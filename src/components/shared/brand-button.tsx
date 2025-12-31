@@ -28,7 +28,7 @@ export default function BrandButton({
   return (
     <button
       className={cn(
-        'group flex-center xsm:h-10.5 relative h-12 w-auto cursor-pointer overflow-hidden rounded-[1.25rem_0.125rem] bg-transparent px-7',
+        'group flex-center font-montserrat xsm:h-10.5 relative h-12 w-auto cursor-pointer overflow-hidden rounded-[1.25rem_0.125rem] bg-transparent px-7',
         classNameButtonVariant[variant],
         classNameButtonContainer,
       )}
@@ -125,8 +125,8 @@ function IconArrowTopRightGradient(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      width='10'
-      height='10'
+      width={10}
+      height={10}
       viewBox='0 0 10 10'
       fill='none'
       {...props}
@@ -150,11 +150,11 @@ function IconArrowTopRightGradient(props: React.SVGProps<SVGSVGElement>) {
         >
           <stop
             offset='0.517469'
-            stop-color='#03328C'
+            stopColor='#03328C'
           />
           <stop
-            offset='1'
-            stop-color='#00804D'
+            offset={1}
+            stopColor='#00804D'
           />
         </linearGradient>
         <linearGradient
@@ -167,11 +167,11 @@ function IconArrowTopRightGradient(props: React.SVGProps<SVGSVGElement>) {
         >
           <stop
             offset='0.517469'
-            stop-color='#03328C'
+            stopColor='#03328C'
           />
           <stop
-            offset='1'
-            stop-color='#00804D'
+            offset={1}
+            stopColor='#00804D'
           />
         </linearGradient>
       </defs>

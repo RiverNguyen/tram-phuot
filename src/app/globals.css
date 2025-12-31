@@ -202,7 +202,7 @@ input[type='number'] {
     linear-gradient(242deg, #ffc542 1.46%, #00804d 41.3%),
     linear-gradient(247deg, #ffc542 -5.23%, #00804d 55.6%);
 }
-.mask-border {
+@utility mask-border {
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
     linear-gradient(#fff 0 0);
