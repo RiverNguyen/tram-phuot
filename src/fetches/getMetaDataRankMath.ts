@@ -1,5 +1,5 @@
-import ENV from '@/config-global.env'
-import parseRankMathHead from '@/utils/parseRankMathHead'
+import ENV from '@/configs/env'
+import { parseRankMathHead } from '@/utils/parseRankMathHead'
 
 export default async function getMetaDataRankMath(slug: string) {
   try {
@@ -15,7 +15,7 @@ export default async function getMetaDataRankMath(slug: string) {
     if (!res.ok) return null
     const data = await res.json()
     if (!data?.success || !data?.head) return null
-    return parseRankMathHead(data.head) // Phân tách dữ liệu head
+    return parseRankMathHead(data.head, ENV.DOMAIN!) // Phân tách dữ liệu head
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return null
