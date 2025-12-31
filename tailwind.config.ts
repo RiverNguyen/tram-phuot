@@ -19,7 +19,10 @@ const config: Config = {
       },
     },
     extend: {
-      fontFamily: {},
+      fontFamily: {
+        montserrat: ['var(--font-montserrat)', 'sans-serif'],
+        phudu: ['var(--font-phudu)', 'sans-serif'],
+      },
       colors: {},
       backgroundImage: {},
       boxShadow: {},
