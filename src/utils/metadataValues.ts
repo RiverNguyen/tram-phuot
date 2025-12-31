@@ -3,12 +3,12 @@ export default function metadataValues(res: any, domain: string) {
   if (!res) {
     return {
       metadataBase: new URL(domain),
-      title: 'Tiem Tour',
-      description: 'Tiem Tour',
+      title: 'Tram Phuot',
+      description: 'Tram Phuot',
       alternates: {
         canonical: './',
       },
-      author: 'Tiem Tour',
+      author: 'Tram Phuot',
       robots: 'index, follow',
       schema: null,
     }
@@ -21,13 +21,9 @@ export default function metadataValues(res: any, domain: string) {
   if (result?.openGraph?.image?.url) {
     ogImages.push({
       url: result.openGraph.image.url,
-      width: result.openGraph.image.width
-        ? Number(result.openGraph.image.width)
-        : 1200,
-      height: result.openGraph.image.height
-        ? Number(result.openGraph.image.height)
-        : 630,
-      alt: result.openGraph.image.alt || result.title || 'Tiem Tour',
+      width: result.openGraph.image.width ? Number(result.openGraph.image.width) : 1200,
+      height: result.openGraph.image.height ? Number(result.openGraph.image.height) : 630,
+      alt: result.openGraph.image.alt || result.title || 'Tram Phuot',
     })
   }
 
@@ -35,53 +31,51 @@ export default function metadataValues(res: any, domain: string) {
   let twitterImages: any[] = []
   if (result?.twitter?.image) {
     if (Array.isArray(result.twitter.image)) {
-      twitterImages = result.twitter.image.map((url: string) => ({url}))
+      twitterImages = result.twitter.image.map((url: string) => ({ url }))
     } else {
-      twitterImages.push({url: result.twitter.image})
+      twitterImages.push({ url: result.twitter.image })
     }
   }
 
   // Fallback ảnh mặc định nếu không có
   if (ogImages.length === 0) {
     ogImages.push({
-      url: '/card-default.webp',
+      url: '/default.webp',
       width: 1200,
       height: 630,
-      alt: 'Tiem Tour',
+      alt: 'Tram Phuot',
     })
   }
   if (twitterImages.length === 0) {
     twitterImages.push({
-      url: '/card-default.webp',
+      url: '/default.webp',
     })
   }
 
   return {
     metadataBase: new URL(domain),
-    title: result?.title || 'Tiem Tour',
-    description: result?.description || 'Tiem Tour',
+    title: result?.title || 'Tram Phuot',
+    description: result?.description || 'Tram Phuot',
     alternates: {
       canonical: './',
     },
-    author: 'Tiem Tour',
+    author: 'Tram Phuot',
     robots: 'index, follow',
     schema: result?.schema || null, // <-- Truyền xuống component để render JSON-LD
     openGraph: {
-      title: result?.openGraph?.title || result?.title || 'Tiem Tour',
-      description:
-        result?.openGraph?.description || result?.description || 'Tiem Tour',
+      title: result?.openGraph?.title || result?.title || 'Tram Phuot',
+      description: result?.openGraph?.description || result?.description || 'Tram Phuot',
       url: './',
-      siteName: result?.openGraph?.siteName || 'Tiem Tour',
+      siteName: result?.openGraph?.siteName || 'Tram Phuot',
       images: ogImages,
       locale: result?.openGraph?.locale,
       type: result?.openGraph?.type,
     },
     twitter: {
       card: result?.twitter?.card || 'summary_large_image',
-      title: result?.twitter?.title || result?.title || 'Tiem Tour',
-      description:
-        result?.twitter?.description || result?.description || 'Tiem Tour',
-      creator: 'Tiem Tour',
+      title: result?.twitter?.title || result?.title || 'Tram Phuot',
+      description: result?.twitter?.description || result?.description || 'Tram Phuot',
+      creator: 'Tram Phuot',
       images: twitterImages,
       label1: result?.twitter?.label1,
       data1: result?.twitter?.data1,
