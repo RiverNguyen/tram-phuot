@@ -13,7 +13,7 @@ export const TOURS = [
     per: 'Person',
     image: '/danh-sach-tour/card.webp',
     tag: 'Tour and chill',
-    tags: ['SUP', 'Scuba diving', '+12'],
+    tags: ['SUP', 'Scuba diving', '+12', 'SUP', 'Scuba diving', '+12'],
   },
   {
     id: 2,
@@ -96,9 +96,9 @@ export default function TourList() {
                     {tour?.tags?.map((tag, index) => (
                       <div
                         key={index}
-                        className='xsm:h-[1.2rem] flex items-center justify-center p-[0.3125rem_0.375rem_0.3125rem_0.4375rem] rounded-[6.25rem] bg-[rgba(255,255,255,0.08)]'
+                        className='xsm:h-[1.2rem] h-[1.375rem] flex items-center justify-center p-[0.3125rem_0.375rem_0.3125rem_0.4375rem] rounded-[6.25rem] bg-[rgba(255,255,255,0.08)]'
                       >
-                        <span className='xsm:opacity-[0.8] text-white font-montserrat text-[0.75rem] font-medium leading-[1.2rem] tracking-[-0.0075rem]'>
+                        <span className='opacity-[0.8] text-white font-montserrat text-[0.75rem] font-medium leading-[1.2rem] tracking-[-0.0075rem]'>
                           {tag}
                         </span>
                       </div>
