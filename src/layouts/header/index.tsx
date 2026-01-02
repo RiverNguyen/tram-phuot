@@ -45,9 +45,9 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: ISocialMedi
 
   return (
     <>
-      <header className='fixed top-[0.625rem] xsm:top-3 left-[50%] z-50 h-[4.5rem] w-[87.5rem] xsm:h-[3.75rem] xsm:w-[calc(100%-2rem)] translate-x-[-50%] rounded-[1rem] xsm:rounded-ơ0.75rem] bg-black/50 p-[0_3.125rem] backdrop-blur-[10px] xsm:p-[0.625rem]'>
+      <header className='fixed top-[0.625rem] xsm:top-3 left-[50%] z-50 h-[4.5rem] w-[87.5rem] xsm:h-[3.75rem] xsm:w-[calc(100%-2rem)] translate-x-[-50%] rounded-[1rem] xsm:rounded-[0.75rem] bg-black/50 p-[0_3.125rem] backdrop-blur-[10px] xsm:p-[0.625rem]'>
         {/* Desktop Navigation */}
-        <div className='xsm:hidden flex items-center justify-between h-full'>
+        <div className='xsm:hidden flex items-center justify-between h-full z-[50]'>
           <NavigationMenu
             items={navLeft}
             side='left'
@@ -114,20 +114,20 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: ISocialMedi
         </SheetProvider>
 
         {/* Desktop Dropdown Menu */}
-        <AnimatePresence>
-          {hoveredIndex !== null && hoveredSide && (
-            <DropdownMenu
-              hoveredIndex={hoveredIndex}
-              hoveredSide={hoveredSide}
-              navLeft={navLeft}
-              navRight={navRight}
-              onClose={handleClose}
-              onMouseEnter={handleDropdownMouseEnter}
-              onMouseLeave={handleItemLeave}
-            />
-          )}
-        </AnimatePresence>
       </header>
+      <AnimatePresence>
+        {hoveredIndex !== null && hoveredSide && (
+          <DropdownMenu
+            hoveredIndex={hoveredIndex}
+            hoveredSide={hoveredSide}
+            navLeft={navLeft}
+            navRight={navRight}
+            onClose={handleClose}
+            onMouseEnter={handleDropdownMouseEnter}
+            onMouseLeave={handleItemLeave}
+          />
+        )}
+      </AnimatePresence>
     </>
   )
 }
