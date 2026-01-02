@@ -28,7 +28,7 @@ export default function OngoingPromotions() {
   return (
     <div className='xsm:gap-[1.25rem] flex flex-col items-start gap-[2.5rem] self-stretch'>
       <div className='xsm:flex-col xsm:gap-[0.875rem] xsm:items-start flex items-center gap-[2.5rem] self-stretch'>
-        <h2 className='xsm:w-full xsm:text-[1.25rem] xsm:leading-[1.5rem] xsm:tracking-[0.025rem] w-[35.8125rem] text-[#2E2E2E] font-phudu text-[2.125rem] font-medium leading-[2.3375rem]'>
+        <h2 className='xsm:w-full xsm:text-[1.25rem] xsm:leading-[1.5rem] xsm:tracking-[0.025rem] w-[35.8125rem] text-[#2E2E2E] font-phu-du text-[2.125rem] font-medium leading-[2.3375rem]'>
           ongoing promotion
         </h2>
       </div>
@@ -58,7 +58,7 @@ export default function OngoingPromotions() {
                     {card.location}
                   </span>
                 </div>
-                <h3 className='xsm:text-[1.125rem] xsm:leading-[1.2375rem] xsm:tracking-normal text-[#1F4D37] font-phudu text-[1.75rem] font-medium leading-[2.0625rem] tracking-[-0.03125rem]'>
+                <h3 className='xsm:text-[1.125rem] xsm:leading-[1.2375rem] xsm:tracking-normal text-[#1F4D37] font-phu-du text-[1.75rem] font-medium leading-[2.0625rem] tracking-[-0.03125rem]'>
                   {card.title}
                 </h3>
               </div>

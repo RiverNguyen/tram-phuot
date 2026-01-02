@@ -33,7 +33,7 @@ export default function Banner() {
           classNameLastItem='xsm:text-[0.875rem] xsm:leading-[1.3125rem] text-white font-montserrat text-[1rem] leading-[1.2rem] font-bold'
           classNameSeparator='xsm:text-[0.875rem] xsm:leading-[1.3125rem] text-[rgba(255,255,255,0.60)] font-montserrat text-[1rem] leading-[1.2rem]'
         />
-        <h1 className='xsm:text-[1.875rem] xsm:leading-[2.25rem] xsm:tracking-[0.01875rem] xsm:font-normal text-white text-shadow-[0_4.702px_4.702px_rgba(0,0,0,0.50)] font-phudu text-[3rem] leading-[3.09rem] tracking-[-0.03rem] uppercase'>
+        <h1 className='xsm:text-[1.875rem] xsm:leading-[2.25rem] xsm:tracking-[0.01875rem] xsm:font-normal text-white text-shadow-[0_4.702px_4.702px_rgba(0,0,0,0.50)] font-phu-du text-[3rem] leading-[3.09rem] tracking-[-0.03rem] uppercase'>
           Your Next Adventure Starts Here
         </h1>
       </div>

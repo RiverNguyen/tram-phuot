@@ -82,7 +82,7 @@ export default function TourList() {
             />
             {/* tag */}
             <div className='xsm:px-[0.84069rem] xsm:py-[0.70056rem] absolute top-0 left-0 inline-flex px-[0.75rem] py-[0.625rem]'>
-              <div className='xsm:h-[1.75144rem] xsm:px-[0.99013rem] xsm:rounded-tl-[0.84069rem] xsm:rounded-br-[0.84069rem] xsm:text-[0.875rem] xsm:leading-[1.75rem] xsm:tracking-[-0.0175rem] flex h-[1.5625rem] px-[0.88331rem] justify-center items-center rounded-tl-[0.75rem] rounded-br-[0.75rem] bg-[#2BAB7D] text-white font-phudu text-[0.75rem] font-medium leading-[1.5rem] tracking-[-0.015rem]'>
+              <div className='xsm:h-[1.75144rem] xsm:px-[0.99013rem] xsm:rounded-tl-[0.84069rem] xsm:rounded-br-[0.84069rem] xsm:text-[0.875rem] xsm:leading-[1.75rem] xsm:tracking-[-0.0175rem] flex h-[1.5625rem] px-[0.88331rem] justify-center items-center rounded-tl-[0.75rem] rounded-br-[0.75rem] bg-[#2BAB7D] text-white font-phu-du text-[0.75rem] font-medium leading-[1.5rem] tracking-[-0.015rem]'>
                 {tour?.tag}
               </div>
             </div>
@@ -105,7 +105,7 @@ export default function TourList() {
                     ))}
                   </div>
                   {/* title */}
-                  <h3 className='xsm:text-[1.25rem] xsm:leading-[1.25rem] xsm:tracking-normal line-clamp-2 text-white font-phudu text-[1rem] font-medium leading-[1.3rem] uppercase'>
+                  <h3 className='xsm:text-[1.25rem] xsm:leading-[1.25rem] xsm:tracking-normal line-clamp-2 text-white font-phu-du text-[1rem] font-medium leading-[1.3rem] uppercase'>
                     {tour?.title}
                   </h3>
                 </div>
@@ -122,7 +122,7 @@ export default function TourList() {
                           {tour?.location}
                         </span>
                       </div>
-                      <p className='xsm:leading-[1.625rem] font-phudu font-medium leading-[1.3rem] uppercase'>
+                      <p className='xsm:leading-[1.625rem] font-phu-du font-medium leading-[1.3rem] uppercase'>
                         <span className='xsm:text-[1.25rem] xsm:leading-[1.625rem] text-[#FFC542] text-[1rem]'>
                           {tour?.price} {tour?.currency}
                         </span>

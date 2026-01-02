@@ -11,7 +11,7 @@ const config: Config = {
         max: '1024px',
       },
       xsm: {
-        max: '639px',
+        max: '639.98px',
       },
       tablet: {
         min: '640px',
@@ -20,8 +20,9 @@ const config: Config = {
     },
     extend: {
       fontFamily: {
+        phuDu: ['var(--font-phu-du)', 'sans-serif'],
         montserrat: ['var(--font-montserrat)', 'sans-serif'],
-        phudu: ['var(--font-phudu)', 'sans-serif'],
+        motherland: ['var(--font-motherland)', 'sans-serif'],
       },
       colors: {},
       backgroundImage: {},
@@ -33,6 +34,9 @@ const config: Config = {
       addUtilities({
         '.flex-center': {
           '@apply flex items-center justify-center': {},
+        },
+        '.flex-between': {
+          '@apply flex items-center justify-between': {},
         },
         '.flex-y-center': {
           '@apply flex items-center': {},

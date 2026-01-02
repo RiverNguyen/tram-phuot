@@ -42,7 +42,7 @@ export default function SpecialOffers() {
 
   return (
     <div className='xsm:gap-[1.25rem] flex flex-col items-start gap-[2.5rem] self-stretch'>
-      <h2 className='xsm:w-full xsm:text-[1.25rem] xsm:leading-[1.5rem] xsm:tracking-[0.025rem] w-[35.8125rem] text-[#2E2E2E] font-phudu text-[2.125rem] font-medium leading-[2.3375rem]'>
+      <h2 className='xsm:w-full xsm:text-[1.25rem] xsm:leading-[1.5rem] xsm:tracking-[0.025rem] w-[35.8125rem] text-[#2E2E2E] font-phu-du text-[2.125rem] font-medium leading-[2.3375rem]'>
         Special offer just for you!
       </h2>
       <div className='xsm:grid-cols-1 xsm:gap-[1rem] w-full grid grid-cols-3 gap-[1.25rem]'>
@@ -78,7 +78,7 @@ export default function SpecialOffers() {
                 className='object-cover sm:hidden'
               />
               {/* percent */}
-              <div className='xsm:top-[3.0615rem] xsm:left-[15.8416rem] xms:h-[3.875rem] absolute top-[4.0461rem] left-[20.9375rem] h-[5.25rem] flex flex-col text-white font-phudu font-bold tracking-normal'>
+              <div className='xsm:top-[3.0615rem] xsm:left-[15.8416rem] xms:h-[3.875rem] absolute top-[4.0461rem] left-[20.9375rem] h-[5.25rem] flex flex-col text-white font-phu-du font-bold tracking-normal'>
                 <div className='xsm:text-[1.11025rem] text-[1.46738rem] leading-[90%]'>Giảm</div>
                 <div className={cn('xsm:text-[3.5rem] text-[4.69563rem] leading-[90%]', offer.discountPercent > 9 ? 'ml-[-0.9375rem]' : '')}>
                   {offer.discountPercent}%
@@ -94,7 +94,7 @@ export default function SpecialOffers() {
                     {offer.location}
                   </div>
                   {/* title */}
-                  <h3 className='xsm:text-[0.875rem] xsm:leading-[1.05rem] xsm:tracking-[0.0175rem] line-clamp-1 self-stretch text-[#2E2E2E] font-phudu text-[1.25rem] font-bold leading-[1.5rem] tracking-[0.025rem]'>
+                  <h3 className='xsm:text-[0.875rem] xsm:leading-[1.05rem] xsm:tracking-[0.0175rem] line-clamp-1 self-stretch text-[#2E2E2E] font-phu-du text-[1.25rem] font-bold leading-[1.5rem] tracking-[0.025rem]'>
                     {offer.title}
                   </h3>
                   <div className='xsm:gap-[0.625rem] flex flex-col gap-[0.875rem] self-stretch'>
