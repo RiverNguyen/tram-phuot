@@ -80,7 +80,7 @@ export default function SpecialOffers() {
               {/* percent */}
               <div className='xsm:top-[3.0615rem] xsm:left-[15.8416rem] xms:h-[3.875rem] absolute top-[4.0461rem] left-[20.9375rem] h-[5.25rem] flex flex-col text-white font-phudu font-bold tracking-normal'>
                 <div className='xsm:text-[1.11025rem] text-[1.46738rem] leading-[90%]'>Giảm</div>
-                <div className={cn('xsm:text-[3.5rem] text-[4.69563rem] leading-[90%]', offer.discountPercent > 11 ? 'ml-[-1rem]' : '')}>
+                <div className={cn('xsm:text-[3.5rem] text-[4.69563rem] leading-[90%]', offer.discountPercent > 9 ? 'ml-[-0.9375rem]' : '')}>
                   {offer.discountPercent}%
                 </div>
               </div>

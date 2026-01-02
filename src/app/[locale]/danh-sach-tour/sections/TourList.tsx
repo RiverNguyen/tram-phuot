@@ -3,7 +3,7 @@ import ICLocation from '@/components/icon/ICLocation'
 import ICChevronright from '@/components/icon/ICChevronright'
 import Link from 'next/link'
 
-export const TOURS = [
+const TOURS = [
   {
     id: 1,
     title: 'Ninh Binh River Caves and Ancient Capital Discovery',
