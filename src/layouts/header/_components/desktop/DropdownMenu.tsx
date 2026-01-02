@@ -36,7 +36,7 @@ const DropdownMenu = ({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       transition={{ duration: 0.2 }}
-      className='fixed top-[5rem] left-[50%] z-40 w-[87.5rem] -translate-x-1/2 rounded-t-[1rem] min-h-[38.0625rem] overflow-hidden shadow-[0_592.313px_165.848px_0_rgba(0,0,0,0.00),_0_379.08px_151.807px_0_rgba(0,0,0,0.01),_0_213.232px_128.115px_0_rgba(0,0,0,0.05),_0_94.77px_94.77px_0_rgba(0,0,0,0.09),_0_23.692px_51.772px_0_rgba(0,0,0,0.10)]'
+      className='fixed top-[5rem] left-[50%] z-40 w-[87.5rem] -translate-x-1/2 rounded-t-[1rem] min-h-[38.0625rem] overflow-hidden shadow-[0_592.313px_165.848px_0_rgba(0,0,0,0.00),_0_379.08px_151.807px_0_rgba(0,0,0,0.01),_0_213.232px_128.115px_0_rgba(0,0,0,0.05),_0_94.77px_94.77px_0_rgba(0,0,0,0.09),_0_23.692px_51.772px_0_rgba(0,0,0,0.10)] xsm:hidden'
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >

@@ -1,6 +1,6 @@
 import { IHeader } from '@/interface/site-setting.interface'
-import NavigationItem from '@/layouts/header/_components/NavigationItem'
-import LanguageSwitcher from '@/layouts/header/_components/LanguageSwitcher'
+import NavigationItem from '@/layouts/header/_components/desktop/NavigationItem'
+import LanguageSwitcher from '@/layouts/header/_components/desktop/LanguageSwitcher'
 
 interface NavigationMenuProps {
   items: IHeader['navigations']

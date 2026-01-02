@@ -1,6 +1,8 @@
 {
   "HomePage": {
     "title": "Xin chào!"
+  },
+  "Header": {
+    "language": "Ngôn ngữ:"
   }
 }
-

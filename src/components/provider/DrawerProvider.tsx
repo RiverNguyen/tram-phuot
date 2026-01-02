@@ -20,10 +20,7 @@ const DrawerProvider: FC<DrawerProviderProps> = ({ children, className, open, se
     >
       <DrawerContent
         suppressHydrationWarning
-        className={cn(
-          'min-h-[16.7rem] w-full rounded-[1.25rem_1.25rem_0rem_0rem] bg-white',
-          className,
-        )}
+        className={cn('w-full rounded-[1.25rem_1.25rem_0rem_0rem] bg-white', className)}
       >
         {/* Giữ lại để tránh báo error */}
         <DrawerHeader className='hidden'>
