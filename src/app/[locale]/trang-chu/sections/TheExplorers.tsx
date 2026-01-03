@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useRef } from 'react'
 import Link from 'next/link'
-import ICBgTitle from '@/components/icon/ICBgTitle'
+import { SectionTitle } from '@/components/shared'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { CustomEase } from 'gsap/dist/CustomEase'
@@ -240,7 +240,7 @@ export default function TheExplorers() {
           alt='towel left'
           width={2918}
           height={1950}
-          className='xsm:hidden towel-left absolute top-[6.3rem] left-[-1.875rem] w-[45.0625rem] h-auto' // width ở figma là 83.7493rem
+          className='xsm:hidden towel-left absolute top-[6.3rem] left-[-1.875rem] w-[45.0625rem] h-auto pointer-events-none' // width ở figma là 83.7493rem
         />
         {/* towel right */}
         <Image
@@ -257,7 +257,7 @@ export default function TheExplorers() {
           alt='towel mb'
           width={1125}
           height={2830}
-          className='sm:hidden z-1 absolute top-[7.2rem] left-[-1rem] max-w-[23.4375rem] h-auto object-cover'
+          className='sm:hidden z-1 absolute top-[7.2rem] left-[-1rem] max-w-[23.4375rem] h-auto object-cover pointer-events-none'
         />
 
         {/* turtle tower */}
@@ -315,7 +315,7 @@ export default function TheExplorers() {
           />
         </div>
         {/* image dynamic 4 */}
-        <div className='xsm:top-[41.8rem] xsm:left-[-0.34rem] xsm:w-[8.2185rem] xsm:h-[6.94356rem] xsm:p-[0.14356rem] xsm:rotate-[11.21deg] xsm:z-1 xsm:shadow-[-60.215px_120.911px_37.574px_0_rgba(0,0,0,0.00),-38.537px_77.075px_34.684px_0_rgba(0,0,0,0.01),-21.677px_43.355px_29.385px_0_rgba(0,0,0,0.05),-9.634px_19.269px_21.677px_0_rgba(0,0,0,0.09),-2.409px_4.817px_12.043px_0_rgba(0,0,0,0.10)] image-dynamic-4 z-2 absolute top-[22.8639rem] left-[55.9025rem] w-[14.9538rem] h-[12.6341rem] rotate-[11.21deg] p-[0.35rem] overflow-hidden bg-white shadow-[-109.563px_220.003px_68.367px_0_rgba(0,0,0,0),-70.12px_140.241px_63.108px_0_rgba(0,0,0,0.01),-39.443px_78.885px_53.467px_0_rgba(0,0,0,0.05),-17.53px_35.06px_39.443px_0_rgba(0,0,0,0.09),-4.383px_8.765px_21.913px_0_rgba(0,0,0,0.1)]'>
+        <div className='xsm:top-[41.8rem] xsm:left-[-0.34rem] xsm:w-[8.2185rem] xsm:h-[6.94356rem] xsm:p-[0.14356rem] xsm:z-1 xsm:shadow-[-60.215px_120.911px_37.574px_0_rgba(0,0,0,0.00),-38.537px_77.075px_34.684px_0_rgba(0,0,0,0.01),-21.677px_43.355px_29.385px_0_rgba(0,0,0,0.05),-9.634px_19.269px_21.677px_0_rgba(0,0,0,0.09),-2.409px_4.817px_12.043px_0_rgba(0,0,0,0.10)] image-dynamic-4 z-2 absolute top-[22.8639rem] left-[55.9025rem] w-[14.9538rem] h-[12.6341rem] rotate-[11.21deg] p-[0.35rem] overflow-hidden bg-white shadow-[-109.563px_220.003px_68.367px_0_rgba(0,0,0,0),-70.12px_140.241px_63.108px_0_rgba(0,0,0,0.01),-39.443px_78.885px_53.467px_0_rgba(0,0,0,0.05),-17.53px_35.06px_39.443px_0_rgba(0,0,0,0.09),-4.383px_8.765px_21.913px_0_rgba(0,0,0,0.1)]'>
           <Image
             src='/uu-dai/card.webp'
             alt='Image dynamic 4'
@@ -356,23 +356,12 @@ export default function TheExplorers() {
           </div>
         </div>
         {/* title */}
-        <div className='xsm:top-0 xsm:left-[0.97rem] xsm:w-[14.11981rem] xsm:h-[10rem] title absolute top-[-7.1431rem] left-[4.3235rem] w-[20.50531rem] h-[14.52263rem]'>
-          <ICBgTitle className='xsm:top-[1.231rem] xsm:left-[0.2095rem] xsm:w-[14.11981rem] xsm:h-[8.71663rem] absolute top-[1.864rem] left-0 w-[20.50531rem] h-[12.65856rem]' />
-          <div className='xsm:top-[1.206rem] xsm:left-[2.2751rem] absolute top-[1.15rem] left-[3.3042rem] rotate-[-3.64deg]'>
-            {/* stroke */}
-            <h2 className='xsm:text-[1.5rem] xsm:[-webkit-text-stroke:2.07px_#FDF6EC] absolute text-[#F56E0A] font-motherland text-[2.25rem] leading-[100%] tracking-[0%] [-webkit-text-stroke:3px_#FDF6EC]'>
-              The explorers
-            </h2>
-
-            {/* fill */}
-            <h2 className='xsm:text-[1.5rem] relative text-[#F56E0A] font-motherland text-[2.25rem] leading-[100%] tracking-[0%]'>
-              The explorers
-            </h2>
-          </div>
-          <h2 className='xsm:text-[2.25rem] xsm:leading-[120%] xsm:top-[3.1rem] xsm:left-[1.77rem] absolute top-[3.9rem] left-[3.6891rem] rotate-[-3.64deg] text-white font-phu-du text-[3rem] font-medium leading-[100%] tracking-[0%]'>
-            SHARE THEIR JOURNEYS!
-          </h2>
-        </div>
+        <SectionTitle
+          title='The explorers'
+          subtitle='SHARE THEIR JOURNEYS!'
+          rotation={-3.64}
+          classNameIcon='text-[#F56E0A]'
+        />
       </div>
       {/* stamp 2 */}
       <Image

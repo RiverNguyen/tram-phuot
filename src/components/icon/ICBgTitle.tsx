@@ -1,19 +1,24 @@
 import { SVGProps } from 'react'
 
-export default function ICBgTitle(props: SVGProps<SVGSVGElement>) {
+export default function ICBgTitle({
+  className = 'text-[#F56E0A]',
+  ...props
+}: SVGProps<SVGSVGElement>) {
+
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       width='330'
       height='203'
       viewBox='0 0 330 203'
+      className={className}
       fill='none'
       {...props}
     >
       <g filter='url(#filter0_g_2033_9063)'>
         <path
           d='M1.87687 192.041L24.2562 28.991C24.7698 25.2493 27.8302 22.3765 31.5969 22.1003L308.173 1.82139C312.485 1.50522 316.268 4.67232 316.715 8.97275L327.633 113.994C328.044 117.947 325.49 121.603 321.636 122.577L11.7626 200.885C6.26405 202.274 1.10567 197.66 1.87687 192.041Z'
-          fill='#F56E0A'
+          fill='currentColor'
         />
       </g>
       <defs>
