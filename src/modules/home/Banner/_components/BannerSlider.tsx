@@ -7,11 +7,16 @@ import 'swiper/css/parallax'
 import { Autoplay, Pagination, Parallax } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
+import useIsMobile from '@/hooks/use-is-mobile'
+
 interface BannerSliderProps {
   gallery: Array<{ url: string; alt: string }>
+  galleryMobile: Array<{ url: string; alt: string }>
 }
 
-export const BannerSlider = ({ gallery }: BannerSliderProps) => {
+export const BannerSlider = ({ gallery, galleryMobile }: BannerSliderProps) => {
+  const isMobile = useIsMobile()
+
   return (
     <Swiper
       slidesPerView={1}
@@ -32,8 +37,8 @@ export const BannerSlider = ({ gallery }: BannerSliderProps) => {
       className='w-full h-full'
       grabCursor={true}
     >
-      {Array.isArray(gallery) &&
-        gallery.map((item, index) => (
+      {Array.isArray(isMobile ? galleryMobile : gallery) &&
+        (isMobile ? galleryMobile : gallery).map((item, index) => (
           <SwiperSlide
             key={index}
             className='relative overflow-hidden'
@@ -56,4 +61,3 @@ export const BannerSlider = ({ gallery }: BannerSliderProps) => {
     </Swiper>
   )
 }
-

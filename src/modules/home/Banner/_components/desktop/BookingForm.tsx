@@ -43,7 +43,7 @@ export const BookingForm = ({
   const t = useTranslations('HomePage.banner')
 
   return (
-    <div className='w-[55.6875rem] absolute bottom-[3.5625rem] right-[7.5375rem] z-[3] flex flex-col'>
+    <div className='w-[55.6875rem] absolute bottom-[3.5625rem] right-[7.5375rem] z-[3] flex flex-col xsm:hidden'>
       <Image
         width={52}
         height={60}

@@ -3,9 +3,10 @@
 import { useState } from 'react'
 import { ProgressiveBlur } from '@/components/ui/progressive-blur'
 import { IHomePage } from '@/interface/homepage.interface'
-import { BannerSlider } from '@/modules/home/Banner/_components/desktop/BannerSlider'
-import { BannerTitle } from '@/modules/home/Banner/_components/desktop/BannerTitle'
+import { BannerSlider } from '@/modules/home/Banner/_components/BannerSlider'
+import { BannerTitle } from '@/modules/home/Banner/_components/BannerTitle'
 import { BookingForm } from '@/modules/home/Banner/_components/desktop/BookingForm'
+import BookingFormMobile from '@/modules/home/Banner/_components/mobile/BookingFormMobile'
 
 const stations = [
   {
@@ -64,11 +65,15 @@ const BannerHomePage = ({ data }: { data: IHomePage }) => {
       <ProgressiveBlur
         blurIntensity={2}
         direction='bottom'
-        className='w-full h-[16.375rem] opacity-70 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,rgba(2,3,5,0.08)_13.88%,#192842_100%)]  absolute bottom-0 left-0 z-[2]'
+        className='w-full h-[16.375rem] opacity-70 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,rgba(2,3,5,0.08)_13.88%,#192842_100%)]  absolute bottom-0 left-0 z-[2] pointer-events-none'
       />
       <div className='w-full h-screen overflow-hidden relative'>
         <BannerTitle title={data.banner.title} />
-        <BannerSlider gallery={data?.banner?.gallery || []} />
+        <BannerSlider
+          gallery={data?.banner?.gallery || []}
+          galleryMobile={data?.banner?.gallery_mobile || []}
+        />
+        {/* Desktop */}
         <BookingForm
           stations={stations}
           selectedStation={selectedStation}
@@ -81,6 +86,13 @@ const BannerHomePage = ({ data }: { data: IHomePage }) => {
           children={children}
           onAdultsChange={setAdults}
           onChildrenChange={setChildren}
+        />
+
+        {/* Mobile */}
+        <BookingFormMobile
+          stations={stations}
+          selectedStation={selectedStation}
+          onStationChange={setSelectedStation}
         />
       </div>
     </section>

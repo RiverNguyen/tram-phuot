@@ -7,4 +7,5 @@ export interface IHomePage {
 export interface IBannerHomePage {
   title: string
   gallery: IMedia[]
+  gallery_mobile: IMedia[]
 }
