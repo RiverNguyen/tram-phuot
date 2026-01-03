@@ -12,7 +12,6 @@ export default async function layout({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  console.log(locale)
   const dataSiteSettings = await fetchData({
     api: `${ENDPOINTS.site_settings}?locale=${locale}`,
   })

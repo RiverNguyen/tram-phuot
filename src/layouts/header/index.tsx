@@ -100,7 +100,7 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: ISocialMedi
           className='border-0 w-full rounded-none p-0'
           hideCloseButton
         >
-          <div className='bg-white'>
+          <div>
             <MobileSheetHeader
               data={data}
               onClose={() => setOpenSheet(false)}

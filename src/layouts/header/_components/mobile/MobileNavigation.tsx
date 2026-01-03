@@ -17,7 +17,7 @@ interface MobileNavigationProps {
 
 const MobileNavigation = ({ data }: MobileNavigationProps) => {
   return (
-    <div className='h-[31.5625rem] overflow-auto'>
+    <div className='h-[28.5625rem] overflow-auto'>
       <Accordion
         type='single'
         collapsible
@@ -27,8 +27,7 @@ const MobileNavigation = ({ data }: MobileNavigationProps) => {
           data?.navigations.map((item, index) => {
             if (item.select === 'parent') {
               const hasChildren =
-                Array.isArray(item.page_link_parent?.link) &&
-                item.page_link_parent.link.length > 0
+                Array.isArray(item.page_link_parent?.link) && item.page_link_parent.link.length > 0
 
               if (!hasChildren) {
                 return (
