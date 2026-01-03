@@ -85,7 +85,7 @@ export default function TheExplorers() {
           // Background animation
           tl.fromTo(
             '.bg-explorers',
-            { width: '100rem', height: '55.75rem', top: '-4.92rem' },
+            { width: '105rem', height: '55.75rem', top: '-4.92rem' },
             { width: '96.25rem', height: '35.75rem', top: '7.88rem' },
           )
 
@@ -96,6 +96,9 @@ export default function TheExplorers() {
             { y: '0rem' },
             '<',
           )
+
+          // person animation
+          tl.fromTo('.person', { y: '5.2504rem' }, { y: '0rem' }, '<')
 
           // Fade in elements
           tl.fromTo(['.rim-100', '.flower', '.stamp-1'], { opacity: 0 }, { opacity: 1 }, '<')
@@ -162,7 +165,7 @@ export default function TheExplorers() {
         alt='Bg Explorers'
         width={4811}
         height={2669}
-        className='xsm:hidden bg-explorers absolute top-[7.88rem] left-1/2 -translate-x-1/2 w-[96.25rem] h-[35.75rem]'
+        className='xsm:hidden bg-explorers max-w-[105rem] absolute top-[7.88rem] left-1/2 -translate-x-1/2 w-[96.25rem] h-[35.75rem]'
       />
       <Image
         src='/home/bg-explorers-mb.webp'
@@ -206,7 +209,7 @@ export default function TheExplorers() {
 
       <div className='xsm:top-0 xsm:w-[21.4375rem] z-1 relative top-[8.51rem] left-1/2 -translate-x-1/2 w-[96.25rem] h-[35.125rem]'>
         {/* halo */}
-        <div className='xsm:top-[28.41rem] xsm:left-[-1.0366rem] xsm:w-[18.99844rem] xsm:h-[16.7265rem] halo absolute top-[2.3447rem] left-[56.0557rem] w-[18.32988rem] h-[18.52913rem] bg-[linear-gradient(154deg,rgba(255,183,21,0.60)_19.82%,rgba(240,76,5,0.60)_91.61%)] blur-[55.2px] opacity-[0.6]'></div>
+        <div className='xsm:top-[28.41rem] xsm:left-[-1.0366rem] xsm:w-[18.99844rem] xsm:h-[16.7265rem] xsm:opacity-[0.8] halo absolute top-[2.3447rem] left-[56.0557rem] w-[18.32988rem] h-[18.52913rem] bg-[linear-gradient(154deg,rgba(255,183,21,0.60)_19.82%,rgba(240,76,5,0.60)_91.61%)] blur-[55.2px] opacity-[0.6]'></div>
         {/* rim 100 */}
         <Image
           src='/home/rim.webp'
@@ -245,7 +248,7 @@ export default function TheExplorers() {
           alt='towel right'
           width={2918}
           height={1950}
-          className='xsm:hidden towel-right absolute top-[-8rem] right-[-1.875rem] w-[27.5625rem] h-auto' // width ở figma là 32.5085rem
+          className='xsm:hidden towel-right absolute top-[-13.9rem] right-[-1.875rem] w-[35.5625rem] h-auto' // width ở figma là 32.5085rem
         />
 
         {/* towel mb */}
@@ -254,7 +257,7 @@ export default function TheExplorers() {
           alt='towel mb'
           width={1125}
           height={2830}
-          className='sm:hidden z-1 absolute top-[7.94rem] left-[-1rem] max-w-[23.4375rem] h-auto object-cover'
+          className='sm:hidden z-1 absolute top-[7.2rem] left-[-1rem] max-w-[23.4375rem] h-auto object-cover'
         />
 
         {/* turtle tower */}
@@ -271,7 +274,7 @@ export default function TheExplorers() {
           alt='Street'
           width={738}
           height={843}
-          className='xsm:top-[29.81rem] xsm:left-[11.19rem] xsm:h-[12.27906rem] xsm:z-3 street absolute top-[-4.5rem] left-[75.5rem] w-auto h-[16.7523rem] object-cover' // height ở figma là 15.7523rem
+          className='xsm:top-[29.81rem] xsm:left-[11.2rem] xsm:w-[12rem] xsm:z-3 street absolute top-[-4.75rem] left-[75.2rem] w-[15.16375rem] h-auto object-cover' // height ở figma là 15.7523rem
         />
         {/* person */}
         <Image
@@ -282,7 +285,7 @@ export default function TheExplorers() {
           className='xsm:top-[32.5rem] xsm:left-[-3.69rem] xsm:w-[12.57144rem] xsm:z-3 person z-1 absolute top-[2.085rem] left-[48.125rem] w-[24.3078rem] h-auto object-cover'
         />
         {/* image dynamic 1 */}
-        <div className='xsm:top-[46.12rem] xsm:left-[5.31rem] xsm:w-[8.8395rem] xsm:h-[5.84513rem] xsm:p-[0.14356rem] xsm:rotate-[11.17deg] xsm:z-5 xsm:shadow-[-35.89px_72.068px_22.396px_0_rgba(0,0,0,0),-22.97px_45.94px_20.673px_0_rgba(0,0,0,0.01),-12.921px_25.841px_17.514px_0_rgba(0,0,0,0.05),-5.742px_11.485px_12.921px_0_rgba(0,0,0,0.09),-1.436px_2.871px_7.178px_0_rgba(0,0,0,0.1)] image-dynamic-1 z-2 absolute top-[22.5rem] left-[29.9rem] w-[26.43281rem] h-[17.47875rem] rotate-[-5.681deg] p-[0.42931rem] overflow-hidden bg-white shadow-[-107.323px_215.505px_66.97px_0_rgba(0,0,0,0),-68.687px_137.373px_61.818px_0_rgba(0,0,0,0.01),-38.636px_77.273px_52.374px_0_rgba(0,0,0,0.05),-17.172px_34.343px_38.636px_0_rgba(0,0,0,0.09),-4.293px_8.586px_21.465px_0_rgba(0,0,0,0.10)]'>
+        <div className='xsm:top-[47.12rem] xsm:left-[5.7rem] xsm:w-[8.8395rem] xsm:h-[5.84513rem] xsm:p-[0.14356rem] xsm:rotate-[11.17deg] xsm:z-5 xsm:shadow-[-35.89px_72.068px_22.396px_0_rgba(0,0,0,0),-22.97px_45.94px_20.673px_0_rgba(0,0,0,0.01),-12.921px_25.841px_17.514px_0_rgba(0,0,0,0.05),-5.742px_11.485px_12.921px_0_rgba(0,0,0,0.09),-1.436px_2.871px_7.178px_0_rgba(0,0,0,0.1)] image-dynamic-1 z-2 absolute top-[22.5rem] left-[29.9rem] w-[26.43281rem] h-[17.47875rem] rotate-[-5.681deg] p-[0.42931rem] overflow-hidden bg-white shadow-[-107.323px_215.505px_66.97px_0_rgba(0,0,0,0),-68.687px_137.373px_61.818px_0_rgba(0,0,0,0.01),-38.636px_77.273px_52.374px_0_rgba(0,0,0,0.05),-17.172px_34.343px_38.636px_0_rgba(0,0,0,0.09),-4.293px_8.586px_21.465px_0_rgba(0,0,0,0.10)]'>
           <Image
             src='/uu-dai/card.webp'
             alt='Image dynamic 1'
@@ -292,7 +295,7 @@ export default function TheExplorers() {
           />
         </div>
         {/* image dynamic 2 */}
-        <div className='xsm:top-[41.69rem] xsm:left-[5.75rem] xsm:w-[9.00213rem] xsm:h-[5.55688rem] xsm:p-[0.14356rem] xsm:rotate-[-10.78deg] xsm:z-4 xsm:shadow-[-58.984px_118.439px_36.806px_0_rgba(0,0,0,0.00),-37.75px_75.499px_33.975px_0_rgba(0,0,0,0.01),-21.234px_42.468px_28.784px_0_rgba(0,0,0,0.05),-9.437px_18.875px_21.234px_0_rgba(0,0,0,0.09),-2.359px_4.719px_11.797px_0_rgba(0,0,0,0.10)] image-dynamic-2 z-2 absolute top-[16.659rem] left-[63.6362rem] w-[16.37975rem] h-[10.11094rem] rotate-[-10.78deg] p-[0.35rem] overflow-hidden bg-white shadow-[-107.323px_215.505px_66.97px_0_rgba(0,0,0,0),-68.687px_137.373px_61.818px_0_rgba(0,0,0,0.01),-38.636px_77.273px_52.374px_0_rgba(0,0,0,0.05),-17.172px_34.343px_38.636px_0_rgba(0,0,0,0.09),-4.293px_8.586px_21.465px_0_rgba(0,0,0,0.10)]'>
+        <div className='xsm:top-[42.5rem] xsm:left-[6.05rem] xsm:w-[9.00213rem] xsm:h-[5.55688rem] xsm:p-[0.14356rem] xsm:rotate-[-10.78deg] xsm:z-4 xsm:shadow-[-58.984px_118.439px_36.806px_0_rgba(0,0,0,0.00),-37.75px_75.499px_33.975px_0_rgba(0,0,0,0.01),-21.234px_42.468px_28.784px_0_rgba(0,0,0,0.05),-9.437px_18.875px_21.234px_0_rgba(0,0,0,0.09),-2.359px_4.719px_11.797px_0_rgba(0,0,0,0.10)] image-dynamic-2 z-2 absolute top-[16.659rem] left-[63.6362rem] w-[16.37975rem] h-[10.11094rem] rotate-[-10.78deg] p-[0.35rem] overflow-hidden bg-white shadow-[-107.323px_215.505px_66.97px_0_rgba(0,0,0,0),-68.687px_137.373px_61.818px_0_rgba(0,0,0,0.01),-38.636px_77.273px_52.374px_0_rgba(0,0,0,0.05),-17.172px_34.343px_38.636px_0_rgba(0,0,0,0.09),-4.293px_8.586px_21.465px_0_rgba(0,0,0,0.10)]'>
           <Image
             src='/uu-dai/card.webp'
             alt='Image dynamic 2'
@@ -302,7 +305,7 @@ export default function TheExplorers() {
           />
         </div>
         {/* image dynamic 3 */}
-        <div className='xsm:top-[41.51rem] xsm:left-[14.54rem] xsm:w-[6.97331rem] xsm:h-[9.91044rem] xsm:p-[0.14356rem] xsm:rotate-[4.53deg] xsm:z-3 xsm:shadow-[-55.13px_110.701px_34.401px_0_rgba(0,0,0,0.00),-35.283px_70.567px_31.755px_0_rgba(0,0,0,0.01),-19.847px_39.694px_26.904px_0_rgba(0,0,0,0.05),-8.821px_17.642px_19.847px_0_rgba(0,0,0,0.09),-2.205px_4.41px_11.026px_0_rgba(0,0,0,0.10)] image-dynamic-3 z-2 absolute top-[14.7rem] left-[77.2rem] w-[12.68819rem] h-[18.03244rem] rotate-[19.529deg] p-[0.35rem] overflow-hidden bg-white shadow-[-100.311px_201.425px_62.594px_0_rgba(0,0,0,0),-64.199px_128.399px_57.779px_0_rgba(0,0,0,0.01),-36.112px_72.224px_48.952px_0_rgba(0,0,0,0.05),-16.05px_32.1px_36.112px_0_rgba(0,0,0,0.09),-4.012px_8.025px_20.062px_0_rgba(0,0,0,0.1)]'>
+        <div className='xsm:top-[41.51rem] xsm:left-[14.95rem] xsm:w-[6.97331rem] xsm:h-[9.91044rem] xsm:p-[0.14356rem] xsm:rotate-[4.53deg] xsm:z-3 xsm:shadow-[-55.13px_110.701px_34.401px_0_rgba(0,0,0,0.00),-35.283px_70.567px_31.755px_0_rgba(0,0,0,0.01),-19.847px_39.694px_26.904px_0_rgba(0,0,0,0.05),-8.821px_17.642px_19.847px_0_rgba(0,0,0,0.09),-2.205px_4.41px_11.026px_0_rgba(0,0,0,0.10)] image-dynamic-3 z-2 absolute top-[14.7rem] left-[77.2rem] w-[12.68819rem] h-[18.03244rem] rotate-[19.529deg] p-[0.35rem] overflow-hidden bg-white shadow-[-100.311px_201.425px_62.594px_0_rgba(0,0,0,0),-64.199px_128.399px_57.779px_0_rgba(0,0,0,0.01),-36.112px_72.224px_48.952px_0_rgba(0,0,0,0.05),-16.05px_32.1px_36.112px_0_rgba(0,0,0,0.09),-4.012px_8.025px_20.062px_0_rgba(0,0,0,0.1)]'>
           <Image
             src='/uu-dai/card.webp'
             alt='Image dynamic 3'
@@ -312,7 +315,7 @@ export default function TheExplorers() {
           />
         </div>
         {/* image dynamic 4 */}
-        <div className='xsm:top-[41.03rem] xsm:left-[-0.94rem] xsm:w-[8.2185rem] xsm:h-[6.94356rem] xsm:p-[0.14356rem] xsm:rotate-[11.21deg] xsm:z-1 xsm:shadow-[-60.215px_120.911px_37.574px_0_rgba(0,0,0,0.00),-38.537px_77.075px_34.684px_0_rgba(0,0,0,0.01),-21.677px_43.355px_29.385px_0_rgba(0,0,0,0.05),-9.634px_19.269px_21.677px_0_rgba(0,0,0,0.09),-2.409px_4.817px_12.043px_0_rgba(0,0,0,0.10)] image-dynamic-4 z-2 absolute top-[22.8639rem] left-[55.9025rem] w-[14.9538rem] h-[12.6341rem] rotate-[11.21deg] p-[0.35rem] overflow-hidden bg-white shadow-[-109.563px_220.003px_68.367px_0_rgba(0,0,0,0),-70.12px_140.241px_63.108px_0_rgba(0,0,0,0.01),-39.443px_78.885px_53.467px_0_rgba(0,0,0,0.05),-17.53px_35.06px_39.443px_0_rgba(0,0,0,0.09),-4.383px_8.765px_21.913px_0_rgba(0,0,0,0.1)]'>
+        <div className='xsm:top-[41.8rem] xsm:left-[-0.34rem] xsm:w-[8.2185rem] xsm:h-[6.94356rem] xsm:p-[0.14356rem] xsm:rotate-[11.21deg] xsm:z-1 xsm:shadow-[-60.215px_120.911px_37.574px_0_rgba(0,0,0,0.00),-38.537px_77.075px_34.684px_0_rgba(0,0,0,0.01),-21.677px_43.355px_29.385px_0_rgba(0,0,0,0.05),-9.634px_19.269px_21.677px_0_rgba(0,0,0,0.09),-2.409px_4.817px_12.043px_0_rgba(0,0,0,0.10)] image-dynamic-4 z-2 absolute top-[22.8639rem] left-[55.9025rem] w-[14.9538rem] h-[12.6341rem] rotate-[11.21deg] p-[0.35rem] overflow-hidden bg-white shadow-[-109.563px_220.003px_68.367px_0_rgba(0,0,0,0),-70.12px_140.241px_63.108px_0_rgba(0,0,0,0.01),-39.443px_78.885px_53.467px_0_rgba(0,0,0,0.05),-17.53px_35.06px_39.443px_0_rgba(0,0,0,0.09),-4.383px_8.765px_21.913px_0_rgba(0,0,0,0.1)]'>
           <Image
             src='/uu-dai/card.webp'
             alt='Image dynamic 4'
@@ -327,11 +330,11 @@ export default function TheExplorers() {
           alt='Stamp 1'
           width={431}
           height={411}
-          className='xsm:top-[26.63rem] xsm:left-[0.56rem] xsm:w-[3.95738rem] stamp-1 z-3 absolute top-[15.9298rem] left-[52rem] w-[7.20056rem] h-auto '
+          className='xsm:top-[26.63rem] xsm:left-[0.56rem] xsm:w-[4.95738rem] stamp-1 z-3 absolute top-[14.5rem] left-[51rem] w-[9rem] h-auto '
         />
         {/* content */}
-        <div className='xsm:top-[11.38rem] xsm:left-1/2 xsm:-translate-x-1/2 xsm:w-[19.5rem] xsm:gap-[2.06rem] content absolute top-[5.4077rem] left-[16.9103rem] flex w-[32.0625rem] flex-col justify-center gap-[1.4375rem]'>
-          <p className='xsm:text-[0.875rem] xsm:no-underline xsm:before:content-none text-white text-[1.125rem] font-montserrat font-medium leading-[200%] tracking-[-2%] whitespace-pre-line underline decoration-[0.0625rem] decoration-[rgba(165,165,165,0.50)] underline-offset-[0.5rem] decoration-dashed decoration before:content-[""] before:pl-[3.875rem]'>
+        <div className='xsm:top-[11.38rem] xsm:left-[1rem] xsm:right-[1rem] xsm:w-auto xsm:gap-[2.06rem] content absolute top-[5.4077rem] left-[16.9103rem] flex w-[32.0625rem] flex-col justify-center gap-[1.4375rem]'>
+          <p className='xsm:text-[0.875rem] xsm:no-underline xsm:before:content-none xsm:leading-[1.75rem] xsm:tracking-[-0.0175rem] text-white text-[1.125rem] font-montserrat font-medium leading-[200%] tracking-[-2%] whitespace-pre-line underline decoration-[0.0625rem] decoration-[rgba(165,165,165,0.50)] underline-offset-[0.5rem] decoration-dashed decoration before:content-[""] before:pl-[3.875rem]'>
             {TEXTAREA}
           </p>
           <div className='xsm:gap-[1.01075rem] flex items-center gap-[1.1035rem]'>
@@ -353,20 +356,20 @@ export default function TheExplorers() {
           </div>
         </div>
         {/* title */}
-        <div className='xsm:top-0 xsm:left-[1.18rem] xsm:w-[14.11981rem] xsm:h-[10rem] title absolute top-[-7.1431rem] left-[4.3235rem] w-[20.50531rem] h-[14.52263rem]'>
+        <div className='xsm:top-0 xsm:left-[0.97rem] xsm:w-[14.11981rem] xsm:h-[10rem] title absolute top-[-7.1431rem] left-[4.3235rem] w-[20.50531rem] h-[14.52263rem]'>
           <ICBgTitle className='xsm:top-[1.231rem] xsm:left-[0.2095rem] xsm:w-[14.11981rem] xsm:h-[8.71663rem] absolute top-[1.864rem] left-0 w-[20.50531rem] h-[12.65856rem]' />
-          <div className='xsm:top-[1.0206rem] xsm:left-[2.2751rem] absolute top-[1.15rem] left-[3.3042rem] rotate-[-3.64deg]'>
+          <div className='xsm:top-[1.206rem] xsm:left-[2.2751rem] absolute top-[1.15rem] left-[3.3042rem] rotate-[-3.64deg]'>
             {/* stroke */}
-            <h2 className='xsm:text-[1.5rem] xsm:leading-[100%] xsm:tracking-[0%] xsm:[-webkit-text-stroke:2.07px_#FDF6EC] absolute text-[#F56E0A] font-motherland text-[2.25rem] [-webkit-text-stroke:3px_#FDF6EC]'>
+            <h2 className='xsm:text-[1.5rem] xsm:[-webkit-text-stroke:2.07px_#FDF6EC] absolute text-[#F56E0A] font-motherland text-[2.25rem] leading-[100%] tracking-[0%] [-webkit-text-stroke:3px_#FDF6EC]'>
               The explorers
             </h2>
 
             {/* fill */}
-            <h2 className='xsm:text-[1.5rem] xsm:leading-[100%] xsm:tracking-[0%] relative text-[#F56E0A] font-motherland text-[2.25rem]'>
+            <h2 className='xsm:text-[1.5rem] relative text-[#F56E0A] font-motherland text-[2.25rem] leading-[100%] tracking-[0%]'>
               The explorers
             </h2>
           </div>
-          <h2 className='xsm:text-[2.25rem] xsm:leading-[120%] xsm:top-[3rem] xsm:left-[1.77rem] absolute top-[3.9rem] left-[3.6891rem] rotate-[-3.64deg] text-white font-phu-du text-[3rem] font-medium leading-[100%] tracking-[0%]'>
+          <h2 className='xsm:text-[2.25rem] xsm:leading-[120%] xsm:top-[3.1rem] xsm:left-[1.77rem] absolute top-[3.9rem] left-[3.6891rem] rotate-[-3.64deg] text-white font-phu-du text-[3rem] font-medium leading-[100%] tracking-[0%]'>
             SHARE THEIR JOURNEYS!
           </h2>
         </div>
@@ -377,7 +380,14 @@ export default function TheExplorers() {
         alt='Stamp 1'
         width={525}
         height={525}
-        className='xsm:top-[5.63rem] xsm:left-[17.19rem] xsm:w-[4.4729rem] stamp-2 z-3 absolute top-[13.32rem] left-[8.0356rem] w-[7.741rem] h-auto '
+        className='xsm:hidden stamp-2 z-3 absolute top-[12.9rem] left-[8.0356rem] w-[10rem] h-auto '
+      />
+      <Image
+        src='/home/stamp-2-mb.webp'
+        alt='Stamp 1'
+        width={311}
+        height={313}
+        className='sm:hidden stamp-2 z-3 absolute top-[5.63063rem] right-[1.785rem] w-[3.47288rem] h-auto '
       />
     </div>
   )
