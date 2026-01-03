@@ -1,5 +1,5 @@
-import ENV from '@/config-global.env'
-import ENDPOINTS from '@/constants/endpoints'
+import ENDPOINTS from '@/configs/endpoints'
+import ENV from '@/configs/env'
 import fetchData from '@/fetches/fetchData'
 import parseRankMathHead from '@/utils/parseRankMathHead'
 
