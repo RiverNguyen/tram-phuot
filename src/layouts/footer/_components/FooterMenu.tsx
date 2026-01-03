@@ -1,15 +1,11 @@
 import { Link } from '@/i18n/navigation'
+import { IMenuFooter } from '@/interface/site-setting.interface'
 import { cn } from '@/lib/utils'
-
-interface FooterMenuItem {
-  label: string
-  link: string
-}
 
 interface FooterMenuProps {
   containerClassName?: string
   title: string
-  menus?: FooterMenuItem[]
+  menus?: IMenuFooter[]
   content?: React.ReactNode
 }
 
@@ -24,10 +20,11 @@ export default function FooterMenu({ title, menus, content, containerClassName }
           {menus.map((menu, i) => (
             <li key={i}>
               <Link
-                href={menu.link}
+                href={menu?.navigations?.url}
+                target={menu?.navigations?.target}
                 className='font-montserrat text-[0.875rem] font-medium leading-[1.3125rem] -tracking-[0.03125rem] text-white/80 sm:hover:text-white transition duration-300 xsm:text-white xsm:leading-[1.4rem] xsm:font-normal'
               >
-                {menu.label}
+                {menu?.navigations?.title}
               </Link>
             </li>
           ))}

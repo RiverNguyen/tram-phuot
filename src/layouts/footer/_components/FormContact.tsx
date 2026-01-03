@@ -16,6 +16,7 @@ import FloatingLabel from './FloatingLabel'
 import BrandButton from '@/components/shared/brand-button'
 
 interface FormContactProps {
+  buttonSubmitText?: string
   containerClassName?: string
 }
 
@@ -28,7 +29,10 @@ const formSchema = z.object({
 
 type IContact = z.infer<typeof formSchema>
 
-export default function FormContact({ containerClassName }: FormContactProps) {
+export default function FormContact({
+  containerClassName,
+  buttonSubmitText = 'VIETNAM TRAVEL GUIDE BOOK',
+}: FormContactProps) {
   const form = useForm<IContact>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -93,7 +97,7 @@ export default function FormContact({ containerClassName }: FormContactProps) {
           variant='orangeGradient'
           classNameButtonContainer='disabled:opacity-50 xsm:w-full'
         >
-          {form.formState.isSubmitting ? 'Submitting' : 'VIETNAM TRAVEL GUIDE BOOK'}
+          {form.formState.isSubmitting ? 'Submitting' : buttonSubmitText}
         </BrandButton>
       </form>
     </Form>
