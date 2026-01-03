@@ -116,7 +116,7 @@ export default function Footer() {
   const { isLoading, isMobile } = useIsMobile()
 
   return (
-    <footer className='relative h-[85.8125rem] xsm:h-auto w-full mask-[url("/footer/footer_mask.webp")] mask-size-[100.07813rem_92.876rem] mask-alpha mask-no-repeat xsm:mask-[url("/footer/footer_mask_mobile.png")] xsm:mask-cover xsm:mask-[0rem_-2.5rem] overflow-hidden'>
+    <footer className='relative h-[85.8125rem] xsm:h-auto w-full mask-[url("/footer/footer_mask.webp")] mask-size-[100.07813rem_92.876rem] mask-alpha mask-no-repeat xsm:mask-[url("/footer/footer_mask_mobile.webp")] xsm:mask-cover xsm:mask-[0rem_-2.5rem] overflow-hidden'>
       {!isLoading &&
         (isMobile ? (
           <Image
