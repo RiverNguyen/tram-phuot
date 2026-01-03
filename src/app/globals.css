@@ -212,6 +212,21 @@ input[type='number'] {
   mask-composite: exclude;
 }
 
+/* Banner Pagination Styles */
+.banner-pagination-bullet {
+  width: 0.41rem;
+  height: 0.41rem;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4.17rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.banner-pagination-bullet-active {
+  background: rgba(255, 255, 255, 1);
+  width: 2.95rem;
+}
+
 @utility bg-text-title-h2 {
   background: linear-gradient(230deg, #03328c 5.76%, #00804d 100.15%);
 }

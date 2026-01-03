@@ -1,15 +1,18 @@
-import { useTranslations } from 'next-intl'
+import BannerHomePage from '@/modules/home/Banner'
+import homeService from '@/services/home'
 
 export const dynamicParams = false
+
 export function generateStaticParams() {
   return [{ locale: 'vi' }, { locale: 'en' }]
 }
 
-export default function page() {
-  const t = useTranslations('HomePage')
+export default async function page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const dataHome = await homeService.getHome(locale)
   return (
-    <div className=''>
-      <h1 className='scroll-m-2'>{t('title')}</h1>
-    </div>
+    <>
+      <BannerHomePage data={dataHome?.acf} />
+    </>
   )
 }
