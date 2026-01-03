@@ -31,3 +31,19 @@
     "language": "Language:"
   }
 }
+    "title": "Hello world!"
+  },
+  "DetailsTourPage": {
+    "metaTourDuration": "Tour duration:",
+    "metaPickupAndDropoff": "Pick up & Drop off:",
+    "metaTransport": "Transport:",
+    "metaAccommodation": "Accommodation:",
+    "breadcrumbHome": "Home",
+    "breadcrumbTourList": "Tour List",
+    "sectionOverviewTitle": "Overview",
+    "sectionOverviewIncludedTitle": "Included",
+    "sectionOverviewExcludedTitle": "Excluded",
+    "textShowGallery": "Show Gallery",
+    "textPerson": "Person"
+  }
+}

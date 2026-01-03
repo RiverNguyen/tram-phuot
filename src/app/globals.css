@@ -48,6 +48,8 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
   --color-orange: #f56e0a;
+  --color-body: rgba(46, 46, 46, 1);
+  --color-body-t1: #2e2e2e;
 }
 
 html {
@@ -223,4 +225,19 @@ input[type='number'] {
 .banner-pagination-bullet-active {
   background: rgba(255, 255, 255, 1);
   width: 2.95rem;
+}
+
+@utility bg-text-title-h2 {
+  background: linear-gradient(230deg, #03328c 5.76%, #00804d 100.15%);
+}
+@utility section-box {
+  background: #fff;
+  border: 1px solid #ededed;
+  box-shadow: 2px 4px 16px 0 rgba(0, 0, 0, 0.03);
+}
+@utility section-title-h2 {
+  background: linear-gradient(230deg, #03328c 5.76%, #00804d 100.15%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
