@@ -20,7 +20,7 @@ export default async function layout({
 
   return (
     <NextIntlClientProvider>
-      {/*<Header data={dataSiteSettings.data.header as IHeader} />*/}
+      <Header data={dataSiteSettings.data.header as IHeader} />
       {children}
       <Footer />
     </NextIntlClientProvider>
