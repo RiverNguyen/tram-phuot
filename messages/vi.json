@@ -1,6 +1,18 @@
 {
   "HomePage": {
     "title": "Xin chào!"
+  },
+  "DetailsTourPage": {
+    "metaTourDuration": "Thời gian tour:",
+    "metaPickupAndDropoff": "Điểm đón & trả:",
+    "metaTransport": "Phương tiện:",
+    "metaAccommodation": "Khách sạn:",
+    "breadcrumbHome": "Trang chủ",
+    "breadcrumbTourList": "Danh sách tour",
+    "sectionOverviewTitle": "Tổng quan",
+    "sectionOverviewIncludedTitle": "Bao gồm",
+    "sectionOverviewExcludedTitle": "Không bao gồm",
+    "textShowGallery": "Xem gallery",
+    "textPerson": "Người"
   }
 }
-
