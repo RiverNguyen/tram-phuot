@@ -24,14 +24,12 @@
         "10": "November",
         "11": "December"
       },
-      "searchForTour": "Search for tour"
+      "searchForTour": "Search for tour",
+      "apply": "Apply"
     }
   },
   "Header": {
     "language": "Language:"
-  }
-}
-    "title": "Hello world!"
   },
   "DetailsTourPage": {
     "metaTourDuration": "Tour duration:",

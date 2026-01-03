@@ -93,6 +93,14 @@ const BannerHomePage = ({ data }: { data: IHomePage }) => {
           stations={stations}
           selectedStation={selectedStation}
           onStationChange={setSelectedStation}
+          adults={adults}
+          children={children}
+          onAdultsChange={setAdults}
+          onChildrenChange={setChildren}
+          checkInDate={checkInDate}
+          checkOutDate={checkOutDate}
+          onCheckInChange={handleCheckInChange}
+          onCheckOutChange={handleCheckOutChange}
         />
       </div>
     </section>
