@@ -182,8 +182,8 @@ export default function Footer({ data }: { data: IFooter }) {
                         {data?.footer_content?.social_media.map((social, i) => (
                           <Link
                             key={i}
-                            href={social?.link}
-                            target={'_blank'}
+                            href={social?.link?.url}
+                            target={social?.link?.target}
                           >
                             <Image
                               src={social?.image?.url}

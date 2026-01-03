@@ -20,7 +20,10 @@ export default async function layout({
 
   return (
     <NextIntlClientProvider>
-      <Header data={dataSiteSettings.data.header} />
+      <Header
+        data={dataSiteSettings?.data?.header}
+        socialMedia={dataSiteSettings.data.footer?.footer_content?.social_media}
+      />
       {children}
       <Footer data={dataSiteSettings?.data?.footer} />
     </NextIntlClientProvider>

@@ -10,9 +10,16 @@ interface DrawerProviderProps {
   className?: string
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
+  showDrawerDrag?: boolean
 }
 
-const DrawerProvider: FC<DrawerProviderProps> = ({ children, className, open, setOpen }) => {
+const DrawerProvider: FC<DrawerProviderProps> = ({
+  children,
+  className,
+  open,
+  setOpen,
+  showDrawerDrag = true,
+}) => {
   return (
     <Drawer
       onOpenChange={(open) => setOpen(open)}
@@ -20,10 +27,8 @@ const DrawerProvider: FC<DrawerProviderProps> = ({ children, className, open, se
     >
       <DrawerContent
         suppressHydrationWarning
-        className={cn(
-          'min-h-[16.7rem] w-full rounded-[1.25rem_1.25rem_0rem_0rem] bg-white',
-          className,
-        )}
+        className={cn('w-full rounded-[1rem_1rem_0rem_0rem] bg-white', className)}
+        showDrawerDrag={showDrawerDrag}
       >
         {/* Giữ lại để tránh báo error */}
         <DrawerHeader className='hidden'>

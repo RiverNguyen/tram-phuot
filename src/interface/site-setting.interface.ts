@@ -27,9 +27,9 @@ export interface IMenuFooter {
   navigations: ILink
 }
 
-export interface ISocialFooter {
+export interface ISocialMedia {
   image: IMedia
-  link: string
+  link: ILink
 }
 
 export interface IFooter {
@@ -58,6 +58,6 @@ export interface IFooter {
     }
     hotline: string
     email: string
-    social_media: ISocialFooter[]
+    social_media: ISocialMedia[]
   }
 }

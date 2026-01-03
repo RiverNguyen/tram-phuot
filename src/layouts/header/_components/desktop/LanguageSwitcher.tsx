@@ -41,37 +41,35 @@ const LanguageSwitcher = () => {
             {locales.map((loc) => {
               const isActive = loc === currentLocale
               return (
-                <NavigationMenuItem
+                <NavigationMenuLink
                   key={loc}
-                  className='list-none'
+                  asChild
                 >
-                  <NavigationMenuLink asChild>
-                    <Link
-                      href={`${pathname}`}
-                      locale={loc}
+                  <Link
+                    href={`${pathname}`}
+                    locale={loc}
+                    className={cn(
+                      'flex-y-center space-x-2 rounded-md px-2 py-1.5 transition-colors',
+                      isActive ? 'bg-black/10 font-semibold' : 'hover:bg-black/5',
+                    )}
+                  >
+                    <Image
+                      src={`/header/${loc}.svg`}
+                      alt={loc}
+                      width={24}
+                      height={24}
+                      className='size-[1.5rem] object-cover rounded-full'
+                    />
+                    <p
                       className={cn(
-                        'flex-y-center space-x-2 rounded-md px-2 py-1.5 transition-colors',
-                        isActive ? 'bg-black/10 font-semibold' : 'hover:bg-black/5',
+                        'leading-[1.6] tracking-[0.04rem] font-normal',
+                        isActive ? 'text-[#2e2e2e]' : 'text-[#2e2e2e]/80',
                       )}
                     >
-                      <Image
-                        src={`/header/${loc}.svg`}
-                        alt={loc}
-                        width={24}
-                        height={24}
-                        className='size-[1.5rem] object-cover rounded-full'
-                      />
-                      <p
-                        className={cn(
-                          'leading-[1.6] tracking-[0.04rem] font-normal',
-                          isActive ? 'text-[#2e2e2e]' : 'text-[#2e2e2e]/80',
-                        )}
-                      >
-                        {loc.toUpperCase()}
-                      </p>
-                    </Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
+                      {loc.toUpperCase()}
+                    </p>
+                  </Link>
+                </NavigationMenuLink>
               )
             })}
           </NavigationMenuContent>

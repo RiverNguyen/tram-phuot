@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: '**' },
       { protocol: 'http', hostname: '**' },
     ],
+    qualities: [100, 90, 80, 70, 60, 50, 40, 30, 20, 10],
   },
   reactStrictMode: true,
   poweredByHeader: false,

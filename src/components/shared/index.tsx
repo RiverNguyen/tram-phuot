@@ -1,0 +1,5 @@
+export { default as PopupGallery } from '@/components/shared/PopupGallery'
+export { default as Pagination } from '@/components/shared/Pagination'
+export { default as BrandButton } from '@/components/shared/BrandButton'
+export { default as Breadcrumb } from '@/components/shared/Breadcrumb'
+export { default as NavigateButton } from '@/components/shared/NavigateButton'

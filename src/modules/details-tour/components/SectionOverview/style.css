@@ -1,0 +1,38 @@
+.overview-service ol {
+  list-style: decimal;
+}
+.overview-service li {
+  position: relative;
+  padding-left: 1.75rem;
+}
+.overview-service li:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+.overview-service ul li::before {
+  content: '';
+  width: 1.25rem;
+  height: 1.25rem;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0.125rem;
+}
+
+.overview-service.overview-service--included ul li::before {
+  background-image: url('/details-tour/icon-included.svg');
+}
+.overview-service.overview-service--excluded ul li::before {
+  background-image: url('/details-tour/icon-excluded.svg');
+}
+
+@media screen and (max-width: 639.98px) {
+  .overview-service ul li::before {
+    top: 0;
+  }
+  .overview-service li:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+}

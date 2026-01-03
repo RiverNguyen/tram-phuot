@@ -6,14 +6,16 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from '@/components/ui/form'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import FloatingLabel from './FloatingLabel'
-import BrandButton from '@/components/shared/brand-button'
+import CF7Request from '@/fetches/cf7Request'
+import { BrandButton } from '@/components/shared'
+import { useParams } from 'next/navigation'
+import { toast } from 'sonner'
 
 interface FormContactProps {
   buttonSubmitText?: string
@@ -33,6 +35,8 @@ export default function FormContact({
   containerClassName,
   buttonSubmitText = 'VIETNAM TRAVEL GUIDE BOOK',
 }: FormContactProps) {
+  const { locale } = useParams()
+
   const form = useForm<IContact>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,10 +45,18 @@ export default function FormContact({
     },
   })
 
-  function onSubmit(values: IContact) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  async function onSubmit(values: IContact) {
+    try {
+      const cf7Request = new CF7Request(values)
+
+      const res = await cf7Request.send({
+        id: locale === 'en' ? '399' : '400',
+        unitTag: '123',
+      })
+      toast.success(res.message)
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Someting went wrong')
+    }
   }
 
   return (
@@ -95,7 +107,7 @@ export default function FormContact({
           type='submit'
           disabled={form.formState.isSubmitting}
           variant='orangeGradient'
-          classNameButtonContainer='disabled:opacity-50 xsm:w-full'
+          classNameButtonContainer='disabled:opacity-50 disabled:cursor-not-allowed xsm:w-full'
         >
           {form.formState.isSubmitting ? 'Submitting' : buttonSubmitText}
         </BrandButton>
