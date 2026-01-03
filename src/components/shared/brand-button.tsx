@@ -4,6 +4,8 @@ import React from 'react'
 type BrandButtonVariant = 'greenGradient' | 'orangeGradient' | 'blueGradient' | 'transparent'
 
 interface BrandButtonProps {
+  type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean
   showButtonTexture?: boolean
   variant?: BrandButtonVariant
   classNameButtonContainer?: string
@@ -12,6 +14,8 @@ interface BrandButtonProps {
 }
 
 export default function BrandButton({
+  type = 'button',
+  disabled,
   showButtonTexture = true,
   variant = 'greenGradient',
   classNameButtonContainer,
@@ -27,6 +31,8 @@ export default function BrandButton({
 
   return (
     <button
+      type={type}
+      disabled={disabled}
       className={cn(
         'group flex-center font-montserrat xsm:h-10.5 relative h-12 w-auto cursor-pointer overflow-hidden rounded-[1.25rem_0.125rem] bg-transparent px-7',
         classNameButtonVariant[variant],
