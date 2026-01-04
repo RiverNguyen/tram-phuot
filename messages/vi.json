@@ -29,9 +29,16 @@
   },
   "Header": {
     "language": "Ngôn ngữ:"
-  }
-}
-    "title": "Xin chào!"
+  },
+  "Footer": {
+    "yourMessage": "Tin nhắn của bạn",
+    "formDesc": "Chúng tôi đảm bảo rằng mọi thông tin của bạn đều được bảo mật",
+    "buttonSubmit": "Đang gửi",
+    "stationStop": "Điểm dừng",
+    "toursAndExperiences": "Tour và trải nghiệm",
+    "representativeOffice": "Văn phòng đại diện",
+    "socialMedia": "Mạng xã hội",
+    "copyright": "Thiết kế bởi OKHUB AGENCY ©2025"
   },
   "DetailsTourPage": {
     "metaTourDuration": "Thời gian tour:",

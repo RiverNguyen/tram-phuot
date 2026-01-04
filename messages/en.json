@@ -29,9 +29,16 @@
   },
   "Header": {
     "language": "Language:"
-  }
-}
-    "title": "Hello world!"
+  },
+  "Footer": {
+    "yourMessage": "Your Message",
+    "formDesc": "We ensure that all your information is kept confidential",
+    "buttonSubmit": "Submitting",
+    "stationStop": "Station Stop",
+    "toursAndExperiences": "Tours and experiences",
+    "representativeOffice": "Representative Office",
+    "socialMedia": "Social Media",
+    "copyright": "Designed by OKHUB AGENCY ©2025"
   },
   "DetailsTourPage": {
     "metaTourDuration": "Tour duration:",

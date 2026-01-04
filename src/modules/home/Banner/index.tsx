@@ -59,7 +59,7 @@ const BannerHomePage = ({ data }: { data: IHomePage }) => {
   }
 
   return (
-    <section>
+    <section className='relative'>
       <h1 className='sr-only'>Trạm Phượt</h1>
 
       <ProgressiveBlur

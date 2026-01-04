@@ -7,41 +7,54 @@ import { ChevronDown } from 'lucide-react'
 import useIsMobile from '@/hooks/use-is-mobile'
 import VectorDecoration from './_components/VectorDecoration'
 import { IFooter } from '@/interface/site-setting.interface'
+import { useTranslations } from 'next-intl'
 
 export default function Footer({ data }: { data: IFooter }) {
   const { isLoading, isMobile } = useIsMobile()
+  const translateFooter = useTranslations('Footer')
 
   return (
-    <footer className='relative h-[85.8125rem] xsm:h-auto w-full mask-[url("/footer/footer_mask.webp")] mask-size-[100.07813rem_92.876rem] mask-alpha mask-no-repeat xsm:mask-[url("/footer/footer_mask_mobile.webp")] xsm:mask-cover xsm:mask-[0rem_-2.5rem] overflow-hidden'>
-      {!isLoading &&
-        (isMobile ? (
-          <Image
-            src={data?.form_footer?.background?.mobile?.url || ''}
-            alt={data?.form_footer?.background?.mobile?.alt}
-            width={data?.form_footer?.background?.mobile?.width}
-            height={data?.form_footer?.background?.mobile?.height}
-            className='absolute top-0 left-0 right-0 h-[31rem] w-full object-cover'
-          />
-        ) : (
-          <Image
-            src={data?.form_footer?.background?.desktop?.url || ''}
-            alt={data?.form_footer?.background?.desktop?.alt}
-            width={data?.form_footer?.background?.desktop?.width}
-            height={data?.form_footer?.background?.desktop?.height}
-            className='absolute -top-[3.5rem] left-0 h-[92.36544rem] w-[100.12506rem] object-contain'
-          />
-        ))}
+    <footer className='relative bg-[#FDF4ED] h-[85.8125rem] xsm:h-auto overflow-hidden'>
+      {/* Background + mask */}
+      <div
+        className="
+          absolute inset-0
+          sm:mask-[url('/footer/footer_mask.webp')]
+          sm:mask-size-[100.07813rem_92.876rem]
+          xsm:mask-[url('/footer/footer_mask_mobile.webp')]
+          xsm:mask-size-[23.4375rem_32rem]
+          mask-no-repeat mask-alpha
+        "
+      >
+        {!isLoading &&
+          (isMobile ? (
+            <Image
+              src={data?.form_footer?.background?.mobile?.url || ''}
+              alt={data?.form_footer?.background?.mobile?.alt}
+              width={data?.form_footer?.background?.mobile?.width}
+              height={data?.form_footer?.background?.mobile?.height}
+              className='absolute -top-[0.63rem] left-0 right-0 h-[32rem] w-full object-cover'
+            />
+          ) : (
+            <Image
+              src={data?.form_footer?.background?.desktop?.url || ''}
+              alt={data?.form_footer?.background?.desktop?.alt}
+              width={data?.form_footer?.background?.desktop?.width}
+              height={data?.form_footer?.background?.desktop?.height}
+              className='absolute -top-[3.5rem] left-0 h-[92.36544rem] w-[100.12506rem] object-contain'
+            />
+          ))}
+        {/* Overlay */}
+        <div className='absolute top-0 left-0 right-0 bg-black/28 h-[83.01219rem] xsm:h-[29.875rem] w-full z-1'></div>
 
-      {/* Overlay */}
-      <div className='absolute top-0 left-0 right-0 bg-black/28 h-[83.01219rem] xsm:h-[29.875rem] w-full z-1'></div>
+        {!isLoading && <VectorDecoration isMobile={isMobile} />}
+      </div>
 
       {/* Background Overlay Mobile */}
       <div className='absolute inset-0 bg-[linear-gradient(180deg,rgba(1,86,63,0.00)_20.65%,rgba(1,68,57,0.25)_22.46%,rgba(2,33,45,0.79)_25.59%,#021429_28.65%,#021028_33.86%,#020E27_38.69%)] sm:hidden z-1'></div>
 
-      {!isLoading && <VectorDecoration isMobile={isMobile} />}
-
       {/* Top Content */}
-      <div className='absolute sm:top-[12.92rem] sm:left-0 sm:right-0 w-full mx-auto max-w-[89.5rem] xsm:pt-[3.25rem] xsm:relative z-3'>
+      <div className='absolute sm:top-[12.92rem] sm:left-0 sm:right-0 w-full mx-auto max-w-[89.5rem] xsm:max-w-full xsm:pt-[3.25rem] xsm:relative z-3'>
         <div className='flex justify-between xsm:flex-col xsm:justify-start'>
           {/* Left */}
           <div>
@@ -92,7 +105,7 @@ export default function Footer({ data }: { data: IFooter }) {
       </div>
 
       {/* Bottom Content */}
-      <div className='absolute sm:bottom-0 sm:left-0 sm:right-0 h-[42.11813rem] overflow-hidden xsm:h-auto xsm:relative z-4'>
+      <div className='absolute sm:bottom-0 sm:left-0 sm:right-0 h-[42.125rem] overflow-hidden xsm:h-auto xsm:relative z-4'>
         <div className='absolute top-0 left-0 right-0 h-[42.4375rem] w-full bg-[linear-gradient(180deg,rgba(1,86,63,0.00)_0%,rgba(1,68,57,0.25)_10.05%,rgba(2,33,45,0.79)_27.39%,#021429_44.32%,#021028_73.23%,#020E27_100%)] pointer-events-none select-none xsm:hidden'></div>
 
         <div className='absolute -bottom-[1.15rem] left-0 right-0 h-[43.25rem] bg-[linear-gradient(180deg,rgba(217,217,217,0.00)_0%,#A2A2A2_28.34%,#737373_100%)] mask-[url("/footer/footer_bottom_deco.webp")] mask-no-repeat mask-cover mask-alpha xsm:hidden z-1'></div>
@@ -126,19 +139,19 @@ export default function Footer({ data }: { data: IFooter }) {
                     menus={data?.footer_content?.menu}
                   />
                   <FooterMenu
-                    title='Station stop'
+                    title={`${translateFooter('stationStop')}:`}
                     menus={data?.footer_content?.station_stop}
                     containerClassName='xsm:w-[13.375rem]'
                   />
                   <FooterMenu
-                    title='Tours and experiences'
+                    title={`${translateFooter('toursAndExperiences')}:`}
                     menus={data?.footer_content?.tours}
                   />
                 </div>
 
                 <div className='shrink-0 grid grid-cols-3 w-[37.11438rem] h-fit xsm:w-full xsm:grid-cols-1 xsm:border-t xsm:border-dashed xsm:border-t-white/20 xsm:pt-[1.25rem] xsm:gap-y-[1.25rem]'>
                   <FooterMenu
-                    title='Representative Office'
+                    title={`${translateFooter('representativeOffice')}:`}
                     containerClassName='col-span-3 xsm:col-span-1 border-b border-dashed border-b-white/20 pb-[1.86rem] xsm:pb-[1.25rem]'
                     content={
                       <Link
@@ -175,7 +188,7 @@ export default function Footer({ data }: { data: IFooter }) {
                     }
                   />
                   <FooterMenu
-                    title='Social Media:'
+                    title={`${translateFooter('socialMedia')}:`}
                     containerClassName='sm:pt-[1.92rem]'
                     content={
                       <div className='flex items-center space-x-2'>
@@ -201,7 +214,7 @@ export default function Footer({ data }: { data: IFooter }) {
               </div>
               <div className='flex items-center justify-between pt-[1.86575rem] pb-[3.24675rem] xsm:pt-[1.25rem] xsm:pb-[2rem]'>
                 <p className='font-phu-du text-[0.875rem] font-medium leading-[1.3125rem] text-white/51 xsm:text-[0.75rem] xsm:text-white/80 xsm:tracking-[0.0625rem] xsm:leading-[1.125rem] xsm:opacity-60'>
-                  Designed by OKHUB AGENCY ©2025
+                  {translateFooter('copyright')}
                 </p>
                 <button
                   type='button'

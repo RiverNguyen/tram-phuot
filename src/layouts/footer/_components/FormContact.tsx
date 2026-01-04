@@ -16,6 +16,8 @@ import CF7Request from '@/fetches/cf7Request'
 import { BrandButton } from '@/components/shared'
 import { useParams } from 'next/navigation'
 import { toast } from 'sonner'
+import { useTranslations } from 'next-intl'
+import { routing } from '@/i18n/routing'
 
 interface FormContactProps {
   buttonSubmitText?: string
@@ -35,7 +37,11 @@ export default function FormContact({
   containerClassName,
   buttonSubmitText = 'VIETNAM TRAVEL GUIDE BOOK',
 }: FormContactProps) {
-  const { locale } = useParams()
+  const params = useParams()
+
+  const currentLocale = (params?.locale as string) || routing.defaultLocale
+
+  const translateFooter = useTranslations('Footer')
 
   const form = useForm<IContact>({
     resolver: zodResolver(formSchema),
@@ -50,9 +56,10 @@ export default function FormContact({
       const cf7Request = new CF7Request(values)
 
       const res = await cf7Request.send({
-        id: locale === 'en' ? '399' : '400',
+        id: currentLocale === 'en' ? '399' : '400', // 399: en, 400: vi
         unitTag: '123',
       })
+      form.reset()
       toast.success(res.message)
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Someting went wrong')
@@ -90,7 +97,7 @@ export default function FormContact({
             <FormItem className='space-y-2.5 mb-[2.75rem] xsm:space-y-[0.9375rem]'>
               <FormControl>
                 <FloatingLabel
-                  label='Your message'
+                  label={translateFooter('yourMessage')}
                   autoComplete='off'
                   error={fieldState.error?.message}
                   {...field}
@@ -98,7 +105,7 @@ export default function FormContact({
               </FormControl>
               <FormMessage className='font-montserrat' />
               <FormDescription className='font-montserrat text-[0.875rem] leading-[1.05rem] tracking-[0.00875rem] text-white/60 xsm:font-medium xsm:text-[0.75rem] xsm:leading-[1.2rem] xsm:-tracking-[0.0075rem]'>
-                We ensure that all your information is kept confidential
+                {translateFooter('formDesc')}
               </FormDescription>
             </FormItem>
           )}
@@ -107,9 +114,9 @@ export default function FormContact({
           type='submit'
           disabled={form.formState.isSubmitting}
           variant='orangeGradient'
-          classNameButtonContainer='disabled:opacity-50 disabled:cursor-not-allowed xsm:w-full'
+          classNameButtonContainer='w-[17.75rem] disabled:opacity-50 disabled:cursor-not-allowed xsm:w-full'
         >
-          {form.formState.isSubmitting ? 'Submitting' : buttonSubmitText}
+          {form.formState.isSubmitting ? translateFooter('buttonSubmit') : buttonSubmitText}
         </BrandButton>
       </form>
     </Form>
