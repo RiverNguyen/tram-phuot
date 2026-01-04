@@ -1,20 +1,8 @@
-'use client'
-
-import { useState } from 'react'
 import Banner from './sections/Banner'
 import SpecialOffers from './sections/SpecialOffers'
-import OngoingPromotions from './sections/OngoingPromotions'
-import { Pagination } from '@/components/shared'
+import WrapperOngoingPromotions from './sections/WrapperOngoingPromotions'
 
 export default function page() {
-  const [currentPage, setCurrentPage] = useState(1)
-  const totalPages = 10
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-    // TODO: Fetch data for the new page
-  }
-
   return (
     <main className='relative w-full h-full bg-[#FDF4ED]'>
       {/* Banner */}
@@ -26,14 +14,7 @@ export default function page() {
         <SpecialOffers />
 
         {/* ongoing promotion */}
-        <OngoingPromotions />
-
-        {/* pagination */}
-        <Pagination
-          pageCurrent={currentPage}
-          pageCount={totalPages}
-          onPageChange={handlePageChange}
-        />
+        <WrapperOngoingPromotions />
       </div>
     </main>
   )
