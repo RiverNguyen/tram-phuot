@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import ICElipse from '@/components/icon/ICElipse'
 import Link from 'next/link'
 
 export const PROMOTION_CARDS = [
@@ -53,7 +52,7 @@ export default function OngoingPromotions() {
                   <span className='xsm:text-[0.75rem] xsm:leading-[1.2rem] xsm:tracking-[-0.0075rem] text-[#F56E0A] font-montserrat text-[0.875rem] font-semibold leading-[1.4rem] tracking-[-0.00875rem]'>
                     {card.category}
                   </span>
-                  <ICElipse className='size-[0.25rem]' />
+                  <span className='size-[0.25rem] rounded-full bg-[#3B3943]'></span>
                   <span className='xsm:text-[0.75rem] xsm:leading-[1.2rem] xsm:tracking-[-0.0075rem] text-[rgba(46,46,46,0.60)] font-montserrat text-[0.875rem] font-semibold leading-[1.4rem] tracking-[-0.00875rem]'>
                     {card.location}
                   </span>

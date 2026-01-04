@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import { useRef } from 'react'
 import Link from 'next/link'
-import { SectionTitle } from '@/components/shared'
+import { BrandTitle } from '@/components/shared'
 import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { CustomEase } from 'gsap/dist/CustomEase'
@@ -41,7 +41,7 @@ const SOCIALS = [
 
 const TEXTAREA = `At Wanderlust Station community every traveler finds a place to share stories tips and new routes connecting through the love of the open road`
 
-export default function TheExplorers() {
+export default function Journey() {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useGSAP(
@@ -78,8 +78,8 @@ export default function TheExplorers() {
           }
 
           const verticalMoveAnimations = {
-            targets: ['.street', '.image-dynamic-2', '.image-dynamic-4', '.content'],
-            yValues: ['9.4946rem', '7.063rem', '5.9111rem', '5.1226rem'],
+            targets: ['.street', '.image-dynamic-2', '.image-dynamic-4', '.content', '.person'],
+            yValues: ['9.4946rem', '7.063rem', '5.9111rem', '5.1226rem', '5.2504rem'],
           }
 
           // Background animation
@@ -96,9 +96,6 @@ export default function TheExplorers() {
             { y: '0rem' },
             '<',
           )
-
-          // person animation
-          tl.fromTo('.person', { y: '5.2504rem' }, { y: '0rem' }, '<')
 
           // Fade in elements
           tl.fromTo(['.rim-100', '.flower', '.stamp-1'], { opacity: 0 }, { opacity: 1 }, '<')
@@ -240,7 +237,7 @@ export default function TheExplorers() {
           alt='towel left'
           width={2918}
           height={1950}
-          className='xsm:hidden towel-left absolute top-[6.3rem] left-[-1.875rem] w-[45.0625rem] h-auto pointer-events-none' // width ở figma là 83.7493rem
+          className='xsm:hidden towel-left absolute top-[5.2rem] left-[-1.875rem] w-[44.0625rem] h-auto pointer-events-none' // width ở figma là 83.7493rem
         />
         {/* towel right */}
         <Image
@@ -356,12 +353,13 @@ export default function TheExplorers() {
           </div>
         </div>
         {/* title */}
-        <SectionTitle
-          title='The explorers'
-          subtitle='SHARE THEIR JOURNEYS!'
-          rotation={-3.64}
-          classNameIcon='text-[#F56E0A]'
-        />
+        <div className='xsm:left-[1.18rem] xsm:top-0 absolute left-[4.32rem] top-[-7.14rem]'>
+          <BrandTitle
+            title='The explorers'
+            subtitle='SHARE THEIR JOURNEYS!'
+            classNameContainer='title'
+          />
+        </div>
       </div>
       {/* stamp 2 */}
       <Image

@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import ICLocation from '@/components/icon/ICLocation'
-import ICChevronright from '@/components/icon/ICChevronright'
+import ICLocation from '@/components/icons/ICLocation'
+import ICChevronright from '@/components/icons/ICChevronright'
 import Link from 'next/link'
 
 const TOURS = [

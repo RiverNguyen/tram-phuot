@@ -1,4 +1,5 @@
-import { BrandButton, SectionTitle } from '@/components/shared'
+import { BrandButton } from '@/components/shared'
+import BrandTitle from '@/components/shared/BrandTitle'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -16,36 +17,89 @@ export const storiesData = [
     title: '7 Hidden Routes in Vietnam Every Traveler Should Try Once',
     date: 'October 15, 2024',
   },
+  {
+    id: 2,
+    href: '/',
+    tag: '#Corporate Sustainability',
+    image: {
+      src: '/uu-dai/card.webp',
+      alt: 'our stories',
+      width: 1360,
+      height: 813,
+    },
+    title: '7 Hidden Routes in Vietnam Every Traveler Should Try Once',
+    date: 'October 15, 2024',
+  },
+  {
+    id: 3,
+    href: '/',
+    tag: '#Corporate Sustainability',
+    image: {
+      src: '/uu-dai/card.webp',
+      alt: 'our stories',
+      width: 1360,
+      height: 813,
+    },
+    title: '7 Hidden Routes in Vietnam Every Traveler Should Try Once',
+    date: 'October 15, 2024',
+  },
 ]
 
-const repeatStoriesData = Array.from({ length: 3 }, () => storiesData).flat()
+const StoriesCard = ({ story }: { story: (typeof storiesData)[0] }) => {
+  return (
+    <Link
+      href={story?.href}
+      className='xsm:w-[15.6875rem] relative flex w-[28.25rem] flex-col gap-[1.125rem] shrink-0'
+    >
+      <div className='xsm:left-[0.63rem] xsm:top-[0.56rem] xsm:h-[1.3125rem] xsm:px-[0.625rem] xsm:text-[0.625rem] xsm:leading-[1.25rem] xsm:tracking-[-0.0125rem] line-clamp-1 absolute top-[0.57rem] left-[0.63rem] flex h-[2rem] px-[0.88331rem] justify-center items-center rounded-tl-[0.75rem] rounded-br-[0.75rem] bg-[#2BAB7D] text-white font-phu-du text-[0.71763rem] font-medium leading-[1.43525rem] tracking-[-0.01438rem]'>
+        {story?.tag}
+      </div>
+      <Image
+        src={story?.image?.src}
+        alt='our stories'
+        width={story?.image?.width}
+        height={story?.image?.height}
+        className='xsm:h-[10.47088rem] w-auto h-[18.875rem] rounded-[1.25rem]'
+      />
+      <div className='xsm:w-full flex flex-col w-[27.08938rem] gap-[0.875rem]'>
+        <h3 className='xsm:text-[1rem] xsm:leading-[1.3rem] xsm:tracking-normal line-clamp-2 text-[#1F4D37] font-phu-du text-[1.75rem] font-medium leading-[2.0625rem] tracking-[-0.03125rem]'>
+          {story?.title}
+        </h3>
+        <p className='line-clamp-1 text-[#FF7B4A] font-montserrat text-[0.875rem] font-normal font-semibold leading-[1.4rem] tracking-[-0.00875rem]'>
+          {story?.date}
+        </p>
+      </div>
+    </Link>
+  )
+}
 
 export default function OurStories() {
   return (
-    <div className='relative w-full h-full mt-[8.48rem] mb-[4.58rem]'>
-      <div className='xsm:px-[1rem] w-full max-w-[87.5rem] mx-auto h-full flex flex-col gap-[1.64rem]'>
-        <SectionTitle
-          title='Our Stories'
-          subtitle='BLOG STORIES!'
-          classNameIcon='text-[#479064]'
-          className='top-[-9.71rem] left-[3.06rem]'
-          classNameTitle='top-[0.32rem]'
-          classNameSubtitle='left-[4.54rem]'
-        />
+    <div className='xsm:mt-[13.88rem] xsm:mb-[7.5rem] relative w-full h-full mt-[8.48rem] mb-[4.58rem]'>
+      <div className='xsm:gap-[1.5rem] relative w-full max-w-[87.5rem] mx-auto h-full flex flex-col gap-[1.64rem]'>
+        <div className='xsm:left-0 xsm:top-[-10.13rem] absolute left-[-3.19rem] top-[-9.71rem]'>
+          <BrandTitle
+            title='Our stories'
+            subtitle='BLOG STORIES!'
+            variant='green'
+            classNameSubtitle='xsm:top-[2.6275rem] xsm:left-[2.06rem] xsm:w-[7.75rem] left-[4.54rem]'
+          />
+        </div>
 
-        <div className='inline-flex items-center justify-end gap-[0.5625rem]'>
+        {/* tab buttons */}
+        <div className='xsm:mx-auto inline-flex items-center justify-end gap-[0.5625rem]'>
           <button
             type='button'
-            className='flex h-[2.45925rem] px-[1.875rem] justify-center items-center gap-[0.5625rem] rounded-[0.625rem] border border-[#03328C] cursor-pointer'
+            className='xsm:w-[10rem] xsm:bg-[#FCF4ED] xsm:backdrop-blur-[2px] flex h-[2.45925rem] px-[1.875rem] justify-center items-center gap-[0.5625rem] rounded-[0.625rem] border border-[#03328C] cursor-pointer'
           >
-            <ICTravel className='w-[0.94525rem] h-[1.05794rem]' />
-            <span className='font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] uppercase bg-[linear-gradient(44deg,#03328C_-111.22%,#00804D_80.69%)] bg-clip-text text-transparent'>
+            <ICTravel className='xsm:w-[1rem] w-[0.94525rem] h-auto shrink-0' />
+            <span className='xsm:text-[0.75rem] xsm:leading-[0.9rem] whitespace-nowrap font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] uppercase bg-[linear-gradient(44deg,#03328C_-111.22%,#00804D_80.69%)] bg-clip-text text-transparent'>
               Stay points
             </span>
           </button>
           <button
             type='button'
-            className='flex h-[2.45925rem] px-[1.875rem] justify-center items-center gap-[0.5625rem] rounded-[0.625rem] bg-[linear-gradient(44deg,#03328C_-111.22%,#00804D_80.69%)] cursor-pointer'
+            className='xsm:w-[10.4375rem] flex h-[2.45925rem] px-[1.875rem] justify-center items-center gap-[0.5625rem] rounded-[0.625rem] bg-[linear-gradient(44deg,#03328C_-111.22%,#00804D_80.69%)] cursor-pointer'
           >
             <ICGift className='size-[1.05769rem]' />
             <span className='text-[#F9EAD5] font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] uppercase'>
@@ -54,41 +108,25 @@ export default function OurStories() {
           </button>
         </div>
 
-        <div className='xsm:grid-cols-1 w-full grid grid-cols-3 gap-[1.375rem] pb-[3.3125rem]'>
-          {repeatStoriesData?.map((story, index) => (
-            <Link
-              href={story?.href}
+        {/* stories list */}
+        <div className='xsm:flex xsm:overflow-x-auto xsm:px-[1rem] xsm:pb-0 w-full grid grid-cols-3 gap-[1.375rem] pb-[3.3125rem]'>
+          {storiesData?.map((story, index) => (
+            <StoriesCard
               key={index}
-              className='xsm:w-[15.6875rem] relative flex w-[28.25rem] flex-col gap-[1.125rem]'
-            >
-              <div className='xsm:px-[0.84069rem] xsm:py-[0.70056rem] absolute top-0 left-0 inline-flex px-[0.75rem] py-[0.625rem]'>
-                <div className='xsm:h-[1.75144rem] xsm:px-[0.99013rem] xsm:rounded-tl-[0.84069rem] xsm:rounded-br-[0.84069rem] xsm:text-[0.875rem] xsm:leading-[1.75rem] xsm:tracking-[-0.0175rem] flex h-[2rem] px-[0.88331rem] justify-center items-center rounded-tl-[0.75rem] rounded-br-[0.75rem] bg-[#2BAB7D] text-white font-phu-du text-[0.71763rem] font-medium leading-[1.43525rem] tracking-[-0.01438rem]'>
-                  {story?.tag}
-                </div>
-              </div>
-              <Image
-                src={story?.image?.src}
-                alt='our stories'
-                width={story?.image?.width}
-                height={story?.image?.height}
-                className='xsm:h-[10.47088rem] w-auto h-[18.875rem] rounded-[1.25rem]'
-              />
-              <div className='xsm:w-full flex flex-col w-[27.08938rem] gap-[0.875rem]'>
-                <h3 className='xsm:h-[2rem] xsm:text-[1rem] xsm:leading-[1.3rem] xsm:tracking-normal h-[4.3125rem] text-[#1F4D37] font-phu-du text-[1.75rem] font-medium leading-[2.0625rem] tracking-[-0.03125rem]'>
-                  {story?.title}
-                </h3>
-                <p className='text-[#FF7B4A] font-montserrat text-[0.875rem] font-normal font-semibold leading-[1.4rem] tracking-[-0.00875rem]'>
-                  {story?.date}
-                </p>
-              </div>
-            </Link>
+              story={story}
+            />
           ))}
         </div>
 
-        <div className='w-full flex items-center gap-[1.625rem]'>
-          <div className='flex-1 h-[0.0625rem] bg-[#FFC542]' />
-          <BrandButton variant='blueGradient'>Read More</BrandButton>
-          <div className='flex-1 h-[0.0625rem] bg-[#FFC542]' />
+        <div className='xsm:px-[1rem] w-full flex items-center gap-[1.625rem]'>
+          <div className='xsm:hidden flex-1 h-[0.0625rem] bg-[#FFC542]' />
+          <BrandButton
+            variant='blueGradient'
+            classNameButtonContainer='xsm:w-full'
+          >
+            Read More
+          </BrandButton>
+          <div className='xsm:hidden flex-1 h-[0.0625rem] bg-[#FFC542]' />
         </div>
       </div>
     </div>

@@ -1,9 +1,20 @@
+'use client'
+
+import { useState } from 'react'
 import Banner from './sections/Banner'
 import SpecialOffers from './sections/SpecialOffers'
 import OngoingPromotions from './sections/OngoingPromotions'
-import ICElipse from '@/components/icon/ICElipse'
+import { Pagination } from '@/components/shared'
 
 export default function page() {
+  const [currentPage, setCurrentPage] = useState(1)
+  const totalPages = 10
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page)
+    // TODO: Fetch data for the new page
+  }
+
   return (
     <main className='relative w-full h-full bg-[#FDF4ED]'>
       {/* Banner */}
@@ -18,22 +29,11 @@ export default function page() {
         <OngoingPromotions />
 
         {/* pagination */}
-        <div className='flex items-center gap-[0.625rem]'>
-          <div className='flex items-center justify-center size-[2rem] rounded-full bg-[rgba(4,52,36,0.10)] text-[#043424] font-montserrat text-[0.875rem] leading-[1.3125rem] hover:bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] hover:text-white transition-all duration-300 cursor-pointer'>
-            1
-          </div>
-          <div className='flex items-center justify-center size-[2rem] rounded-full bg-[rgba(4,52,36,0.10)] text-[#043424] font-montserrat text-[0.875rem] leading-[1.3125rem] hover:bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] hover:text-white transition-all duration-300 cursor-pointer'>
-            2
-          </div>
-          <div className='flex gap-[0.33331rem]'>
-            <ICElipse className='size-[0.25rem] text-[#043424]' />
-            <ICElipse className='size-[0.25rem] text-[#043424]' />
-            <ICElipse className='size-[0.25rem] text-[#043424]' />
-          </div>
-          <div className='flex items-center justify-center size-[2rem] rounded-full bg-[rgba(4,52,36,0.10)] text-[#043424] font-montserrat text-[0.875rem] leading-[1.3125rem] hover:bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] hover:text-white transition-all duration-300 cursor-pointer'>
-            10
-          </div>
-        </div>
+        <Pagination
+          pageCurrent={currentPage}
+          pageCount={totalPages}
+          onPageChange={handlePageChange}
+        />
       </div>
     </main>
   )

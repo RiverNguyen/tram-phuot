@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import ICCopy from '@/components/icon/ICCopy'
+import ICCopy from '@/components/icons/ICCopy'
 import { cn } from '@/lib/utils'
 
 const SPECIAL_OFFERS = [
