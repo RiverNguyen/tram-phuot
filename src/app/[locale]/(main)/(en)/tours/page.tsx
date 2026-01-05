@@ -1,5 +1,5 @@
-import Banner from './sections/Banner'
-import WrapperTourList from './sections/WrapperTourList'
+import Banner from '@/modules/tours/_components/Banner'
+import WrapperTourList from '@/modules/tours/_components/WrapperTourList'
 
 export default function page() {
   return (

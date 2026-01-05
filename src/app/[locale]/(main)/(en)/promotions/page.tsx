@@ -1,6 +1,6 @@
-import Banner from './sections/Banner'
-import SpecialOffers from './sections/SpecialOffers'
-import WrapperOngoingPromotions from './sections/WrapperOngoingPromotions'
+import Banner from '@/modules/promotions/_components/Banner'
+import SpecialOffers from '@/modules/promotions/_components/SpecialOffers'
+import WrapperOngoingPromotions from '@/modules/promotions/_components/WrapperOngoingPromotions'
 
 export default function page() {
   return (
