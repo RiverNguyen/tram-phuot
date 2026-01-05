@@ -3,11 +3,11 @@
 import { Separator } from '@/components/ui/separator'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
-import { FieldItem } from './FieldItem'
-import { StationDrawer } from './StationDrawer'
-import { GuestsDrawer } from './GuestsDrawer'
-import { DateDrawer } from './DateDrawer'
-import { SearchButton } from './SearchButton'
+import { FieldItem } from '@/modules/home/banner/_components/mobile/FieldItem'
+import { StationDrawer } from '@/modules/home/banner/_components/mobile/StationDrawer'
+import { GuestsDrawer } from '@/modules/home/banner/_components/mobile/GuestsDrawer'
+import { DateDrawer } from '@/modules/home/banner/_components/mobile/DateDrawer'
+import { SearchButton } from '@/modules/home/banner/_components/mobile/SearchButton'
 
 interface Station {
   name: string

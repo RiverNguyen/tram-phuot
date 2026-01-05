@@ -1,5 +1,5 @@
-import BannerHomePage from '@/modules/home/Banner'
-import Overview from '@/modules/home/Overview'
+import BannerHomePage from '@/modules/home/banner'
+import Overview from '@/modules/home/overview'
 import homeService from '@/services/home'
 
 export const dynamicParams = false

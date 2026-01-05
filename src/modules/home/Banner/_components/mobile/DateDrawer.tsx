@@ -2,13 +2,13 @@
 
 import DrawerProvider from '@/components/provider/DrawerProvider'
 import { CalendarCustom } from '@/components/ui/calendar-custom'
-import { useTranslations, useLocale } from 'next-intl'
-import { DrawerHeader } from './DrawerHeader'
-import { ApplyButton } from './ApplyButton'
+import { useLocale } from 'next-intl'
+import { ApplyButton } from '@/modules/home/banner/_components/mobile/ApplyButton'
+import { DrawerHeader } from '@/modules/home/banner/_components/mobile/DrawerHeader'
 
 interface DateDrawerProps {
   open: boolean
-  onOpenChange: (open: boolean) => void
+  onOpenChange: React.Dispatch<React.SetStateAction<boolean>>
   title: string
   selectedDate: Date | undefined
   onDateChange: (date: Date | undefined) => void
@@ -51,5 +51,3 @@ export const DateDrawer = ({
     </DrawerProvider>
   )
 }
-
-

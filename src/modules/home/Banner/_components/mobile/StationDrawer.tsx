@@ -4,8 +4,8 @@ import DrawerProvider from '@/components/provider/DrawerProvider'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItemCustom } from '@/components/ui/radio-group'
 import { useTranslations } from 'next-intl'
-import { DrawerHeader } from './DrawerHeader'
-import { ApplyButton } from './ApplyButton'
+import { DrawerHeader } from '@/modules/home/banner/_components/mobile/DrawerHeader'
+import { ApplyButton } from '@/modules/home/banner/_components/mobile/ApplyButton'
 
 interface Station {
   name: string
@@ -14,7 +14,7 @@ interface Station {
 
 interface StationDrawerProps {
   open: boolean
-  onOpenChange: (open: boolean) => void
+  onOpenChange: React.Dispatch<React.SetStateAction<boolean>>
   stations: Station[]
   selectedStation: string
   onStationChange: (value: string) => void
@@ -68,5 +68,3 @@ export const StationDrawer = ({
     </DrawerProvider>
   )
 }
-
-

@@ -3,10 +3,10 @@
 import { useState } from 'react'
 import { ProgressiveBlur } from '@/components/ui/progressive-blur'
 import { IHomePage } from '@/interface/homepage.interface'
-import { BannerSlider } from '@/modules/home/Banner/_components/BannerSlider'
-import { BannerTitle } from '@/modules/home/Banner/_components/BannerTitle'
-import { BookingForm } from '@/modules/home/Banner/_components/desktop/BookingForm'
-import BookingFormMobile from '@/modules/home/Banner/_components/mobile/BookingFormMobile'
+import { BannerSlider } from '@/modules/home/banner/_components/BannerSlider'
+import { BannerTitle } from '@/modules/home/banner/_components/BannerTitle'
+import { BookingForm } from '@/modules/home/banner/_components/desktop/BookingForm'
+import BookingFormMobile from '@/modules/home/banner/_components/mobile/BookingFormMobile'
 
 const stations = [
   {

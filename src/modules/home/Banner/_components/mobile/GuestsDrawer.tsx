@@ -2,13 +2,13 @@
 
 import DrawerProvider from '@/components/provider/DrawerProvider'
 import { useTranslations } from 'next-intl'
-import { DrawerHeader } from './DrawerHeader'
-import { ApplyButton } from './ApplyButton'
-import { Counter } from './Counter'
+import { DrawerHeader } from '@/modules/home/banner/_components/mobile/DrawerHeader'
+import { ApplyButton } from '@/modules/home/banner/_components/mobile/ApplyButton'
+import { Counter } from '@/modules/home/banner/_components/mobile/Counter'
 
 interface GuestsDrawerProps {
   open: boolean
-  onOpenChange: (open: boolean) => void
+  onOpenChange: React.Dispatch<React.SetStateAction<boolean>>
   adults: number
   children: number
   onAdultsChange: (value: number) => void
@@ -59,5 +59,3 @@ export const GuestsDrawer = ({
     </DrawerProvider>
   )
 }
-
-
