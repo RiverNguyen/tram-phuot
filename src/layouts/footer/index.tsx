@@ -1,21 +1,29 @@
 'use client'
 import Image from 'next/image'
 import FormContact from './_components/FormContact'
-import { Link } from '@/i18n/navigation'
+import { Link, usePathname } from '@/i18n/navigation'
 import FooterMenu from './_components/FooterMenu'
 import { ChevronDown } from 'lucide-react'
 import useIsMobile from '@/hooks/use-is-mobile'
 import VectorDecoration from './_components/VectorDecoration'
 import { IFooter } from '@/interface/site-setting.interface'
 import { useTranslations } from 'next-intl'
+import { cn } from '@/lib/utils'
 
 export default function Footer({ data }: { data: IFooter }) {
   const { isLoading, isMobile } = useIsMobile()
   const translateFooter = useTranslations('Footer')
+  const pathname = usePathname()
 
-  // 85.8125rem
+  const isThankyouPage = pathname === '/thank-you' || pathname === '/cam-on'
+
   return (
-    <footer className='relative bg-[#FDF4ED] h-[85.8125rem] xsm:h-auto overflow-hidden'>
+    <footer
+      className={cn(
+        'relative bg-[#FDF4ED] h-[85.8125rem] xsm:h-auto overflow-hidden z-1',
+        !isLoading && isMobile && isThankyouPage && 'bg-transparent',
+      )}
+    >
       {/* Background + mask */}
       <div
         className="

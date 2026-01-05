@@ -40,6 +40,18 @@
     "socialMedia": "Mạng xã hội",
     "copyright": "Thiết kế bởi OKHUB AGENCY ©2025"
   },
+  "NotFound": {
+    "error": "Lỗi",
+    "title": "Không tìm thấy trang",
+    "message": "Trang bạn đang tìm có thể đã bị xóa, đổi tên hoặc tạm thời không khả dụng",
+    "button": "Quay lại trang chủ"
+  },
+  "ThankYou": {
+    "title": "Chúng tôi đã nhận được yêu cầu báo giá của bạn.",
+    "subtitle": "Cảm ơn bạn đã tin tưởng chúng tôi!",
+    "desc": "Cảm ơn bạn đã tin tưởng chúng tôi, chúng tôi sẽ liên hệ với bạn sớm nhất có thể.",
+    "button": "Tiếp tục khám phá"
+  },
   "DetailsTourPage": {
     "metaTourDuration": "Thời gian tour:",
     "metaPickupAndDropoff": "Điểm đón & trả:",

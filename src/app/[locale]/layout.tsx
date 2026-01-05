@@ -3,7 +3,6 @@ import fetchData from '@/fetches/fetchData'
 import Header from '@/layouts/header'
 import { NextIntlClientProvider } from 'next-intl'
 import { ISiteSetting } from '@/interface/site-setting.interface'
-import Footer from '@/layouts/footer'
 
 export default async function layout({
   children,
@@ -15,7 +14,7 @@ export default async function layout({
   const { locale } = await params
 
   const dataSiteSettings: ISiteSetting = await fetchData({
-    api: `${ENDPOINTS.site_settings}?locale=${locale}`,
+    api: `${ENDPOINTS.site_settings}?locale=${locale}&field=header`,
   })
 
   return (
@@ -25,7 +24,6 @@ export default async function layout({
         socialMedia={dataSiteSettings.data.footer?.footer_content?.social_media}
       />
       {children}
-      <Footer data={dataSiteSettings?.data?.footer} />
     </NextIntlClientProvider>
   )
 }
