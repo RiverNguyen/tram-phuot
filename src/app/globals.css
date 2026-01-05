@@ -212,6 +212,16 @@ input[type='number'] {
   mask-composite: exclude;
 }
 
+.text-stroke {
+  -webkit-text-stroke: 0.375rem #fdf6ec;
+}
+
+@media (max-width: 639px) {
+  .text-stroke {
+    -webkit-text-stroke: 0.2rem #fdf6ec;
+  }
+}
+
 /* Banner Pagination Styles */
 .banner-pagination-bullet {
   width: 0.41rem;

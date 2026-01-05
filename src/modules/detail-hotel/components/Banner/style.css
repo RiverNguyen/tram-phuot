@@ -1,0 +1,10 @@
+.swiper-pagination-bullet-active {
+  --swiper-pagination-color: white;
+}
+
+.swiper-pagination-bullet {
+  --swiper-pagination-bullet-width: 0.375rem;
+  --swiper-pagination-bullet-height: 0.375rem;
+  --swiper-pagination-bullet-inactive-color: white;
+  --swiper-pagination-bullet-inactive-opacity: 0.32;
+}

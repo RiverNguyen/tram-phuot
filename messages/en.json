@@ -24,14 +24,34 @@
         "10": "November",
         "11": "December"
       },
-      "searchForTour": "Search for tour"
+      "searchForTour": "Search for tour",
+      "apply": "Apply"
     }
   },
   "Header": {
     "language": "Language:"
-  }
-}
-    "title": "Hello world!"
+  },
+  "Footer": {
+    "yourMessage": "Your Message",
+    "formDesc": "We ensure that all your information is kept confidential",
+    "buttonSubmit": "Submitting",
+    "stationStop": "Station Stop",
+    "toursAndExperiences": "Tours and experiences",
+    "representativeOffice": "Representative Office",
+    "socialMedia": "Social Media",
+    "copyright": "Designed by OKHUB AGENCY ©2025"
+  },
+  "NotFound": {
+    "error": "Error",
+    "title": "Page not found",
+    "desc": "The page you’re looking for may have been removed, renamed, or is temporarily unavailable",
+    "button": "Back to homepage"
+  },
+  "ThankYou": {
+    "title": "We have received your quote request.",
+    "subtitle": "Thank you for trusting us !",
+    "desc": "Thank you for trusting us, we will contact you as soon as possible.",
+    "button": "Keep exploring"
   },
   "DetailsTourPage": {
     "metaTourDuration": "Tour duration:",

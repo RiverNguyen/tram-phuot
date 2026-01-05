@@ -16,6 +16,9 @@ const ENDPOINTS = {
     en: 'wp/v2/pages/71?_fields=acf&acf_format=standard',
     vi: 'wp/v2/pages/84?_fields=acf&acf_format=standard',
   },
+  promotion: {
+    coupon: 'api/v1/get-all/coupon'
+  },
 }
 
 export default ENDPOINTS

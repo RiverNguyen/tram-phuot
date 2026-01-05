@@ -1,21 +1,28 @@
+import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
 import React from 'react'
 
 type BrandButtonVariant = 'greenGradient' | 'orangeGradient' | 'blueGradient' | 'transparent'
 
 interface BrandButtonProps {
+  type?: 'button' | 'submit' | 'reset'
+  disabled?: boolean
   showButtonTexture?: boolean
   variant?: BrandButtonVariant
   classNameButtonContainer?: string
   classNameButtonText?: string
+  href?: string
   children: React.ReactNode
 }
 
 export default function BrandButton({
+  type = 'button',
+  disabled,
   showButtonTexture = true,
   variant = 'greenGradient',
   classNameButtonContainer,
   classNameButtonText,
+  href,
   children,
 }: BrandButtonProps) {
   const classNameButtonVariant: Record<BrandButtonVariant, string> = {
@@ -25,8 +32,50 @@ export default function BrandButton({
     transparent: 'bg-transparent',
   }
 
+  if (href) {
+    return (
+      <Link
+        href={href}
+        className={cn(
+          'group flex-center font-montserrat xsm:h-10.5 relative h-12 w-auto cursor-pointer overflow-hidden rounded-[1.25rem_0.125rem] bg-transparent px-7',
+          classNameButtonVariant[variant],
+          classNameButtonContainer,
+        )}
+      >
+        <div
+          className={cn(
+            'xsm:text-[0.75rem] relative z-2 text-[0.875rem] leading-none font-semibold text-white uppercase',
+            variant === 'transparent' && 'bg-blue-gradient bg-clip-text text-transparent',
+            classNameButtonText,
+          )}
+        >
+          {children}
+        </div>
+        <div
+          className={cn(
+            'bg-blue-gradient mask-border pointer-events-none absolute top-0 left-0 z-5 hidden size-full rounded-[inherit] p-0.25',
+            variant === 'transparent' && 'block',
+          )}
+        ></div>
+        {variant === 'transparent' ? (
+          <IconArrowTopRightGradient className='absolute top-2 right-2 size-2.5' />
+        ) : (
+          <IconArrowTopRightWhite className='absolute top-2 right-2 size-2.5' />
+        )}
+        {showButtonTexture && (
+          <>
+            <ButtonDecorTexture className='absolute top-0.5 -left-6.5 z-1 h-[4.5325rem] w-18 opacity-6' />
+            <ButtonDecorTexture className='absolute -top-6 -right-6 z-1 h-[4.5325rem] w-18 opacity-12' />
+          </>
+        )}
+      </Link>
+    )
+  }
+
   return (
     <button
+      type={type}
+      disabled={disabled}
       className={cn(
         'group flex-center font-montserrat xsm:h-10.5 relative h-12 w-auto cursor-pointer overflow-hidden rounded-[1.25rem_0.125rem] bg-transparent px-7',
         classNameButtonVariant[variant],

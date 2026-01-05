@@ -1,13 +1,13 @@
 'use client'
 
-import { ICChevron } from '@/components/icons'
-import DrawerProvider from '@/components/provider/DrawerProvider'
-import { Label } from '@/components/ui/label'
-import { RadioGroup, RadioGroupItemCustom } from '@/components/ui/radio-group'
 import { Separator } from '@/components/ui/separator'
-import { XIcon } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 import { useState } from 'react'
+import { FieldItem } from '@/modules/home/banner/_components/mobile/FieldItem'
+import { StationDrawer } from '@/modules/home/banner/_components/mobile/StationDrawer'
+import { GuestsDrawer } from '@/modules/home/banner/_components/mobile/GuestsDrawer'
+import { DateDrawer } from '@/modules/home/banner/_components/mobile/DateDrawer'
+import { SearchButton } from '@/modules/home/banner/_components/mobile/SearchButton'
 
 interface Station {
   name: string
@@ -18,18 +18,41 @@ interface BookingFormMobileProps {
   stations: Station[]
   selectedStation: string
   onStationChange: (value: string) => void
+  adults: number
+  children: number
+  onAdultsChange: (value: number) => void
+  onChildrenChange: (value: number) => void
+  checkInDate: Date | undefined
+  checkOutDate: Date | undefined
+  onCheckInChange: (date: Date | undefined) => void
+  onCheckOutChange: (date: Date | undefined) => void
 }
 
 const BookingFormMobile = ({
   stations,
   selectedStation,
   onStationChange,
+  adults,
+  children,
+  onAdultsChange,
+  onChildrenChange,
+  checkInDate,
+  checkOutDate,
+  onCheckInChange,
+  onCheckOutChange,
 }: BookingFormMobileProps) => {
   const t = useTranslations('HomePage.banner')
   const [openStationDrawer, setOpenStationDrawer] = useState(false)
   const [openGuestsDrawer, setOpenGuestsDrawer] = useState(false)
   const [openCheckInDrawer, setOpenCheckInDrawer] = useState(false)
   const [openCheckOutDrawer, setOpenCheckOutDrawer] = useState(false)
+
+  const formatDate = (date: Date | undefined) => {
+    if (!date) return { day: '', month: '' }
+    const day = date.getDate()
+    const month = t(`months.${date.getMonth()}`)
+    return { day: day.toString().padStart(2, '0'), month }
+  }
 
   return (
     <div className='absolute bottom-[2.26rem] left-[0.9375rem] right-[0.9375rem] xsm:block hidden z-[3]'>
@@ -49,175 +72,101 @@ const BookingFormMobile = ({
           className='absolute-center h-[7rem]'
         />
         <Separator className='absolute-center w-full h-[0.0325rem]' />
-        <div
-          className='flex items-end justify-between mx-4 w-[8.75rem] cursor-pointer'
-          onClick={() => setOpenStationDrawer(true)}
-        >
-          <div className='space-y-2'>
-            <p className='text-[#2e2e2e]/75 text-[0.75rem] font-medium leading-[1.6] tracking-[-0.0075rem]'>
-              {t('station')}
-            </p>
+        <FieldItem
+          label={t('station')}
+          value={
             <p className='text-[1.25rem] font-medium leading-[1.1] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
-              Caobang
+              {stations.find((s) => s.value === selectedStation)?.name.toUpperCase() || 'CAOBANG'}
             </p>
-          </div>
-          <ICChevron className='size-4 text-black opacity-24' />
-        </div>
-        <div
-          className='flex items-end justify-between mx-4 w-[8.75rem] cursor-pointer'
+          }
+          onClick={() => setOpenStationDrawer(true)}
+        />
+        <FieldItem
+          label={t('numberOfGuests')}
+          value={
+            <div className='flex items-center space-x-1'>
+              <p className='text-[1.25rem] font-medium leading-[1.1] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
+                {(adults + children).toString().padStart(2, '0')}
+              </p>
+              <p className='text-[#2e2e2e]/60 text-[0.625rem] font-medium leading-[1.6] tracking-[-0.00625rem]'>
+                {adults} {adults === 1 ? t('adult') : t('adults')}
+                {children > 0 && `, ${children} ${children === 1 ? t('child') : t('children')}`}
+              </p>
+            </div>
+          }
           onClick={() => setOpenGuestsDrawer(true)}
-        >
-          <div className='space-y-2'>
-            <p className='text-[#2e2e2e]/75 text-[0.75rem] font-medium leading-[1.6] tracking-[-0.0075rem]'>
-              {t('numberOfGuests')}
-            </p>
+        />
+        <FieldItem
+          label={t('checkIn')}
+          value={
             <div className='flex items-center space-x-1'>
               <p className='text-[1.25rem] font-medium leading-[1.1] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
-                04
+                {formatDate(checkInDate).day}
               </p>
               <p className='text-[#2e2e2e]/60 text-[0.625rem] font-medium leading-[1.6] tracking-[-0.00625rem]'>
-                2 adults, 1 child
+                {formatDate(checkInDate).month}
               </p>
             </div>
-          </div>
-          <ICChevron className='size-4 text-black opacity-24' />
-        </div>
-        <div
-          className='flex items-end justify-between mx-4 w-[8.75rem] cursor-pointer'
+          }
           onClick={() => setOpenCheckInDrawer(true)}
-        >
-          <div className='space-y-2'>
-            <p className='text-[#2e2e2e]/75 text-[0.75rem] font-medium leading-[1.6] tracking-[-0.0075rem]'>
-              {t('checkIn')}
-            </p>
+        />
+        <FieldItem
+          label={t('checkOut')}
+          value={
             <div className='flex items-center space-x-1'>
               <p className='text-[1.25rem] font-medium leading-[1.1] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
-                Caobang
+                {formatDate(checkOutDate).day}
               </p>
               <p className='text-[#2e2e2e]/60 text-[0.625rem] font-medium leading-[1.6] tracking-[-0.00625rem]'>
-                2 adults, 1 child
+                {formatDate(checkOutDate).month}
               </p>
             </div>
-          </div>
-          <ICChevron className='size-4 text-black opacity-24' />
-        </div>
-        <div
-          className='flex items-end justify-between mx-4 w-[8.75rem] cursor-pointer'
+          }
           onClick={() => setOpenCheckOutDrawer(true)}
-        >
-          <div className='space-y-2'>
-            <p className='text-[#2e2e2e]/75 text-[0.75rem] font-medium leading-[1.6] tracking-[-0.0075rem]'>
-              {t('checkOut')}
-            </p>
-            <div className='flex items-center space-x-1'>
-              <p className='text-[1.25rem] font-medium leading-[1.1] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
-                Caobang
-              </p>
-              <p className='text-[#2e2e2e]/60 text-[0.625rem] font-medium leading-[1.6] tracking-[-0.00625rem]'>
-                2 adults, 1 child
-              </p>
-            </div>
-          </div>
-          <ICChevron className='size-4 text-black opacity-24' />
-        </div>
+        />
       </div>
-      <DrawerProvider
+      <StationDrawer
         open={openStationDrawer}
-        setOpen={setOpenStationDrawer}
-        showDrawerDrag={false}
-      >
-        <div className='pt-[1.5rem] pb-4'>
-          <div className='flex-between px-4'>
-            <p className='text-[1.125rem] font-bold leading-[1.1] text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)]'>
-              {t('station')}
-            </p>
-            <XIcon
-              className='size-[1.25rem] text-[#2e2e2e] cursor-pointer'
-              onClick={() => setOpenStationDrawer(false)}
-            />
-          </div>
-          <Separator className='my-5 text-[#e6e6e6]' />
-          <RadioGroup
-            value={selectedStation}
-            onValueChange={onStationChange}
-            className='space-y-3'
-          >
-            {stations.map((station) => (
-              <div
-                key={station.value}
-                className='flex items-center space-x-2'
-              >
-                <RadioGroupItemCustom
-                  value={station.value}
-                  id={station.value}
-                />
-                <Label
-                  htmlFor={station.value}
-                  className='text-[#303030] text-[0.875rem] font-normal leading-[1.5] cursor-pointer'
-                >
-                  {station.name}
-                </Label>
-              </div>
-            ))}
-          </RadioGroup>
-        </div>
-      </DrawerProvider>
-      <DrawerProvider
+        onOpenChange={setOpenStationDrawer}
+        stations={stations}
+        selectedStation={selectedStation}
+        onStationChange={onStationChange}
+      />
+      <GuestsDrawer
         open={openGuestsDrawer}
-        setOpen={setOpenGuestsDrawer}
-      >
-        <div className='p-[1.5rem]'>
-          <p className='text-[#2E2E2E] text-[1rem] leading-[1.6] font-medium'>
-            {t('numberOfGuests')}
-          </p>
-          {/* Add guests selection content here */}
-        </div>
-      </DrawerProvider>
-      <DrawerProvider
+        onOpenChange={setOpenGuestsDrawer}
+        adults={adults}
+        children={children}
+        onAdultsChange={onAdultsChange}
+        onChildrenChange={onChildrenChange}
+      />
+      <DateDrawer
         open={openCheckInDrawer}
-        setOpen={setOpenCheckInDrawer}
-      >
-        <div className='p-[1.5rem]'>
-          <p className='text-[#2E2E2E] text-[1rem] leading-[1.6] font-medium'>{t('checkIn')}</p>
-          {/* Add check-in date picker content here */}
-        </div>
-      </DrawerProvider>
-      <DrawerProvider
-        open={openCheckOutDrawer}
-        setOpen={setOpenCheckOutDrawer}
-      >
-        <div className='p-[1.5rem]'>
-          <p className='text-[#2E2E2E] text-[1rem] leading-[1.6] font-medium'>{t('checkOut')}</p>
-          {/* Add check-out date picker content here */}
-        </div>
-      </DrawerProvider>
-      <div
-        className='flex-center p-[0.75rem_1rem] h-[2.73rem] rounded-bl-[1rem] rounded-br-[2.5rem]'
-        style={{
-          background: 'linear-gradient(139deg, #FFB715 4.6%, #F04C05 101.16%)',
+        onOpenChange={setOpenCheckInDrawer}
+        title={t('checkIn')}
+        selectedDate={checkInDate}
+        onDateChange={onCheckInChange}
+        disabled={(date) => {
+          const today = new Date()
+          today.setHours(0, 0, 0, 0)
+          return date < today
         }}
-      >
-        <p className='uppercase text-white text-[0.75rem] font-semibold leading-[1.2]'>
-          {t('searchForTour')}
-        </p>
-        <svg
-          xmlns='http://www.w3.org/2000/svg'
-          width='20'
-          height='20'
-          viewBox='0 0 20 20'
-          fill='none'
-          className='size-[0.875rem] ml-[0.625rem]'
-        >
-          <path
-            d='M14.6303 11.3171C14.3873 11.321 14.144 11.3277 13.9011 11.3276C12.1863 11.3281 10.4716 11.3278 8.75687 11.3275C8.07934 11.3274 7.40101 11.3233 6.72387 11.3299C6.54128 11.3319 6.40166 11.2632 6.27938 11.1409C5.9516 10.8139 5.62342 10.4865 5.29682 10.1584C5.11419 9.97495 5.11574 9.82509 5.29791 9.64292C5.6307 9.31013 5.96586 8.9797 6.29471 8.64375C6.42364 8.51245 6.57271 8.462 6.75333 8.46282C7.56614 8.46651 8.37855 8.46508 9.19135 8.46562C9.98207 8.46616 10.772 8.46748 11.5623 8.46762C12.2825 8.46775 13.003 8.46591 13.7231 8.46604C14.0074 8.4657 14.2918 8.46772 14.5761 8.46816C14.5966 8.46817 14.6179 8.46659 14.655 8.46502C14.6313 8.43426 14.6183 8.41335 14.6018 8.39679C13.3597 7.15468 12.1175 5.91257 10.8743 4.67086C10.0112 3.80939 9.14698 2.94911 8.28394 2.08843C8.25002 2.05451 8.21767 2.01822 8.19164 1.97799C8.0867 1.81549 8.17501 1.63646 8.36865 1.63215C8.66798 1.6255 8.9677 1.62871 9.26703 1.62837C9.92209 1.62652 10.5771 1.62782 11.2322 1.62518C11.4329 1.62403 11.5962 1.69583 11.7378 1.83744C12.95 3.05193 14.1637 4.26485 15.377 5.47816C16.5248 6.626 17.6726 7.77383 18.8205 8.92167C19.2855 9.38672 19.3696 10.0489 19.0294 10.6116C18.9707 10.709 18.8965 10.7997 18.8161 10.8801C16.4546 13.2448 14.0912 15.6074 11.7289 17.9705C11.5999 18.0994 11.4497 18.17 11.2636 18.17C10.3155 18.1682 9.36701 18.17 8.41894 18.1698C8.25724 18.1698 8.16732 18.1138 8.15546 17.9915C8.14993 17.9347 8.172 17.8693 8.19921 17.8168C8.22562 17.766 8.27294 17.725 8.31473 17.6832C10.3868 15.6111 12.4593 13.5386 14.5313 11.4666C14.5676 11.4303 14.6039 11.394 14.6405 11.3574C14.6374 11.344 14.6334 11.3305 14.6303 11.3171Z'
-            fill='white'
-          />
-          <path
-            d='M3.50544 10.8459C3.27753 11.0738 3.05002 11.3021 2.82172 11.5296C2.65335 11.6972 2.48614 11.6987 2.3185 11.5311C1.85897 11.0731 1.40102 10.6144 0.943071 10.1549C0.769515 9.98131 0.76988 9.81607 0.94219 9.64297C1.39958 9.184 1.85816 8.72543 2.31713 8.26803C2.48628 8.09888 2.64798 8.09812 2.81916 8.26852C3.28421 8.7312 3.74848 9.19467 4.21037 9.65972C4.36618 9.81632 4.36187 9.98866 4.20454 10.1468C3.9719 10.3802 3.73848 10.6128 3.50505 10.8463L3.50544 10.8459Z'
-            fill='white'
-          />
-        </svg>
-      </div>
+      />
+      <DateDrawer
+        open={openCheckOutDrawer}
+        onOpenChange={setOpenCheckOutDrawer}
+        title={t('checkOut')}
+        selectedDate={checkOutDate}
+        onDateChange={onCheckOutChange}
+        disabled={(date) => {
+          const today = new Date()
+          today.setHours(0, 0, 0, 0)
+          if (date < today) return true
+          if (checkInDate && date <= checkInDate) return true
+          return false
+        }}
+      />
+      <SearchButton />
     </div>
   )
 }

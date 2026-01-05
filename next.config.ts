@@ -14,6 +14,16 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode: true,
   poweredByHeader: false,
+  // productionBrowserSourceMaps: false,
+  // experimental: {
+  //   webpackMemoryOptimizations: true,
+  //   turbopackSourceMaps: false,
+  //   serverSourceMaps: false,
+  //   preloadEntriesOnStart: false,
+  //   optimizeServerReact: true,
+  //   turbopackMinify: true,
+  //   serverMinification: true,
+  // },
 }
 
 const withNextIntl = createNextIntlPlugin()
