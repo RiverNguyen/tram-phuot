@@ -4,11 +4,7 @@ import { ILink } from '@/interface/link.interface'
 export interface ISiteSetting {
   data: {
     header: IHeader
-    footer: {
-      footer_content: {
-        social_media: ISocialMedia[]
-      }
-    }
+    footer: IFooter
   }
 }
 
@@ -27,7 +23,41 @@ export interface IHeader {
   }[]
 }
 
+export interface IMenuFooter {
+  navigations: ILink
+}
+
 export interface ISocialMedia {
   image: IMedia
   link: ILink
+}
+
+export interface IFooter {
+  form_footer: {
+    form_title: string
+    form_text_decor: string
+    form_text_decor_2: string
+    background: {
+      desktop: IMedia
+      mobile: IMedia
+    }
+    image: {
+      desktop: IMedia
+      mobile: IMedia
+    }
+    button_submit: string
+  }
+  footer_content: {
+    logo: IMedia
+    menu: IMenuFooter[]
+    station_stop: IMenuFooter[]
+    tours: IMenuFooter[]
+    address: {
+      detail: string
+      google_map_link: string
+    }
+    hotline: string
+    email: string
+    social_media: ISocialMedia[]
+  }
 }

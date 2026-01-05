@@ -2,7 +2,7 @@ import ENDPOINTS from '@/configs/endpoints'
 import fetchData from '@/fetches/fetchData'
 import Header from '@/layouts/header'
 import { NextIntlClientProvider } from 'next-intl'
-import { IHeader, ISocialMedia } from '@/interface/site-setting.interface'
+import { ISiteSetting } from '@/interface/site-setting.interface'
 
 export default async function layout({
   children,
@@ -12,15 +12,16 @@ export default async function layout({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  const dataSiteSettings = await fetchData({
-    api: `${ENDPOINTS.site_settings}?locale=${locale}`,
+
+  const dataSiteSettings: ISiteSetting = await fetchData({
+    api: `${ENDPOINTS.site_settings}?locale=${locale}&field=header`,
   })
 
   return (
     <NextIntlClientProvider>
       <Header
-        data={dataSiteSettings?.data?.header as IHeader}
-        socialMedia={dataSiteSettings.data.footer?.footer_content?.social_media as ISocialMedia[]}
+        data={dataSiteSettings?.data?.header}
+        socialMedia={dataSiteSettings.data.footer?.footer_content?.social_media}
       />
       {children}
     </NextIntlClientProvider>
