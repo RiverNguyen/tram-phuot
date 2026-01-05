@@ -1,6 +1,6 @@
-import Banner from './sections/Banner'
-import SpecialOffers from './sections/SpecialOffers'
-import WrapperOngoingPromotions from './sections/WrapperOngoingPromotions'
+import Banner from './sections/banner/Banner'
+import SpecialOffers from './sections/special-offer/SpecialOffers'
+import OngoingPromotions from './sections/ongoing-promotions/OngoingPromotions'
 
 export default function page() {
   return (
@@ -9,12 +9,12 @@ export default function page() {
       <Banner />
 
       {/* Main content */}
-      <div className='xsm:px-[1rem] xsm:py-[2.5rem] xsm:gap-[2.5rem] relative w-full max-w-[87.5rem] mx-auto flex flex-col items-center gap-[5.625rem] py-[5rem]'>
+      <div className='xsm:px-[1rem] xsm:py-[2.5rem] xsm:gap-[2.5rem] relative w-full flex flex-col items-center gap-[5.625rem] py-[5rem]'>
         {/* Special offer just for you! */}
         <SpecialOffers />
 
         {/* ongoing promotion */}
-        <WrapperOngoingPromotions />
+        <OngoingPromotions />
       </div>
     </main>
   )
