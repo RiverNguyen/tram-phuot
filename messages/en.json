@@ -24,7 +24,8 @@
         "10": "November",
         "11": "December"
       },
-      "searchForTour": "Search for tour"
+      "searchForTour": "Search for tour",
+      "apply": "Apply"
     }
   },
   "Header": {

@@ -3,10 +3,10 @@
 import Image from 'next/image'
 import { Separator } from '@/components/ui/separator'
 import { useTranslations } from 'next-intl'
-import { DatePickerField } from '@/modules/home/Banner/_components/desktop/DatePickerField'
-import { GuestCounter } from '@/modules/home/Banner/_components/desktop/GuestCounter'
-import { StationSelector } from '@/modules/home/Banner/_components/desktop/StationSelector'
-import { SubmitButton } from '@/modules/home/Banner/_components/desktop/SubmitButton'
+import { DatePickerField } from '@/modules/home/banner/_components/desktop/DatePickerField'
+import { GuestCounter } from '@/modules/home/banner/_components/desktop/GuestCounter'
+import { StationSelector } from '@/modules/home/banner/_components/desktop/StationSelector'
+import { SubmitButton } from '@/modules/home/banner/_components/desktop/SubmitButton'
 
 interface Station {
   name: string
