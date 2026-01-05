@@ -22,10 +22,10 @@ export const SubmitButton = () => {
             y2='3.57146'
             gradientUnits='userSpaceOnUse'
           >
-            <stop stop-color='#FFB715' />
+            <stop stopColor='#FFB715' />
             <stop
               offset='1'
-              stop-color='#F04C05'
+              stopColor='#F04C05'
             />
           </linearGradient>
         </defs>
@@ -50,4 +50,3 @@ export const SubmitButton = () => {
     </button>
   )
 }
-

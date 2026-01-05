@@ -1,37 +1,77 @@
 'use client'
-import { useEffect, useState } from 'react'
 
-const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState<boolean>(false)
-  const [isClient, setIsClient] = useState<boolean>(false)
+import { useState, useEffect } from 'react'
+
+interface UseIsMobileReturn {
+  isMobile: boolean
+  isLoading: boolean
+}
+
+const mobileBreakpoint = 639
+
+export const useIsMobile = (): UseIsMobileReturn => {
+  const [isMobile, setIsMobile] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    setIsClient(true)
+    const checkIsMobile = () => {
+      // Check using media query
+      const mediaQuery = window.matchMedia(`(max-width: ${mobileBreakpoint}px)`)
 
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 639)
+      // Check using user agent (additional detection)
+      const userAgent = navigator.userAgent.toLowerCase()
+      const mobileKeywords = [
+        'android',
+        'webos',
+        'iphone',
+        'ipad',
+        'ipod',
+        'blackberry',
+        'windows phone',
+        'mobile',
+      ]
+
+      const isMobileUA = mobileKeywords.some((keyword) => userAgent.includes(keyword))
+
+      // Combine both checks - prioritize media query but consider user agent
+      const isMobileDevice =
+        mediaQuery.matches || (isMobileUA && window.innerWidth <= mobileBreakpoint)
+
+      setIsMobile(isMobileDevice)
+      setIsLoading(false)
     }
 
-    const debounce = (func: () => void, delay: number) => {
-      let timeout: ReturnType<typeof setTimeout>
-      return () => {
-        clearTimeout(timeout)
-        timeout = setTimeout(func, delay)
-      }
+    // Initial check
+    checkIsMobile()
+
+    // Listen for media query changes
+    const mediaQuery = window.matchMedia(`(max-width: ${mobileBreakpoint}px)`)
+    const handleChange = () => checkIsMobile()
+
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleChange)
+    } else {
+      // Fallback for older browsers
+      mediaQuery.addListener(handleChange)
     }
 
-    const debouncedCheckMobile = debounce(checkMobile, 100)
-
-    checkMobile()
-    window.addEventListener('resize', debouncedCheckMobile)
+    // Listen for window resize
+    window.addEventListener('resize', checkIsMobile)
 
     return () => {
-      window.removeEventListener('resize', debouncedCheckMobile)
+      if (mediaQuery.removeEventListener) {
+        mediaQuery.removeEventListener('change', handleChange)
+      } else {
+        mediaQuery.removeListener(handleChange)
+      }
+      window.removeEventListener('resize', checkIsMobile)
     }
   }, [])
 
-  // Return false during SSR to prevent hydration mismatch
-  return isClient ? isMobile : false
+  return {
+    isMobile,
+    isLoading,
+  }
 }
 
 export default useIsMobile
