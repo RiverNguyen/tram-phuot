@@ -13,6 +13,7 @@ export default function Footer({ data }: { data: IFooter }) {
   const { isLoading, isMobile } = useIsMobile()
   const translateFooter = useTranslations('Footer')
 
+  // 85.8125rem
   return (
     <footer className='relative bg-[#FDF4ED] h-[85.8125rem] xsm:h-auto overflow-hidden'>
       {/* Background + mask */}
@@ -41,7 +42,7 @@ export default function Footer({ data }: { data: IFooter }) {
               alt={data?.form_footer?.background?.desktop?.alt}
               width={data?.form_footer?.background?.desktop?.width}
               height={data?.form_footer?.background?.desktop?.height}
-              className='absolute -top-[3.5rem] left-0 h-[92.36544rem] w-[100.12506rem] object-contain'
+              className='absolute -top-[6.3rem] left-0 h-[92.36544rem] w-[100.12506rem] object-contain'
             />
           ))}
         {/* Overlay */}

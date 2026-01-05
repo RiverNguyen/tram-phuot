@@ -4,10 +4,11 @@ import BrandButton2 from '@/components/shared/BrandButton2'
 import useIsMobile from '@/hooks/use-is-mobile'
 import Image from 'next/image'
 import { useState } from 'react'
-import { Pagination } from 'swiper/modules'
+import { Autoplay, Pagination } from 'swiper/modules'
 import { SwiperSlide, Swiper } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/pagination'
+import 'swiper/css/autoplay'
 import './style.css'
 
 const datas = [
@@ -40,7 +41,9 @@ export default function Banner() {
             pagination={{
               clickable: true,
             }}
-            modules={[Pagination]}
+            loop
+            autoplay
+            modules={[Pagination, Autoplay]}
           >
             {datas.map((data, i) => (
               <SwiperSlide key={i}>
