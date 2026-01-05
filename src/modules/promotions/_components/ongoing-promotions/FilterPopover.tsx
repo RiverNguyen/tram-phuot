@@ -7,10 +7,11 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItemCustom } from '@/components/ui/radio-group'
 import { ICChevron } from '@/components/icons'
+import { FilterOption } from './mapTaxonomyToFilter'
 
 interface FilterPopoverProps {
   label: string
-  options: Array<{ value: string; label: string }>
+  options: FilterOption[]
   value?: string | string[]
   onValueChange?: (value: string | string[]) => void
   className?: string

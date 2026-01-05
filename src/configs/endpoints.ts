@@ -17,7 +17,8 @@ const ENDPOINTS = {
     vi: 'wp/v2/pages/84?_fields=acf&acf_format=standard',
   },
   promotion: {
-    coupon: 'api/v1/get-all/coupon'
+    coupon: 'api/v1/get-all/coupon',
+    couponTaxonomies: 'api/v1/taxonomies/coupon',
   },
 }
 

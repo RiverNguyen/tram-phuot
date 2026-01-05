@@ -20,6 +20,17 @@
   filter: blur(0) !important;
 }
 
+.special-offer-prev.swiper-button-disabled, .special-offer-next.swiper-button-disabled {
+  background-color: #fff;
+  transition: background-color 0.3s ease;
+  cursor: not-allowed;
+}
+
+.special-offer-prev.swiper-button-disabled > svg, .special-offer-next.swiper-button-disabled > svg {
+  color: #479064;
+  transition: color 0.3s ease;
+}
+
 /* Tắt animation trên mobile */
 @media (max-width: 639.98px) {
   .special-offer-swiper .swiper-slide {

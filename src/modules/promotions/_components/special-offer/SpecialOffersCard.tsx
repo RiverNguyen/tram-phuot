@@ -74,7 +74,7 @@ export default function SpecialOffersCard({ offer }: { offer: CouponItem }) {
               {offer?.title}
             </h3>
             <div className='xsm:gap-[0.625rem] flex flex-col gap-[0.875rem] self-stretch'>
-              <div className='xsm:gap-[0.26556rem] xsm:text-[0.625rem] xsm:leading-[0.4375rem] xsm:tracking-[-0.00625rem] flex items-start gap-[0.375rem] text-[#2E2E2E] font-montserrat text-[0.875rem] font-medium leading-[1.4rem] tracking-[-0.00875rem] opacity-[0.48]'>
+              <div className='xsm:gap-[0.26556rem] xsm:text-[0.625rem] xsm:leading-[0.4375rem] xsm:tracking-[-0.00625rem] flex items-start gap-[0.375rem] text-[#2E2E2E] font-montserrat text-[0.875rem] font-medium leading-[0.625rem] tracking-[-0.00875rem] opacity-[0.48]'>
                 <span>Ngày áp dụng:</span>
                 <span>{offer?.acf?.booking_time?.start}</span>
               </div>
@@ -84,11 +84,11 @@ export default function SpecialOffersCard({ offer }: { offer: CouponItem }) {
             </div>
           </div>
           <div className='xsm:gap-[0.44256rem] flex flex-col items-start justify-center gap-[0.625rem]'>
-            <h4 className='xsm:text-[0.625rem] xsm:leading-[0.4375rem] xsm:tracking-[-0.00625rem] text-[#2E2E2E] font-montserrat text-[0.875rem] font-medium leading-[1.4rem] tracking-[-0.00875rem] opacity-[0.48]'>
+            <h4 className='xsm:text-[0.625rem] xsm:leading-[0.4375rem] xsm:tracking-[-0.00625rem] text-[#2E2E2E] font-montserrat text-[0.875rem] font-medium leading-[0.625rem] tracking-[-0.00875rem] opacity-[0.48]'>
               Promotion code:
             </h4>
             <div className='xsm:gap-[1.16981rem] flex items-center gap-[0.75rem]'>
-              <span className='xsm:max-w-[4.375rem] xsm:text-[0.75rem] xsm:leading-[0.5rem] xsm:tracking-[-0.0075rem] max-w-[7.5rem] truncate text-[#1F4D37] font-montserrat text-[0.875rem] font-semibold leading-[1.4rem] tracking-[-0.00875rem]'>
+              <span className='xsm:max-w-[4.375rem] xsm:text-[0.75rem] xsm:leading-[0.5rem] xsm:tracking-[-0.0075rem] max-w-[7.5rem] truncate text-[#1F4D37] font-montserrat text-[0.875rem] font-semibold leading-[0.625rem] tracking-[-0.00875rem]'>
                 {offer?.acf?.code}
               </span>
               <button

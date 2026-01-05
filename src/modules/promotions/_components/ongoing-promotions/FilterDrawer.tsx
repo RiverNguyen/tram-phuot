@@ -6,7 +6,8 @@ import ICTrashcan from '@/components/icons/ICTrashcan'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItemCustom } from '@/components/ui/radio-group'
-import { FILTER_OPTIONS } from './constants'
+import { mapTaxonomyToFilter } from './mapTaxonomyToFilter'
+import { CouponTaxonomy } from '@/types/coupon.type'
 
 interface FilterDrawerProps {
   open: boolean
@@ -17,6 +18,7 @@ interface FilterDrawerProps {
     destination: string
     typeTours: string[]
   }
+  taxonomies: CouponTaxonomy[]
 }
 
 export default function FilterDrawer({
@@ -25,11 +27,13 @@ export default function FilterDrawer({
   onReset,
   onApply,
   initialFilters = { destination: '', typeTours: [] },
+  taxonomies,
 }: FilterDrawerProps) {
   const [selectedDestination, setSelectedDestination] = useState<string>(initialFilters.destination)
   const [selectedTypeTours, setSelectedTypeTours] = useState<string[]>(initialFilters.typeTours)
 
-  // Sync với initialFilters khi drawer mở
+  const filters = mapTaxonomyToFilter(taxonomies)
+
   useEffect(() => {
     if (open) {
       setSelectedDestination(initialFilters.destination)
@@ -88,7 +92,7 @@ export default function FilterDrawer({
                 onValueChange={setSelectedDestination}
                 className='flex w-full flex-col items-start gap-[0.75rem]'
               >
-                {FILTER_OPTIONS.destination.map((option) => (
+                {filters.locations?.map((option) => (
                   <div
                     key={option.value}
                     className='flex items-center gap-[0.5rem]'
@@ -112,7 +116,7 @@ export default function FilterDrawer({
                 TYPE TOUR
               </h4>
               <div className='flex w-full flex-col items-start gap-[0.75rem]'>
-                {FILTER_OPTIONS.typeTour.map((option) => (
+                {filters['tour-type']?.map((option) => (
                   <div
                     key={option.value}
                     className='flex items-center gap-[0.5rem]'

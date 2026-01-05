@@ -15,18 +15,37 @@ export type CouponItem = {
     id: number
     url: string
   }
-  taxonomies: {
-    locations: TaxonomyItem[]
-    'tour-type': TaxonomyItem[]
-  }
+  taxonomies: CouponTaxonomies
   acf: CouponACF
   lang: string
 }
 
-export type TaxonomyItem = {
+export type CouponTaxonomies = {
+  locations: TaxonomyTerm[]
+  'tour-type': TaxonomyTerm[]
+}
+
+export type TaxonomyTerm = {
   id: number
   name: string
   slug: string
+  /** only exists in taxonomy API */
+  count?: number
+}
+
+export type CouponTaxonomyResponse = {
+  success: boolean
+  lang: string
+  postType: 'coupon'
+  total: number
+  data: CouponTaxonomy[]
+}
+
+export type CouponTaxonomy = {
+  taxonomy: keyof CouponTaxonomies | string
+  label: string
+  hierarchical: boolean
+  terms: TaxonomyTerm[]
 }
 
 export type CouponACF = {
