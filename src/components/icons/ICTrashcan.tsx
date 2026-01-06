@@ -56,4 +56,3 @@ export default function ICTrashcan(props: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-

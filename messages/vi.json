@@ -53,6 +53,14 @@
     "desc": "Cảm ơn bạn đã tin tưởng chúng tôi, chúng tôi sẽ liên hệ với bạn sớm nhất có thể.",
     "button": "Tiếp tục khám phá"
   },
+  "ListTourPage": {
+    "noResult": "Không có kết quả",
+    "reset": "Xóa tất cả",
+    "select": "Lựa chọn",
+    "selected": "Đã chọn",
+    "searchFilter": "Bộ lọc",
+    "done": "Hoàn thành"
+  },
   "DetailsTourPage": {
     "metaTourDuration": "Thời gian tour:",
     "metaPickupAndDropoff": "Điểm đón & trả:",
@@ -64,6 +72,57 @@
     "sectionOverviewIncludedTitle": "Bao gồm",
     "sectionOverviewExcludedTitle": "Không bao gồm",
     "textShowGallery": "Xem gallery",
-    "textPerson": "Người"
+    "textPerson": "Người",
+    "sectionDetailItineraryTitle": "Lịch trình chi tiết",
+    "sectionBookingTourTitle": "Đặt tour",
+    "sectionPolicyTitle": "Chính sách",
+    "childrenPolicyTitle": "Trẻ em",
+    "cancellationPolicyTitle": "Hủy tour",
+    "whatToBringPolicyTitle": "Đồ đem theo",
+    "sectionBookingOverviewTitle": "Tổng quan về đặt tour",
+    "textVoucherCode": "Mã giảm giá",
+    "textVoucherCodePlaceholder": "Nhập mã giảm giá...",
+    "textBookNow": "Đặt ngay",
+    "textProvisional": "Tạm tính",
+    "textVoucher": "Giảm giá",
+    "textTotal": "Tổng cộng",
+    "textApply": "Áp dụng",
+    "sectionBriefItineraryTitle": "Lịch trình tóm tắt"
+  },
+  "BookingTourForm": {
+    "startDateRequired": "Vui lòng chọn ngày bắt đầu",
+    "endDateRequired": "Vui lòng chọn ngày kết thúc",
+    "adultsMin": "Số người lớn phải lớn hơn hoặc bằng 1",
+    "endDateAfterStartDate": "Ngày kết thúc phải lớn hơn ngày bắt đầu",
+    "startDateLabel": "Ngày bắt đầu",
+    "endDateLabel": "Ngày kết thúc",
+    "paxQuantityLabel": "Số lượng khách",
+    "adultsLabel": "Người lớn",
+    "children58Label": "Trẻ em 5-8 tuổi",
+    "children14Label": "Trẻ em 1-4 tuổi",
+    "textPax": "Khách",
+    "textApply": "Áp dụng",
+    "textApplyVoucherSuccess": "Áp dụng voucher thành công",
+    "textApplyVoucherError": "Áp dụng voucher thất bại"
+  },
+  "ContactFormBooking": {
+    "title": "Thông tin liên hệ",
+    "description": "Vui lòng điền thông tin liên hệ và nhân viên của chúng tôi sẽ liên hệ với bạn sớm nhất.",
+    "submitButton": "Gửi thông tin",
+    "textMessage": "Tin nhắn",
+    "fullNameRequired": "Vui lòng nhập tên của bạn",
+    "emailRequired": "Vui lòng nhập email của bạn",
+    "emailInvalid": "Vui lòng nhập email hợp lệ",
+    "phoneRequired": "Vui lòng nhập số điện thoại của bạn",
+    "phoneInvalid": "Vui lòng nhập số điện thoại hợp lệ"
+  },
+  "PhoneInput": {
+    "textSearchCountry": "Tìm kiếm quốc gia...",
+    "textNoCountryFound": "Không tìm thấy quốc gia."
+  },
+  "Components": {
+    "SectionVoucher": {
+      "title": "Ưu đãi đặc biệt dành cho bạn!"
+    }
   }
 }

@@ -13,11 +13,17 @@ interface PageProps {
 
 export default async function page({ params }: PageProps) {
   const { slug, locale } = await params
-  const [detailTour, siteSettings]: [DetailsTourApiResponseType, SiteSettingsResType] =
-    await Promise.all([
-      tourService.getDetailTour(slug, locale, 'tour'),
-      wordpressService.getSiteSettings(locale, 'social'),
-    ])
+  const [detailTour, siteSettings, relatedTours]: [
+    DetailsTourApiResponseType,
+    SiteSettingsResType,
+    any,
+  ] = await Promise.all([
+    tourService.getDetailTour(slug, locale, 'tour'),
+    wordpressService.getSiteSettings(locale, 'social'),
+    tourService.getRelatedTours(slug, locale, 'tour-duration', 'tour'),
+  ])
+
+  console.log({ relatedTours })
 
   return (
     <DetailsTour

@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItemCustom } from '@/components/ui/radio-group'
 import { ICChevron } from '@/components/icons'
 import { FilterOption } from './mapTaxonomyToFilter'
@@ -48,6 +47,7 @@ export default function FilterPopover({
 
   const handleRadioChange = (newValue: string) => {
     onValueChange?.(newValue === 'all' ? '' : newValue)
+    setOpen(false)
   }
 
   const handleCheckboxChange = (val: string, checked: boolean) => {

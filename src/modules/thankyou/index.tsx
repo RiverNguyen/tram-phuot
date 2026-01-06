@@ -13,7 +13,7 @@ export default function ThankYou() {
     <div className='relative bg-[#FDF4ED] w-full overflow-hidden xsm:-mb-[3.25rem]'>
       {!isLoading && !isMobile && (
         <Image
-          src='/thankyou/thankyou_deco_left.webp'
+          src='/thankyou/d-thankyou_deco_left.webp'
           alt=''
           width={956}
           height={1029}
@@ -22,7 +22,7 @@ export default function ThankYou() {
       )}
       {!isLoading && !isMobile && (
         <Image
-          src='/thankyou/thankyou_deco_right.webp'
+          src='/thankyou/d-thankyou_deco_right.webp'
           alt=''
           width={1170}
           height={1310}
@@ -54,7 +54,7 @@ export default function ThankYou() {
           {!isLoading &&
             (isMobile ? (
               <Image
-                src='/thankyou/thankyou_image_mobile.webp'
+                src='/thankyou/d-thankyou_image_mobile.webp'
                 alt=''
                 width={563}
                 height={402}
@@ -62,7 +62,7 @@ export default function ThankYou() {
               />
             ) : (
               <Image
-                src='/thankyou/thankyou_image.webp'
+                src='/thankyou/d-thankyou_image.webp'
                 alt=''
                 width={1943}
                 height={483}
