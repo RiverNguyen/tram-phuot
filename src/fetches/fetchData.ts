@@ -19,6 +19,9 @@ export default async function fetchData(request: RequestPostGuest) {
         ...request.headers,
       },
       ...request.option,
+      next: {
+        revalidate: 60,
+      },
     })
 
     if (!res.ok) {

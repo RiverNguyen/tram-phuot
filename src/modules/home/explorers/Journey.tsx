@@ -8,6 +8,7 @@ import { gsap } from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { CustomEase } from 'gsap/dist/CustomEase'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { IExplorers } from '@/interface/homepage.interface'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -41,7 +42,7 @@ const SOCIALS = [
 
 const TEXTAREA = `At Wanderlust Station community every traveler finds a place to share stories tips and new routes connecting through the love of the open road`
 
-export default function Journey() {
+export default function Journey({ explorers }: { explorers: IExplorers }) {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useGSAP(
@@ -284,7 +285,7 @@ export default function Journey() {
         {/* image dynamic 1 */}
         <div className='xsm:top-[47.12rem] xsm:left-[5.7rem] xsm:w-[8.8395rem] xsm:h-[5.84513rem] xsm:p-[0.14356rem] xsm:rotate-[11.17deg] xsm:z-5 xsm:shadow-[-35.89px_72.068px_22.396px_0_rgba(0,0,0,0),-22.97px_45.94px_20.673px_0_rgba(0,0,0,0.01),-12.921px_25.841px_17.514px_0_rgba(0,0,0,0.05),-5.742px_11.485px_12.921px_0_rgba(0,0,0,0.09),-1.436px_2.871px_7.178px_0_rgba(0,0,0,0.1)] image-dynamic-1 z-2 absolute top-[22.5rem] left-[29.9rem] w-[26.43281rem] h-[17.47875rem] rotate-[-5.681deg] p-[0.42931rem] overflow-hidden bg-white shadow-[-107.323px_215.505px_66.97px_0_rgba(0,0,0,0),-68.687px_137.373px_61.818px_0_rgba(0,0,0,0.01),-38.636px_77.273px_52.374px_0_rgba(0,0,0,0.05),-17.172px_34.343px_38.636px_0_rgba(0,0,0,0.09),-4.293px_8.586px_21.465px_0_rgba(0,0,0,0.10)]'>
           <Image
-            src='/uu-dai/card.webp'
+            src={explorers?.gallery?.[0]?.url || ''}
             alt='Image dynamic 1'
             width={1301}
             height={916}
@@ -294,7 +295,7 @@ export default function Journey() {
         {/* image dynamic 2 */}
         <div className='xsm:top-[42.5rem] xsm:left-[6.05rem] xsm:w-[9.00213rem] xsm:h-[5.55688rem] xsm:p-[0.14356rem] xsm:rotate-[-10.78deg] xsm:z-4 xsm:shadow-[-58.984px_118.439px_36.806px_0_rgba(0,0,0,0.00),-37.75px_75.499px_33.975px_0_rgba(0,0,0,0.01),-21.234px_42.468px_28.784px_0_rgba(0,0,0,0.05),-9.437px_18.875px_21.234px_0_rgba(0,0,0,0.09),-2.359px_4.719px_11.797px_0_rgba(0,0,0,0.10)] image-dynamic-2 z-2 absolute top-[16.659rem] left-[63.6362rem] w-[16.37975rem] h-[10.11094rem] rotate-[-10.78deg] p-[0.35rem] overflow-hidden bg-white shadow-[-107.323px_215.505px_66.97px_0_rgba(0,0,0,0),-68.687px_137.373px_61.818px_0_rgba(0,0,0,0.01),-38.636px_77.273px_52.374px_0_rgba(0,0,0,0.05),-17.172px_34.343px_38.636px_0_rgba(0,0,0,0.09),-4.293px_8.586px_21.465px_0_rgba(0,0,0,0.10)]'>
           <Image
-            src='/uu-dai/card.webp'
+            src={explorers?.gallery?.[1]?.url || ''}
             alt='Image dynamic 2'
             width={832}
             height={592}
@@ -304,7 +305,7 @@ export default function Journey() {
         {/* image dynamic 3 */}
         <div className='xsm:top-[41.51rem] xsm:left-[14.95rem] xsm:w-[6.97331rem] xsm:h-[9.91044rem] xsm:p-[0.14356rem] xsm:rotate-[4.53deg] xsm:z-3 xsm:shadow-[-55.13px_110.701px_34.401px_0_rgba(0,0,0,0.00),-35.283px_70.567px_31.755px_0_rgba(0,0,0,0.01),-19.847px_39.694px_26.904px_0_rgba(0,0,0,0.05),-8.821px_17.642px_19.847px_0_rgba(0,0,0,0.09),-2.205px_4.41px_11.026px_0_rgba(0,0,0,0.10)] image-dynamic-3 z-2 absolute top-[14.7rem] left-[77.2rem] w-[12.68819rem] h-[18.03244rem] rotate-[19.529deg] p-[0.35rem] overflow-hidden bg-white shadow-[-100.311px_201.425px_62.594px_0_rgba(0,0,0,0),-64.199px_128.399px_57.779px_0_rgba(0,0,0,0.01),-36.112px_72.224px_48.952px_0_rgba(0,0,0,0.05),-16.05px_32.1px_36.112px_0_rgba(0,0,0,0.09),-4.012px_8.025px_20.062px_0_rgba(0,0,0,0.1)]'>
           <Image
-            src='/uu-dai/card.webp'
+            src={explorers?.gallery?.[2]?.url || ''}
             alt='Image dynamic 3'
             width={831}
             height={985}
@@ -314,7 +315,7 @@ export default function Journey() {
         {/* image dynamic 4 */}
         <div className='xsm:top-[41.8rem] xsm:left-[-0.34rem] xsm:w-[8.2185rem] xsm:h-[6.94356rem] xsm:p-[0.14356rem] xsm:z-1 xsm:shadow-[-60.215px_120.911px_37.574px_0_rgba(0,0,0,0.00),-38.537px_77.075px_34.684px_0_rgba(0,0,0,0.01),-21.677px_43.355px_29.385px_0_rgba(0,0,0,0.05),-9.634px_19.269px_21.677px_0_rgba(0,0,0,0.09),-2.409px_4.817px_12.043px_0_rgba(0,0,0,0.10)] image-dynamic-4 z-2 absolute top-[22.8639rem] left-[55.9025rem] w-[14.9538rem] h-[12.6341rem] rotate-[11.21deg] p-[0.35rem] overflow-hidden bg-white shadow-[-109.563px_220.003px_68.367px_0_rgba(0,0,0,0),-70.12px_140.241px_63.108px_0_rgba(0,0,0,0.01),-39.443px_78.885px_53.467px_0_rgba(0,0,0,0.05),-17.53px_35.06px_39.443px_0_rgba(0,0,0,0.09),-4.383px_8.765px_21.913px_0_rgba(0,0,0,0.1)]'>
           <Image
-            src='/uu-dai/card.webp'
+            src={explorers?.gallery?.[3]?.url || ''}
             alt='Image dynamic 4'
             width={786}
             height={698}
@@ -332,18 +333,18 @@ export default function Journey() {
         {/* content */}
         <div className='xsm:top-[11.38rem] xsm:left-[1rem] xsm:right-[1rem] xsm:w-auto xsm:gap-[2.06rem] content absolute top-[5.4077rem] left-[16.9103rem] flex w-[32.0625rem] flex-col justify-center gap-[1.4375rem]'>
           <p className='xsm:text-[0.875rem] xsm:no-underline xsm:before:content-none xsm:leading-[1.75rem] xsm:tracking-[-0.0175rem] text-white text-[1.125rem] font-montserrat font-medium leading-[200%] tracking-[-2%] whitespace-pre-line underline decoration-[0.0625rem] decoration-[rgba(165,165,165,0.50)] underline-offset-[0.5rem] decoration-dashed decoration before:content-[""] before:pl-[3.875rem]'>
-            {TEXTAREA}
+            {explorers?.desc}
           </p>
           <div className='xsm:gap-[1.01075rem] flex items-center gap-[1.1035rem]'>
-            {SOCIALS.map((social) => (
+            {explorers?.social_media?.map((social, index) => (
               <Link
-                href={social.href}
-                key={social.name}
+                href={social.link || ''}
+                key={index}
                 className='xsm:size-[3.09138rem] size-[3.375rem]'
               >
                 <Image
-                  src={social.image}
-                  alt={social.name}
+                  src={social.image?.url || ''}
+                  alt={social.image?.alt || ''}
                   width={162}
                   height={162}
                   className='w-full h-full object-cover'
@@ -355,8 +356,8 @@ export default function Journey() {
         {/* title */}
         <div className='xsm:left-[1.18rem] xsm:top-0 absolute left-[4.32rem] top-[-7.14rem]'>
           <BrandTitle
-            title='The explorers'
-            subtitle='SHARE THEIR JOURNEYS!'
+            title={explorers?.text_decor}
+            subtitle={explorers?.title}
             classNameContainer='title'
           />
         </div>

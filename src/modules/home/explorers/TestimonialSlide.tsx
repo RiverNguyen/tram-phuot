@@ -1,36 +1,27 @@
-import { Swiper, SwiperSlide } from 'swiper/react'
+import Marquee from '@/components/ui/marquee'
 import TestimonialItem from './TestimonialItem'
-import { convertRemToPx } from '@/lib/utils'
+import { IReview } from '@/interface/homepage.interface'
 
 interface TestimonialSlideProps {
-  testimonials: {
-    avatar: string
-    name: string
-    date: string
-    rating: number
-    title: string
-    description: string
-  }[]
+  testimonials: IReview[]
 }
 export default function TestimonialSlide({ testimonials }: TestimonialSlideProps) {
   return (
-    <Swiper
-      slidesPerView='auto'
-      centeredSlides={true}
-      initialSlide={2}
-      loop={true}
-      grabCursor={true}
-      spaceBetween={convertRemToPx(1.5)}
-      className='w-full h-[15.875rem] !overflow-visible relative !z-0'
+    <Marquee
+      className='w-full'
+      baseVelocity={12}
+      repeat={4}
+      draggable={false}
+      slowDownFactor={0.1}
+      slowdownOnHover
+      direction='left'
     >
-      {testimonials?.map((testimonial, index) => (
-        <SwiperSlide
+      {testimonials?.map((review, index) => (
+        <TestimonialItem
           key={index}
-          className='!w-[23.75rem] !h-[15.875rem]'
-        >
-          <TestimonialItem testimonial={testimonial} />
-        </SwiperSlide>
+          review={review}
+        />
       ))}
-    </Swiper>
+    </Marquee>
   )
 }
