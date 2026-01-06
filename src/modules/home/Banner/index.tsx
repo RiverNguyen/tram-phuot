@@ -3,10 +3,9 @@
 import { useState } from 'react'
 import { ProgressiveBlur } from '@/components/ui/progressive-blur'
 import { IHomePage } from '@/interface/homepage.interface'
-import { BannerSlider } from '@/modules/home/banner/_components/BannerSlider'
-import { BannerTitle } from '@/modules/home/banner/_components/BannerTitle'
-import { BookingForm } from '@/modules/home/banner/_components/desktop/BookingForm'
-import BookingFormMobile from '@/modules/home/banner/_components/mobile/BookingFormMobile'
+import { BannerTitle } from './_components/BannerTitle'
+import { BannerSlider } from './_components/BannerSlider'
+import BookingFormMobile from './_components/mobile/BookingFormMobile'
 
 const stations = [
   {
@@ -74,7 +73,7 @@ const BannerHomePage = ({ data }: { data: IHomePage }) => {
           galleryMobile={data?.banner?.gallery_mobile || []}
         />
         {/* Desktop */}
-        <BookingForm
+        <BookingFormMobile
           stations={stations}
           selectedStation={selectedStation}
           onStationChange={setSelectedStation}
