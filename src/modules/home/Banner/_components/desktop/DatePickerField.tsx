@@ -13,12 +13,7 @@ interface DatePickerFieldProps {
   disabled?: (date: Date) => boolean
 }
 
-export const DatePickerField = ({
-  label,
-  date,
-  onDateChange,
-  disabled,
-}: DatePickerFieldProps) => {
+export const DatePickerField = ({ label, date, onDateChange, disabled }: DatePickerFieldProps) => {
   const t = useTranslations('HomePage.banner')
   const locale = useLocale()
 
@@ -68,4 +63,3 @@ export const DatePickerField = ({
     </Popover>
   )
 }
-

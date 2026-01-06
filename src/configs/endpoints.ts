@@ -5,7 +5,8 @@ const ENDPOINTS = {
     get: (locale: string, type: string) => `api/v1/taxonomies/${type}?lang=${locale}`,
   },
   tour: {
-    list: '/tour/list',
+    list: 'api/v1/get-all/tour',
+    taxonomies: 'api/v1/taxonomies/tour',
     detail: 'api/v1/tour/detail',
   },
   wordpress: {

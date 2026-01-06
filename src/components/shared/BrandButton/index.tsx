@@ -13,6 +13,7 @@ interface BrandButtonProps {
   classNameButtonText?: string
   href?: string
   children: React.ReactNode
+  onClick?: () => void
 }
 
 export default function BrandButton({
@@ -23,6 +24,7 @@ export default function BrandButton({
   classNameButtonContainer,
   classNameButtonText,
   href,
+  onClick,
   children,
 }: BrandButtonProps) {
   const classNameButtonVariant: Record<BrandButtonVariant, string> = {
@@ -76,6 +78,7 @@ export default function BrandButton({
     <button
       type={type}
       disabled={disabled}
+      onClick={onClick}
       className={cn(
         'group flex-center font-montserrat xsm:h-10.5 relative h-12 w-auto cursor-pointer overflow-hidden rounded-[1.25rem_0.125rem] bg-transparent px-7',
         classNameButtonVariant[variant],
