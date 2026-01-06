@@ -27,7 +27,7 @@ export default function TourList({ data }: { data: ITour[] }) {
                 className='object-cover lg:group-hover:scale-107 transition-all duration-500 ease-[cubic-bezier(0.65,0.01,0.28,0.98)]'
               />
               {/* Tour Type */}
-              {tour?.taxonomies && tour?.taxonomies['tour-type'] && (
+              {Array.isArray(tour?.taxonomies['tour-type']) && (
                 <div className='xsm:px-[0.84069rem] xsm:py-[0.70056rem] absolute top-0 left-0 w-full inline-flex px-[0.75rem] py-[0.625rem]'>
                   <div className='xsm:h-[1.75144rem] xsm:px-[0.99013rem] xsm:rounded-tl-[0.84069rem] xsm:rounded-br-[0.84069rem] flex h-[1.5625rem] px-[0.88331rem] justify-center items-center rounded-tl-[0.75rem] rounded-br-[0.75rem] bg-[#2BAB7D]'>
                     <span className='xsm:text-[0.875rem] xsm:leading-[1.75rem] xsm:tracking-[-0.0175rem] line-clamp-1 text-white font-phu-du text-[0.75rem] font-medium leading-[1.5rem] tracking-[-0.015rem]'>
@@ -43,13 +43,17 @@ export default function TourList({ data }: { data: ITour[] }) {
                   <div className='xsm:gap-[0.84069rem] flex flex-col justify-center gap-[0.75rem] self-stretch'>
                     {/* tour duration */}
                     <div className='xsm:gap-[0.42031rem] w-full flex items-center gap-[0.375rem] flex-wrap'>
-                      {tour?.taxonomies && tour?.taxonomies['tour-duration'] && (
-                        <div className='xsm:h-[1.2rem] h-[1.375rem] flex items-center justify-center p-[0.3125rem_0.375rem_0.3125rem_0.4375rem] rounded-[6.25rem] bg-[rgba(255,255,255,0.08)]'>
-                          <span className='xsm:text-[0.75rem] xsm:leading-[1.2rem] xsm:tracking-[-0.0075rem] opacity-[0.8] text-white font-montserrat text-[0.75rem] font-medium leading-[1.2rem] tracking-[-0.0075rem]'>
-                            {tour?.taxonomies['tour-duration'][0]?.name}
-                          </span>
-                        </div>
-                      )}
+                      {Array.isArray(tour?.taxonomies['tour-duration']) &&
+                        tour?.taxonomies['tour-duration'].map((duration, i) => (
+                          <div
+                            key={i}
+                            className='xsm:h-[1.2rem] h-[1.375rem] flex items-center justify-center p-[0.3125rem_0.375rem_0.3125rem_0.4375rem] rounded-[6.25rem] bg-[rgba(255,255,255,0.08)]'
+                          >
+                            <span className='xsm:text-[0.75rem] xsm:leading-[1.2rem] xsm:tracking-[-0.0075rem] opacity-[0.8] text-white font-montserrat text-[0.75rem] font-medium leading-[1.2rem] tracking-[-0.0075rem]'>
+                              {duration?.name}
+                            </span>
+                          </div>
+                        ))}
                     </div>
                     {/* title */}
                     <h3 className='xsm:text-[1.25rem] xsm:leading-[1.25rem] xsm:tracking-normal line-clamp-2 text-white font-phu-du text-[1rem] font-medium leading-[1.3rem] uppercase'>
@@ -66,9 +70,9 @@ export default function TourList({ data }: { data: ITour[] }) {
                         <div className='xsm:gap-[0.28025rem] flex items-center gap-[0.25rem]'>
                           <ICLocation className='xsm:size-[0.84069rem] size-[0.75rem]' />
                           <span className='xsm:text-[1rem] xsm:leading-[1.6rem] xsm:tracking-[-0.01rem] text-white font-montserrat text-[0.875rem] font-semibold leading-[1.4rem] tracking-[-0.00875rem] opacity-[0.48]'>
-                            {tour?.taxonomies && tour?.taxonomies?.locations
+                            {Array.isArray(tour?.taxonomies?.locations)
                               ? tour?.taxonomies?.locations[0]?.name
-                              : 'abc'}
+                              : ''}
                           </span>
                         </div>
                         <p className='xsm:leading-[1.625rem] font-phu-du font-medium leading-[1.3rem] uppercase'>
