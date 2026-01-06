@@ -10,8 +10,11 @@ export function extractTiktokId(url: string): string {
   return match ? match[1] : ''
 }
 
-export function convertRemToPx(rem: number): number {
-  if (typeof window === 'undefined') return rem * 16
+export function convertRemToPx(rem: number) {
+  if (typeof window === 'undefined' || !document?.documentElement) {
+    return
+  }
+
   const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize)
   return rem * rootFontSize
 }

@@ -3,10 +3,9 @@
 import { useState } from 'react'
 import { ProgressiveBlur } from '@/components/ui/progressive-blur'
 import { IHomePage } from '@/interface/homepage.interface'
-import { BannerSlider } from '@/modules/home/Banner/_components/BannerSlider'
-import { BannerTitle } from '@/modules/home/Banner/_components/BannerTitle'
-import { BookingForm } from '@/modules/home/Banner/_components/desktop/BookingForm'
-import BookingFormMobile from '@/modules/home/Banner/_components/mobile/BookingFormMobile'
+import { BannerTitle } from './_components/BannerTitle'
+import { BannerSlider } from './_components/BannerSlider'
+import BookingFormMobile from './_components/mobile/BookingFormMobile'
 
 const stations = [
   {
@@ -59,7 +58,7 @@ const BannerHomePage = ({ data }: { data: IHomePage }) => {
   }
 
   return (
-    <section>
+    <section className='relative'>
       <h1 className='sr-only'>Trạm Phượt</h1>
 
       <ProgressiveBlur
@@ -74,7 +73,7 @@ const BannerHomePage = ({ data }: { data: IHomePage }) => {
           galleryMobile={data?.banner?.gallery_mobile || []}
         />
         {/* Desktop */}
-        <BookingForm
+        <BookingFormMobile
           stations={stations}
           selectedStation={selectedStation}
           onStationChange={setSelectedStation}
@@ -93,6 +92,14 @@ const BannerHomePage = ({ data }: { data: IHomePage }) => {
           stations={stations}
           selectedStation={selectedStation}
           onStationChange={setSelectedStation}
+          adults={adults}
+          children={children}
+          onAdultsChange={setAdults}
+          onChildrenChange={setChildren}
+          checkInDate={checkInDate}
+          checkOutDate={checkOutDate}
+          onCheckInChange={handleCheckInChange}
+          onCheckOutChange={handleCheckOutChange}
         />
       </div>
     </section>

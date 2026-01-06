@@ -3,10 +3,10 @@
 import Image from 'next/image'
 import { Separator } from '@/components/ui/separator'
 import { useTranslations } from 'next-intl'
-import { DatePickerField } from '@/modules/home/Banner/_components/desktop/DatePickerField'
-import { GuestCounter } from '@/modules/home/Banner/_components/desktop/GuestCounter'
-import { StationSelector } from '@/modules/home/Banner/_components/desktop/StationSelector'
-import { SubmitButton } from '@/modules/home/Banner/_components/desktop/SubmitButton'
+import { SubmitButton } from '@/modules/home/banner/_components/desktop/SubmitButton'
+import { StationSelector } from '@/modules/home/banner/_components/desktop/StationSelector'
+import { DatePickerField } from '@/modules/home/banner/_components/desktop/DatePickerField'
+import { GuestCounter } from '@/modules/home/banner/_components/desktop/GuestCounter'
 
 interface Station {
   name: string
@@ -43,25 +43,25 @@ export const BookingForm = ({
   const t = useTranslations('HomePage.banner')
 
   return (
-    <div className='w-[55.6875rem] absolute bottom-[3.5625rem] right-[7.5375rem] z-[3] flex flex-col xsm:hidden'>
+    <div className='xsm:hidden absolute right-[7.5375rem] bottom-[3.5625rem] z-[3] flex w-[55.6875rem] flex-col'>
       <Image
         width={52}
         height={60}
         src='/home/decor.svg'
         alt='bg-banner'
-        className='w-[3.25838rem] h-[3.72563rem] object-cover absolute -right-5 top-1'
+        className='absolute top-1 -right-5 h-[3.72563rem] w-[3.25838rem] object-cover'
       />
       <div
-        className='h-[2.5rem] px-[0.75rem_1.625rem] flex-center w-fit'
+        className='flex-center h-[2.5rem] w-fit px-[0.75rem_1.625rem]'
         style={{
           borderRadius: '1rem 1rem 0 0',
           background: 'linear-gradient(247deg, #03328C 12.24%, #00804D 106.2%), #F56E0A',
         }}
       >
-        <p className='text-white text-[1.125rem] font-semibold'>{t('text')}</p>
+        <p className='text-[1.125rem] font-semibold text-white'>{t('text')}</p>
       </div>
       <div
-        className='w-full h-[5.5rem] rounded-bl-[1rem] rounded-br-[1.25rem] relative pl-[1.875rem] flex-y-center'
+        className='flex-y-center relative h-[5.5rem] w-full rounded-br-[1.25rem] rounded-bl-[1rem] pl-[1.875rem]'
         style={{
           background: 'rgba(255, 255, 255, 0.92)',
           backdropFilter: 'blur(8px)',
@@ -77,7 +77,7 @@ export const BookingForm = ({
 
         <Separator
           orientation='vertical'
-          className='h-[3.75rem] mx-4 border-[0.0325rem] border-black/6'
+          className='mx-4 h-[3.75rem] border-[0.0325rem] border-black/6'
         />
 
         <DatePickerField
@@ -88,7 +88,7 @@ export const BookingForm = ({
 
         <Separator
           orientation='vertical'
-          className='h-[3.75rem] mx-4 border-[0.0325rem] border-black/6'
+          className='mx-4 h-[3.75rem] border-[0.0325rem] border-black/6'
         />
 
         <DatePickerField
@@ -107,7 +107,7 @@ export const BookingForm = ({
 
         <Separator
           orientation='vertical'
-          className='h-[3.75rem] mx-4 border-[0.0325rem] border-black/6'
+          className='mx-4 h-[3.75rem] border-[0.0325rem] border-black/6'
         />
 
         <GuestCounter

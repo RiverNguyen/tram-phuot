@@ -54,7 +54,7 @@ const RadioGroupItemCustom = React.forwardRef<
       {...props}
     >
       <RadioGroupPrimitive.Indicator className='flex items-center justify-center'>
-        <CheckedRadio className='size-[0.70313rem] ml-[0.025rem] mt-[0.025rem]' />
+        <CheckedRadio className='size-[0.85938rem] ml-[0.025rem] mt-[0.025rem]' />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   )

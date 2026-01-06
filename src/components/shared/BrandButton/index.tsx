@@ -1,5 +1,6 @@
 'use client'
 import { cn } from '@/lib/utils'
+import Link from 'next/link'
 import React from 'react'
 
 type BrandButtonVariant = 'greenGradient' | 'orangeGradient' | 'blueGradient' | 'transparent'
@@ -13,10 +14,12 @@ type BrandButtonType =
       disabled?: boolean
     }
 interface BrandButtonProps {
+  disabled?: boolean
   showButtonTexture?: boolean
   variant?: BrandButtonVariant
   classNameButtonContainer?: string
   classNameButtonText?: string
+  href?: string
   children: React.ReactNode
   type?: BrandButtonType
 }
@@ -38,7 +41,7 @@ export default function BrandButton({
 
   if (type.variant === 'link') {
     return (
-      <a
+      <Link
         href={type.href}
         className={cn(
           'group flex-center font-montserrat xsm:h-10.5 relative h-12 w-auto cursor-pointer overflow-hidden rounded-[1.25rem_0.125rem] bg-transparent px-7',
@@ -72,7 +75,7 @@ export default function BrandButton({
             <ButtonDecorTexture className='xsm:w-[2.7465rem] xsm:h-[2.76625rem] xsm:-top-4 xsm:-right-4 absolute -top-6 -right-6 z-1 h-[4.5325rem] w-18 opacity-12' />
           </>
         )}
-      </a>
+      </Link>
     )
   }
 
