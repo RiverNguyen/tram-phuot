@@ -44,8 +44,6 @@ export default function OngoingPromotions({
   }
 
   useEffect(() => {
-    if (page === 1) return
-
     if (!sectionRef.current) return
 
     const offset = 120

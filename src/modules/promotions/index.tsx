@@ -30,7 +30,7 @@ export default async function Promotions({ locale }: { locale: string }) {
 
       {/* Main content */}
       <div className='relative w-full h-full'>
-        <div className='xsm:py-[2.5rem] xsm:gap-[1.25rem] relative w-full flex flex-col items-center gap-[5.625rem] py-[5rem]'>
+        <div className='xsm:py-[2.5rem] xsm:gap-0 relative w-full flex flex-col items-center gap-[5.625rem] py-[5rem]'>
           {/* Special offer just for you! */}
           <SpecialOffers data={coupon?.data} />
 

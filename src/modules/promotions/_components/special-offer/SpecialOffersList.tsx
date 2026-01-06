@@ -48,7 +48,7 @@ export default function SpecialOffers({ data }: { data: CouponItem[] }) {
             </div>
           </div>
         </Swiper>
-        <div className='sm:hidden xsm:px-[1rem] xsm:py-[1.25rem] flex gap-[1rem] overflow-x-auto'>
+        <div className='sm:hidden xsm:px-[1rem] xsm:pt-[1.25rem] xsm:pb-[2.5rem] flex gap-[1rem] overflow-x-auto hidden_scroll'>
           {data
             .filter((offer: CouponItem) => !offer.acf.private)
             .map((offer: CouponItem) => (
