@@ -4,9 +4,9 @@ import { useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItemCustom } from '@/components/ui/radio-group'
 import { ICChevron } from '@/components/icons'
+import { useTranslations } from 'next-intl'
 
 interface FilterPopoverProps {
   label: string
@@ -26,6 +26,7 @@ export default function FilterPopover({
   className,
 }: FilterPopoverProps) {
   const [open, setOpen] = useState(false)
+  const t = useTranslations('ListTourPage')
   const isRadio = variant === 'radio'
   const selectedValue = isRadio ? (value as string | undefined) || '' : ''
   const selectedValues = !isRadio ? (value as string[] | undefined) || [] : []
@@ -40,7 +41,7 @@ export default function FilterPopover({
         const selectedOption = options.find((opt) => opt.value === selectedValues[0])
         return selectedOption?.label || ''
       }
-      return `${selectedValues.length} selected`
+      return `${selectedValues.length} ${t('selected')}`
     }
   }
 
@@ -73,7 +74,7 @@ export default function FilterPopover({
         <div className='flex items-center gap-[0.25rem]'>
           <span className='text-[rgba(46,46,46,0.60)] font-normal uppercase'>{label}:</span>
           <span className={cn(!getDisplayText() && 'text-[rgba(46,46,46,0.60)]')}>
-            {getDisplayText() || 'Select'}
+            {getDisplayText() || t('select')}
           </span>
         </div>
         <ICChevron className='w-[0.825rem] h-auto text-[#A1A1A1]' />
@@ -90,7 +91,7 @@ export default function FilterPopover({
                 htmlFor={`${label}-${option.value}`}
                 key={option.value}
                 className={cn(
-                  'flex py-[1rem] px-[0.75rem] items-center gap-[0.625rem] self-stretch rounded-tl-[1rem] rounded-br-[1rem] lg:hover:bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
+                  'flex py-[1rem] px-[0.75rem] items-center gap-[0.625rem] cursor-pointer self-stretch rounded-tl-[1rem] rounded-br-[1rem] lg:hover:bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
                   selectedValue === option.value &&
                     'bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
                 )}
@@ -99,7 +100,7 @@ export default function FilterPopover({
                   value={option.value}
                   id={`${label}-${option.value}`}
                 />
-                <span className='line-clamp-1 text-[#303030] font-montserrat text-[0.875rem] leading-[1.3125rem] cursor-pointer'>
+                <span className='line-clamp-1 text-[#303030] font-montserrat text-[0.875rem] leading-[1.3125rem] '>
                   {option.label}
                 </span>
               </label>
@@ -114,7 +115,7 @@ export default function FilterPopover({
                   htmlFor={`${label}-${option.value}`}
                   key={option.value}
                   className={cn(
-                    'flex py-[1rem] px-[0.75rem] items-center gap-[0.625rem] self-stretch rounded-tl-[1rem] rounded-br-[1rem] lg:hover:bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
+                    'flex py-[1rem] px-[0.75rem] items-center gap-[0.625rem] cursor-pointer self-stretch rounded-tl-[1rem] rounded-br-[1rem] lg:hover:bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
                     isChecked &&
                       'bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
                   )}
@@ -129,7 +130,7 @@ export default function FilterPopover({
                   />
                   <span
                     id={`${label}-${option.value}`}
-                    className='line-clamp-1 text-[#303030] font-montserrat text-[0.875rem] leading-[1.3125rem] cursor-pointer'
+                    className='line-clamp-1 text-[#303030] font-montserrat text-[0.875rem] leading-[1.3125rem]'
                   >
                     {option.label}
                   </span>

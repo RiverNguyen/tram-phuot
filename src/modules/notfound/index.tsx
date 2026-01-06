@@ -13,7 +13,7 @@ export default function NotFound() {
       {!isLoading &&
         (isMobile ? (
           <Image
-            src='/notfound/notfound_bg_mobile.webp'
+            src='/notfound/d-notfound_bg_mobile.webp'
             alt=''
             width={563}
             height={721}
@@ -21,7 +21,7 @@ export default function NotFound() {
           />
         ) : (
           <Image
-            src='/notfound/notfound_bg.webp'
+            src='/notfound/d-notfound_bg.webp'
             alt=''
             width={2400}
             height={1079}
@@ -31,7 +31,7 @@ export default function NotFound() {
       {!isLoading &&
         (isMobile ? (
           <Image
-            src='/notfound/notfound_deco_mobile.webp'
+            src='/notfound/d-notfound_deco_mobile.webp'
             alt=''
             width={563}
             height={225}
@@ -39,7 +39,7 @@ export default function NotFound() {
           />
         ) : (
           <Image
-            src='/notfound/notfound_deco.webp'
+            src='/notfound/d-notfound_deco.webp'
             alt=''
             width={2399}
             height={366}
@@ -52,7 +52,7 @@ export default function NotFound() {
           {t('error')}
         </span>
         <Image
-          src='/notfound/404.webp'
+          src='/notfound/d-404.webp'
           alt=''
           width={425}
           height={199}
