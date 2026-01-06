@@ -27,7 +27,7 @@ export default async function page({ params }: { params: Promise<{ locale: strin
       <Overview overview={dataHome?.acf?.overview} />
       <OurTours />
       <div className='relative bg-[#FDF4ED]'>
-        <div className="pointer-events-none absolute inset-0 bg-[url('/home/explorers/bg-pc.webp')] bg-repeat-y bg-[length:100%_auto] bg-top opacity-5" />
+        <div className="pointer-events-none absolute inset-0 bg-[url('/home/explorers/bg-pc.webp')] bg-[length:100%_auto] bg-top bg-repeat-y opacity-5" />
         <div className='relative'>
           <TheExplorers
             explorers={dataHome?.acf?.explorers}

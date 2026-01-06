@@ -89,7 +89,7 @@ export default function PopupGallery({
         </DialogHeader>
 
         <div className='flex size-full items-center justify-center'>
-          <div className='xsm:w-full xsm:h-full relative h-[43.75rem] max-h-full w-[51.9375rem] space-y-3'>
+          <div className='xsm:w-full xsm:h-full relative h-175 max-h-full w-207.75 space-y-3'>
             <Swiper
               modules={[FreeMode, Navigation, Thumbs]}
               spaceBetween={10}
@@ -112,7 +112,7 @@ export default function PopupGallery({
               onSlideChange={(swiper) => {
                 setCurrentIndex(swiper.activeIndex)
               }}
-              className='swiper-main-gallery xsm:h-[17.375rem] xsm:absolute! xsm:top-1/2 xsm:left-0 xsm:-translate-y-1/2 h-[38.4375rem] w-full'
+              className='swiper-main-gallery xsm:h-69.5 xsm:absolute! xsm:top-1/2 xsm:left-0 xsm:-translate-y-1/2 h-153.75 w-full'
             >
               {items.map((item, index) => (
                 <SwiperSlide
@@ -137,7 +137,7 @@ export default function PopupGallery({
               slidesPerView='auto'
               freeMode
               watchSlidesProgress
-              className='swiper-thumbs-gallery xsm:px-[0.35rem]! xsm:absolute! xsm:bottom-0 xsm:left-0 h-[4.5625rem] w-full'
+              className='swiper-thumbs-gallery xsm:px-[0.35rem]! xsm:absolute! xsm:bottom-0 xsm:left-0 h-18.25 w-full'
             >
               {items.map((item, index) => (
                 <SwiperSlide
@@ -157,32 +157,32 @@ export default function PopupGallery({
           </div>
 
           <div className='xsm:absolute xsm:flex xsm:bg-black xsm:top-0 xsm:left-0 xsm:w-full xsm:items-center xsm:justify-between xsm:p-4'>
-            <p className='xsm:static xsm:space-x-0 absolute top-[2rem] left-[2rem] z-5 flex items-center space-x-[0.5rem] py-[0.625rem]'>
-              <ICGallery className='xsm:hidden size-[1.125rem] shrink-0' />
+            <p className='xsm:static xsm:space-x-0 absolute top-8 left-8 z-5 flex items-center space-x-2 py-2.5'>
+              <ICGallery className='xsm:hidden size-4.5 shrink-0' />
               <span className='xsm:text-[0.875rem] xsm:tracking-[0.00875rem] text-[1.125rem] font-semibold text-white'>
                 {currentIndex + 1}/{total}
               </span>
             </p>
 
-            <DrawerClose className='xsm:size-[1.75rem] xsm:static absolute top-[2rem] right-[2rem] z-5 size-[2rem] cursor-pointer'>
-              <ICClose className='size-full' />
+            <DrawerClose className='xsm:size-7 xsm:static absolute top-8 right-8 z-5 size-8 cursor-pointer'>
+              <ICClose className='size-full text-white' />
             </DrawerClose>
           </div>
 
           <button
             ref={prevRef}
             type='button'
-            className='xsm:hidden absolute top-1/2 left-[2.125rem] z-10 -translate-y-1/2 cursor-pointer disabled:opacity-50'
+            className='xsm:hidden absolute top-1/2 left-8.5 z-10 -translate-y-1/2 cursor-pointer disabled:opacity-50'
           >
-            <ICArrowLeft className='size-[2rem]' />
+            <ICArrowLeft className='size-8' />
           </button>
 
           <button
             ref={nextRef}
             type='button'
-            className='xsm:hidden absolute top-1/2 right-[2.125rem] z-10 -translate-y-1/2 cursor-pointer disabled:opacity-50'
+            className='xsm:hidden absolute top-1/2 right-8.5 z-10 -translate-y-1/2 cursor-pointer disabled:opacity-50'
           >
-            <ICArrowRight className='size-[2rem]' />
+            <ICArrowRight className='size-8' />
           </button>
         </div>
       </DialogContent>

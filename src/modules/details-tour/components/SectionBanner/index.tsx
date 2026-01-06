@@ -13,7 +13,7 @@ import Image from 'next/image'
 interface SectionBannerProps {
   title: string
   banner: DetailsTourBannerType
-  pricePerPax: string
+  fromPricePerPax: number
   tourDuration: WPTaxonomy
   transport: string
   accommodation: string
@@ -23,7 +23,7 @@ interface SectionBannerProps {
 export default function SectionBanner({
   title,
   banner,
-  pricePerPax,
+  fromPricePerPax,
   tourDuration,
   transport,
   accommodation,
@@ -74,7 +74,7 @@ export default function SectionBanner({
               <ICCompass className='xsm:size-[0.90106rem] xsm:mt-[0.2rem] mt-1.5 size-[1.59194rem] text-[#FFC542]' />
               <span className='xsm:space-x-[0.28rem] flex items-center space-x-2'>
                 <span className='font-phu-du xsm:text-[1.25rem] text-[2.5rem] leading-12 font-medium text-[#FFC542]'>
-                  {pricePerPax || '0'}$ USD
+                  {fromPricePerPax || '0'}$ USD
                 </span>
                 <span className='font-montserrat xsm:text-[0.75rem] inline-block text-[1rem] leading-6 text-white'>
                   /{translateDetailsTourPage('textPerson')}
