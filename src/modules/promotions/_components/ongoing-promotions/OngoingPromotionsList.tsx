@@ -9,6 +9,7 @@ import { Pagination } from '@/components/shared'
 import { CouponItem, CouponTaxonomy } from '@/types/coupon.type'
 import OngoingPromotionsCard from './OngoingPromotionsCard'
 import { useCouponFilters } from './useCouponFilters'
+import { scrollToSection } from '@/utils/scrollToSection'
 
 export default function OngoingPromotions({
   data,
@@ -25,6 +26,7 @@ export default function OngoingPromotions({
 }) {
   const [openDrawer, setOpenDrawer] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
+  const didInitScrollRef = useRef(false)
 
   const { filters: filtersState, coupons, loading, totalPages, page, setFilterValues, resetFilters, setPage } =
     useCouponFilters({
@@ -44,21 +46,20 @@ export default function OngoingPromotions({
   }
 
   useEffect(() => {
+    if (!didInitScrollRef.current) {
+      didInitScrollRef.current = true
+      return
+    }
+
     if (!sectionRef.current) return
-
-    const offset = 120
-    const elementTop = sectionRef.current.getBoundingClientRect().top + window.scrollY
-
-    window.scrollTo({
-      top: elementTop - offset,
-      behavior: 'smooth',
-    })
+    scrollToSection('ongoing-promotions-section', 1, 7.5)
   }, [page])
 
   return (
     <>
       <div
         ref={sectionRef}
+        id='ongoing-promotions-section'
         className='xsm:gap-[1.25rem] xsm:px-[1rem] w-full max-w-[87.5rem] mx-auto flex flex-col items-start gap-[2.5rem] self-stretch'
       >
         <div className='xsm:flex-col xsm:gap-[0.875rem] xsm:items-start flex items-center gap-[2.5rem] self-stretch'>
