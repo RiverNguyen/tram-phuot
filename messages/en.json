@@ -53,6 +53,14 @@
     "desc": "Thank you for trusting us, we will contact you as soon as possible.",
     "button": "Keep exploring"
   },
+  "ListTourPage": {
+    "noResult": "No Result",
+    "reset": "Reset all",
+    "select": "Select",
+    "selected": "Selected",
+    "searchFilter": "Search Filter",
+    "done": "Done"
+  },
   "DetailsTourPage": {
     "metaTourDuration": "Tour duration:",
     "metaPickupAndDropoff": "Pick up & Drop off:",

@@ -53,6 +53,14 @@
     "desc": "Cảm ơn bạn đã tin tưởng chúng tôi, chúng tôi sẽ liên hệ với bạn sớm nhất có thể.",
     "button": "Tiếp tục khám phá"
   },
+  "ListTourPage": {
+    "noResult": "Không có kết quả",
+    "reset": "Xóa tất cả",
+    "select": "Lựa chọn",
+    "selected": "Đã chọn",
+    "searchFilter": "Bộ lọc",
+    "done": "Hoàn thành"
+  },
   "DetailsTourPage": {
     "metaTourDuration": "Thời gian tour:",
     "metaPickupAndDropoff": "Điểm đón & trả:",

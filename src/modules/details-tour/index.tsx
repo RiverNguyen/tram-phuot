@@ -2,7 +2,6 @@ import SectionBanner from '@/modules/details-tour/components/SectionBanner'
 import SectionOverview from '@/modules/details-tour/components/SectionOverview'
 import { DetailsTourApiResponseType } from '@/types/details-tour.type'
 import { SiteSettingsResType } from '@/types/wordpress.type'
-import React from 'react'
 
 interface DetailsTourProps {
   detailsTourData: DetailsTourApiResponseType

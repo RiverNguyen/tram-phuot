@@ -28,9 +28,9 @@ export default function Footer({ data }: { data: IFooter }) {
       <div
         className="
           absolute inset-0
-          sm:mask-[url('/footer/footer_mask.webp')]
+          sm:mask-[url('/footer/d-footer_mask.webp')]
           sm:mask-size-[100.07813rem_92.876rem]
-          xsm:mask-[url('/footer/footer_mask_mobile.webp')]
+          xsm:mask-[url('/footer/d-footer_mask_mobile.webp')]
           xsm:mask-size-[23.4375rem_32rem]
           mask-no-repeat mask-alpha
         "
@@ -232,7 +232,7 @@ export default function Footer({ data }: { data: IFooter }) {
                   <span>VIE</span>
                   <div className='flex items-center space-x-[0.42rem]'>
                     <Image
-                      src='/footer/vn.webp'
+                      src='/footer/d-vn.webp'
                       alt=''
                       width={558}
                       height={558}
@@ -248,7 +248,7 @@ export default function Footer({ data }: { data: IFooter }) {
 
         {!isLoading && !isMobile && (
           <Image
-            src='/footer/footer_bottom_deco_2.webp'
+            src='/footer/d-footer_bottom_deco_2.webp'
             alt='Footer Bottom Deco 2'
             width={431}
             height={406}
