@@ -13,12 +13,7 @@ interface DatePickerFieldProps {
   disabled?: (date: Date) => boolean
 }
 
-export const DatePickerField = ({
-  label,
-  date,
-  onDateChange,
-  disabled,
-}: DatePickerFieldProps) => {
+export const DatePickerField = ({ label, date, onDateChange, disabled }: DatePickerFieldProps) => {
   const t = useTranslations('HomePage.banner')
   const locale = useLocale()
 
@@ -34,17 +29,17 @@ export const DatePickerField = ({
       <PopoverTrigger asChild>
         <div
           className={cn(
-            'flex items-end space-x-2 cursor-pointer',
-            locale === 'vi' ? 'ml-1' : 'ml-[1.375rem]',
+            'flex cursor-pointer items-end space-x-2',
+            locale === 'vi' ? 'ml-1' : 'ml-5.5',
           )}
         >
           <div className='space-y-1'>
-            <p className='text-[#2e2e2e] text-[0.875rem] leading-[1.6]'>{label}</p>
+            <p className='text-body-t1 text-[0.875rem] leading-[1.6]'>{label}</p>
             <div className='flex items-center space-x-2'>
-              <p className='text-[2.125rem] font-medium leading-[0.9] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
+              <p className='font-phu-du w-fit bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[2.125rem] leading-[0.9] font-medium text-transparent'>
                 {formatDate(date).day}
               </p>
-              <p className='text-[#2e2e2e]/60 text-[0.75rem] font-medium leading-[1.6] tracking-[-0.0075rem] bg-transparent'>
+              <p className='text-body-t1/60 bg-transparent text-[0.75rem] leading-[1.6] font-medium tracking-[-0.0075rem]'>
                 {formatDate(date).month}
               </p>
             </div>
@@ -53,7 +48,7 @@ export const DatePickerField = ({
         </div>
       </PopoverTrigger>
       <PopoverContent
-        className='w-[22.25rem] pt-4 pb-6 ml-[-2rem]'
+        className='-ml-8 w-89 pt-4 pb-6'
         align='start'
       >
         <CalendarCustom
@@ -61,11 +56,10 @@ export const DatePickerField = ({
           selected={date}
           onSelect={onDateChange}
           disabled={disabled}
-          className='rounded-md border-0 w-full'
+          className='w-full rounded-md border-0'
           localeCode={locale}
         />
       </PopoverContent>
     </Popover>
   )
 }
-
