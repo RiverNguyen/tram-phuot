@@ -29,7 +29,7 @@ const Images = ({ isInView }: ImagesProps) => {
         alt='overview-grandma'
         width={375}
         height={275}
-        className='w-[23.36031rem] h-[17.15269rem] object-cover absolute bottom-[12rem] left-[-3rem] z-[4] xsm:bottom-[1.5rem] xsm:left-[0.5rem] xsm:w-[9.10775rem] xsm:h-[6.6875rem]'
+        className='w-[23.36031rem] h-[17.15269rem] object-cover absolute bottom-[12rem] left-[-3rem] z-[4] xsm:bottom-[2.25rem] xsm:left-[-1rem] xsm:w-[9.10775rem] xsm:h-[6.6875rem]'
       />
       <Image
         src={'/home/overview/image-mobile.webp'}

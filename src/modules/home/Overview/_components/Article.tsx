@@ -4,6 +4,7 @@ import { BrandButton } from '@/components/shared'
 import { IHomePageOverview } from '@/interface/homepage.interface'
 import Link from 'next/link'
 import { motion } from 'motion/react'
+import useIsMobile from '@/hooks/use-is-mobile'
 
 interface ArticleProps {
   overview: IHomePageOverview
@@ -11,13 +12,16 @@ interface ArticleProps {
 }
 
 const Article = ({ overview, isInView }: ArticleProps) => {
+  const isMobile = useIsMobile()
+  const yOffset = isMobile ? '3rem' : '8rem'
+
   return (
     <motion.article
-      initial={{ opacity: 0, y: '8rem', filter: 'blur(10px)' }}
+      initial={{ opacity: 0, y: yOffset, filter: 'blur(10px)' }}
       animate={
         isInView
           ? { opacity: 1, y: 0, filter: 'blur(0px)' }
-          : { opacity: 0, y: '8rem', filter: 'blur(10px)' }
+          : { opacity: 0, y: yOffset, filter: 'blur(10px)' }
       }
       transition={{ duration: 1.5, ease: [0.39, 0.02, 0.15, 0.85], delay: 0.2 }}
       className='absolute top-[4.67rem] xsm:top-[3.125rem] xsm:left-[3rem] left-[11rem] z-[5]'
@@ -53,16 +57,16 @@ const Article = ({ overview, isInView }: ArticleProps) => {
         <p className='pl-[5rem] xsm:pl-8'>{overview?.title?.line_4}</p>
       </h2>
       <p
-        className='w-[37.4502rem] xsm:w-[21.4375rem] xsm:text-[0.875rem] xsm:indent-0 mt-4 text-[1.125rem] font-medium leading-[2.0] tracking-[-0.02] indent-[4rem]'
+        className='w-[37.4502rem] xsm:w-[21.4375rem] xsm:text-[0.875rem] xsm:indent-0 mt-4 text-[1.125rem] font-medium leading-[2.0] tracking-[-0.02] indent-[4rem] xsm:ml-[-2rem] xsm:line-clamp-4'
         style={{
           textDecoration: 'underline dotted #AEAFAE',
         }}
       >
         {overview?.description}
       </p>
-      <div className='flex space-x-[0.6875rem] mt-[1.72rem] xsm:flex-col xsm:space-y-[0.875rem]'>
+      <div className='flex space-x-[0.6875rem] mt-[1.72rem] xsm:flex-col xsm:space-y-[0.875rem] xsm:ml-[-2rem]'>
         <Link
-          href={overview?.button_1?.url}
+          href={overview?.button_1?.url || ''}
           target={overview?.button_1?.target}
         >
           <BrandButton
@@ -73,7 +77,7 @@ const Article = ({ overview, isInView }: ArticleProps) => {
           </BrandButton>
         </Link>
         <Link
-          href={overview?.button_2?.url}
+          href={overview?.button_2?.url || ''}
           target={overview?.button_2?.target}
         >
           <BrandButton

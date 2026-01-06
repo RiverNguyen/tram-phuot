@@ -13,7 +13,7 @@ const Overview = ({ overview }: { overview: IHomePageOverview }) => {
   return (
     <section
       ref={sectionRef}
-      className='h-[68.5rem] relative w-full bg-[url("/home/overview/bg.webp")] bg-cover bg-center overflow-hidden xsm:h-[37.75rem]'
+      className='h-[68.5rem] relative w-full bg-[url("/home/overview/bg.webp")] bg-cover bg-center overflow-hidden xsm:h-[39.75rem]'
     >
       <Images isInView={isInView} />
       <Article
