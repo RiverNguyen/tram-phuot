@@ -1,65 +1,71 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import DrawerProvider from '@/components/provider/DrawerProvider'
 import ICTrashcan from '@/components/icons/ICTrashcan'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItemCustom } from '@/components/ui/radio-group'
-import { mapTaxonomyToFilter } from './mapTaxonomyToFilter'
 import { CouponTaxonomy } from '@/types/coupon.type'
+import { mapTaxonomyToFilter } from './mapTaxonomyToFilter'
+import { useEffect, useState } from 'react'
 
 interface FilterDrawerProps {
   open: boolean
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>
-  onReset: () => void
-  onApply: (filters: { destination: string; typeTours: string[] }) => void
-  initialFilters?: {
-    destination: string
-    typeTours: string[]
-  }
   taxonomies: CouponTaxonomy[]
+  filters: {
+    locations: string
+    'tour-type': string[]
+  }
+  onApply: (next: { locations: string; 'tour-type': string[] }) => void
+  onReset: () => void
 }
 
-export default function FilterDrawer({
-  open,
-  onOpenChange,
-  onReset,
-  onApply,
-  initialFilters = { destination: '', typeTours: [] },
-  taxonomies,
-}: FilterDrawerProps) {
-  const [selectedDestination, setSelectedDestination] = useState<string>(initialFilters.destination)
-  const [selectedTypeTours, setSelectedTypeTours] = useState<string[]>(initialFilters.typeTours)
+export default function FilterDrawer({ open, onOpenChange, taxonomies, filters, onApply, onReset }: FilterDrawerProps) {
+  const filtersMap = mapTaxonomyToFilter(taxonomies)
 
-  const filters = mapTaxonomyToFilter(taxonomies)
+  const selectedDestination = filters.locations || undefined
+  const selectedTypeTours = filters['tour-type'] || []
+
+  const [draftDestination, setDraftDestination] = useState<string | undefined>(selectedDestination)
+
+  const [draftTypeTours, setDraftTypeTours] = useState<string[]>(selectedTypeTours)
 
   useEffect(() => {
-    if (open) {
-      setSelectedDestination(initialFilters.destination)
-      setSelectedTypeTours(initialFilters.typeTours)
-    }
-  }, [open, initialFilters])
+    if (!open) return
+
+    setDraftDestination(selectedDestination)
+    setDraftTypeTours([...selectedTypeTours])
+  }, [open, selectedDestination, selectedTypeTours])
 
   const handleTypeTourChange = (value: string, checked: boolean) => {
-    if (checked) {
-      setSelectedTypeTours((prev) => [...prev, value])
-    } else {
-      setSelectedTypeTours((prev) => prev.filter((v) => v !== value))
-    }
+    setDraftTypeTours((prev) => {
+      if (checked) {
+        return prev.includes(value) ? prev : [...prev, value]
+      }
+      return prev.filter((v) => v !== value)
+    })
+  }
+
+  const handleDestinationChange = (value: string) => {
+    setDraftDestination(value)
   }
 
   const handleApply = () => {
     onApply({
-      destination: selectedDestination,
-      typeTours: selectedTypeTours,
+      locations: draftDestination || '',
+      'tour-type': draftTypeTours,
     })
+    onOpenChange(false)
   }
 
   const handleReset = () => {
-    setSelectedDestination('')
-    setSelectedTypeTours([])
+    setDraftDestination(undefined)
+    setDraftTypeTours([])
+
     onReset()
+
+    onOpenChange(false)
   }
 
   return (
@@ -88,11 +94,11 @@ export default function FilterDrawer({
                 DESTINATION
               </h4>
               <RadioGroup
-                value={selectedDestination}
-                onValueChange={setSelectedDestination}
+                value={draftDestination || ''}
+                onValueChange={handleDestinationChange}
                 className='flex w-full flex-col items-start gap-[0.75rem]'
               >
-                {filters.locations?.map((option) => (
+                {filtersMap?.locations?.map((option) => (
                   <div
                     key={option.value}
                     className='flex items-center gap-[0.5rem]'
@@ -116,14 +122,14 @@ export default function FilterDrawer({
                 TYPE TOUR
               </h4>
               <div className='flex w-full flex-col items-start gap-[0.75rem]'>
-                {filters['tour-type']?.map((option) => (
+                {filtersMap['tour-type']?.map((option) => (
                   <div
                     key={option.value}
                     className='flex items-center gap-[0.5rem]'
                   >
                     <Checkbox
                       id={`typeTour-${option.value}`}
-                      checked={selectedTypeTours.includes(option.value)}
+                      checked={draftTypeTours.includes(option.value)}
                       onCheckedChange={(checked) =>
                         handleTypeTourChange(option.value, checked === true)
                       }
@@ -153,7 +159,7 @@ export default function FilterDrawer({
           <button
             type='button'
             onClick={handleReset}
-            className='flex h-[2.5rem] py-[0.75rem] justify-center items-center gap-[0.25rem] rounded-[0.5rem] shadow-[0_3px_40px_1px_rgba(214,214,221,0.40)]'
+            className='flex h-[2.5rem] py-[0.75rem] justify-center items-center gap-[0.25rem] rounded-[0.5rem]'
           >
             <ICTrashcan className='size-[1rem] text-[#2E2E2E]' />
             Reset all

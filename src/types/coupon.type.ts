@@ -59,6 +59,7 @@ export type CouponACF = {
   time_goes: DateRange
   hotel_or_tour_applicable: ApplicablePost[]
   private: boolean
+  price_discount: string
 }
 
 export type DateRange = {

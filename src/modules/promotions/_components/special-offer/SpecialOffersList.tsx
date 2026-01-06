@@ -30,7 +30,7 @@ export default function SpecialOffers({ data }: { data: CouponItem[] }) {
           }}
           grabCursor
           spaceBetween={convertRemToPx(1.25)}
-          className='xsm:!hidden w-full h-full !px-[5.75rem] !py-[2.5rem] relative'
+          className='xsm:!hidden w-full h-full !px-[5.75rem] !py-[2.5rem] relative select-none'
         >
           {data
             .filter((offer: CouponItem) => !offer.acf.private)
