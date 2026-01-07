@@ -5,23 +5,27 @@ import ICTrashcan from '@/components/icons/ICTrashcan'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItemCustom } from '@/components/ui/radio-group'
-import { CouponTaxonomy } from '@/types/coupon.type'
+import { ICouponTaxonomy } from '@/interface/coupon.interface'
 import { mapTaxonomyToFilter } from './mapTaxonomyToFilter'
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
+
+type CouponFilter = {
+  locations: string
+  'tour-type': string[]
+}
 
 interface FilterDrawerProps {
   open: boolean
   onOpenChange: React.Dispatch<React.SetStateAction<boolean>>
-  taxonomies: CouponTaxonomy[]
-  filters: {
-    locations: string
-    'tour-type': string[]
-  }
-  onApply: (next: { locations: string; 'tour-type': string[] }) => void
+  taxonomies: ICouponTaxonomy[]
+  filters: CouponFilter
+  onApply: (next: CouponFilter) => void
   onReset: () => void
 }
 
 export default function FilterDrawer({ open, onOpenChange, taxonomies, filters, onApply, onReset }: FilterDrawerProps) {
+  const t = useTranslations('ListCouponPage')
   const filtersMap = mapTaxonomyToFilter(taxonomies)
 
   const selectedDestination = filters.locations || undefined
@@ -86,12 +90,12 @@ export default function FilterDrawer({ open, onOpenChange, taxonomies, filters, 
         {/* content */}
         <div className='flex flex-col items-start gap-[1.25rem] self-stretch'>
           <h3 className='flex px-[1rem] flex-col self-stretch font-phu-du text-[1.125rem] font-bold leading-[1.2375rem] bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-transparent'>
-            Category
+            {t('category')}
           </h3>
           <div className='flex px-[1rem] flex-col items-start gap-[1.25rem] self-stretch'>
             <div className='flex flex-col items-start gap-[0.875rem] self-stretch'>
               <h4 className='text-[#2E2E2E] font-phu-du text-[0.875rem] font-bold leading-[1.1375rem]'>
-                DESTINATION
+                {t('destination')}
               </h4>
               <RadioGroup
                 value={draftDestination || ''}
@@ -119,7 +123,7 @@ export default function FilterDrawer({ open, onOpenChange, taxonomies, filters, 
             </div>
             <div className='flex flex-col items-start gap-[0.875rem] self-stretch'>
               <h4 className='text-[#2E2E2E] font-phu-du text-[0.875rem] font-bold leading-[1.1375rem]'>
-                TYPE TOUR
+                {t('typeTour')}
               </h4>
               <div className='flex w-full flex-col items-start gap-[0.75rem]'>
                 {filtersMap['tour-type']?.map((option) => (
@@ -154,7 +158,7 @@ export default function FilterDrawer({ open, onOpenChange, taxonomies, filters, 
             onClick={handleApply}
             className='flex h-[2.5rem] py-[0.625rem] px-[1.875rem] justify-center items-center gap-[0.625rem] flex-1 rounded-[0.625rem] bg-[linear-gradient(50deg,#03328C_-18.36%,#00804D_82.62%)] text-[#F9EAD5] font-montserrat text-[0.75rem] font-semibold leading-[0.9rem] uppercase'
           >
-            Apply
+            {t('apply')}
           </button>
           <button
             type='button'
@@ -162,7 +166,7 @@ export default function FilterDrawer({ open, onOpenChange, taxonomies, filters, 
             className='flex h-[2.5rem] py-[0.75rem] justify-center items-center gap-[0.25rem] rounded-[0.5rem]'
           >
             <ICTrashcan className='size-[1rem] text-[#2E2E2E]' />
-            Reset all
+            {t('reset')}
           </button>
         </div>
       </div>

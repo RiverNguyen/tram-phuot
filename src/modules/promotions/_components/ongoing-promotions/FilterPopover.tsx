@@ -7,6 +7,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { RadioGroup, RadioGroupItemCustom } from '@/components/ui/radio-group'
 import { ICChevron } from '@/components/icons'
 import { FilterOption } from './mapTaxonomyToFilter'
+import { useTranslations } from 'next-intl'
 
 interface FilterPopoverProps {
   label: string
@@ -26,22 +27,23 @@ export default function FilterPopover({
   className,
 }: FilterPopoverProps) {
   const [open, setOpen] = useState(false)
+  const t = useTranslations('ListCouponPage')
   const isRadio = variant === 'radio'
   const selectedValue = isRadio ? (value as string | undefined) || 'all' : ''
   const selectedValues = !isRadio ? (value as string[] | undefined) || [] : []
 
   const getDisplayText = () => {
     if (isRadio) {
-      if (selectedValue === 'all') return 'All'
+      if (selectedValue === 'all') return t('all')
       const selectedOption = options.find((opt) => opt.value === selectedValue)
-      return selectedOption?.label || 'All'
+      return selectedOption?.label || t('all')
     } else {
-      if (selectedValues.length === 0) return 'All'
+      if (selectedValues.length === 0) return t('all')
       if (selectedValues.length === 1) {
         const selectedOption = options.find((opt) => opt.value === selectedValues[0])
-        return selectedOption?.label || 'All'
+        return selectedOption?.label || t('all')
       }
-      return `${selectedValues.length} selected`
+      return `${selectedValues.length} ${t('selected')}`
     }
   }
 
@@ -97,7 +99,7 @@ export default function FilterPopover({
                 id={`${label}-all`}
               />
               <span className='line-clamp-1 text-[#303030] font-montserrat text-[0.875rem] leading-[1.3125rem] cursor-pointer'>
-                All
+                {t('all')}
               </span>
             </label>
 

@@ -61,6 +61,23 @@
     "searchFilter": "Bộ lọc",
     "done": "Hoàn thành"
   },
+  "ListCouponPage": {
+    "noResult": "Không có kết quả",
+    "reset": "Xóa tất cả",
+    "all": "Tất cả",
+    "category": "Danh mục",
+    "destination": "Địa điểm",
+    "typeTour": "Loại tour",
+    "apply": "Áp dụng"
+  },
+  "ListHotelPage": {
+    "noResult": "Không có kết quả",
+    "reset": "Xóa tất cả",
+    "select": "Lựa chọn",
+    "selected": "Đã chọn",
+    "searchFilter": "Bộ lọc",
+    "done": "Hoàn thành"
+  },
   "DetailsTourPage": {
     "metaTourDuration": "Thời gian tour:",
     "metaPickupAndDropoff": "Điểm đón & trả:",

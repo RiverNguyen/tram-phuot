@@ -3,11 +3,10 @@ import SpecialOffers from '@/modules/promotions/_components/special-offer/Wrappe
 import OngoingPromotions from '@/modules/promotions/_components/ongoing-promotions/WrapperOngoingPromotions'
 import fetchData from '@/fetches/fetchData'
 import endpoints from '@/configs/endpoints'
-import { CouponResponse, CouponTaxonomyResponse } from '@/types/coupon.type'
-import Image from 'next/image'
+import { ICouponRes, ICouponTaxonomyRes } from '@/interface/coupon.interface'
 
 const getCoupon = async (lang: string) => {
-  const res: CouponResponse = await fetchData({
+  const res: ICouponRes = await fetchData({
     api: `${endpoints.promotion.coupon}?lang=${lang}&acf=true&limit=9`,
   })
   return res
@@ -34,17 +33,29 @@ const getCouponFiltered = async ({
   if (tourType) query.set('tour-type', tourType)
   if (paged && Number(paged) > 1) query.set('paged', paged)
 
-  const res: CouponResponse = await fetchData({
+  const res: ICouponRes = await fetchData({
     api: `${endpoints.promotion.coupon}?${query.toString()}`,
   })
   return res
 }
 
 const getTaxonomiesCoupon = async (lang: string) => {
-  const res: CouponTaxonomyResponse = await fetchData({
+  const res: ICouponTaxonomyRes = await fetchData({
     api: `${endpoints.promotion.couponTaxonomies}?lang=${lang}`,
   })
   return res
+}
+
+const getPromotionPage = async (locale: string) => {
+  return await fetchData({
+    api: endpoints.promotion[locale as 'en' | 'vi'],
+  })
+}
+
+const getCouponSpecialOffer = async (locale: string) => {
+  return await fetchData({
+    api: endpoints.promotion.couponSpecialOffer,
+  })
 }
 
 export default async function Promotions({
@@ -58,7 +69,12 @@ export default async function Promotions({
     paged?: string
   }
 }) {
-  const [coupon, taxonomies] = await Promise.all([getCoupon(locale), getTaxonomiesCoupon(locale)])
+  const [coupon, taxonomies, promotionPage, couponSpecialOffer] = await Promise.all([
+    getCoupon(locale),
+    getTaxonomiesCoupon(locale),
+    getPromotionPage(locale),
+    getCouponSpecialOffer(locale),
+  ])
 
   const hasFilters =
     !!searchParams?.locations ||
@@ -77,13 +93,16 @@ export default async function Promotions({
   return (
     <main className='relative w-full h-full bg-[url("/uu-dai/bg.webp")] bg-cover bg-center'>
       {/* Banner */}
-      <Banner />
+      <Banner
+        locale={locale}
+        data={promotionPage?.acf}
+      />
 
       {/* Main content */}
       <div className='relative w-full h-full'>
         <div className='xsm:py-[2.5rem] xsm:gap-0 relative w-full flex flex-col items-center gap-[5.625rem] py-[5rem]'>
           {/* Special offer just for you! */}
-          <SpecialOffers data={coupon?.data} />
+          <SpecialOffers data={couponSpecialOffer} />
 
           {/* ongoing promotion */}
           <OngoingPromotions

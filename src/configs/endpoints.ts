@@ -10,6 +10,17 @@ const ENDPOINTS = {
     detail: 'api/v1/tour/detail',
     applyVoucher: 'api/v1/tour/voucher/apply',
     relatedTours: 'api/v1/tour/related-tours',
+    en: 'wp/v2/pages/272?_fields=acf&acf_format=standard',
+    vi: 'wp/v2/pages/274?_fields=acf&acf_format=standard',
+  },
+  hotel: {
+    list: 'api/v1/get-all/hotels',
+    taxonomies: 'api/v1/taxonomies/hotels',
+    detail: 'api/v1/hotels/detail',
+    applyVoucher: 'api/v1/hotels/voucher/apply',
+    relatedHotels: 'api/v1/hotels/related-hotels',
+    en: 'wp/v2/pages/559?_fields=acf&acf_format=standard',
+    vi: 'wp/v2/pages/562?_fields=acf&acf_format=standard',
   },
   wordpress: {
     siteSettings: 'api/v1/site-settings',
@@ -25,6 +36,9 @@ const ENDPOINTS = {
   promotion: {
     coupon: 'api/v1/get-all/coupon',
     couponTaxonomies: 'api/v1/taxonomies/coupon',
+    couponSpecialOffer: 'api/v1/page-acf?page_id=410&name=coupon&acf=true',
+    en: 'wp/v2/pages/410?_fields=acf&acf_format=standard',
+    vi: 'wp/v2/pages/412?_fields=acf&acf_format=standard',
   },
   contact_form: {
     form_booking_tour_vi: {

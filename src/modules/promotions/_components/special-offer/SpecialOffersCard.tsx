@@ -3,11 +3,11 @@ import Image from 'next/image'
 import ICCopy from '@/components/icons/ICCopy'
 import { cn } from '@/lib/utils'
 import { useState } from 'react'
-import { CouponItem } from '@/types/coupon.type'
+import { ICoupon } from '@/interface/coupon.interface'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Check } from 'lucide-react'
 
-export default function SpecialOffersCard({ offer }: { offer: CouponItem }) {
+export default function SpecialOffersCard({ offer }: { offer: ICoupon }) {
   const [copiedId, setCopiedId] = useState<number | null>(null)
   const handleCopy = async (code: string, id: number) => {
     try {

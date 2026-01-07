@@ -43,91 +43,57 @@ export default function FilterDrawer({
       open={open}
       setOpen={setOpen}
       showDrawerDrag={false}
-      className='h-full overflow-hidden'
+      className='max-h-screen overflow-hidden'
     >
-      {/* Header */}
-      <div className='right fixed top-0 left-0 flex h-[4.5rem] w-full items-center justify-between bg-[#E5EDF6] p-3 pt-6'>
-        <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent'>
-          {t('searchFilter')}
-        </span>
-        <button
-          type='button'
-          onClick={() => setOpen(false)}
-          className='flex shrink-0 items-center justify-center rounded-[0.5rem] bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] p-[0.625rem]'
-        >
-          <X className='size-[1rem] text-white' />
-        </button>
-      </div>
+      <div className='flex max-h-screen w-full flex-col overflow-hidden'>
+        {/* Header */}
+        <div className='sticky top-0 z-10 flex h-[4.5rem] w-full items-center justify-between bg-[#E5EDF6] p-3 pt-6'>
+          <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent'>
+            {t('searchFilter')}
+          </span>
+          <button
+            type='button'
+            onClick={() => setOpen(false)}
+            className='flex shrink-0 items-center justify-center rounded-[0.5rem] bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] p-[0.625rem]'
+          >
+            <X className='size-[1rem] text-white' />
+          </button>
+        </div>
 
-      {/* Content */}
-      <div className='space-y-[0.75rem] overflow-y-auto bg-[#E5EDF6] pt-[4.5rem] pb-[4.125rem]'>
-        {data.map((item, i) => {
-          const isRadio = item.variant === 'radio'
+        {/* Content */}
+        <div className='flex-1 space-y-[0.75rem] overflow-y-auto bg-[#E5EDF6] pb-3'>
+          {data.map((item, i) => {
+            const isRadio = item.variant === 'radio'
 
-          const value = values[item.taxonomy] as string
+            const value = values[item.taxonomy] as string
 
-          return (
-            <div
-              className='bg-white p-3'
-              key={i}
-            >
-              <div className='font-montserrat flex items-center justify-between rounded-[0.5rem] bg-[#F6F6F6] p-[0.875rem_0.625rem] text-[0.875rem] leading-[1.3125rem] font-bold text-[#07364D] uppercase'>
-                <span>{item.label}</span>
-                {item.taxonomy === 'locations' && <ICLocation2 className='size-[1.25rem]' />}
-                {item.taxonomy === 'tour-duration' && <Clock8 className='size-[1.25rem]' />}
-                {item.taxonomy === 'tour-type' && <List className='size-[1.25rem]' />}
-              </div>
+            return (
+              <div
+                className='bg-white p-3'
+                key={i}
+              >
+                <div className='font-montserrat flex items-center justify-between rounded-[0.5rem] bg-[#F6F6F6] p-[0.875rem_0.625rem] text-[0.875rem] leading-[1.3125rem] font-bold text-[#07364D] uppercase'>
+                  <span>{item.label}</span>
+                  {item.taxonomy === 'locations' && <ICLocation2 className='size-[1.25rem]' />}
+                  {item.taxonomy === 'tour-duration' && <Clock8 className='size-[1.25rem]' />}
+                  {item.taxonomy === 'tour-type' && <List className='size-[1.25rem]' />}
+                </div>
 
-              {isRadio ? (
-                <RadioGroup
-                  value={value}
-                  onValueChange={(value) => onChange(item.taxonomy, value)}
-                >
-                  {item.options.map((option, i) => (
-                    <div
-                      key={option.value}
-                      className='flex items-center space-x-2.5 px-[0.81rem] py-4'
-                    >
-                      <RadioGroupItemCustom
-                        value={option.value}
-                        id={`tour-${option.value}`}
-                        className='flex size-[1.375rem] items-center justify-center'
-                      />
-                      <Label
-                        htmlFor={`tour-${option.value}`}
-                        className='font-montserrat line-clamp-1 cursor-pointer text-[0.875rem] leading-[1.4rem] text-[#303030]'
-                      >
-                        {option.label}
-                      </Label>
-                    </div>
-                  ))}
-                </RadioGroup>
-              ) : (
-                <div>
-                  {item.options.map((option, i) => {
-                    const newValues = values[item.taxonomy] as string[]
-
-                    const isChecked = newValues.includes(option.value)
-
-                    return (
+                {isRadio ? (
+                  <RadioGroup
+                    value={value}
+                    onValueChange={(value) => onChange(item.taxonomy, value)}
+                  >
+                    {item.options.map((option, i) => (
                       <div
-                        key={i}
-                        className='flex items-center gap-[0.3125rem] py-[0.75rem]'
+                        key={option.value}
+                        className='flex items-center space-x-2.5 px-[0.81rem] py-4'
                       >
-                        <div className='p-[0.5rem]'>
-                          <Checkbox
-                            id={`tour-${option.value}`}
-                            checked={isChecked}
-                            onCheckedChange={(checked) => {
-                              const values = checked
-                                ? [...newValues, option.value]
-                                : newValues.filter((value) => value !== option.value)
-
-                              onChange(item.taxonomy, values)
-                            }}
-                            className='size-[1.375rem] rounded-[0.375rem] border-2 border-[rgba(46,46,46,0.4)]/80 shadow-none data-[state=checked]:border-none data-[state=checked]:bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)]'
-                          />
-                        </div>
+                        <RadioGroupItemCustom
+                          value={option.value}
+                          id={`tour-${option.value}`}
+                          className='flex size-[1.375rem] items-center justify-center'
+                        />
                         <Label
                           htmlFor={`tour-${option.value}`}
                           className='font-montserrat line-clamp-1 cursor-pointer text-[0.875rem] leading-[1.4rem] text-[#303030]'
@@ -135,39 +101,76 @@ export default function FilterDrawer({
                           {option.label}
                         </Label>
                       </div>
-                    )
-                  })}
-                </div>
-              )}
-            </div>
-          )
-        })}
-      </div>
+                    ))}
+                  </RadioGroup>
+                ) : (
+                  <div>
+                    {item.options.map((option, i) => {
+                      const newValues = values[item.taxonomy] as string[]
 
-      <div className='fixed right-0 bottom-0 left-0 z-1 flex w-full items-center space-x-[0.75rem] bg-white p-3'>
-        <BrandButton
-          classNameButtonContainer='w-full'
-          type={{
-            variant: 'button',
-            onClick: () => {
+                      const isChecked = newValues.includes(option.value)
+
+                      return (
+                        <div
+                          key={i}
+                          className='flex items-center gap-[0.3125rem] py-[0.75rem]'
+                        >
+                          <div className='p-[0.5rem]'>
+                            <Checkbox
+                              id={`tour-${option.value}`}
+                              checked={isChecked}
+                              onCheckedChange={(checked) => {
+                                const values = checked
+                                  ? [...newValues, option.value]
+                                  : newValues.filter((value) => value !== option.value)
+
+                                onChange(item.taxonomy, values)
+                              }}
+                              className='size-[1.375rem] rounded-[0.375rem] border-2 border-[rgba(46,46,46,0.4)]/80 shadow-none data-[state=checked]:border-none data-[state=checked]:bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)]'
+                            />
+                          </div>
+                          <Label
+                            htmlFor={`tour-${option.value}`}
+                            className='font-montserrat line-clamp-1 cursor-pointer text-[0.875rem] leading-[1.4rem] text-[#303030]'
+                          >
+                            {option.label}
+                          </Label>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Footer */}
+        <div className='sticky bottom-0 z-10 flex w-full items-center space-x-[0.75rem] bg-white p-3'>
+          <BrandButton
+            classNameButtonContainer='w-full'
+            type={{
+              variant: 'button',
+              onClick: () => {
+                setOpen(false)
+                onApply()
+              },
+            }}
+          >
+            {t('done')}
+          </BrandButton>
+          <button
+            type='button'
+            onClick={() => {
               setOpen(false)
-              onApply()
-            },
-          }}
-        >
-          {t('done')}
-        </BrandButton>
-        <button
-          type='button'
-          onClick={() => {
-            setOpen(false)
-            onReset()
-          }}
-          className='font-montserrat flex h-[2.5rem] shrink-0 items-center justify-center gap-[0.25rem] py-[0.75rem] text-[0.875rem] text-[#FF2019]'
-        >
-          <ICTrashcan className='size-[1rem]' />
-          {t('reset')}
-        </button>
+              onReset()
+            }}
+            className='font-montserrat flex h-[2.5rem] shrink-0 items-center justify-center gap-[0.25rem] py-[0.75rem] text-[0.875rem] text-[#FF2019]'
+          >
+            <ICTrashcan className='size-[1rem]' />
+            {t('reset')}
+          </button>
+        </div>
       </div>
     </DrawerProvider>
   )

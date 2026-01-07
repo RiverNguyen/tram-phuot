@@ -1,6 +1,6 @@
-import Banner from '@/modules/tours/_components/Banner'
-import WrapperTourList from '@/modules/tours/_components/WrapperTourList'
-import tourService from '@/services/tour'
+import Banner from '@/modules/hotels/_components/Banner'
+import WrapperHotelList from '@/modules/hotels/_components/WrapperHotelList'
+import hotelService from '@/services/hotels'
 import ENDPOINTS from '@/configs/endpoints'
 import fetchData from '@/fetches/fetchData'
 
@@ -10,39 +10,38 @@ export default async function page({
 }: {
   params: Promise<{ locale: string }>
   searchParams: Promise<{
-    locations: string
-    ['tour-type']: string
-    ['tour-duration']: string
+    locations?: string
+    ['hotel-amenities']?: string
     page?: string
   }>
 }) {
   const [{ locale }, sp] = await Promise.all([params, searchParams])
 
-  const tourPage = await fetchData({
-    api: ENDPOINTS.tour[locale as 'en' | 'vi'],
+  const hotelPage = await fetchData({
+    api: ENDPOINTS.hotel[locale as 'en' | 'vi'],
   })
 
   const [{ data: taxonomies }, { data, totalPages }] = await Promise.all([
-    tourService.getTaxonomies(locale),
-    tourService.getTours({
+    hotelService.getTaxonomies(locale),
+    hotelService.getHotels({
       locale,
-      locations: sp.locations,
-      tourType: sp['tour-type'],
-      tourDuration: sp['tour-duration'],
+      locations: sp.locations || '',
+      hotelAmenities: sp['hotel-amenities'] || '',
       page: sp.page,
+      limit: 8,
     }),
   ])
 
   return (
-    <main className='relative w-full h-full bg-[#FDF4ED]'>
+    <main className='relative w-full h-full bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")]'>
       {/* Banner */}
       <Banner
         locale={locale}
-        data={tourPage?.acf}
+        data={hotelPage?.acf}
       />
 
       {/* Main content */}
-      <WrapperTourList
+      <WrapperHotelList
         data={data}
         totalPages={totalPages}
         taxonomies={taxonomies}

@@ -6,14 +6,14 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
     {
-      label: locale === 'en' ? 'Tour List' : 'Danh sách tour',
-      href: locale === 'en' ? '/tours' : '/danh-sach-tour',
+      label: locale === 'en' ? 'Hotel List' : 'Danh sách khách sạn',
+      href: locale === 'en' ? '/hotels' : '/danh-sach-khach-san',
     },
   ]
 
   return (
     <div className='xsm:h-[43.25rem] relative h-[36.375rem] w-full'>
-      { data?.banner?.background_pc?.url && (
+      {data?.banner?.background_pc?.url && (
         <Image
           src={data?.banner?.background_pc?.url}
           alt='banner'
@@ -48,7 +48,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
         alt='overlay bottom'
         width={4800}
         height={153}
-        className='xsm:hidden absolute top-[33.3rem] left-0 h-auto w-full object-cover'
+        className='xsm:hidden absolute top-[33.25rem] left-0 h-auto w-full object-cover'
       />
       <Image
         src='/danh-sach-tour/overlay-bottom-mb.webp'

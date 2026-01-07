@@ -61,6 +61,24 @@
     "searchFilter": "Search Filter",
     "done": "Done"
   },
+  "ListCouponPage": {
+    "noResult": "No Result",
+    "reset": "Reset all",
+    "all": "All",
+    "selected": "Selected",
+    "category": "Category",
+    "destination": "Destination",
+    "typeTour": "Type tour",
+    "apply": "Apply"
+  },
+  "ListHotelPage": {
+    "noResult": "No Result",
+    "reset": "Reset all",
+    "select": "Select",
+    "selected": "Selected",
+    "searchFilter": "Search Filter",
+    "done": "Done"
+  },
   "DetailsTourPage": {
     "metaTourDuration": "Tour duration:",
     "metaPickupAndDropoff": "Pick up & Drop off:",

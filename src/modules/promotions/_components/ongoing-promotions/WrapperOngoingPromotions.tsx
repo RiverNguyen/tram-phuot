@@ -9,18 +9,19 @@ import { ICTrashcan } from '@/components/icons'
 import ICCFilterLine from '@/components/icons/ICCFilterLine'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Pagination } from '@/components/shared'
-import { CouponItem, CouponTaxonomy } from '@/types/coupon.type'
+import { ICoupon, ICouponTaxonomy } from '@/interface/coupon.interface'
 import OngoingPromotionsCard from './OngoingPromotionsCard'
 import { scrollToSection } from '@/utils/scrollToSection'
 import { usePathname, useRouter } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
 
 export default function OngoingPromotions({
   data,
   taxonomies,
   totalPages,
 }: {
-  data: CouponItem[]
-  taxonomies: CouponTaxonomy[]
+  data: ICoupon[]
+  taxonomies: ICouponTaxonomy[]
   totalPages?: number
 }) {
   const [openDrawer, setOpenDrawer] = useState(false)
@@ -29,6 +30,7 @@ export default function OngoingPromotions({
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
+  const t = useTranslations('ListCouponPage')
 
   const filters = mapTaxonomyToFilter(taxonomies)
 
@@ -73,7 +75,16 @@ export default function OngoingPromotions({
   }
 
   const handleReset = () => {
-    if (filterState.locations === '' && filterState['tour-type'].length === 0) return
+    const hasAnyFilter = filterState.locations !== '' || filterState['tour-type'].length > 0
+    if (!hasAnyFilter) {
+      if (currentPage <= 1) return
+      startTransition(() => {
+        const query = createQueryString({ paged: undefined })
+        router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
+      })
+      return
+    }
+
     pushFilters({ locations: '', 'tour-type': [] })
   }
 
@@ -116,14 +127,14 @@ export default function OngoingPromotions({
           {/* Desktop Filters */}
           <div className='xsm:hidden flex flex-1 items-center gap-[0.75rem]'>
             <FilterPopover
-              label='Destination'
+              label={t('destination')}
               options={filters.locations ?? []}
               value={filterState.locations}
               onValueChange={(val) => handleFilterChange('locations', val as string)}
               variant='radio'
             />
             <FilterPopover
-              label='type tour'
+              label={t('typeTour')}
               options={filters['tour-type'] ?? []}
               value={filterState['tour-type']}
               onValueChange={(val) => handleFilterChange('tour-type', val as string[])}
@@ -136,7 +147,7 @@ export default function OngoingPromotions({
             >
               <ICTrashcan className='size-[1.125rem] text-[#FF2019]' />
               <span className='font-montserrat text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] text-[#FF2019] uppercase'>
-                Reset all
+                {t('reset')}
               </span>
             </button>
           </div>
@@ -149,7 +160,7 @@ export default function OngoingPromotions({
               className='flex w-full items-center justify-between rounded-[0.5rem] bg-white px-[0.75rem] py-[0.625rem] shadow-[0_2px_4px_0_rgba(0,0,0,0.05)]'
             >
               <span className='font-montserrat text-[0.875rem] leading-[1.3125rem] font-medium text-[rgba(46,46,46,0.75)]'>
-                Category
+                {t('category')}
               </span>
               <ICCFilterLine className='size-[1.28125rem]' />
             </button>
@@ -197,7 +208,7 @@ export default function OngoingPromotions({
           ) : (
             <div className='col-span-3 flex w-full items-center justify-center'>
               <span className='font-montserrat text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] text-[#2E2E2E]'>
-                Not found
+                {t('noResult')}
               </span>
             </div>
           )}
