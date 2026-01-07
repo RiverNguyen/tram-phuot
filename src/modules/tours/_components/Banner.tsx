@@ -13,26 +13,22 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
 
   return (
     <div className='xsm:h-[43.25rem] relative h-[36.375rem] w-full'>
-      { data?.banner?.background_pc?.url && (
-        <Image
-          src={data?.banner?.background_pc?.url}
-          alt='banner'
-          fill
-          priority
-          sizes='(max-width: 640px) 0vw, 100vw'
-          className='xsm:hidden object-cover'
-        />
-      )}
-      {data?.banner?.background_mobile?.url && (
-        <Image
-          src={data?.banner?.background_mobile?.url}
-          alt='banner mb'
-          fill
-          priority
-          sizes='(max-width: 640px) 0vw, 100vw'
-          className='object-cover sm:hidden'
-        />
-      )}
+      <Image
+        src={data?.banner?.background_pc?.url || ''}
+        alt='banner'
+        width={1600}
+        height={582}
+        priority
+        className='xsm:hidden h-auto w-full object-cover'
+      />
+      <Image
+        src={data?.banner?.background_mobile?.url || ''}
+        alt='banner mb'
+        width={375}
+        height={692}
+        priority
+        className='h-auto w-full object-cover sm:hidden'
+      />
       {/* overlay */}
       <div className='xsm:top-[0] xsm:h-[43.25rem] absolute top-[16.8125rem] left-0 h-[19.5625rem] w-full bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,rgba(2,3,5,0.08)_13.88%,#192842_100%)] opacity-[0.68] backdrop-blur-[2px]' />
       {/* content */}

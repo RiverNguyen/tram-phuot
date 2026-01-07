@@ -48,8 +48,8 @@
     "button": "Back to homepage"
   },
   "ThankYou": {
-    "title": "We have received your quote request.",
-    "subtitle": "Thank you for trusting us !",
+    "title": "Thank you for trusting us !",
+    "subtitle": "We have received your quote request.",
     "desc": "Thank you for trusting us, we will contact you as soon as possible.",
     "button": "Keep exploring"
   },

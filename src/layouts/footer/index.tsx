@@ -17,13 +17,10 @@ export default function Footer({ data }: { data: IFooter }) {
 
   const isThankyouPage = pathname === '/thank-you' || pathname === '/cam-on'
 
+  if (isThankyouPage) return null
+
   return (
-    <footer
-      className={cn(
-        'relative bg-[#FDF4ED] h-[85.8125rem] xsm:h-auto overflow-hidden z-1',
-        !isLoading && isMobile && isThankyouPage && 'bg-transparent',
-      )}
-    >
+    <footer className='relative bg-[#FDF4ED] h-[85.8125rem] xsm:h-auto overflow-hidden z-1'>
       {/* Background + mask */}
       <div
         className="
