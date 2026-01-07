@@ -6,6 +6,7 @@ import { IHomePage } from '@/interface/homepage.interface'
 import { BannerTitle } from './_components/BannerTitle'
 import { BannerSlider } from './_components/BannerSlider'
 import BookingFormMobile from './_components/mobile/BookingFormMobile'
+import { BookingForm } from './_components/desktop/BookingForm'
 
 const stations = [
   {
@@ -73,7 +74,7 @@ const BannerHomePage = ({ data }: { data: IHomePage }) => {
           galleryMobile={data?.banner?.gallery_mobile || []}
         />
         {/* Desktop */}
-        <BookingFormMobile
+        <BookingForm
           stations={stations}
           selectedStation={selectedStation}
           onStationChange={setSelectedStation}
