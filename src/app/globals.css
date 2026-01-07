@@ -94,8 +94,8 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   transition: background-color 5000s ease-in-out 0s;
-  -webkit-text-fill-color: white !important;
-  color: white !important;
+  -webkit-text-fill-color: currentColor !important;
+  color: currentColor !important;
 }
 
 /* Ẩn nút tăng/giảm trên tất cả trình duyệt */
@@ -258,4 +258,10 @@ input[type='number'] {
 }
 @utility bg-button-ph {
   background: linear-gradient(180deg, #03328c 0%, #00804d 100%);
+}
+
+html > body[data-scroll-locked] {
+  overflow: auto !important;
+  --removed-body-scroll-bar-size: 0px;
+  margin-right: 0 !important;
 }

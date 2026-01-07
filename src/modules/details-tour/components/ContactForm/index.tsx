@@ -6,17 +6,22 @@ import ENDPOINTS from '@/configs/endpoints'
 import CF7Request from '@/fetches/cf7Request'
 import useIsMobile from '@/hooks/useIsMobile'
 import { BookingTourContext } from '@/modules/details-tour/providers/BookingTourProvider'
+import { calculateProvisionalPriceByPaxQuantity } from '@/modules/details-tour/utils'
 import { ContactFormValues } from '@/schemas/booking-tour.schema'
 import { format } from 'date-fns'
 import { useLocale } from 'next-intl'
 import { useContext } from 'react'
 
-export default function ContactForm() {
+interface ContactFormProps {
+  pricePerPax: number
+}
+
+export default function ContactForm({ pricePerPax = 0 }: ContactFormProps) {
   const bookingTourContext = useContext(BookingTourContext)
   if (!bookingTourContext) {
     throw new Error('BookingTourContext not found')
   }
-  const { bookingTourData, openContactForm, setOpenContactForm } = bookingTourContext
+  const { bookingTourData, openContactForm, tourPrice, setOpenContactForm } = bookingTourContext
   const locale = useLocale()
   const isMobile = useIsMobile()
 
@@ -38,6 +43,9 @@ export default function ContactForm() {
         adults: adults,
         children58: children58,
         children14: children14,
+        provisionalPrice: tourPrice?.provisionalPrice || 0,
+        discountPrice: tourPrice?.discountPrice || 0,
+        totalPrice: tourPrice?.provisionalPrice - tourPrice?.discountPrice || 0,
       }
 
       const cf7Request = new CF7Request(formData)

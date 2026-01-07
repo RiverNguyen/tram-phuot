@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
 import { useContext, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 interface ContactFormContentProps {
   onSubmitForm: (data: ContactFormValues) => Promise<{ success: boolean }>
@@ -24,6 +25,7 @@ export default function ContactFormContent({ onSubmitForm }: ContactFormContentP
   const { setOpenContactForm } = bookingTourContext
 
   const translateContactFormBooking = useTranslations('ContactFormBooking')
+
   const translateContactFormBookingMessages = {
     fullNameRequired: translateContactFormBooking('fullNameRequired'),
     emailRequired: translateContactFormBooking('emailRequired'),
@@ -48,9 +50,12 @@ export default function ContactFormContent({ onSubmitForm }: ContactFormContentP
     startTransition(async () => {
       const response = await onSubmitForm(data)
       if (response.success) {
-        reset()
         setOpenContactForm(false)
+        toast.success(translateContactFormBooking('bookingTourSuccessfully'))
+      } else {
+        toast.error(translateContactFormBooking('bookingTourFailed'))
       }
+      reset()
     })
   }
 

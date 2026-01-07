@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl'
 interface SectionBookingOverviewProps {
   tourTitle: string
   tourDuration: TourDurationType
-  pricePerPax: DetailsTourPricePerPaxType
+  pricePerPax: number
 }
 
 export default function SectionBookingOverview({

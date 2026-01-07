@@ -11,16 +11,19 @@ import { useContext, useEffect } from 'react'
 import { addDays } from 'date-fns'
 import RHFPaxQuantityField from '@/modules/details-tour/components/FormControl/RHFPaxQuantityField'
 import { BookingTourContext } from '@/modules/details-tour/providers/BookingTourProvider'
+import { calculateProvisionalPriceByPaxQuantity } from '@/modules/details-tour/utils'
+import { PaxType } from '@/enums'
 
 interface FormBookingTourProps {
   tourDuration: TourDurationType
-  pricePerPax: DetailsTourPricePerPaxType
+  pricePerPax: number
 }
 
-export default function FormBookingTour({ tourDuration, pricePerPax }: FormBookingTourProps) {
+export default function FormBookingTour({ tourDuration, pricePerPax = 0 }: FormBookingTourProps) {
   const translateBookingTourForm = useTranslations('BookingTourForm')
   const tourDayNumber = Number(tourDuration?.day_number) || 0
   const bookingTourContext = useContext(BookingTourContext)
+
   if (!bookingTourContext) {
     throw new Error('BookingTourContext not found')
   }
@@ -28,9 +31,11 @@ export default function FormBookingTour({ tourDuration, pricePerPax }: FormBooki
   const {
     bookingTourData,
     openBookingOverviewMobile,
+    pricePerPaxTypes,
     setBookingTourData,
     setOpenBookingOverviewMobile,
     setOpenContactForm,
+    setTourPrice,
   } = bookingTourContext
 
   const translateBookingTourMessages = {
@@ -53,7 +58,12 @@ export default function FormBookingTour({ tourDuration, pricePerPax }: FormBooki
     defaultValues: bookingTourData,
   })
 
-  const startDate = form.watch('startDate')
+  const { watch } = form
+
+  const startDate = watch('startDate')
+  const adults = watch('paxQuantity.adults')
+  const children58 = watch('paxQuantity.children58')
+  const children14 = watch('paxQuantity.children14')
 
   const handleSubmitFormSuccess = () => {
     setOpenContactForm(true)
@@ -75,9 +85,6 @@ export default function FormBookingTour({ tourDuration, pricePerPax }: FormBooki
 
   useEffect(() => {
     if (!startDate || !tourDayNumber) return
-
-    // tourDayNumber = số ngày tour
-    // endDate = startDate + (tourDayNumber - 1)
     const calculatedEndDate = addDays(startDate, tourDayNumber - 1)
 
     form.setValue('endDate', calculatedEndDate, {
@@ -85,6 +92,17 @@ export default function FormBookingTour({ tourDuration, pricePerPax }: FormBooki
       shouldDirty: true,
     })
   }, [startDate, tourDayNumber, form])
+
+  useEffect(() => {
+    const { provisionalPrice } = calculateProvisionalPriceByPaxQuantity(
+      { adults, children58, children14 },
+      Number(pricePerPax),
+    )
+    setTourPrice((prevData) => ({
+      ...prevData,
+      provisionalPrice: provisionalPrice,
+    }))
+  }, [adults, children58, children14])
 
   return (
     <Form {...form}>
@@ -135,7 +153,7 @@ export default function FormBookingTour({ tourDuration, pricePerPax }: FormBooki
                   required
                   field={field}
                   classNameFormItem='w-full'
-                  unitPrice={pricePerPax?.adults || 0}
+                  unitPrice={pricePerPaxTypes[PaxType.ADULTS]?.unitPrice || 0}
                   label={translateBookingTourFormLabels.adultsLabel}
                 />
               )}
@@ -148,7 +166,7 @@ export default function FormBookingTour({ tourDuration, pricePerPax }: FormBooki
                   required
                   field={field}
                   classNameFormItem='w-full'
-                  unitPrice={pricePerPax?.children58 || 0}
+                  unitPrice={pricePerPaxTypes[PaxType.CHILDREN_58]?.unitPrice || 0}
                   label={translateBookingTourFormLabels.children58Label}
                 />
               )}
@@ -161,11 +179,14 @@ export default function FormBookingTour({ tourDuration, pricePerPax }: FormBooki
                   required
                   field={field}
                   classNameFormItem='w-full'
-                  unitPrice={pricePerPax?.children14 || 0}
+                  unitPrice={pricePerPaxTypes[PaxType.CHILDREN_14]?.unitPrice || 0}
                   label={translateBookingTourFormLabels.children14Label}
                 />
               )}
             />
+            <p className='text-body-t1/60 font-montserrat text-[0.75rem] leading-[1.6] font-semibold tracking-[-0.0075rem]'>
+              {translateBookingTourForm('textNoteChildren14')}
+            </p>
           </div>
         </div>
       </form>

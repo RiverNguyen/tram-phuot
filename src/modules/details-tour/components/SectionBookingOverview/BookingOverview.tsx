@@ -1,6 +1,7 @@
 'use client'
 import ICTicket from '@/components/icons/ICTicket'
 import { BrandButton } from '@/components/shared'
+import { PaxType } from '@/enums'
 import ICArrowRight from '@/modules/details-tour/icons/ICArrowRight'
 import { BookingTourContext } from '@/modules/details-tour/providers/BookingTourProvider'
 import tourService from '@/services/tour'
@@ -16,7 +17,7 @@ import { toast } from 'sonner'
 
 interface BookingOverviewProps {
   tourDuration: TourDurationType
-  pricePerPax: DetailsTourPricePerPaxType
+  pricePerPax: number
 }
 
 export default function BookingOverview({ tourDuration, pricePerPax }: BookingOverviewProps) {
@@ -28,12 +29,15 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
   const {
     bookingTourData: { startDate, endDate, paxQuantity },
     tourSlug,
+    tourPrice,
+    pricePerPaxTypes,
+    setTourPrice,
   } = bookingTourContext
   const { adults = 0, children58 = 0, children14 = 0 } = paxQuantity || {}
   const locale = useLocale()
   const translateBookingTourForm = useTranslations('BookingTourForm')
   const translateDetailsTourPage = useTranslations('DetailsTourPage')
-  const [voucher, setVoucher] = useState({ voucherCode: '', voucherPrice: 0 })
+  const [couponCode, setCouponCode] = useState<string>('')
   const [isApplyingVoucher, startApplyingTransition] = useTransition()
 
   const formatDateByLocale = (date?: Date, locale = 'en') => {
@@ -45,26 +49,31 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
       year: 'numeric',
     }).format(date)
   }
+  const unitPricePerPax: Record<PaxType, number> = {
+    adults: pricePerPaxTypes[PaxType.ADULTS].unitPrice || 0,
+    children58: pricePerPaxTypes[PaxType.CHILDREN_58].unitPrice || 0,
+    children14: pricePerPaxTypes[PaxType.CHILDREN_14].unitPrice || 0,
+  }
+  const children14FreeQty = children14 > 0 ? 1 : 0 // bé đầu tiên miễn phí
+  const children14ChargedQty = Math.max(0, children14 - children14FreeQty)
+
   const paxQuantityItems = [
     {
       label: translateBookingTourForm('adultsLabel'),
       quantity: adults,
-      price: Number(pricePerPax?.adults) * Number(adults) || 0,
+      price: unitPricePerPax[PaxType.ADULTS] * adults,
     },
     {
       label: translateBookingTourForm('children58Label'),
       quantity: children58,
-      price: Number(pricePerPax?.children58) * Number(children58) || 0,
+      price: unitPricePerPax[PaxType.CHILDREN_58] * children58,
     },
     {
       label: translateBookingTourForm('children14Label'),
       quantity: children14,
-      price: Number(pricePerPax?.children14) * Number(children14) || 0,
+      price: unitPricePerPax[PaxType.CHILDREN_14] * children14ChargedQty,
     },
   ]
-
-  const provisionalPrice = paxQuantityItems.reduce((acc, item) => acc + item.price, 0) || 0
-  const totalPrice = provisionalPrice - voucher.voucherPrice || 0
 
   const handleApplyVoucher = async () => {
     startApplyingTransition(async () => {
@@ -77,7 +86,7 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
           startDate: startDate,
           endDate: endDate,
           tourSlug: tourSlug,
-          voucherCode: voucher.voucherCode,
+          voucherCode: couponCode,
           paxQuantity: {
             adults: adults,
             children58: children58,
@@ -87,7 +96,7 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
 
         const response: ApplyVoucherResponseType = await tourService.applyVoucher(payload)
         if (response.success) {
-          setVoucher((prev) => ({ ...prev, voucherPrice: response.voucher.discount }))
+          setTourPrice((prevData) => ({ ...prevData, discountPrice: response.voucher.discount }))
           toast.success(translateBookingTourForm('textApplyVoucherSuccess'))
         } else {
           toast.error(translateBookingTourForm('textApplyVoucherError'))
@@ -96,7 +105,7 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
         console.error(error)
         toast.error(translateBookingTourForm('textApplyVoucherError'))
       } finally {
-        setVoucher((prev) => ({ ...prev, voucherCode: '' }))
+        setCouponCode('')
       }
     })
   }
@@ -158,14 +167,14 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
                 name='voucherCode'
                 className='text-body/75 placeholder:text-body/50 font-montserrat xsm:px-3 h-13 w-full rounded-[0.625rem] border-[0.8px] border-solid border-[#EDEDED] px-4 py-0 text-[0.875rem] leading-[1.2] font-semibold tracking-[0.00875rem] shadow-none outline-none placeholder:font-normal'
                 placeholder={translateDetailsTourPage('textVoucherCodePlaceholder')}
-                value={voucher.voucherCode}
-                onChange={(e) => setVoucher({ ...voucher, voucherCode: e.target.value })}
+                value={couponCode}
+                onChange={(e) => setCouponCode(e.target.value)}
               />
-              <ICTicket className='pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-[#2E2E2E]' />
+              <ICTicket className='pointer-events-none absolute top-1/2 right-3 size-[1.25rem] -translate-y-1/2 text-[#2E2E2E]' />
             </div>
             <button
               type='button'
-              disabled={isApplyingVoucher || voucher.voucherCode.length === 0}
+              disabled={isApplyingVoucher || !couponCode}
               onClick={handleApplyVoucher}
               className='bg-text-title-h2 flex-center xsm:text-[0.75rem] cursor-pointer rounded-[0.625rem] px-4 text-[0.875rem] leading-[1.2] font-semibold tracking-[0.00875rem] text-white uppercase disabled:cursor-not-allowed disabled:opacity-50'
             >
@@ -180,7 +189,7 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
               {translateDetailsTourPage('textProvisional')}:
             </p>
             <p className='font-montserrat text-body/75 text-[1.125rem] leading-loose font-medium tracking-[-0.0225rem] opacity-80'>
-              {provisionalPrice}$
+              {tourPrice?.provisionalPrice || 0}$
             </p>
           </div>
           <div className='flex items-center justify-between'>
@@ -188,7 +197,7 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
               {translateDetailsTourPage('textVoucher')}:
             </p>
             <p className='font-montserrat text-[1rem] leading-[1.6] tracking-[0.04rem] text-black'>
-              {voucher.voucherPrice}$
+              {tourPrice?.discountPrice || 0}$
             </p>
           </div>
           <div className='h-[0.05rem] w-full bg-[#ccc]'></div>
@@ -197,7 +206,7 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
               {translateDetailsTourPage('textTotal')}
             </p>
             <p className='font-phu-du section-title-h2 text-[1.75rem] leading-8.25 font-bold tracking-[-0.03125rem] uppercase'>
-              {totalPrice}$
+              {tourPrice?.provisionalPrice - tourPrice?.discountPrice || 0}$
             </p>
           </div>
         </div>
