@@ -26,6 +26,10 @@
       },
       "searchForTour": "Search for tour",
       "apply": "Apply"
+    },
+    "ourTours": {
+      "stayPoints": "Stay points",
+      "tourAndChill": "Tour and chill"
     }
   },
   "Header": {
@@ -56,10 +60,10 @@
   "ListTourPage": {
     "noResult": "No Result",
     "reset": "Reset all",
-    "select": "Select",
     "selected": "Selected",
     "searchFilter": "Search Filter",
-    "done": "Done"
+    "done": "Done",
+    "all": "All"
   },
   "DetailsTourPage": {
     "metaTourDuration": "Tour duration:",

@@ -12,6 +12,18 @@ export interface ITaxonomy {
   terms: ITerm[]
 }
 
+export interface ILocation {
+  id: number
+  name: string
+  slug: string
+  count: number
+  acf: {
+    image: string
+    desc: string
+    order_index: string
+  }
+}
+
 export interface ITaxonomyRes {
   success: boolean
   lang: string

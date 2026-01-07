@@ -50,7 +50,7 @@ export default function Footer({ data }: { data: IFooter }) {
               alt={data?.form_footer?.background?.desktop?.alt}
               width={data?.form_footer?.background?.desktop?.width}
               height={data?.form_footer?.background?.desktop?.height}
-              className='absolute -top-[6.3rem] left-0 h-[92.36544rem] w-[100.12506rem] object-contain'
+              className='absolute -top-[3.5rem] left-0 h-[92.36544rem] w-[100.12506rem] object-contain'
             />
           ))}
         {/* Overlay */}
@@ -117,7 +117,7 @@ export default function Footer({ data }: { data: IFooter }) {
       <div className='absolute sm:bottom-0 sm:left-0 sm:right-0 h-[42.125rem] overflow-hidden xsm:h-auto xsm:relative z-4'>
         <div className='absolute top-0 left-0 right-0 h-[42.4375rem] w-full bg-[linear-gradient(180deg,rgba(1,86,63,0.00)_0%,rgba(1,68,57,0.25)_10.05%,rgba(2,33,45,0.79)_27.39%,#021429_44.32%,#021028_73.23%,#020E27_100%)] pointer-events-none select-none xsm:hidden'></div>
 
-        <div className='absolute -bottom-[1.15rem] left-0 right-0 h-[43.25rem] bg-[linear-gradient(180deg,rgba(217,217,217,0.00)_0%,#A2A2A2_28.34%,#737373_100%)] mask-[url("/footer/footer_bottom_deco.webp")] mask-no-repeat mask-cover mask-alpha xsm:hidden z-1'></div>
+        <div className='absolute -bottom-[1.15rem] left-0 right-0 h-[43.25rem] bg-[linear-gradient(180deg,rgba(217,217,217,0.00)_0%,#A2A2A2_28.34%,#737373_100%)] mask-[url("/footer/d-footer_bottom_deco.webp")] mask-no-repeat mask-cover mask-alpha xsm:hidden z-1'></div>
 
         <div className='absolute sm:bottom-0 sm:left-0 sm:right-0 max-w-[87.805rem] mx-auto xsm:relative z-2'>
           {!isLoading && isMobile && (
@@ -127,7 +127,7 @@ export default function Footer({ data }: { data: IFooter }) {
             />
           )}
           <div className='relative overflow-hidden'>
-            <div className='absolute top-0 left-0 right-0 h-[29.39425rem] w-full bg-[linear-gradient(180deg,rgba(217,217,217,0.00)_0%,#A2A2A2_28.34%,#737373_100%)] mask-[url("/footer/footer_bottom_deco.webp")] mask-no-repeat mask-size-[67.96363rem_29.39425rem] mask-alpha mask-center sm:hidden'></div>
+            <div className='absolute top-0 left-0 right-0 h-[29.39425rem] w-full bg-[linear-gradient(180deg,rgba(217,217,217,0.00)_0%,#A2A2A2_28.34%,#737373_100%)] mask-[url("/footer/d-footer_bottom_deco.webp")] mask-no-repeat mask-size-[67.96363rem_29.39425rem] mask-alpha mask-center sm:hidden'></div>
             <div className='relative xsm:px-4'>
               <Link
                 href='/'

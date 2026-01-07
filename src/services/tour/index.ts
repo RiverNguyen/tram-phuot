@@ -20,7 +20,7 @@ const tourService = {
     limit?: number
   }): Promise<ITourRes> => {
     return await fetchData({
-      api: `${ENDPOINTS.tour.list}?lang=${locale}&tax=locations,tour-type,tour-duration&locations=${locations}&tour-type=${tourType}&tour-duration=${tourDuration}&acf=price_person&paged=${page}&limit=${limit}`,
+      api: `${ENDPOINTS.tour.list}?lang=${locale}&tax=locations,tour-type,tour-duration&locations=${locations}&tour-type=${tourType}&tour-duration=${tourDuration}&acf=price_person&paged=${page}&limit=${limit}&order=DESC&orderby=date`,
     })
   },
   getTaxonomies: async (locale: string): Promise<ITaxonomyRes> => {

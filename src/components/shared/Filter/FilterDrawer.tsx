@@ -83,9 +83,22 @@ export default function FilterDrawer({
                   value={value}
                   onValueChange={(value) => onChange(item.taxonomy, value)}
                 >
+                  <div className='flex items-center py-4 px-[0.81rem] space-x-2.5'>
+                    <RadioGroupItemCustom
+                      value={''}
+                      id={`tour-all`}
+                      className='size-[1.375rem] flex items-center justify-center'
+                    />
+                    <Label
+                      htmlFor={`tour-all`}
+                      className='line-clamp-1 text-[#303030] font-montserrat text-[0.875rem] leading-[1.4rem] cursor-pointer'
+                    >
+                      {t('all')}
+                    </Label>
+                  </div>
                   {item.options.map((option, i) => (
                     <div
-                      key={option.value}
+                      key={i}
                       className='flex items-center py-4 px-[0.81rem] space-x-2.5'
                     >
                       <RadioGroupItemCustom

@@ -6,8 +6,14 @@ const ENDPOINTS = {
     taxonomies: 'api/v1/taxonomies/tour',
     detail: 'api/v1/tour/detail',
   },
+  hotel: {
+    list: 'api/v1/get-all/hotels',
+  },
   wordpress: {
     siteSettings: 'api/v1/site-settings',
+  },
+  taxonomy: {
+    locations: 'api/v1/taxonomy',
   },
   seo: {
     rankMath: (slug: string) => `/rankmath/v1/getHead?url=${ENV.CMS!}${slug}`,

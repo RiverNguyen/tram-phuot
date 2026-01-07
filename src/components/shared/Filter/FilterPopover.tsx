@@ -73,9 +73,7 @@ export default function FilterPopover({
       >
         <div className='flex items-center gap-[0.25rem]'>
           <span className='text-[rgba(46,46,46,0.60)] font-normal uppercase'>{label}:</span>
-          <span className={cn(!getDisplayText() && 'text-[rgba(46,46,46,0.60)]')}>
-            {getDisplayText() || t('select')}
-          </span>
+          <span>{getDisplayText() || t('all')}</span>
         </div>
         <ICChevron className='w-[0.825rem] h-auto text-[#A1A1A1]' />
       </PopoverTrigger>
@@ -86,6 +84,22 @@ export default function FilterPopover({
             onValueChange={handleRadioChange}
             className='w-full'
           >
+            <label
+              htmlFor={`radio-all`}
+              className={cn(
+                'flex py-[1rem] px-[0.75rem] items-center gap-[0.625rem] cursor-pointer self-stretch rounded-tl-[1rem] rounded-br-[1rem] lg:hover:bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
+                selectedValue === '' &&
+                  'bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
+              )}
+            >
+              <RadioGroupItemCustom
+                value={''}
+                id={`radio-all`}
+              />
+              <span className='line-clamp-1 text-[#303030] font-montserrat text-[0.875rem] leading-[1.3125rem] '>
+                {t('all')}
+              </span>
+            </label>
             {options.map((option) => (
               <label
                 htmlFor={`${label}-${option.value}`}

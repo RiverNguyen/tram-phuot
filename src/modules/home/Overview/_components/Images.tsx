@@ -22,7 +22,7 @@ const Images = ({ isInView }: ImagesProps) => {
         alt='overview-paper'
         width={1440}
         height={500}
-        className='w-full h-auto object-cover absolute bottom-0 left-0 z-[4]'
+        className='w-full h-auto object-cover absolute bottom-0 left-0 z-[4] pointer-events-none '
       />
       <Image
         src={'/home/overview/grandma.webp'}
