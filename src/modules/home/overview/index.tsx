@@ -3,8 +3,8 @@
 import { IHomePageOverview } from '@/interface/homepage.interface'
 import { useInView } from 'motion/react'
 import { useRef } from 'react'
-import Images from '@/modules/home/Overview/_components/Images'
-import Article from '@/modules/home/Overview/_components/Article'
+import Images from '@/modules/home/overview/_components/Images'
+import Article from '@/modules/home/overview/_components/Article'
 
 const Overview = ({ overview }: { overview: IHomePageOverview }) => {
   const sectionRef = useRef(null)

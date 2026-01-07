@@ -12,6 +12,7 @@ import { useRef } from 'react'
 export default function SpecialOffers({ data }: { data: CouponItem[] }) {
   const prevRef = useRef<HTMLDivElement | null>(null)
   const nextRef = useRef<HTMLDivElement | null>(null)
+  const visibleData = data.filter((offer: CouponItem) => !offer?.acf?.private)
   return (
     <div className='xsm:gap-0 flex flex-col items-start gap-[2.5rem] self-stretch'>
       <h2 className='xsm:w-full xsm:px-[1rem] xsm:text-[1.25rem] xsm:leading-[1.5rem] xsm:tracking-[0.025rem] w-full max-w-[87.5rem] mx-auto text-[#2E2E2E] font-phu-du text-[2.125rem] font-medium leading-[2.3375rem]'>
@@ -32,9 +33,7 @@ export default function SpecialOffers({ data }: { data: CouponItem[] }) {
           spaceBetween={convertRemToPx(1.25)}
           className='xsm:!hidden w-full h-full !px-[5.75rem] !py-[2.5rem] relative select-none'
         >
-          {data
-            .filter((offer: CouponItem) => !offer.acf.private)
-            .map((offer: CouponItem) => (
+          {visibleData.map((offer: CouponItem) => (
               <SwiperSlide key={offer.id} className='!w-[28.33331rem]'>
                 <SpecialOffersCard offer={offer} />
               </SwiperSlide>
@@ -49,9 +48,7 @@ export default function SpecialOffers({ data }: { data: CouponItem[] }) {
           </div>
         </Swiper>
         <div className='sm:hidden xsm:px-[1rem] xsm:pt-[1.25rem] xsm:pb-[2.5rem] flex gap-[1rem] overflow-x-auto hidden_scroll'>
-          {data
-            .filter((offer: CouponItem) => !offer.acf.private)
-            .map((offer: CouponItem) => (
+          {visibleData.map((offer: CouponItem) => (
               <SpecialOffersCard
                 key={offer.id}
                 offer={offer}

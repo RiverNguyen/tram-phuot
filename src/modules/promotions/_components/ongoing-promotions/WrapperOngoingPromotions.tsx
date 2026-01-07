@@ -99,6 +99,8 @@ export default function OngoingPromotions({
     scrollToSection('ongoing-promotions-section', 1, 7.5)
   }, [isPending])
 
+  const visibleData = data.filter((item) => !item?.acf?.private)
+
   return (
     <>
       <div
@@ -185,8 +187,8 @@ export default function OngoingPromotions({
                 </div>
               </div>
             ))
-          ) : data.length > 0 ? (
-            data.map((card) => (
+          ) : visibleData.length > 0 ? (
+            visibleData.map((card) => (
               <OngoingPromotionsCard
                 key={card.id}
                 card={card}
@@ -203,7 +205,7 @@ export default function OngoingPromotions({
       </div>
 
       {/* Pagination */}
-      {data.length > 0 && (
+      {visibleData.length > 0 && (
         <Pagination
           pageCurrent={currentPage}
           pageCount={totalPages || 1}
