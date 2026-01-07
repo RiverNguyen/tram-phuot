@@ -45,7 +45,7 @@ export default function Banner() {
         alt='overlay bottom'
         width={1125}
         height={87}
-        className='absolute top-[32.5661rem] left-0 w-full h-auto object-cover sm:hidden'
+        className='absolute top-[32.6rem] left-0 w-full h-auto object-cover sm:hidden'
       />
     </div>
   )

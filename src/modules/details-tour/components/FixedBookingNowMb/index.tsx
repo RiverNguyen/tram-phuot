@@ -1,0 +1,87 @@
+'use client'
+
+import ICClose from '@/components/icons/ICClose'
+import ICCompass from '@/components/icons/ICCompass'
+import DrawerProvider from '@/components/provider/DrawerProvider'
+import { BrandButton } from '@/components/shared'
+import SectionBookingOverview from '@/modules/details-tour/components/SectionBookingOverview'
+import { BookingTourContext } from '@/modules/details-tour/providers/BookingTourProvider'
+import { DetailsTourPricePerPaxType, TourDurationType } from '@/types/details-tour.type'
+import { useTranslations } from 'next-intl'
+import { useContext, useState } from 'react'
+
+interface FixedBookingNowMbProps {
+  fromPricePerPax: number
+  tourDuration: TourDurationType
+  pricePerPax: DetailsTourPricePerPaxType
+  tourTitle: string
+}
+
+export default function FixedBookingNowMb({
+  fromPricePerPax,
+  tourDuration,
+  pricePerPax,
+  tourTitle,
+}: FixedBookingNowMbProps) {
+  const translateDetailsTourPage = useTranslations('DetailsTourPage')
+  const bookingTourContext = useContext(BookingTourContext)
+  if (!bookingTourContext) {
+    throw new Error('BookingTourContext not found')
+  }
+  const { openBookingOverviewMobile, setOpenBookingOverviewMobile } = bookingTourContext
+  return (
+    <>
+      <div className='xsm:block shadow-booking-now-mb fixed right-0 bottom-0 left-0 z-50 hidden space-y-2.5 bg-white px-5 py-3'>
+        <div className='flex items-center justify-between'>
+          <span className='font-montserrat section-title-h2 text-[0.75rem] leading-[1.6] font-bold tracking-[-0.0075rem] uppercase underline'>
+            Booking Overview
+          </span>
+
+          <div className='flex items-center space-x-1'>
+            <ICCompass className='size-4 text-[#F56E0A]' />
+            <p className='flex items-center space-x-1'>
+              <span className='font-phu-du text-[1.125rem] leading-[1.1] font-bold text-[#F56E0A]'>
+                {fromPricePerPax} USD
+              </span>
+              <span className='font-montserrat text-[0.75rem] leading-[1.6] font-medium tracking-[-0.0075rem] text-black/50'>
+                /{translateDetailsTourPage('textPerson')}
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <BrandButton
+          type={{
+            variant: 'button',
+            type: 'button',
+            onClick: () => setOpenBookingOverviewMobile(true),
+          }}
+          variant='blueGradient'
+          classNameButtonText='uppercase font-montserrat text-[0.875rem] text-white'
+          classNameButtonContainer='w-full'
+        >
+          Book now
+        </BrandButton>
+      </div>
+      <DrawerProvider
+        open={openBookingOverviewMobile}
+        setOpen={setOpenBookingOverviewMobile}
+        className='rounded-t-[0.5rem]'
+        showDrawerDrag={false}
+      >
+        <button
+          type='button'
+          className='absolute top-3.75 right-4.75 size-5'
+          onClick={() => setOpenBookingOverviewMobile(false)}
+        >
+          <ICClose className='size-full' />
+        </button>
+        <SectionBookingOverview
+          tourTitle={tourTitle || ''}
+          tourDuration={tourDuration || {}}
+          pricePerPax={pricePerPax || {}}
+        />
+      </DrawerProvider>
+    </>
+  )
+}

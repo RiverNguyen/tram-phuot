@@ -50,6 +50,10 @@
   --color-orange: #f56e0a;
   --color-body: rgba(46, 46, 46, 1);
   --color-body-t1: #2e2e2e;
+  --shadow-booking-now-mb:
+    113px 188px 61px 0 rgba(87, 87, 87, 0), 73px 120px 56px 0 rgba(87, 87, 87, 0.01),
+    41px 68px 47px 0 rgba(87, 87, 87, 0.05), 18px 30px 35px 0 rgba(87, 87, 87, 0.09),
+    5px 8px 19px 0 rgba(87, 87, 87, 0.1);
 }
 
 html {
@@ -251,4 +255,7 @@ input[type='number'] {
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+@utility bg-button-ph {
+  background: linear-gradient(180deg, #03328c 0%, #00804d 100%);
 }

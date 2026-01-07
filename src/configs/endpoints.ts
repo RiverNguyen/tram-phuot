@@ -8,6 +8,8 @@ const ENDPOINTS = {
     list: 'api/v1/get-all/tour',
     taxonomies: 'api/v1/taxonomies/tour',
     detail: 'api/v1/tour/detail',
+    applyVoucher: 'api/v1/tour/voucher/apply',
+    relatedTours: 'api/v1/tour/related-tours',
   },
   wordpress: {
     siteSettings: 'api/v1/site-settings',
@@ -19,6 +21,20 @@ const ENDPOINTS = {
   home: {
     en: 'wp/v2/pages/71?_fields=acf&acf_format=standard',
     vi: 'wp/v2/pages/84?_fields=acf&acf_format=standard',
+  },
+  promotion: {
+    coupon: 'api/v1/get-all/coupon',
+    couponTaxonomies: 'api/v1/taxonomies/coupon',
+  },
+  contact_form: {
+    form_booking_tour_vi: {
+      id: '455',
+      unit_tag: '42f9d6e',
+    },
+    form_booking_tour_en: {
+      id: '456',
+      unit_tag: '79372bc',
+    },
   },
   our_stories: {
     get: (locale: string, kind: string) =>

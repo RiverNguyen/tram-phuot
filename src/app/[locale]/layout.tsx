@@ -3,6 +3,7 @@ import fetchData from '@/fetches/fetchData'
 import Header from '@/layouts/header'
 import { NextIntlClientProvider } from 'next-intl'
 import { ISiteSetting } from '@/interface/site-setting.interface'
+import { TooltipProvider } from '@/components/ui/tooltip'
 
 export default async function layout({
   children,
@@ -19,11 +20,13 @@ export default async function layout({
 
   return (
     <NextIntlClientProvider>
-      <Header
-        data={dataSiteSettings?.data?.header}
-        socialMedia={dataSiteSettings.data.footer?.footer_content?.social_media}
-      />
-      {children}
+      <TooltipProvider>
+        <Header
+          data={dataSiteSettings?.data?.header}
+          socialMedia={dataSiteSettings.data.footer?.footer_content?.social_media}
+        />
+        {children}
+      </TooltipProvider>
     </NextIntlClientProvider>
   )
 }

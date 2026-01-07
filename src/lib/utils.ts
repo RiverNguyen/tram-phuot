@@ -15,8 +15,6 @@ export function convertRemToPx(rem: number) {
     return
   }
 
-  const rootFontSize = parseFloat(
-    getComputedStyle(document.documentElement).fontSize,
-  )
+  const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize)
   return rem * rootFontSize
 }
