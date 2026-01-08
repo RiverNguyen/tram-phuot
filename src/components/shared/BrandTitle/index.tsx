@@ -11,6 +11,7 @@ interface BrandTitleProps {
   classNameContainer?: string
   classNameTitle?: string
   classNameSubtitle?: string
+  classNameTitleContainer?: string
   classNameIcon?: string
   variant?: variant
 }
@@ -22,6 +23,7 @@ export default function BrandTitle({
   classNameTitle,
   classNameSubtitle,
   classNameIcon,
+  classNameTitleContainer,
   variant = 'orange',
 }: BrandTitleProps) {
   const classNameVariant: Record<variant, string> = {
@@ -43,7 +45,12 @@ export default function BrandTitle({
         )}
       />
 
-      <div className='xsm:left-[2.28rem] absolute top-[0.375rem] left-[3.3rem]'>
+      <div
+        className={cn(
+          'xsm:left-[2.28rem] absolute top-[0.375rem] left-[3.3rem]',
+          classNameTitleContainer,
+        )}
+      >
         <div className='relative inline-block'>
           <h2
             aria-hidden

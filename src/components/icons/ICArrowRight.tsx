@@ -1,0 +1,65 @@
+export default function ICArrowRight(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='16'
+      height='16'
+      viewBox='0 0 16 16'
+      fill='none'
+      {...props}
+    >
+      <path
+        d='M9.61914 3.95312L13.6658 7.99979L9.61914 12.0465'
+        stroke='url(#paint0_linear_3092_19182)'
+        strokeWidth='0.875'
+        strokeMiterlimit='10'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <path
+        d='M2.33398 8H13.554'
+        stroke='url(#paint1_linear_3092_19182)'
+        strokeWidth='0.875'
+        strokeMiterlimit='10'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+      <defs>
+        <linearGradient
+          id='paint0_linear_3092_19182'
+          x1='9.61914'
+          y1='12.0781'
+          x2='14.8289'
+          y2='10.1294'
+          gradientUnits='userSpaceOnUse'
+        >
+          <stop
+            offset='0.517469'
+            stopColor='#03328C'
+          />
+          <stop
+            offset='1'
+            stopColor='#00804D'
+          />
+        </linearGradient>
+        <linearGradient
+          id='paint1_linear_3092_19182'
+          x1='2.33398'
+          y1='9.0039'
+          x2='2.56445'
+          y2='7.06957'
+          gradientUnits='userSpaceOnUse'
+        >
+          <stop
+            offset='0.517469'
+            stopColor='#03328C'
+          />
+          <stop
+            offset='1'
+            stopColor='#00804D'
+          />
+        </linearGradient>
+      </defs>
+    </svg>
+  )
+}

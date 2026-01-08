@@ -26,6 +26,13 @@
       },
       "searchForTour": "Search for tour",
       "apply": "Apply"
+    },
+    "ourTours": {
+      "localTours": "Local tours",
+      "stayPoints": "Stay points",
+      "tourAndChill": "Tour and chill",
+      "exploreTheTour": "Explore the tour",
+      "noResult": "No Result"
     }
   },
   "Header": {
@@ -56,10 +63,10 @@
   "ListTourPage": {
     "noResult": "No Result",
     "reset": "Reset all",
-    "select": "Select",
     "selected": "Selected",
     "searchFilter": "Search Filter",
-    "done": "Done"
+    "done": "Done",
+    "all": "All"
   },
   "ListCouponPage": {
     "noResult": "No Result",

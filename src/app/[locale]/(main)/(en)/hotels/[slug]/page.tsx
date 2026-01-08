@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import DetailsTour from '@/modules/details-tour'
 import tourService from '@/services/tour'
 import wordpressService from '@/services/wordpress'
@@ -31,6 +32,29 @@ export default async function page({ params }: PageProps) {
       siteSettings={siteSettings}
       relatedTours={relatedTours?.data || []}
       tourCoupons={[]}
+=======
+import DetailHotel from '@/modules/detail-hotel'
+import hotelService from '@/services/hotel'
+
+export default async function page({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>
+}) {
+  const { locale } = await params
+  let { slug } = await params
+  const [detailHotel, taxonomies, coupons] = await Promise.all([
+    hotelService.getDetailHotel(slug),
+    hotelService.getTaxonomies(locale),
+    hotelService.getCoupons(slug),
+  ])
+
+  return (
+    <DetailHotel
+      detailHotel={detailHotel}
+      taxonomies={taxonomies?.data}
+      coupons={coupons?.data}
+>>>>>>> 7f1100ef9bffedf7696a2efe9ab87e64b56a6fa9
     />
   )
 }

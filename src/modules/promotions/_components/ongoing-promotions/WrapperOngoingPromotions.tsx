@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
-import FilterDrawer from '../../../../components/shared/Filter/FilterDrawer2'
-import FilterPopover from '@/components/shared/Filter/FilterPopover'
+import FilterDrawer from '@/modules/tours/_components/FilterDrawer2'
+import FilterPopover from '@/modules/tours/_components/FilterPopover'
 import { mapTaxonomyToFilter } from '@/utils/mapTaxonomyToFilter'
 import { ICTrashcan } from '@/components/icons'
 import ICCFilterLine from '@/components/icons/ICCFilterLine'
