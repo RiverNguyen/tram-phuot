@@ -24,12 +24,13 @@ import {
   ApplyHotelVoucherResponseType,
 } from '@/types/detail-hotel.type'
 import { IHotelDetail } from '@/interface/hotel.interface'
-import DatePickerFields from './DatePickerFields'
-import HotelContactFormContent from './HotelContactFormContent'
-import NumberStepperField from './NumberStepperField'
-import PriceSummary from './PriceSummary'
-import RoomCard from './RoomCard'
-import VoucherCodeField from './VoucherCodeField'
+import DatePickerFields from './_components/DatePickerFields'
+import HotelContactFormContent from './_components/HotelContactFormContent'
+import NumberStepperField from './_components/NumberStepperField'
+import PriceSummary from './_components/PriceSummary'
+import RoomCard from './_components/RoomCard'
+import VoucherCodeField from './_components/VoucherCodeField'
+import { XIcon } from 'lucide-react'
 
 const formSchema = z.object({
   check_in_date: z.date(),
@@ -53,6 +54,7 @@ type BookingOverviewProps = {
   onRemoveRoom?: (id: number | string) => void
   onClearAllRooms?: () => void
   detailHotel?: IHotelDetail
+  onClose?: () => void
 }
 
 export default function BookingOverview({
@@ -60,6 +62,7 @@ export default function BookingOverview({
   onRemoveRoom,
   onClearAllRooms,
   detailHotel,
+  onClose,
 }: BookingOverviewProps) {
   const [voucherDiscount, setVoucherDiscount] = useState(0)
   const [openContactForm, setOpenContactForm] = useState(false)
@@ -187,6 +190,35 @@ export default function BookingOverview({
     })
   }
 
+  const handleBookNow = async () => {
+    // Check if at least one room is selected
+    if (selectedRooms.length === 0) {
+      toast.error('Please select at least one room')
+      return
+    }
+
+    // Validate form before opening contact form
+    const isValid = await form.trigger('adults')
+
+    if (!isValid) {
+      // If validation fails, the error will be shown automatically
+      return
+    }
+
+    const formValues = form.getValues()
+    const adultsValue = Number(formValues.adults) || 0
+
+    if (adultsValue <= 0) {
+      form.setError('adults', {
+        type: 'manual',
+        message: 'At least 1 adult is required',
+      })
+      return
+    }
+
+    setOpenContactForm(true)
+  }
+
   const handleSubmitContactForm = async (contactData: ContactFormValues) => {
     try {
       const formValues = form.getValues()
@@ -242,6 +274,11 @@ export default function BookingOverview({
         setOpenContactForm(false)
         toast.success('Booking successful, our staff will contact you soon.')
 
+        // Close parent drawer (mobile) after successful submission
+        if (onClose) {
+          onClose()
+        }
+
         // Reset form values
         form.reset({
           check_in_date: today,
@@ -270,10 +307,20 @@ export default function BookingOverview({
   }
 
   return (
-    <>
-      <h3 className='text-[1.5rem] font-phu-du leading-[1.1] font-bold bg-clip-text text-transparent bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit mb-4'>
-        Booking Overview
-      </h3>
+    <div className='relative'>
+      <div className='flex-between mb-4 xsm:mb-6'>
+        <h3 className='text-[1.5rem] font-phu-du leading-[1.1] font-bold bg-clip-text text-transparent bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit xsm:text-[1.125rem]'>
+          Booking Overview
+        </h3>
+        <button
+          className='sm:hidden'
+          type='button'
+          onClick={onClose}
+        >
+          <XIcon className='size-5 text-[#2E2E2E]' />
+        </button>
+      </div>
+
       <Form {...form}>
         <form
           onSubmit={(e) => e.preventDefault()}
@@ -283,41 +330,43 @@ export default function BookingOverview({
             control={form.control}
             errors={form.formState.errors}
           />
-          <Field>
-            <Controller
-              control={form.control}
-              name='adults'
-              render={({ field }) => (
-                <NumberStepperField
-                  label='Adults'
-                  field={field}
-                />
-              )}
-            />
-            <FieldError>{form.formState.errors.adults?.message}</FieldError>
-          </Field>
-          <Field>
-            <Controller
-              control={form.control}
-              name='child'
-              render={({ field }) => (
-                <NumberStepperField
-                  label='Child'
-                  field={field}
-                />
-              )}
-            />
-            <FieldError>{form.formState.errors.child?.message}</FieldError>
-          </Field>
+          <div className='max-h-[15rem] xsm:max-h-[20rem] overflow-y-auto space-y-4'>
+            <Field>
+              <Controller
+                control={form.control}
+                name='adults'
+                render={({ field }) => (
+                  <NumberStepperField
+                    label='Adults'
+                    field={field}
+                  />
+                )}
+              />
+              <FieldError>{form.formState.errors.adults?.message}</FieldError>
+            </Field>
+            <Field>
+              <Controller
+                control={form.control}
+                name='child'
+                render={({ field }) => (
+                  <NumberStepperField
+                    label='Child'
+                    field={field}
+                  />
+                )}
+              />
+              <FieldError>{form.formState.errors.child?.message}</FieldError>
+            </Field>
 
-          {selectedRooms.map((room) => (
-            <RoomCard
-              key={room.id}
-              room={room}
-              onRemove={onRemoveRoom}
-              formatUSD={formatUSD}
-            />
-          ))}
+            {selectedRooms.map((room) => (
+              <RoomCard
+                key={room.id}
+                room={room}
+                onRemove={onRemoveRoom}
+                formatUSD={formatUSD}
+              />
+            ))}
+          </div>
           <VoucherCodeField
             register={form.register}
             errors={form.formState.errors}
@@ -326,17 +375,19 @@ export default function BookingOverview({
             onApply={handleApplyVoucher}
             isApplying={isApplyingVoucher}
           />
-          <PriceSummary
-            provisionalAmount={provisionalAmount}
-            voucherDiscount={voucherDiscount}
-            totalAmount={totalAmount}
-            formatUSD={formatUSD}
-          />
+          {selectedRooms.length > 0 && provisionalAmount > 0 && (
+            <PriceSummary
+              provisionalAmount={provisionalAmount}
+              voucherDiscount={voucherDiscount}
+              totalAmount={totalAmount}
+              formatUSD={formatUSD}
+            />
+          )}
 
           <BrandButton2
             type='button'
-            className='w-full'
-            onClick={() => setOpenContactForm(true)}
+            className='w-full xsm:h-[2.5rem]! xsm:rounded-[0.625rem]!'
+            onClick={handleBookNow}
           >
             Book Now
           </BrandButton2>
@@ -369,6 +420,6 @@ export default function BookingOverview({
           />
         </DrawerProvider>
       )}
-    </>
+    </div>
   )
 }
