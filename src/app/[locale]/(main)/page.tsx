@@ -20,7 +20,7 @@ export default async function page({ params }: { params: Promise<{ locale: strin
       homeService.getHome(locale),
       homeService.getHotels(locale),
       tourService.getTours({ locale }),
-      homeService.getTaxonomies(locale, 'locations'),
+      homeService.getTaxonomy(locale, 'locations'),
       homeService.getReviews(locale),
       homeService.getOurStories(locale, 'stay-points'),
       homeService.getTaxonomies(locale, 'post'),

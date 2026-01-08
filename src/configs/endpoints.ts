@@ -1,8 +1,12 @@
 import ENV from '@/configs/env'
 
 const ENDPOINTS = {
+  taxonomy: {
+    get: (locale: string, taxonomy: string) =>
+      `api/v1/taxonomy?taxonomy=${taxonomy}&lang=${locale}&acf=true`,
+  },
   taxonomies: {
-    get: (locale: string, type: string) => `api/v1/taxonomies/${type}?lang=${locale}&acf=true`,
+    get: (locale: string, type: string) => `api/v1/taxonomies/${type}?lang=${locale}`,
   },
   tour: {
     list: 'api/v1/get-all/tour',
