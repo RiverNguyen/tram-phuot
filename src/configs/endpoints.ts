@@ -1,6 +1,12 @@
 import ENV from '@/configs/env'
 
 const ENDPOINTS = {
+  hotel: {
+    getDetail: (slug: string) => `api/v1/get-detail/hotels?slug=${slug}`,
+    getCoupons: (slug: string) => `api/v1/coupons?slug=${slug}&post_type=hotels`,
+    applyVoucher: 'api/v1/hotel/voucher/apply',
+    list: 'api/v1/get-all/hotels',
+  },
   taxonomy: {
     get: (locale: string, taxonomy: string) =>
       `api/v1/taxonomy?taxonomy=${taxonomy}&lang=${locale}&acf=true`,
@@ -15,9 +21,6 @@ const ENDPOINTS = {
     applyVoucher: 'api/v1/tour/voucher/apply',
     relatedTours: 'api/v1/tour/related-tours',
     coupons: 'api/v1/coupons',
-  },
-  hotel: {
-    list: 'api/v1/get-all/hotels',
   },
   wordpress: {
     siteSettings: 'api/v1/site-settings',
@@ -42,6 +45,14 @@ const ENDPOINTS = {
     form_booking_tour_en: {
       id: '456',
       unit_tag: '79372bc',
+    },
+    form_booking_hotel_en: {
+      id: '644',
+      unit_tag: '646954a',
+    },
+    form_booking_hotel_vi: {
+      id: '649',
+      unit_tag: 'bafab39',
     },
   },
   our_stories: {

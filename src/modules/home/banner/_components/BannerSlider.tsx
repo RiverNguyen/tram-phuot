@@ -53,7 +53,7 @@ export const BannerSlider = ({ gallery, galleryMobile }: BannerSliderProps) => {
                 src={item.url}
                 alt={item.alt}
                 className='w-full h-full object-cover will-change-transform'
-                priority
+                preload
               />
             </div>
           </SwiperSlide>

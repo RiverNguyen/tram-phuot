@@ -23,14 +23,14 @@ export default function RHFInputField({
         <div className='relative flex flex-col space-y-3.75'>
           <Input
             {...field}
-            placeholder=''
+            placeholder={placeholder || ''}
             className='peer text-body-t1 h-4.25 rounded-none border-none! px-0 py-0 text-[0.875rem] leading-[1.2] tracking-[0.00875rem] shadow-none! ring-0! outline-0!'
           />
 
-          <p className='pointer-events-none absolute top-0 left-0 space-x-1 text-[0.875rem] leading-[1.2] tracking-[0.00875rem] text-[#8B8B8B] peer-[:not(:placeholder-shown)]:hidden'>
+          {/* <p className='pointer-events-none absolute top-0 left-0 space-x-1 text-[0.875rem] leading-[1.2] tracking-[0.00875rem] text-[#8B8B8B] peer-[:not(:placeholder-shown)]:hidden'>
             <span>{placeholder}</span>
             {required && <span className='text-[#EF2020]'>*</span>}
-          </p>
+          </p> */}
 
           <div className='h-px w-full bg-[#8B8B8B]/40'></div>
         </div>
