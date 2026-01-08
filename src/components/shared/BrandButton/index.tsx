@@ -19,7 +19,6 @@ interface BrandButtonProps {
   variant?: BrandButtonVariant
   classNameButtonContainer?: string
   classNameButtonText?: string
-  href?: string
   children: React.ReactNode
   type?: BrandButtonType
 }

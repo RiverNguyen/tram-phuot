@@ -26,6 +26,13 @@
       },
       "searchForTour": "Tìm tour",
       "apply": "Áp dụng"
+    },
+    "ourTours": {
+      "localTours": "Tour địa phương",
+      "stayPoints": "Điểm dừng",
+      "tourAndChill": "Tour và thư giãn",
+      "exploreTheTour": "Khám phá tour",
+      "noResult": "Không có kết quả"
     }
   },
   "Header": {
@@ -56,10 +63,10 @@
   "ListTourPage": {
     "noResult": "Không có kết quả",
     "reset": "Xóa tất cả",
-    "select": "Lựa chọn",
     "selected": "Đã chọn",
     "searchFilter": "Bộ lọc",
-    "done": "Hoàn thành"
+    "done": "Hoàn thành",
+    "all": "Tất cả"
   },
   "DetailsTourPage": {
     "metaTourDuration": "Thời gian tour:",

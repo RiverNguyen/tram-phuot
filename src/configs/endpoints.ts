@@ -5,6 +5,11 @@ const ENDPOINTS = {
     getDetail: (slug: string) => `api/v1/get-detail/hotels?slug=${slug}`,
     getCoupons: (slug: string) => `api/v1/coupons?slug=${slug}&post_type=hotels`,
     applyVoucher: 'api/v1/hotel/voucher/apply',
+    list: 'api/v1/get-all/hotels',
+  },
+  taxonomy: {
+    get: (locale: string, taxonomy: string) =>
+      `api/v1/taxonomy?taxonomy=${taxonomy}&lang=${locale}&acf=true`,
   },
   taxonomies: {
     get: (locale: string, type: string) => `api/v1/taxonomies/${type}?lang=${locale}`,
