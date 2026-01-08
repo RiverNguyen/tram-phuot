@@ -138,10 +138,10 @@ export default function OurTours({
                 type='button'
                 onClick={() => setTab('stayPoints')}
                 className={cn(
-                  'flex-center font-montserrat xsm:w-[10.4375rem] xsm:text-[0.75rem] xsm:leading-[0.9rem] h-[2.45925rem] cursor-pointer space-x-[0.5625rem] rounded-[0.625rem] border border-transparent px-[1.875rem] text-[0.875rem] leading-[1.05rem] font-semibold text-[#F9EAD5] uppercase',
+                  'flex-center font-montserrat xsm:w-[10.4375rem] xsm:text-[0.75rem] xsm:leading-[0.9rem] h-[2.45925rem] cursor-pointer space-x-[0.5625rem] overflow-hidden rounded-[0.625rem] border border-transparent px-[1.875rem] text-[0.875rem] leading-[1.05rem] font-semibold text-[#F9EAD5] uppercase',
                   tab === 'stayPoints'
                     ? 'bg-[linear-gradient(44deg,#03328C_-111.22%,#00804D_80.69%)]'
-                    : 'border-[#03328C] bg-white/15',
+                    : 'border-[#00804D] bg-white/15',
                 )}
               >
                 <Image
@@ -157,10 +157,10 @@ export default function OurTours({
                 type='button'
                 onClick={() => setTab('tourAndChill')}
                 className={cn(
-                  'flex-center font-montserrat xsm:w-[10.4375rem] xsm:text-[0.75rem] xsm:leading-[0.9rem] h-[2.45925rem] cursor-pointer space-x-[0.5625rem] rounded-[0.625rem] border border-transparent px-[1.875rem] text-[0.875rem] leading-[1.05rem] font-semibold text-[#F9EAD5] uppercase',
+                  'flex-center font-montserrat xsm:w-[10.4375rem] xsm:text-[0.75rem] xsm:leading-[0.9rem] h-[2.45925rem] cursor-pointer space-x-[0.5625rem] overflow-hidden rounded-[0.625rem] border border-transparent px-[1.875rem] text-[0.875rem] leading-[1.05rem] font-semibold text-[#F9EAD5] uppercase',
                   tab === 'tourAndChill'
                     ? 'bg-[linear-gradient(44deg,#03328C_-111.22%,#00804D_80.69%)]'
-                    : 'border-[#03328C] bg-white/15',
+                    : 'border-[#00804D] bg-white/15',
                 )}
               >
                 <Image
@@ -250,7 +250,7 @@ export default function OurTours({
               style={{
                 scrollbarWidth: 'none',
               }}
-              className='mb-[1.5rem] flex space-x-[1.125rem] overflow-x-auto rounded-[0.56044rem] px-4 sm:hidden'
+              className='mb-[1.5rem] flex space-x-[1.125rem] overflow-x-auto px-4 sm:hidden'
             >
               {tab === 'stayPoints' ? (
                 Array.isArray(hotels) && hotels.length > 0 ? (
