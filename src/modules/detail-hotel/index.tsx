@@ -12,6 +12,7 @@ import { SectionVoucher } from '@/components/shared'
 import BrandButton2 from '@/components/shared/BrandButton2'
 import DrawerProvider from '@/components/provider/DrawerProvider'
 import { formatUSD, normalizePrice } from '@/lib/utils'
+import SectionExploreOtherTours from '../details-tour/components/SectionExploreOtherTours'
 
 export default function DetailHotel({
   detailHotel,
@@ -97,7 +98,7 @@ export default function DetailHotel({
             detailHotel={detailHotel}
           />
         </div>
-        <div className='fixed w-[21.4375rem] h-[3.75rem] sm:hidden left-4 right-4 bottom-4 p-[0.625rem_0.75rem] rounded-[0.75rem] bg-black/50 backdrop-blur-[10px] flex-between'>
+        <div className='fixed z-[10] w-[21.4375rem] h-[3.75rem] sm:hidden left-4 right-4 bottom-4 p-[0.625rem_0.75rem] rounded-[0.75rem] bg-black/50 backdrop-blur-[10px] flex-between'>
           <div className=''>
             <p className='text-white text-[0.875rem] leading-[1.5] mb-1'>Total</p>
             <p className='text-[#FF7B4A] font-bold font-phu-du leading-[1.1]'>
@@ -130,6 +131,17 @@ export default function DetailHotel({
             onClose={() => setOpenBookingOverview(false)}
           />
         </DrawerProvider>
+      </div>
+      <div className='mt-[5rem] xsm:mt-[2rem]'>
+        <SectionExploreOtherTours
+          price={
+            detailHotel?.acf?.room_and_dorm?.select[0]?.acf?.price_reduced ||
+            detailHotel?.acf?.room_and_dorm?.select[0]?.acf?.price ||
+            ''
+          }
+          type='hotel'
+          relatedTours={detailHotel?.acf?.related_hotels?.hotels || []}
+        />
       </div>
     </main>
   )

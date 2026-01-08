@@ -16,7 +16,7 @@ interface TourCardProps {
   tourPrice: number
   tourThumbnail: WPImage
   tourSlug: string
-
+  type?: 'tour' | 'hotel'
   size?: TourCardSize
   classNameCard?: string
 }
@@ -28,6 +28,7 @@ export default function TourCard({
   tourPrice,
   tourThumbnail,
   tourSlug,
+  type = 'tour',
   size = 'medium',
   classNameCard,
 }: TourCardProps) {
@@ -42,7 +43,7 @@ export default function TourCard({
 
   return (
     <Link
-      href={`${tourListLink}/${tourSlug}`}
+      href={`${type === 'tour' ? tourListLink : 'hotels'}/${tourSlug}`}
       className={cn(
         'group xsm:rounded-[0.4085rem] relative inline-block overflow-hidden rounded-[0.5rem]',
         tourCardSizeClassNames[size],
@@ -60,11 +61,13 @@ export default function TourCard({
           />
         )}
 
-        <p className='flex-center xsm:top-2 xsm:left-[0.6125rem] xsm:rounded-tl-[0.61275rem] xsm:rounded-br-[0.61275rem] absolute top-2.5 left-3 z-1 h-6.25 rounded-tl-[0.75rem] rounded-br-[0.75rem] bg-[#2BAB7D] px-[0.88331rem]'>
-          <span className='font-phu-du xsm:text-[0.63775rem] xsm:tracking-[-0.01275rem] text-[0.75rem] leading-none font-medium tracking-[-0.015rem] text-white'>
-            {tourType}
-          </span>
-        </p>
+        {tourType && (
+          <p className='flex-center xsm:top-2 xsm:left-[0.6125rem] xsm:rounded-tl-[0.61275rem] xsm:rounded-br-[0.61275rem] absolute top-2.5 left-3 z-1 h-6.25 rounded-tl-[0.75rem] rounded-br-[0.75rem] bg-[#2BAB7D] px-[0.88331rem]'>
+            <span className='font-phu-du xsm:text-[0.63775rem] xsm:tracking-[-0.01275rem] text-[0.75rem] leading-none font-medium tracking-[-0.015rem] text-white'>
+              {tourType}
+            </span>
+          </p>
+        )}
 
         <div className='xsm:px-[0.6125rem] xsm:pb-4 xsm:pt-[2.55rem] absolute right-0 bottom-0 left-0 bg-[linear-gradient(180deg,rgba(6,42,25,0.00)_0%,rgba(6,42,25,0.58)_24.91%,#062A19_100%)] px-3 pt-12.5 pb-4.75'>
           <div className='xsm:mb-3 mb-3.25'>
