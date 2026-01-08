@@ -14,9 +14,11 @@ export interface IPin {
 export default function Map({
   className,
   locations,
+  onFilter,
 }: {
   className?: string
   locations: ILocation[]
+  onFilter: (locationSlug: string) => void
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<SVGSVGElement>(null)
@@ -27,6 +29,7 @@ export default function Map({
     if (!dataId) return false
 
     // Các rule đặc biệt của bạn
+    if (loc.slug === 'hai-phong' && dataId === 'hai-phong-island') return true
 
     // Rule mặc định: match slug
     return loc.slug === dataId
@@ -94,6 +97,7 @@ export default function Map({
           fillOpacity='0.2'
           stroke='white'
           strokeWidth='0.387826'
+          data-id='phu-quoc'
         />
         <path
           d='M150.163 69.1428L149.542 69.5307V72.7105L152.335 73.874L153.964 73.4862L153.731 74.9602L155.36 75.1155V76.7441L157.299 77.2872L158.307 75.9684L160.634 75.5806L162.573 73.2536L162.108 72.2454L164.435 69.2981L168.081 68.9876L169.166 70.3063L171.183 71.6251L172.347 70.2283L174.519 70.9267L175.372 71.8576L174.596 73.4089L176.225 73.5642L177.001 75.8131L179.716 75.5033L179.948 78.6059L181.499 79.9239L181.189 80.7776L179.328 81.4753L179.56 83.6477L177.932 85.8194L177.156 85.2763L175.139 85.5868L173.976 85.121L172.579 86.595L166.917 85.5088L165.831 85.8194L163.349 84.9657L161.876 83.7249L158.928 83.4924L156.058 85.9746L154.895 84.8884L155.205 86.6723L154.352 87.6805L154.817 90.1627L153.421 92.7222L151.947 92.4897L149.31 93.2653L147.991 92.9555L146.44 92.1018L143.337 92.3344L144.036 90.5505L143.415 89.5423L141.088 89.0773L140.079 87.5259L140.545 86.9828L139.847 83.4924L141.01 83.0266L140.7 81.0102L139.459 79.8467L139.925 77.9076L140.933 78.1401L141.864 75.6579L144.191 77.2092L144.967 75.4253L144.811 72.5553L145.354 71.2373L144.423 70.8494L146.207 68.5997L149.31 68.3672L150.163 69.1428Z'
@@ -548,7 +552,8 @@ export default function Map({
       {pins.map((pin, index) => (
         <MapItemTooltip
           key={index}
-          {...pin}
+          pin={pin}
+          onFilter={onFilter}
         />
       ))}
     </div>

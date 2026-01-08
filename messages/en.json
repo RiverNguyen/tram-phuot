@@ -31,7 +31,8 @@
       "localTours": "Local tours",
       "stayPoints": "Stay points",
       "tourAndChill": "Tour and chill",
-      "exploreTheTour": "Explore the tour"
+      "exploreTheTour": "Explore the tour",
+      "noResult": "No Result"
     }
   },
   "Header": {

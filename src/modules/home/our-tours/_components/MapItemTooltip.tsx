@@ -6,21 +6,52 @@ import { PopoverClose } from '@radix-ui/react-popover'
 import { X } from 'lucide-react'
 import Image from 'next/image'
 import { IPin } from './Map'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ICMinimize from '@/components/icons/ICMinimize'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/navigation'
+import { useParams } from 'next/navigation'
 
-export default function MapItemTooltip(pin: IPin) {
+interface MapItemTooltipProps {
+  pin: IPin
+  onFilter: (locationSlug: string) => void
+}
+
+export default function MapItemTooltip({ pin, onFilter }: MapItemTooltipProps) {
+  const [open, setOpen] = useState(false)
   const [isMaximize, setIsMaximize] = useState(false)
   const t = useTranslations('HomePage.ourTours')
+  const { locale } = useParams<{ locale: string }>()
+  const descRef = useRef<HTMLDivElement | null>(null)
+  const [canExpand, setCanExpand] = useState(false)
+
+  useEffect(() => {
+    const el = descRef.current
+    if (!el) return
+
+    // scrollHeight > clientHeight => bị overflow
+    setCanExpand(el.scrollHeight > el.clientHeight)
+  }, [open])
+
+  const exploreMore =
+    locale === 'en'
+      ? `/tours?locations=${pin?.location?.slug}`
+      : '/danh-sach-tour?locations=${pin?.location?.slug}'
 
   return (
-    <Popover>
+    <Popover
+      open={open}
+      onOpenChange={setOpen}
+    >
       <PopoverTrigger asChild>
         <button
           type='button'
-          className='absolute transform -translate-x-1/2 -translate-y-full cursor-pointer hover:scale-125 transition duration-300 ease-out z-10'
+          onClick={() => onFilter(pin?.location?.slug)}
+          className={cn(
+            'absolute z-10 -translate-x-1/2 -translate-y-full transform cursor-pointer transition duration-300 ease-out hover:scale-125',
+            open && 'scale-125',
+          )}
           style={{
             left: `${pin.x}%`, // hoặc dùng px nếu thích
             top: `${pin.y}%`,
@@ -33,7 +64,7 @@ export default function MapItemTooltip(pin: IPin) {
             viewBox='0 0 30 36'
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
-            className='w-[1.48594rem] h-auto'
+            className='h-auto w-[1.48594rem]'
           >
             <mask
               id='path-1-inside-1_26_3234'
@@ -83,35 +114,35 @@ export default function MapItemTooltip(pin: IPin) {
       </PopoverTrigger>
       <PopoverContent
         className={cn(
-          'relative p-4 w-[22.25rem] rounded-[0.5rem]! transition-all',
-          isMaximize ? 'h-auto pb-[3.8125rem] overflow-visible' : 'h-[14.5625rem] overflow-hidden',
+          'relative z-49 w-[22.25rem] rounded-[0.5rem]! p-4 pb-[3.8125rem]',
+          isMaximize ? 'h-auto overflow-visible' : 'h-[14.5625rem] overflow-hidden',
         )}
       >
         <PopoverClose asChild>
           <button
             type='button'
-            className='absolute flex items-center justify-center cursor-pointer right-2.5 top-2.5 bg-[rgba(17,17,100,0.10)] size-[1.875rem] rounded-full'
+            className='absolute top-2.5 right-2.5 flex size-[1.875rem] cursor-pointer items-center justify-center rounded-full bg-[rgba(17,17,100,0.10)]'
           >
             <X className='size-4 text-[rgba(17,17,100,0.60)]' />
           </button>
         </PopoverClose>
-        <div className='flex items-center pb-[0.75rem] border-b border-b-black/6 space-x-3.5'>
+        <div className='flex items-center space-x-3.5 border-b border-b-black/6 pb-[0.75rem]'>
           <Image
-            src={pin?.location?.acf?.image || ''}
+            src={pin?.location?.acf?.image || '/default.webp'}
             alt=''
             width={144}
             height={144}
-            className='size-[4.75rem] rounded-[0.5rem]'
+            className='size-[4.75rem] rounded-[0.5rem] object-cover'
           />
           <div>
-            <h2 className='font-phu-du text-[1rem] font-bold leading-[1.1rem] text-[#07364D]'>
+            <h2 className='font-phu-du text-[1rem] leading-[1.1rem] font-bold text-[#07364D]'>
               {pin?.location?.name}
             </h2>
             <p className='font-montserrat text-[0.875rem] leading-[1.02rem] tracking-[0.00875rem] text-[rgba(46,46,46,0.75)]'>
               {t('localTours')}:
               <span className='leading-[1.4rem] font-semibold tracking-[-0.00875rem] text-[#FF7B4A]'>
                 {' '}
-                {pin?.location?.stats?.tours} tours
+                {pin?.location?.stats?.tours} {locale === 'en' ? 'tours' : 'tour'}
               </span>
             </p>
             <p className='font-montserrat text-[0.875rem] leading-[1.02rem] tracking-[0.00875rem] text-[rgba(46,46,46,0.75)]'>
@@ -124,32 +155,33 @@ export default function MapItemTooltip(pin: IPin) {
           </div>
         </div>
         <div
+          ref={descRef}
           dangerouslySetInnerHTML={{ __html: pin?.location?.acf?.desc || '' }}
-          className='pt-[0.875rem] font-montserrat text-[0.875rem] leading-[1.02rem] tracking-[0.00875rem] text-[rgba(46,46,46,0.75)]'
+          className='font-montserrat pt-[0.875rem] text-[0.875rem] leading-[1.02rem] tracking-[0.00875rem] text-[rgba(46,46,46,0.75)]'
         ></div>
         <div
           className={cn(
-            'absolute bottom-0 left-0 right-0 w-full h-[4.625rem] bg-[linear-gradient(180deg,rgba(255,255,255,0.00)_0%,rgba(255,255,255,0.86)_32.08%,#FFF_69.34%)] z-1 rounded-b-[0.5rem]',
+            'absolute right-0 bottom-0 left-0 z-1 h-[4.625rem] w-full rounded-b-[0.5rem] bg-[linear-gradient(180deg,rgba(255,255,255,0.00)_0%,rgba(255,255,255,0.86)_32.08%,#FFF_69.34%)]',
             isMaximize && 'hidden',
           )}
         ></div>
         <div
           className={cn(
-            'absolute bottom-0 left-0 right-0 w-full flex items-end justify-between z-2 h-[3.0625rem] rounded-b-[0.5rem]',
+            'absolute right-0 bottom-0 left-0 z-2 flex h-[3.0625rem] w-full items-end justify-between rounded-b-[0.5rem]',
             isMaximize && 'bg-white',
           )}
         >
-          <button
-            type='button'
-            className='px-4 py-3.5 inline-flex items-center justify-center space-x-1.5 font-montserrat text-[0.875rem] font-semibold tracking-[-0.00875rem] bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] bg-clip-text text-transparent cursor-pointer'
+          <Link
+            href={exploreMore}
+            className='font-montserrat inline-flex cursor-pointer items-center justify-center space-x-1.5 bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] bg-clip-text px-4 py-3.5 text-[0.875rem] font-semibold tracking-[-0.00875rem] text-transparent'
           >
             <span>{t('exploreTheTour')}</span>
             <ICArrowRight className='size-4' />
-          </button>
+          </Link>
           <button
             type='button'
             onClick={() => setIsMaximize((prev) => !prev)}
-            className='p-3.5 cursor-pointer'
+            className='cursor-pointer p-3.5'
           >
             {isMaximize ? (
               <ICMinimize className='size-[0.85456rem]' />

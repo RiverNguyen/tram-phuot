@@ -1,16 +1,10 @@
 import ENDPOINTS from '@/configs/endpoints'
 import fetchData from '@/fetches/fetchData'
-import { IHotelRes } from '@/interface/hotel.interface'
 
 const homeService = {
   getHome: async (locale: string) => {
     return await fetchData({
       api: ENDPOINTS.home[locale as keyof typeof ENDPOINTS.home],
-    })
-  },
-  getHotels: async (locale: string): Promise<IHotelRes> => {
-    return await fetchData({
-      api: `${ENDPOINTS.hotel.list}?lang=${locale}&limit=8&order=DESC&orderby=date&acf=banner`,
     })
   },
   getReviews: async (locale: string) => {
