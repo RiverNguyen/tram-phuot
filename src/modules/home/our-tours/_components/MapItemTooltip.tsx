@@ -6,7 +6,7 @@ import { PopoverClose } from '@radix-ui/react-popover'
 import { X } from 'lucide-react'
 import Image from 'next/image'
 import { IPin } from './Map'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import ICMinimize from '@/components/icons/ICMinimize'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
@@ -23,16 +23,6 @@ export default function MapItemTooltip({ pin, onFilter }: MapItemTooltipProps) {
   const [isMaximize, setIsMaximize] = useState(false)
   const t = useTranslations('HomePage.ourTours')
   const { locale } = useParams<{ locale: string }>()
-  const descRef = useRef<HTMLDivElement | null>(null)
-  const [canExpand, setCanExpand] = useState(false)
-
-  useEffect(() => {
-    const el = descRef.current
-    if (!el) return
-
-    // scrollHeight > clientHeight => bị overflow
-    setCanExpand(el.scrollHeight > el.clientHeight)
-  }, [open])
 
   const exploreMore =
     locale === 'en'
@@ -155,7 +145,6 @@ export default function MapItemTooltip({ pin, onFilter }: MapItemTooltipProps) {
           </div>
         </div>
         <div
-          ref={descRef}
           dangerouslySetInnerHTML={{ __html: pin?.location?.acf?.desc || '' }}
           className='font-montserrat pt-[0.875rem] text-[0.875rem] leading-[1.02rem] tracking-[0.00875rem] text-[rgba(46,46,46,0.75)]'
         ></div>
