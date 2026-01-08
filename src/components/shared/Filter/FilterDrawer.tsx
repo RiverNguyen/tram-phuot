@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItemCustom } from '@/components/ui/radio-group'
 import { Clock8, List, X } from 'lucide-react'
 import { Dispatch, SetStateAction } from 'react'
-import BrandButton from '../../../components/shared/BrandButton'
+import BrandButton from '../BrandButton'
 import ICLocation2 from '@/components/icons/ICLocation2'
 import { useTranslations } from 'next-intl'
 
