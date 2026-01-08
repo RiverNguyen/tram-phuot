@@ -68,17 +68,10 @@ export interface IHotel {
     url: string
   }
   taxonomies: {
-    'hotel-amenities': ITerm[]
+    'hotel-amenities'?: ITerm[]
     locations: ITerm[]
   }
-  acf: {
-    price_person: string
-    banner: {
-      review: {
-        rating: string
-      }
-    }
-  }
+  acf: IHotelACF | null
   lang: string
 }
 
@@ -88,4 +81,22 @@ export interface IHotelRes {
   total: number
   totalPages: number
   data: IHotel[]
+}
+
+export interface IHotelReview {
+  image: string | false
+  icon: string | false
+  text: string
+  rating: string | number | false
+}
+
+export interface IHotelBanner {
+  address: string
+  gallery: string[]
+  review: IHotelReview
+}
+
+export interface IHotelACF {
+  banner: IHotelBanner
+  price_person?: number | string
 }

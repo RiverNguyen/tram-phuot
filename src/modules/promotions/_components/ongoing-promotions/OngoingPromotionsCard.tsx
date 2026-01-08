@@ -1,8 +1,8 @@
-import { CouponItem } from '@/types/coupon.type'
+import { ICoupon } from '@/interface/coupon.interface'
 import Link from 'next/link'
 import Image from 'next/image'
 
-export default function OngoingPromotionsCard({ card }: { card: CouponItem }) {
+export default function OngoingPromotionsCard({ card }: { card: ICoupon }) {
   if (card?.acf?.private) return null
 
   return (
