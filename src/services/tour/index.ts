@@ -53,6 +53,11 @@ const tourService = {
       api: `${ENDPOINTS.tour.relatedTours}?slug=${slug}&locale=${locale}&fields=${fields}&post=${postTypeKey}`,
     })
   },
+  getTourCoupons: async (slug: string, locale: string, postTypeKey: string) => {
+    return await fetchData({
+      api: `${ENDPOINTS.tour.coupons}?slug=${slug}&locale=${locale}&post_type=${postTypeKey}`,
+    })
+  },
 }
 
 export default tourService

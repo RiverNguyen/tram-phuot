@@ -13,6 +13,7 @@ const ENDPOINTS = {
     detail: 'api/v1/tour/detail',
     applyVoucher: 'api/v1/tour/voucher/apply',
     relatedTours: 'api/v1/tour/related-tours',
+    coupons: 'api/v1/coupons',
   },
   wordpress: {
     siteSettings: 'api/v1/site-settings',
