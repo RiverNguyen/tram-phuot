@@ -232,7 +232,7 @@ export default function BookingOverview({
       // You may need to add hotel booking endpoints to ENDPOINTS config
       // For now, using tour endpoints as placeholder
       const CONTACT_ENDPOINT_BY_LOCALE = {
-        vi: ENDPOINTS.contact_form.form_booking_hotel_en,
+        vi: ENDPOINTS.contact_form.form_booking_hotel_vi,
         en: ENDPOINTS.contact_form.form_booking_hotel_en,
       }
       const endpoint = CONTACT_ENDPOINT_BY_LOCALE[locale as keyof typeof CONTACT_ENDPOINT_BY_LOCALE]

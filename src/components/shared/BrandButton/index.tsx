@@ -30,6 +30,7 @@ export default function BrandButton({
   classNameButtonContainer,
   classNameButtonText,
   children,
+  disabled,
 }: BrandButtonProps) {
   const classNameButtonVariant: Record<BrandButtonVariant, string> = {
     greenGradient: 'bg-green-gradient',
@@ -101,7 +102,7 @@ export default function BrandButton({
       type={type?.type || 'button'}
       onClick={handleClickButton}
       form={type?.form || undefined}
-      disabled={type?.disabled || false}
+      disabled={type?.disabled || disabled || false}
       className={cn(
         'group flex-center font-montserrat xsm:h-10.5 relative h-12 w-auto cursor-pointer overflow-hidden rounded-[1.25rem_0.125rem] bg-transparent px-7 disabled:cursor-not-allowed disabled:opacity-50',
         classNameButtonVariant[variant],

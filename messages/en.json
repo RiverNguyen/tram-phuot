@@ -55,8 +55,8 @@
     "button": "Back to homepage"
   },
   "ThankYou": {
-    "title": "We have received your quote request.",
-    "subtitle": "Thank you for trusting us !",
+    "title": "Thank you for trusting us !",
+    "subtitle": "We have received your quote request.",
     "desc": "Thank you for trusting us, we will contact you as soon as possible.",
     "button": "Keep exploring"
   },
@@ -66,7 +66,30 @@
     "selected": "Selected",
     "searchFilter": "Search Filter",
     "done": "Done",
-    "all": "All"
+    "all": "All",
+    "locations": "Locations",
+    "tour-type": "Tour Type",
+    "tour-duration": "Tour Duration"
+  },
+  "ListCouponPage": {
+    "noResult": "No Result",
+    "reset": "Reset all",
+    "all": "All",
+    "selected": "Selected",
+    "category": "Category",
+    "destination": "Destination",
+    "typeTour": "Type tour",
+    "apply": "Apply"
+  },
+  "ListHotelPage": {
+    "noResult": "No Result",
+    "reset": "Reset all",
+    "select": "Select",
+    "selected": "Selected",
+    "searchFilter": "Search Filter",
+    "done": "Done",
+    "amenities": "Amenities",
+    "locations": "Locations"
   },
   "DetailsTourPage": {
     "metaTourDuration": "Tour duration:",
@@ -117,6 +140,23 @@
     "textApplyVoucherSuccess": "Voucher applied successfully",
     "textApplyVoucherError": "Voucher applied failed",
     "textNoteChildren14": "Children aged 1-4 are free, but from the second child onwards, they will be charged at 50% of the adult price;"
+  },
+  "ContactForm": {
+    "fullNameRequired": "Please enter your full name",
+    "emailRequired": "Please enter your email",
+    "emailInvalid": "Please enter a valid email",
+    "phoneRequired": "Please enter your phone number",
+    "phoneInvalid": "Please enter a valid phone number",
+    "submitSuccess": "Submitted successfully",
+    "submitFailed": "Submitted failed",
+    "submitFailedMessage": "Submitted failed. Please try again.",
+    "sending": "Sending...",
+    "sendInformation": "Send information",
+    "fullNameLabel": "Full name",
+    "emailLabel": "Email",
+    "phoneNumberLabel": "Phone number",
+    "messageLabel": "Message",
+    "directionsToTheOffice": "Directions to the office"
   },
   "ContactFormBooking": {
     "title": "Contact Information",

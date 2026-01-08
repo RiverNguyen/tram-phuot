@@ -17,13 +17,10 @@ export default function Footer({ data }: { data: IFooter }) {
 
   const isThankyouPage = pathname === '/thank-you' || pathname === '/cam-on'
 
+  if (isThankyouPage) return null
+
   return (
-    <footer
-      className={cn(
-        'xsm:h-auto relative z-1 h-[85.8125rem] overflow-hidden bg-[#FDF4ED]',
-        !isLoading && isMobile && isThankyouPage && 'bg-transparent',
-      )}
-    >
+    <footer className='relative bg-[#FDF4ED] h-[85.8125rem] xsm:h-auto overflow-hidden z-1'>
       {/* Background + mask */}
       <div className="xsm:mask-[url('/footer/d-footer_mask_mobile.webp')] xsm:mask-size-[23.4375rem_32rem] absolute inset-0 mask-alpha mask-no-repeat sm:mask-[url('/footer/d-footer_mask.webp')] sm:mask-size-[100.07813rem_92.876rem]">
         <Image

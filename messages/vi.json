@@ -55,8 +55,8 @@
     "button": "Quay lại trang chủ"
   },
   "ThankYou": {
-    "title": "Chúng tôi đã nhận được yêu cầu báo giá của bạn.",
-    "subtitle": "Cảm ơn bạn đã tin tưởng chúng tôi!",
+    "title": "Cảm ơn bạn đã tin tưởng chúng tôi!",
+    "subtitle": "Chúng tôi đã nhận được yêu cầu báo giá của bạn.",
     "desc": "Cảm ơn bạn đã tin tưởng chúng tôi, chúng tôi sẽ liên hệ với bạn sớm nhất có thể.",
     "button": "Tiếp tục khám phá"
   },
@@ -66,7 +66,29 @@
     "selected": "Đã chọn",
     "searchFilter": "Bộ lọc",
     "done": "Hoàn thành",
-    "all": "Tất cả"
+    "all": "Tất cả",
+    "locations": "Địa điểm",
+    "tour-type": "Loại tour",
+    "tour-duration": "Thời gian tour"
+  },
+  "ListCouponPage": {
+    "noResult": "Không có kết quả",
+    "reset": "Xóa tất cả",
+    "all": "Tất cả",
+    "category": "Danh mục",
+    "destination": "Địa điểm",
+    "typeTour": "Loại tour",
+    "apply": "Áp dụng"
+  },
+  "ListHotelPage": {
+    "noResult": "Không có kết quả",
+    "reset": "Xóa tất cả",
+    "select": "Lựa chọn",
+    "selected": "Đã chọn",
+    "searchFilter": "Bộ lọc",
+    "done": "Hoàn thành",
+    "amenities": "Tiện ích",
+    "locations": "Địa điểm"
   },
   "DetailsTourPage": {
     "metaTourDuration": "Thời gian tour:",
@@ -117,6 +139,23 @@
     "textApplyVoucherSuccess": "Áp dụng voucher thành công",
     "textApplyVoucherError": "Áp dụng voucher thất bại",
     "textNoteChildren14": "Trẻ em từ 1 đến 4 tuổi được miễn phí, nhưng từ trẻ thứ hai trở đi, giá vé sẽ bằng 50% giá vé người lớn;"
+  },
+  "ContactForm": {
+    "fullNameRequired": "Vui lòng nhập tên của bạn",
+    "emailRequired": "Vui lòng nhập email của bạn",
+    "emailInvalid": "Vui lòng nhập email hợp lệ",
+    "phoneRequired": "Vui lòng nhập số điện thoại của bạn",
+    "phoneInvalid": "Vui lòng nhập số điện thoại hợp lệ",
+    "submitSuccess": "Gửi thông tin thành công",
+    "submitFailed": "Gửi thông tin thất bại",
+    "submitFailedMessage": "Gửi thông tin thất bại. Vui lòng thử lại.",
+    "sending": "Đang gửi...",
+    "sendInformation": "Gửi thông tin",
+    "fullNameLabel": "Tên của bạn",
+    "emailLabel": "Email",
+    "phoneNumberLabel": "Số điện thoại",
+    "messageLabel": "Tin nhắn",
+    "directionsToTheOffice": "Hướng dẫn đến văn phòng"
   },
   "ContactFormBooking": {
     "title": "Thông tin liên hệ",
