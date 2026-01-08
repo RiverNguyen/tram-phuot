@@ -9,14 +9,14 @@ import { ICChevron } from '@/components/icons'
 import { ICoupon } from '@/interface/coupon.interface'
 import { useRef } from 'react'
 
-export default function SpecialOffers({ data }: { data: ICoupon[] }) {
+export default function SpecialOffers({ data, text1 }: { data: ICoupon[], text1: string }) {
   const prevRef = useRef<HTMLDivElement | null>(null)
   const nextRef = useRef<HTMLDivElement | null>(null)
   const visibleData = data.filter((offer: ICoupon) => !offer?.acf?.private)
   return (
     <div className='xsm:gap-0 flex flex-col items-start gap-[2.5rem] self-stretch'>
       <h2 className='xsm:w-full xsm:px-[1rem] xsm:text-[1.25rem] xsm:leading-[1.5rem] xsm:tracking-[0.025rem] font-phu-du mx-auto w-full max-w-[87.5rem] text-[2.125rem] leading-[2.3375rem] font-medium text-[#2E2E2E]'>
-        Special offer just for you!
+        {text1}
       </h2>
       <div className='special-offer-swiper mx-auto w-full max-w-[99rem]'>
         <Swiper
