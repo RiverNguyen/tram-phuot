@@ -28,8 +28,10 @@
       "apply": "Áp dụng"
     },
     "ourTours": {
+      "localTours": "Tour địa phương",
       "stayPoints": "Điểm dừng",
-      "tourAndChill": "Tour và thư giãn"
+      "tourAndChill": "Tour và thư giãn",
+      "exploreTheTour": "Khám phá tour"
     }
   },
   "Header": {

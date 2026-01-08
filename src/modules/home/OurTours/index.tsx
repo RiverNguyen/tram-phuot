@@ -12,12 +12,9 @@ import { ITour } from '@/interface/tour.interface'
 import { IHotel } from '@/interface/hotel.interface'
 import HotelCard from '@/modules/hotels/_components/HotelCard'
 import { useTranslations } from 'next-intl'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { X } from 'lucide-react'
-import ICMaximize from '@/components/icons/ICMaximize'
-import ICArrowRight from '@/components/icons/ICArrowRight'
 import Map from './_components/Map'
 import { ILocation } from '@/interface/taxonomy.interface'
+import useIsMobile from '@/hooks/use-is-mobile'
 
 export default function OurTours({
   ourTours,
@@ -31,79 +28,11 @@ export default function OurTours({
   locations: ILocation[]
 }) {
   const [tab, setTab] = useState<'stayPoints' | 'tourAndChill'>('tourAndChill')
-  const [open, setOpen] = useState(false)
   const t = useTranslations('HomePage.ourTours')
+  const { isMobile, isLoading } = useIsMobile()
 
   return (
     <>
-      <Popover
-        open={open}
-        onOpenChange={setOpen}
-      >
-        <PopoverTrigger asChild></PopoverTrigger>
-        <PopoverContent className='relative p-4 w-[22.25rem] h-[14.5625rem] overflow-hidden rounded-[0.5rem]!'>
-          <button
-            type='button'
-            onClick={() => setOpen(false)}
-            className='absolute flex items-center justify-center cursor-pointer right-2.5 top-2.5 bg-[rgba(17,17,100,0.10)] size-[1.875rem] rounded-full'
-          >
-            <X className='size-4 text-[rgba(17,17,100,0.60)]' />
-          </button>
-          <div className='flex items-center pb-[0.75rem] border-b border-b-black/6 space-x-3.5'>
-            <Image
-              src='/home/avatar.webp'
-              alt=''
-              width={144}
-              height={144}
-              className='size-[4.75rem] rounded-[0.5rem]'
-            />
-            <div>
-              <h2 className='font-phu-du text-[1rem] font-bold leading-[1.1rem] text-[#07364D]'>
-                Lam Dong
-              </h2>
-              <p className='font-montserrat text-[0.875rem] leading-[1.02rem] tracking-[0.00875rem] text-[rgba(46,46,46,0.75)]'>
-                Local tours:
-                <span className='leading-[1.4rem] font-semibold tracking-[-0.00875rem] text-[#FF7B4A]'>
-                  {' '}
-                  08 tours
-                </span>
-              </p>
-              <p className='font-montserrat text-[0.875rem] leading-[1.02rem] tracking-[0.00875rem] text-[rgba(46,46,46,0.75)]'>
-                Stay points:
-                <span className='leading-[1.4rem] font-semibold tracking-[-0.00875rem] text-[#FF7B4A]'>
-                  {' '}
-                  12
-                </span>
-              </p>
-            </div>
-          </div>
-          <div className='pt-[0.875rem] font-montserrat text-[0.875rem] leading-[1.02rem] tracking-[0.00875rem] text-[rgba(46,46,46,0.75)]'>
-            In the Northwest of Da Lat city, there is a high mountain called Lang Biang, with the
-            highest peak at 2,163m. Later, the name of the mountain became the name of the plateau.
-            During the feudal era, this plateau's name was Sinicized to Lâm Viên. On 1st November
-            1899, the Governor-General of Indochina issued a decree separating the upper reaches of
-            the Dong Nai River from Binh Thuan province to establish Dong Nai Thượng province
-            (Province du Haut Donnai). The provincial capital was located in Di Linh.
-          </div>
-          <div className='absolute bottom-0 left-0 right-0 w-full h-[4.625rem] bg-[linear-gradient(180deg,rgba(255,255,255,0.00)_0%,rgba(255,255,255,0.86)_32.08%,#FFF_69.34%)] z-1 rounded-b-[0.5rem]'></div>
-          <div className='absolute bottom-0 left-0 right-0 w-full flex items-end justify-between z-2 rounded-b-[0.5rem]'>
-            <button
-              type='button'
-              className='px-4 py-3.5 inline-flex items-center justify-center space-x-1.5 font-montserrat text-[0.875rem] font-semibold tracking-[-0.00875rem] bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] bg-clip-text text-transparent cursor-pointer'
-            >
-              <span>Eplore the tour</span>
-              <ICArrowRight className='size-4' />
-            </button>
-            <button
-              type='button'
-              className='p-3.5 cursor-pointer'
-            >
-              <ICMaximize className='size-[0.89581rem]' />
-            </button>
-          </div>
-        </PopoverContent>
-      </Popover>
-
       <section className='relative h-[71.8125rem] sm:mt-[-15.875rem] xsm:h-auto xsm:mt-[-4rem] xsm:overflow-hidden w-full z-3'>
         <Image
           src='/home/our-tours/d-bg-mobile.webp'
@@ -130,30 +59,32 @@ export default function OurTours({
         </div>
 
         <div className='relative pt-[14rem] flex sm:pl-[6.6rem] w-full xsm:pt-[4.83rem] z-10 xsm:pb-[4.04rem]'>
-          <div className='relative shrink-0 w-[27.875rem] h-[35.04981rem] xsm:hidden'>
-            <Map
-              locations={locations}
-              className='size-full object-contain xsm:hidden'
-            />
+          {!isLoading && !isMobile && (
+            <div className='relative w-[27.875rem] h-[35.04981rem] shrink-0 xsm:hidden'>
+              <Map
+                locations={locations}
+                className='size-full xsm:hidden'
+              />
 
-            <motion.div
-              initial={{
-                visibility: 'hidden',
-              }}
-              whileInView={{
-                scale: [0, 1],
-                opacity: [0, 1, 0],
-                visibility: 'visible',
-              }}
-              viewport={{ once: true, amount: 0.9 }}
-              transition={{
-                duration: 1.2,
-                ease: 'linear',
-                repeat: Infinity,
-              }}
-              className='size-[33.25794rem] absolute bottom-[11.18rem] right-[2.16rem] z-1 rounded-full border-2 border-white/80 pointer-events-none xsm:hidden'
-            ></motion.div>
-          </div>
+              <motion.div
+                initial={{
+                  visibility: 'hidden',
+                }}
+                whileInView={{
+                  scale: [0, 1],
+                  opacity: [0, 1, 0],
+                  visibility: 'visible',
+                }}
+                viewport={{ once: true, amount: 0.9 }}
+                transition={{
+                  duration: 1.2,
+                  ease: 'linear',
+                  repeat: Infinity,
+                }}
+                className='size-[33.25794rem] absolute bottom-[11.18rem] right-[2.16rem] z-1 rounded-full border-2 border-white/80 pointer-events-none xsm:hidden'
+              ></motion.div>
+            </div>
+          )}
 
           <div className='relative min-w-0'>
             <BrandTitle

@@ -21,6 +21,10 @@ export interface ILocation {
     image: string
     desc: string
     order_index: string
+  } | null
+  stats: {
+    hotels: string
+    tours: string
   }
 }
 
