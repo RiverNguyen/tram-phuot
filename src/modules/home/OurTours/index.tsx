@@ -37,9 +37,8 @@ export default function OurTours({
         <Image
           src='/home/our-tours/d-bg-mobile.webp'
           alt=''
-          width={563}
-          height={1385}
-          className='absolute inset-0 object-cover z-1 sm:hidden'
+          fill
+          className='absolute inset-0 size-full object-cover z-1 sm:hidden'
         />
         <Image
           src='/home/our-tours/d-bg.svg'

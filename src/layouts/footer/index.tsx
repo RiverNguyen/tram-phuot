@@ -35,24 +35,21 @@ export default function Footer({ data }: { data: IFooter }) {
           mask-no-repeat mask-alpha
         "
       >
-        {!isLoading &&
-          (isMobile ? (
-            <Image
-              src={data?.form_footer?.background?.mobile?.url || ''}
-              alt={data?.form_footer?.background?.mobile?.alt}
-              width={data?.form_footer?.background?.mobile?.width}
-              height={data?.form_footer?.background?.mobile?.height}
-              className='absolute -top-[0.63rem] left-0 right-0 h-[32rem] w-full object-cover'
-            />
-          ) : (
-            <Image
-              src={data?.form_footer?.background?.desktop?.url || ''}
-              alt={data?.form_footer?.background?.desktop?.alt}
-              width={data?.form_footer?.background?.desktop?.width}
-              height={data?.form_footer?.background?.desktop?.height}
-              className='absolute -top-[3.5rem] left-0 h-[92.36544rem] w-[100.12506rem] object-contain'
-            />
-          ))}
+        <Image
+          src={data?.form_footer?.background?.mobile?.url || ''}
+          alt={data?.form_footer?.background?.mobile?.alt}
+          width={data?.form_footer?.background?.mobile?.width}
+          height={data?.form_footer?.background?.mobile?.height}
+          className='absolute -top-[0.63rem] left-0 right-0 h-[32rem] w-full object-cover sm:hidden'
+        />
+
+        <Image
+          src={data?.form_footer?.background?.desktop?.url || ''}
+          alt={data?.form_footer?.background?.desktop?.alt}
+          width={data?.form_footer?.background?.desktop?.width}
+          height={data?.form_footer?.background?.desktop?.height}
+          className='absolute -top-[3.5rem] left-0 h-[92.36544rem] w-[100.12506rem] object-contain xsm:hidden'
+        />
         {/* Overlay */}
         <div className='absolute top-0 left-0 right-0 bg-black/28 h-[83.01219rem] xsm:h-[29.875rem] w-full z-1'></div>
 
@@ -91,24 +88,20 @@ export default function Footer({ data }: { data: IFooter }) {
 
           {/* Right */}
           <div className='relative -mr-[1.75rem] -mt-[0.7rem] xsm:m-0 xsm:pt-[0.75rem]'>
-            {!isLoading &&
-              (isMobile ? (
-                <Image
-                  src={data?.form_footer?.image?.mobile?.url || ''}
-                  alt={data?.form_footer?.image?.mobile?.alt}
-                  width={data?.form_footer?.image?.mobile?.width}
-                  height={data?.form_footer?.image?.mobile?.height}
-                  className='w-[23.4375rem] h-[16.4375rem] object-cover'
-                />
-              ) : (
-                <Image
-                  src={data?.form_footer?.image?.desktop?.url || ''}
-                  alt={data?.form_footer?.image?.desktop?.alt}
-                  width={data?.form_footer?.image?.desktop?.width}
-                  height={data?.form_footer?.image?.desktop?.height}
-                  className='w-[52.40981rem] h-[39.20763rem] object-cover'
-                />
-              ))}
+            <Image
+              src={data?.form_footer?.image?.mobile?.url || ''}
+              alt={data?.form_footer?.image?.mobile?.alt}
+              width={data?.form_footer?.image?.mobile?.width}
+              height={data?.form_footer?.image?.mobile?.height}
+              className='w-[23.4375rem] h-[16.4375rem] object-cover sm:hidden'
+            />
+            <Image
+              src={data?.form_footer?.image?.desktop?.url || ''}
+              alt={data?.form_footer?.image?.desktop?.alt}
+              width={data?.form_footer?.image?.desktop?.width}
+              height={data?.form_footer?.image?.desktop?.height}
+              className='w-[52.40981rem] h-[39.20763rem] object-cover xsm:hidden'
+            />
           </div>
         </div>
       </div>
