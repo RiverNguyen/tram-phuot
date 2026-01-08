@@ -1,62 +1,7 @@
 import Banner from '@/modules/promotions/_components/banner/Banner'
 import SpecialOffers from '@/modules/promotions/_components/special-offer/WrapperSpecialOffers'
 import OngoingPromotions from '@/modules/promotions/_components/ongoing-promotions/WrapperOngoingPromotions'
-import fetchData from '@/fetches/fetchData'
-import endpoints from '@/configs/endpoints'
-import { ICouponRes, ICouponTaxonomyRes } from '@/interface/coupon.interface'
-
-const getCoupon = async (lang: string) => {
-  const res: ICouponRes = await fetchData({
-    api: `${endpoints.promotion.coupon}?lang=${lang}&acf=true&limit=9`,
-  })
-  return res
-}
-
-const getCouponFiltered = async ({
-  lang,
-  locations,
-  tourType,
-  paged,
-}: {
-  lang: string
-  locations?: string
-  tourType?: string
-  paged?: string
-}) => {
-  const query = new URLSearchParams()
-  query.set('lang', lang)
-  query.set('acf', 'true')
-  query.set('tax', 'locations,tour-type')
-  query.set('limit', '9')
-
-  if (locations) query.set('locations', locations)
-  if (tourType) query.set('tour-type', tourType)
-  if (paged && Number(paged) > 1) query.set('paged', paged)
-
-  const res: ICouponRes = await fetchData({
-    api: `${endpoints.promotion.coupon}?${query.toString()}`,
-  })
-  return res
-}
-
-const getTaxonomiesCoupon = async (lang: string) => {
-  const res: ICouponTaxonomyRes = await fetchData({
-    api: `${endpoints.promotion.couponTaxonomies}?lang=${lang}`,
-  })
-  return res
-}
-
-const getPromotionPage = async (locale: string) => {
-  return await fetchData({
-    api: endpoints.promotion[locale as 'en' | 'vi'],
-  })
-}
-
-const getCouponSpecialOffer = async (locale: string) => {
-  return await fetchData({
-    api: endpoints.promotion.couponSpecialOffer,
-  })
-}
+import couponService from '@/services/coupon'
 
 export default async function Promotions({
   locale,
@@ -70,10 +15,10 @@ export default async function Promotions({
   }
 }) {
   const [coupon, taxonomies, promotionPage, couponSpecialOffer] = await Promise.all([
-    getCoupon(locale),
-    getTaxonomiesCoupon(locale),
-    getPromotionPage(locale),
-    getCouponSpecialOffer(locale),
+    couponService.getCoupons({ locale }),
+    couponService.getTaxonomies(locale),
+    couponService.getPromotionPage(locale),
+    couponService.getCouponSpecialOffer(locale),
   ])
 
   const hasFilters =
@@ -82,8 +27,8 @@ export default async function Promotions({
     (searchParams?.paged ? Number(searchParams.paged) > 1 : false)
 
   const ongoingCoupon = hasFilters
-    ? await getCouponFiltered({
-        lang: locale,
+    ? await couponService.getCoupons({
+        locale,
         locations: searchParams?.locations,
         tourType: searchParams?.['tour-type'],
         paged: searchParams?.paged,

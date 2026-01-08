@@ -1,10 +1,10 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState, useTransition } from 'react'
+import { useEffect, useRef, useState, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
-import FilterDrawer from './FilterDrawer'
-import FilterPopover from './FilterPopover'
-import { mapTaxonomyToFilter } from './mapTaxonomyToFilter'
+import FilterDrawer from '../../../../components/shared/Filter/FilterDrawer2'
+import FilterPopover from '@/components/shared/Filter/FilterPopover'
+import { mapTaxonomyToFilter } from '@/utils/mapTaxonomyToFilter'
 import { ICTrashcan } from '@/components/icons'
 import ICCFilterLine from '@/components/icons/ICCFilterLine'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -14,6 +14,12 @@ import OngoingPromotionsCard from './OngoingPromotionsCard'
 import { scrollToSection } from '@/utils/scrollToSection'
 import { usePathname, useRouter } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
+import {
+  createQueryString,
+  parseFilterStateFromURL,
+  formatFiltersForURL,
+  hasActiveFilters,
+} from '@/utils/filterHelpers'
 
 export default function OngoingPromotions({
   data,
@@ -32,37 +38,27 @@ export default function OngoingPromotions({
   const [isPending, startTransition] = useTransition()
   const t = useTranslations('ListCouponPage')
 
-  const filters = mapTaxonomyToFilter(taxonomies)
+  const filters = mapTaxonomyToFilter(taxonomies, ['locations', 'tour-type'])
 
-  const [filterState, setFilterState] = useState<{ locations: string; 'tour-type': string[] }>({
-    locations: searchParams.get('locations') || '',
-    'tour-type': (searchParams.get('tour-type') || '').split(',').filter(Boolean),
-  })
+  const [filterState, setFilterState] = useState<{ locations: string; 'tour-type': string[] }>(
+    () =>
+      parseFilterStateFromURL(searchParams, [
+        { taxonomy: 'locations', variant: 'radio' },
+        { taxonomy: 'tour-type', variant: 'checkbox' },
+      ]) as {
+        locations: string
+        'tour-type': string[]
+      },
+  )
 
   const currentPage = Math.max(1, Number(searchParams.get('paged')) || 1)
-
-  const createQueryString = useCallback(
-    (updates: Record<string, string | undefined>) => {
-      const params = new URLSearchParams(searchParams.toString())
-
-      Object.entries(updates).forEach(([k, v]) => {
-        if (v && v.length > 0) params.set(k, v)
-        else params.delete(k)
-      })
-
-      return params.toString()
-    },
-    [searchParams],
-  )
 
   const pushFilters = (next: { locations: string; 'tour-type': string[] }) => {
     setFilterState(next)
     startTransition(() => {
-      const query = createQueryString({
-        locations: next.locations || undefined,
-        'tour-type': next['tour-type'].length > 0 ? next['tour-type'].join(',') : undefined,
-        paged: undefined,
-      })
+      const updates = formatFiltersForURL(next)
+      updates.paged = undefined
+      const query = createQueryString(searchParams, updates)
       router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
     })
   }
@@ -75,11 +71,10 @@ export default function OngoingPromotions({
   }
 
   const handleReset = () => {
-    const hasAnyFilter = filterState.locations !== '' || filterState['tour-type'].length > 0
-    if (!hasAnyFilter) {
+    if (!hasActiveFilters(filterState)) {
       if (currentPage <= 1) return
       startTransition(() => {
-        const query = createQueryString({ paged: undefined })
+        const query = createQueryString(searchParams, { paged: undefined })
         router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
       })
       return
@@ -90,7 +85,7 @@ export default function OngoingPromotions({
 
   const handlePageChange = (page: number) => {
     startTransition(() => {
-      const query = createQueryString({
+      const query = createQueryString(searchParams, {
         paged: page > 1 ? String(page) : undefined,
       })
       router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
@@ -98,10 +93,15 @@ export default function OngoingPromotions({
   }
 
   useEffect(() => {
-    setFilterState({
-      locations: searchParams.get('locations') || '',
-      'tour-type': (searchParams.get('tour-type') || '').split(',').filter(Boolean),
-    })
+    setFilterState(
+      parseFilterStateFromURL(searchParams, [
+        { taxonomy: 'locations', variant: 'radio' },
+        { taxonomy: 'tour-type', variant: 'checkbox' },
+      ]) as {
+        locations: string
+        'tour-type': string[]
+      },
+    )
   }, [searchParams])
 
   useEffect(() => {
@@ -167,9 +167,22 @@ export default function OngoingPromotions({
             <FilterDrawer
               open={openDrawer}
               onOpenChange={setOpenDrawer}
-              taxonomies={taxonomies}
+              sections={[
+                {
+                  type: 'radio',
+                  key: 'locations',
+                  title: t('destination'),
+                  options: filters.locations || [],
+                },
+                {
+                  type: 'checkbox',
+                  key: 'tour-type',
+                  title: t('typeTour'),
+                  options: filters['tour-type'] || [],
+                },
+              ]}
               filters={filterState}
-              onApply={(next) => pushFilters(next)}
+              onApply={(next) => pushFilters(next as { locations: string; 'tour-type': string[] })}
               onReset={handleReset}
             />
           </div>

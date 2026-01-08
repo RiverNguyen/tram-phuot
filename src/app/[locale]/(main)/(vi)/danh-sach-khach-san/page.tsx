@@ -12,7 +12,7 @@ export default async function page({
   searchParams: Promise<{
     locations?: string
     ['hotel-amenities']?: string
-    page?: string
+    paged?: string
   }>
 }) {
   const [{ locale }, sp] = await Promise.all([params, searchParams])
@@ -27,7 +27,7 @@ export default async function page({
       locale,
       locations: sp.locations || '',
       hotelAmenities: sp['hotel-amenities'] || '',
-      page: sp.page,
+      page: sp.paged || '1',
       limit: 8,
     }),
   ])

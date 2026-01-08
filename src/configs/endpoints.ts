@@ -24,6 +24,10 @@ const ENDPOINTS = {
     vi: 'wp/v2/pages/562?_fields=acf&acf_format=standard',
     coupons: 'api/v1/coupons',
   },
+  blogs: {
+    en: 'wp/v2/pages/248?_fields=acf&acf_format=standard',
+    vi: 'wp/v2/pages/250?_fields=acf&acf_format=standard',
+  },
   wordpress: {
     siteSettings: 'api/v1/site-settings',
   },

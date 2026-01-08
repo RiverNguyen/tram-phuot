@@ -8,9 +8,14 @@ import { RadioGroup, RadioGroupItemCustom } from '@/components/ui/radio-group'
 import { ICChevron } from '@/components/icons'
 import { useTranslations } from 'next-intl'
 
+interface FilterOption {
+  label: string
+  value: string
+}
+
 interface FilterPopoverProps {
   label: string
-  options: Array<{ value: string; label: string }>
+  options: FilterOption[]
   value?: string | string[]
   onValueChange?: (value: string | string[]) => void
   className?: string
@@ -26,38 +31,39 @@ export default function FilterPopover({
   className,
 }: FilterPopoverProps) {
   const [open, setOpen] = useState(false)
-  const t = useTranslations('ListTourPage')
+  const t = useTranslations('ListCouponPage')
   const isRadio = variant === 'radio'
-  const selectedValue = isRadio ? (value as string | undefined) || '' : ''
+  const selectedValue = isRadio ? (value as string | undefined) || 'all' : ''
   const selectedValues = !isRadio ? (value as string[] | undefined) || [] : []
 
   const getDisplayText = () => {
     if (isRadio) {
+      if (selectedValue === 'all') return t('all')
       const selectedOption = options.find((opt) => opt.value === selectedValue)
-      return selectedOption?.label || ''
+      return selectedOption?.label || t('all')
     } else {
-      if (selectedValues.length === 0) return ''
+      if (selectedValues.length === 0) return t('all')
       if (selectedValues.length === 1) {
         const selectedOption = options.find((opt) => opt.value === selectedValues[0])
-        return selectedOption?.label || ''
+        return selectedOption?.label || t('all')
       }
       return `${selectedValues.length} ${t('selected')}`
     }
   }
 
   const handleRadioChange = (newValue: string) => {
-    onValueChange?.(newValue)
+    onValueChange?.(newValue === 'all' ? '' : newValue)
     setOpen(false)
   }
 
-  const handleCheckboxChange = (optionValue: string, checked: boolean) => {
+  const handleCheckboxChange = (val: string, checked: boolean) => {
+    let newValues: string[]
     if (checked) {
-      const newValues = [...selectedValues, optionValue]
-      onValueChange?.(newValues)
+      newValues = Array.from(new Set([...selectedValues, val]))
     } else {
-      const newValues = selectedValues.filter((v) => v !== optionValue)
-      onValueChange?.(newValues)
+      newValues = selectedValues.filter((v) => v !== val)
     }
+    onValueChange?.(newValues)
   }
 
   return (
@@ -73,9 +79,7 @@ export default function FilterPopover({
       >
         <div className='flex items-center gap-[0.25rem]'>
           <span className='text-[rgba(46,46,46,0.60)] font-normal uppercase'>{label}:</span>
-          <span className={cn(!getDisplayText() && 'text-[rgba(46,46,46,0.60)]')}>
-            {getDisplayText() || t('select')}
-          </span>
+          <span>{getDisplayText()}</span>
         </div>
         <ICChevron className='w-[0.825rem] h-auto text-[#A1A1A1]' />
       </PopoverTrigger>
@@ -86,12 +90,29 @@ export default function FilterPopover({
             onValueChange={handleRadioChange}
             className='w-full'
           >
+            <label
+              htmlFor={`${label}-all`}
+              className={cn(
+                'flex py-[1rem] px-[0.75rem] items-center gap-[0.625rem] self-stretch rounded-tl-[1rem] rounded-br-[1rem] lg:hover:bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
+                selectedValue === 'all' &&
+                  'bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
+              )}
+            >
+              <RadioGroupItemCustom
+                value='all'
+                id={`${label}-all`}
+              />
+              <span className='line-clamp-1 text-[#303030] font-montserrat text-[0.875rem] leading-[1.3125rem] cursor-pointer'>
+                {t('all')}
+              </span>
+            </label>
+
             {options.map((option) => (
               <label
                 htmlFor={`${label}-${option.value}`}
                 key={option.value}
                 className={cn(
-                  'flex py-[1rem] px-[0.75rem] items-center gap-[0.625rem] cursor-pointer self-stretch rounded-tl-[1rem] rounded-br-[1rem] lg:hover:bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
+                  'flex py-[1rem] px-[0.75rem] items-center gap-[0.625rem] self-stretch rounded-tl-[1rem] rounded-br-[1rem] lg:hover:bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
                   selectedValue === option.value &&
                     'bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
                 )}
@@ -100,7 +121,7 @@ export default function FilterPopover({
                   value={option.value}
                   id={`${label}-${option.value}`}
                 />
-                <span className='line-clamp-1 text-[#303030] font-montserrat text-[0.875rem] leading-[1.3125rem] '>
+                <span className='line-clamp-1 text-[#303030] font-montserrat text-[0.875rem] leading-[1.3125rem] cursor-pointer'>
                   {option.label}
                 </span>
               </label>
@@ -115,7 +136,7 @@ export default function FilterPopover({
                   htmlFor={`${label}-${option.value}`}
                   key={option.value}
                   className={cn(
-                    'flex py-[1rem] px-[0.75rem] items-center gap-[0.625rem] cursor-pointer self-stretch rounded-tl-[1rem] rounded-br-[1rem] lg:hover:bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
+                    'flex py-[1rem] px-[0.75rem] items-center gap-[0.625rem] self-stretch rounded-tl-[1rem] rounded-br-[1rem] lg:hover:bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
                     isChecked &&
                       'bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
                   )}
@@ -130,7 +151,7 @@ export default function FilterPopover({
                   />
                   <span
                     id={`${label}-${option.value}`}
-                    className='line-clamp-1 text-[#303030] font-montserrat text-[0.875rem] leading-[1.3125rem]'
+                    className='line-clamp-1 text-[#303030] font-montserrat text-[0.875rem] leading-[1.3125rem] cursor-pointer'
                   >
                     {option.label}
                   </span>
