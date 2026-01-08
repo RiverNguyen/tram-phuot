@@ -6,19 +6,17 @@ import DrawerProvider from '@/components/provider/DrawerProvider'
 import { BrandButton } from '@/components/shared'
 import SectionBookingOverview from '@/modules/details-tour/components/SectionBookingOverview'
 import { BookingTourContext } from '@/modules/details-tour/providers/BookingTourProvider'
-import { DetailsTourPricePerPaxType, TourDurationType } from '@/types/details-tour.type'
+import { TourDurationType } from '@/types/details-tour.type'
 import { useTranslations } from 'next-intl'
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 
 interface FixedBookingNowMbProps {
-  fromPricePerPax: number
   tourDuration: TourDurationType
-  pricePerPax: DetailsTourPricePerPaxType
+  pricePerPax: number
   tourTitle: string
 }
 
 export default function FixedBookingNowMb({
-  fromPricePerPax,
   tourDuration,
   pricePerPax,
   tourTitle,
@@ -41,7 +39,7 @@ export default function FixedBookingNowMb({
             <ICCompass className='size-4 text-[#F56E0A]' />
             <p className='flex items-center space-x-1'>
               <span className='font-phu-du text-[1.125rem] leading-[1.1] font-bold text-[#F56E0A]'>
-                {fromPricePerPax} USD
+                {pricePerPax} USD
               </span>
               <span className='font-montserrat text-[0.75rem] leading-[1.6] font-medium tracking-[-0.0075rem] text-black/50'>
                 /{translateDetailsTourPage('textPerson')}
@@ -79,7 +77,7 @@ export default function FixedBookingNowMb({
         <SectionBookingOverview
           tourTitle={tourTitle || ''}
           tourDuration={tourDuration || {}}
-          pricePerPax={pricePerPax || {}}
+          pricePerPax={pricePerPax}
         />
       </DrawerProvider>
     </>

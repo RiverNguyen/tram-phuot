@@ -1,10 +1,10 @@
 import FormBookingTour from '@/modules/details-tour/components/SectionBookingTour/FormBookingTour'
-import { DetailsTourPricePerPaxType, TourDurationType } from '@/types/details-tour.type'
+import {  TourDurationType } from '@/types/details-tour.type'
 import { useTranslations } from 'next-intl'
 
 interface SectionBookingTourProps {
   tourDuration: TourDurationType
-  pricePerPax: DetailsTourPricePerPaxType
+  pricePerPax: number
 }
 
 export default function SectionBookingTour({ tourDuration, pricePerPax }: SectionBookingTourProps) {

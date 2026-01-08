@@ -3,6 +3,8 @@ import DetailItineraryCard from '@/modules/details-tour/components/SectionDetail
 import { DetailsTourDetailItineraryType } from '@/types/details-tour.type'
 import { useTranslations } from 'next-intl'
 
+import TabListPC from '@/modules/details-tour/components/SectionDetailItinerary/TabListPC'
+import TabListMb from '@/modules/details-tour/components/SectionDetailItinerary/TabListMb'
 interface SectionDetailItineraryProps {
   detailItinerary: DetailsTourDetailItineraryType
 }
@@ -35,19 +37,10 @@ export default function SectionDetailItinerary({ detailItinerary }: SectionDetai
           defaultValue={normalizedDetailItinerary?.[0]?.value}
           className='xsm:space-y-7.5 w-full gap-0 space-y-6.5'
         >
-          <TabsList className='hidden_scroll xsm:space-x-1.5 flex h-auto w-full justify-start space-x-2 overflow-x-auto rounded-[2.75rem] bg-transparent p-0'>
-            {normalizedDetailItinerary?.map((item, index) => {
-              return (
-                <TabsTrigger
-                  value={item.value}
-                  key={index}
-                  className='font-phu-du xsm:min-w-[4.70225rem] xsm:bg-black/20 xsm:h-[1.6285rem] xsm:text-[0.75rem] xsm:tracking-[0.03rem] xsm:text-black flex h-8.5 min-w-25 flex-[unset] cursor-pointer items-center justify-center rounded-[inherit] border-none! bg-black/10 px-6 py-0 text-[0.875rem] leading-[1.6] font-bold tracking-[0.035rem] text-[#2E2E2E] uppercase shadow-none! ring-0! outline-0! data-[state=active]:bg-[#FFC542]'
-                >
-                  {item.title}
-                </TabsTrigger>
-              )
-            })}
-          </TabsList>
+          <div>
+            <TabListPC items={normalizedDetailItinerary} />
+            <TabListMb items={normalizedDetailItinerary} />
+          </div>
           <div className='w-full'>
             {normalizedDetailItinerary?.map((item, index) => {
               return (

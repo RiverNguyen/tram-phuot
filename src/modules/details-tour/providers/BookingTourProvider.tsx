@@ -1,8 +1,14 @@
 'use client'
+import { PaxType } from '@/enums'
+import {
+  calculateProvisionalPriceByPaxQuantity,
+  PriceBreakdownItemType,
+} from '@/modules/details-tour/utils'
 import { useParams } from 'next/navigation'
 import React, { createContext, Dispatch, SetStateAction, useState } from 'react'
 
 interface BookingTourProviderProps {
+  pricePerPax: number
   children: React.ReactNode
 }
 
@@ -11,9 +17,12 @@ export type BookingTourContextType = {
   bookingTourData: BookingTourDataType
   openBookingOverviewMobile: boolean
   openContactForm: boolean
+  pricePerPaxTypes: Record<PaxType, PriceBreakdownItemType>
+  tourPrice: PriceTourType
   setBookingTourData: Dispatch<SetStateAction<BookingTourDataType>>
   setOpenBookingOverviewMobile: Dispatch<SetStateAction<boolean>>
   setOpenContactForm: Dispatch<SetStateAction<boolean>>
+  setTourPrice: Dispatch<SetStateAction<PriceTourType>>
 }
 
 export const BookingTourContext = createContext<BookingTourContextType | null>(null)
@@ -28,7 +37,12 @@ export type BookingTourDataType = {
   }
 }
 
-export default function BookingTourProvider({ children }: BookingTourProviderProps) {
+export type PriceTourType = {
+  provisionalPrice: number
+  discountPrice: number
+}
+
+export default function BookingTourProvider({ pricePerPax, children }: BookingTourProviderProps) {
   const searchParams = useParams()
   const tourSlug = searchParams.slug as string
   const [bookingTourData, setBookingTourData] = useState<BookingTourDataType>({
@@ -43,6 +57,14 @@ export default function BookingTourProvider({ children }: BookingTourProviderPro
 
   const [openBookingOverviewMobile, setOpenBookingOverviewMobile] = useState<boolean>(false)
   const [openContactForm, setOpenContactForm] = useState<boolean>(false)
+  const { pricePerPaxTypes, provisionalPrice } = calculateProvisionalPriceByPaxQuantity(
+    bookingTourData.paxQuantity,
+    pricePerPax,
+  )
+  const [tourPrice, setTourPrice] = useState<PriceTourType>({
+    provisionalPrice,
+    discountPrice: 0,
+  })
 
   return (
     <BookingTourContext.Provider
@@ -54,6 +76,9 @@ export default function BookingTourProvider({ children }: BookingTourProviderPro
         setBookingTourData,
         setOpenBookingOverviewMobile,
         setOpenContactForm,
+        pricePerPaxTypes,
+        tourPrice,
+        setTourPrice,
       }}
     >
       {children}

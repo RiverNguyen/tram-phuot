@@ -87,7 +87,12 @@
     "textVoucher": "Giảm giá",
     "textTotal": "Tổng cộng",
     "textApply": "Áp dụng",
-    "sectionBriefItineraryTitle": "Lịch trình tóm tắt"
+    "sectionBriefItineraryTitle": "Lịch trình tóm tắt",
+    "sectionExploreOtherTours": {
+      "title": "Khám phá tour khác",
+      "subtitle": "Khám phá thêm",
+      "viewMore": "Xem thêm"
+    }
   },
   "BookingTourForm": {
     "startDateRequired": "Vui lòng chọn ngày bắt đầu",
@@ -103,7 +108,8 @@
     "textPax": "Khách",
     "textApply": "Áp dụng",
     "textApplyVoucherSuccess": "Áp dụng voucher thành công",
-    "textApplyVoucherError": "Áp dụng voucher thất bại"
+    "textApplyVoucherError": "Áp dụng voucher thất bại",
+    "textNoteChildren14": "Trẻ em từ 1 đến 4 tuổi được miễn phí, nhưng từ trẻ thứ hai trở đi, giá vé sẽ bằng 50% giá vé người lớn;"
   },
   "ContactFormBooking": {
     "title": "Thông tin liên hệ",
@@ -114,7 +120,9 @@
     "emailRequired": "Vui lòng nhập email của bạn",
     "emailInvalid": "Vui lòng nhập email hợp lệ",
     "phoneRequired": "Vui lòng nhập số điện thoại của bạn",
-    "phoneInvalid": "Vui lòng nhập số điện thoại hợp lệ"
+    "phoneInvalid": "Vui lòng nhập số điện thoại hợp lệ",
+    "bookingTourSuccessfully": "Đặt tour thành công",
+    "bookingTourFailed": "Đặt tour thất bại. Vui lòng thử lại"
   },
   "PhoneInput": {
     "textSearchCountry": "Tìm kiếm quốc gia...",
@@ -123,6 +131,15 @@
   "Components": {
     "SectionVoucher": {
       "title": "Ưu đãi đặc biệt dành cho bạn!"
+    },
+    "CouponCard": {
+      "textDiscountBooking": "Giảm giá đặt phòng",
+      "textDiscount": "Giảm",
+      "textApplyDate": "Ngày áp dụng",
+      "textPromotionCode": "Mã giảm giá",
+      "textCopy": "Sao chép mã",
+      "textCopied": "Đã sao chép mã giảm giá",
+      "textMinApplication": "Giá tối thiểu"
     }
   }
 }
