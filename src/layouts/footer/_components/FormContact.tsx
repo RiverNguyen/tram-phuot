@@ -76,7 +76,7 @@ export default function FormContact({
           control={form.control}
           name='email'
           render={({ field, fieldState }) => (
-            <FormItem className='space-y-2.5 mb-8 xsm:space-y-[0.9375rem]'>
+            <FormItem className='xsm:space-y-[0.9375rem] mb-8 space-y-2.5'>
               <FormControl>
                 <FloatingLabel
                   label='Email'
@@ -94,7 +94,7 @@ export default function FormContact({
           control={form.control}
           name='message'
           render={({ field, fieldState }) => (
-            <FormItem className='space-y-2.5 mb-[2.75rem] xsm:space-y-[0.9375rem]'>
+            <FormItem className='xsm:space-y-[0.9375rem] mb-[2.75rem] space-y-2.5'>
               <FormControl>
                 <FloatingLabel
                   label={translateFooter('yourMessage')}
@@ -104,14 +104,14 @@ export default function FormContact({
                 />
               </FormControl>
               <FormMessage className='font-montserrat' />
-              <FormDescription className='font-montserrat text-[0.875rem] leading-[1.05rem] tracking-[0.00875rem] text-white/60 xsm:font-medium xsm:text-[0.75rem] xsm:leading-[1.2rem] xsm:-tracking-[0.0075rem]'>
+              <FormDescription className='font-montserrat xsm:font-medium xsm:text-[0.75rem] xsm:leading-[1.2rem] xsm:-tracking-[0.0075rem] text-[0.875rem] leading-[1.05rem] tracking-[0.00875rem] text-white/60'>
                 {translateFooter('formDesc')}
               </FormDescription>
             </FormItem>
           )}
         />
         <BrandButton
-          type='submit'
+          type={{ variant: 'button', type: 'submit' }}
           disabled={form.formState.isSubmitting}
           variant='orangeGradient'
           classNameButtonContainer='w-[17.75rem] disabled:opacity-50 disabled:cursor-not-allowed xsm:w-full'

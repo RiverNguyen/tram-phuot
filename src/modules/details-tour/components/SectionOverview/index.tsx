@@ -36,10 +36,13 @@ export default function SectionOverview({ overview, siteSettings }: SectionOverv
   ]
 
   return (
-    <section className='xsm:px-4 relative'>
-      <div className='section-box xsm:space-y-4 xsm:py-4 xsm:px-3 xsm:rounded-[0.75rem] relative w-full space-y-6 rounded-[1.5rem] p-8'>
+    <section
+      id='section-overview'
+      className='xsm:px-4 relative'
+    >
+      <div className='section-box xsm:shadow-none xsm:space-y-4 xsm:py-4 xsm:px-3 xsm:rounded-[0.75rem] relative w-full space-y-6 rounded-[1.5rem] p-8'>
         <div className='space-y-4'>
-          <h2 className='xsm:border-[#EDEDED] xsm:text-[1.25rem] xsm:pb-4 xsm:border-b xsm:border-solid font-phu-du section-title-h2 text-[1.75rem] leading-8.25 font-bold tracking-[-0.03125rem]'>
+          <h2 className='xsm:border-[#EDEDED] xsm:w-full xsm:text-[1.25rem] xsm:pb-[0.725rem] xsm:border-b xsm:border-solid font-phu-du section-title-h2 w-fit pr-2 text-[1.75rem] leading-8.25 font-bold tracking-[-0.03125rem]'>
             {translateDetailsTourPage('sectionOverviewTitle')}
           </h2>
           <p className='font-montserrat xsm:text-[0.75rem] text-body/75 text-[1rem] leading-normal'>
@@ -47,21 +50,21 @@ export default function SectionOverview({ overview, siteSettings }: SectionOverv
           </p>
         </div>
 
-        <div className='xsm:block xsm:h-auto flex h-129.5 space-x-3'>
+        <div className='xsm:block xsm:h-auto xsm:space-x-0 xsm:space-y-2 flex h-129.5 space-x-3'>
           <div className='xsm:w-full xsm:h-[32.99563rem] h-full w-78.25 shrink-0'>
             <OverviewVideo
               overviewVideo={overview?.video || {}}
               siteSettings={siteSettings}
             />
           </div>
-          <div className='xsm:w-full xsm:h-auto xsm:justify-baseline xsm:space-y-[0.48rem] flex h-full w-124.75 shrink-0 flex-col justify-between'>
+          <div className='xsm:w-full xsm:h-auto xsm:justify-baseline xsm:space-y-2 flex h-full w-124.75 shrink-0 flex-col justify-between'>
             <div className='xsm:h-[12.14806rem] h-76.25 w-full'>
               <GalleryImage
                 imageList={overview?.album_image?.image_list || []}
                 previewImage={overview?.album_image?.preview_image || {}}
               />
             </div>
-            <div className='xsm:h-[8.0058rem] xsm:space-x-[0.48rem] flex h-50.25 w-full justify-between space-x-3'>
+            <div className='xsm:h-[8.0058rem] xsm:space-x-2 flex h-50.25 w-full justify-between space-x-3'>
               {Array.isArray(overview?.decor_image) &&
                 overview?.decor_image?.map((item, index) => (
                   <div

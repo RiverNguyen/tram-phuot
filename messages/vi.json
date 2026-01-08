@@ -78,6 +78,74 @@
     "sectionOverviewIncludedTitle": "Bao gồm",
     "sectionOverviewExcludedTitle": "Không bao gồm",
     "textShowGallery": "Xem gallery",
-    "textPerson": "Người"
+    "textPerson": "Người",
+    "sectionDetailItineraryTitle": "Lịch trình chi tiết",
+    "sectionBookingTourTitle": "Đặt tour",
+    "sectionPolicyTitle": "Chính sách",
+    "childrenPolicyTitle": "Trẻ em",
+    "cancellationPolicyTitle": "Hủy tour",
+    "whatToBringPolicyTitle": "Đồ đem theo",
+    "sectionBookingOverviewTitle": "Tổng quan về đặt tour",
+    "textVoucherCode": "Mã giảm giá",
+    "textVoucherCodePlaceholder": "Nhập mã giảm giá...",
+    "textBookNow": "Đặt ngay",
+    "textProvisional": "Tạm tính",
+    "textVoucher": "Giảm giá",
+    "textTotal": "Tổng cộng",
+    "textApply": "Áp dụng",
+    "sectionBriefItineraryTitle": "Lịch trình tóm tắt",
+    "sectionExploreOtherTours": {
+      "title": "Khám phá tour khác",
+      "subtitle": "Khám phá thêm",
+      "viewMore": "Xem thêm"
+    }
+  },
+  "BookingTourForm": {
+    "startDateRequired": "Vui lòng chọn ngày bắt đầu",
+    "endDateRequired": "Vui lòng chọn ngày kết thúc",
+    "adultsMin": "Số người lớn phải lớn hơn hoặc bằng 1",
+    "endDateAfterStartDate": "Ngày kết thúc phải lớn hơn ngày bắt đầu",
+    "startDateLabel": "Ngày bắt đầu",
+    "endDateLabel": "Ngày kết thúc",
+    "paxQuantityLabel": "Số lượng khách",
+    "adultsLabel": "Người lớn",
+    "children58Label": "Trẻ em 5-8 tuổi",
+    "children14Label": "Trẻ em 1-4 tuổi",
+    "textPax": "Khách",
+    "textApply": "Áp dụng",
+    "textApplyVoucherSuccess": "Áp dụng voucher thành công",
+    "textApplyVoucherError": "Áp dụng voucher thất bại",
+    "textNoteChildren14": "Trẻ em từ 1 đến 4 tuổi được miễn phí, nhưng từ trẻ thứ hai trở đi, giá vé sẽ bằng 50% giá vé người lớn;"
+  },
+  "ContactFormBooking": {
+    "title": "Thông tin liên hệ",
+    "description": "Vui lòng điền thông tin liên hệ và nhân viên của chúng tôi sẽ liên hệ với bạn sớm nhất.",
+    "submitButton": "Gửi thông tin",
+    "textMessage": "Tin nhắn",
+    "fullNameRequired": "Vui lòng nhập tên của bạn",
+    "emailRequired": "Vui lòng nhập email của bạn",
+    "emailInvalid": "Vui lòng nhập email hợp lệ",
+    "phoneRequired": "Vui lòng nhập số điện thoại của bạn",
+    "phoneInvalid": "Vui lòng nhập số điện thoại hợp lệ",
+    "bookingTourSuccessfully": "Đặt tour thành công",
+    "bookingTourFailed": "Đặt tour thất bại. Vui lòng thử lại"
+  },
+  "PhoneInput": {
+    "textSearchCountry": "Tìm kiếm quốc gia...",
+    "textNoCountryFound": "Không tìm thấy quốc gia."
+  },
+  "Components": {
+    "SectionVoucher": {
+      "title": "Ưu đãi đặc biệt dành cho bạn!"
+    },
+    "CouponCard": {
+      "textDiscountBooking": "Giảm giá đặt phòng",
+      "textDiscount": "Giảm",
+      "textApplyDate": "Ngày áp dụng",
+      "textPromotionCode": "Mã giảm giá",
+      "textCopy": "Sao chép mã",
+      "textCopied": "Đã sao chép mã giảm giá",
+      "textMinApplication": "Giá tối thiểu"
+    }
   }
 }

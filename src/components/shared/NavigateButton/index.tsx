@@ -7,7 +7,7 @@ type NavigateButtonVariant = 'left' | 'right'
 
 interface NavigateButtonProps {
   variant?: NavigateButtonVariant
-  onClick: () => void
+  onClick?: () => void
   className?: string
 }
 
@@ -29,7 +29,7 @@ export default function NavigateButton({
       )}
     >
       <IconArrowRight
-        className={cn('xsm:w-2 xsm:h-[0.66669rem] h-3 w-2.25', variant === 'right' && 'rotate-180')}
+        className={cn('xsm:w-2 xsm:h-[0.66669rem] h-3 w-2.25', variant === 'left' && 'rotate-180')}
       />
     </button>
   )

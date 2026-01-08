@@ -29,7 +29,7 @@ export default function Breadcrumb({
             <li
               key={index}
               className={cn(
-                'xsm:text-[0.75rem] xsm:last:font-normal xsm:leading-[1.4] shrink-0 text-[1rem] leading-[1.2] text-white not-last:text-white/60 not-last:after:ml-3 not-last:after:content-["/"] last:line-clamp-1 last:max-w-82 last:font-bold',
+                'xsm:text-[0.75rem] xsm:last:font-normal xsm:leading-[1.4] xsm:last:max-w-40 shrink-0 text-[1rem] leading-[1.2] text-white not-last:text-white/60 not-last:after:ml-3 not-last:after:content-["/"] last:line-clamp-1 last:max-w-82 last:font-bold',
                 classNameBreadcrumbItem,
               )}
             >

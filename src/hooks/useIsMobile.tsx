@@ -9,6 +9,8 @@ const useIsMobile = () => {
       setIsMobile(window.innerWidth <= 639)
     }
     checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
   return isMobile

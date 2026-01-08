@@ -78,6 +78,74 @@
     "sectionOverviewIncludedTitle": "Included",
     "sectionOverviewExcludedTitle": "Excluded",
     "textShowGallery": "Show Gallery",
-    "textPerson": "Person"
+    "textPerson": "Person",
+    "sectionDetailItineraryTitle": "Detail Itinerary",
+    "sectionBookingTourTitle": "Booking Tour",
+    "sectionPolicyTitle": "Policy",
+    "childrenPolicyTitle": "Children Policy",
+    "cancellationPolicyTitle": "Cancellation",
+    "whatToBringPolicyTitle": "What to bring?",
+    "sectionBookingOverviewTitle": "Booking Overview",
+    "textVoucherCode": "Voucher code",
+    "textVoucherCodePlaceholder": "Enter voucher code...",
+    "textBookNow": "Book now",
+    "textProvisional": "Provisional",
+    "textVoucher": "Voucher",
+    "textTotal": "Total",
+    "textApply": "Apply",
+    "sectionBriefItineraryTitle": "Brief Itinerary",
+    "sectionExploreOtherTours": {
+      "title": "Explore other tour",
+      "subtitle": "Explore more",
+      "viewMore": "View more"
+    }
+  },
+  "BookingTourForm": {
+    "startDateRequired": "Please select start date",
+    "endDateRequired": "Please select end date",
+    "adultsMin": "Adults must be greater than or equal to 1",
+    "endDateAfterStartDate": "End date must be greater than start date",
+    "startDateLabel": "Start date",
+    "endDateLabel": "End date",
+    "paxQuantityLabel": "Pax quantity",
+    "adultsLabel": "Adults",
+    "children58Label": "Children 5-8 ages",
+    "children14Label": "Children 1-4 ages",
+    "textPax": "Pax",
+    "textApply": "Apply",
+    "textApplyVoucherSuccess": "Voucher applied successfully",
+    "textApplyVoucherError": "Voucher applied failed",
+    "textNoteChildren14": "Children aged 1-4 are free, but from the second child onwards, they will be charged at 50% of the adult price;"
+  },
+  "ContactFormBooking": {
+    "title": "Contact Information",
+    "description": "Please fill in your contact information and our staff will contact you soon.",
+    "submitButton": "Send information",
+    "textMessage": "Message",
+    "fullNameRequired": "Please enter your full name",
+    "emailRequired": "Please enter your email",
+    "emailInvalid": "Please enter a valid email",
+    "phoneRequired": "Please enter your phone number",
+    "phoneInvalid": "Please enter a valid phone number",
+    "bookingTourSuccessfully": "Booking tour successfully",
+    "bookingTourFailed": "Booking tour failed. Please try again"
+  },
+  "PhoneInput": {
+    "textSearchCountry": "Search country...",
+    "textNoCountryFound": "No country found."
+  },
+  "Components": {
+    "SectionVoucher": {
+      "title": "Special offer just for you!"
+    },
+    "CouponCard": {
+      "textDiscountBooking": "Discount booking",
+      "textDiscount": "Off",
+      "textApplyDate": "Apply date",
+      "textPromotionCode": "Promotion code",
+      "textCopy": "Copy code",
+      "textCopied": "Copied voucher code",
+      "textMinApplication": "Min application"
+    }
   }
 }
