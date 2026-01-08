@@ -21,6 +21,12 @@ import {
   hasActiveFilters,
 } from '@/utils/filterHelpers'
 
+// Taxonomy configuration
+const TAXONOMY_CONFIG = [
+  { key: 'locations', variant: 'radio' as const, translationKey: 'destination' },
+  { key: 'tour-type', variant: 'checkbox' as const, translationKey: 'typeTour' },
+] as const
+
 export default function OngoingPromotions({
   data,
   taxonomies,
@@ -38,22 +44,20 @@ export default function OngoingPromotions({
   const [isPending, startTransition] = useTransition()
   const t = useTranslations('ListCouponPage')
 
-  const filters = mapTaxonomyToFilter(taxonomies, ['locations', 'tour-type'])
+  const filters = mapTaxonomyToFilter(taxonomies, TAXONOMY_CONFIG.map((t) => t.key))
 
-  const [filterState, setFilterState] = useState<{ locations: string; 'tour-type': string[] }>(
-    () =>
-      parseFilterStateFromURL(searchParams, [
-        { taxonomy: 'locations', variant: 'radio' },
-        { taxonomy: 'tour-type', variant: 'checkbox' },
-      ]) as {
-        locations: string
-        'tour-type': string[]
-      },
+  const taxonomiesWithVariant = TAXONOMY_CONFIG.map((config) => ({
+    taxonomy: config.key,
+    variant: config.variant,
+  }))
+
+  const [filterState, setFilterState] = useState<Record<string, string | string[]>>(() =>
+    parseFilterStateFromURL(searchParams, taxonomiesWithVariant),
   )
 
   const currentPage = Math.max(1, Number(searchParams.get('paged')) || 1)
 
-  const pushFilters = (next: { locations: string; 'tour-type': string[] }) => {
+  const pushFilters = (next: Record<string, string | string[]>) => {
     setFilterState(next)
     startTransition(() => {
       const updates = formatFiltersForURL(next)
@@ -63,10 +67,10 @@ export default function OngoingPromotions({
     })
   }
 
-  const handleFilterChange = (key: 'locations' | 'tour-type', value: string | string[]) => {
+  const handleFilterChange = (key: string, value: string | string[]) => {
     pushFilters({
-      locations: key === 'locations' ? (value as string) : filterState.locations,
-      'tour-type': key === 'tour-type' ? (value as string[]) : filterState['tour-type'],
+      ...filterState,
+      [key]: value,
     })
   }
 
@@ -80,7 +84,11 @@ export default function OngoingPromotions({
       return
     }
 
-    pushFilters({ locations: '', 'tour-type': [] })
+    const reset: Record<string, string | string[]> = {}
+    taxonomiesWithVariant.forEach(({ taxonomy, variant }) => {
+      reset[taxonomy] = variant === 'radio' ? '' : []
+    })
+    pushFilters(reset)
   }
 
   const handlePageChange = (page: number) => {
@@ -93,15 +101,7 @@ export default function OngoingPromotions({
   }
 
   useEffect(() => {
-    setFilterState(
-      parseFilterStateFromURL(searchParams, [
-        { taxonomy: 'locations', variant: 'radio' },
-        { taxonomy: 'tour-type', variant: 'checkbox' },
-      ]) as {
-        locations: string
-        'tour-type': string[]
-      },
-    )
+    setFilterState(parseFilterStateFromURL(searchParams, taxonomiesWithVariant))
   }, [searchParams])
 
   useEffect(() => {
@@ -126,20 +126,16 @@ export default function OngoingPromotions({
 
           {/* Desktop Filters */}
           <div className='xsm:hidden flex flex-1 items-center gap-[0.75rem]'>
-            <FilterPopover
-              label={t('destination')}
-              options={filters.locations ?? []}
-              value={filterState.locations}
-              onValueChange={(val) => handleFilterChange('locations', val as string)}
-              variant='radio'
-            />
-            <FilterPopover
-              label={t('typeTour')}
-              options={filters['tour-type'] ?? []}
-              value={filterState['tour-type']}
-              onValueChange={(val) => handleFilterChange('tour-type', val as string[])}
-              variant='checkbox'
-            />
+            {TAXONOMY_CONFIG.map((config) => (
+              <FilterPopover
+                key={config.key}
+                label={t(config.translationKey)}
+                options={filters[config.key] ?? []}
+                value={filterState[config.key]}
+                onValueChange={(val) => handleFilterChange(config.key, val)}
+                variant={config.variant}
+              />
+            ))}
             <button
               type='button'
               onClick={handleReset}
@@ -167,22 +163,14 @@ export default function OngoingPromotions({
             <FilterDrawer
               open={openDrawer}
               onOpenChange={setOpenDrawer}
-              sections={[
-                {
-                  type: 'radio',
-                  key: 'locations',
-                  title: t('destination'),
-                  options: filters.locations || [],
-                },
-                {
-                  type: 'checkbox',
-                  key: 'tour-type',
-                  title: t('typeTour'),
-                  options: filters['tour-type'] || [],
-                },
-              ]}
+              sections={TAXONOMY_CONFIG.map((config) => ({
+                type: config.variant,
+                key: config.key,
+                title: t(config.translationKey),
+                options: filters[config.key] || [],
+              }))}
               filters={filterState}
-              onApply={(next) => pushFilters(next as { locations: string; 'tour-type': string[] })}
+              onApply={(next) => pushFilters(next)}
               onReset={handleReset}
             />
           </div>

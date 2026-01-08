@@ -28,6 +28,11 @@ interface WrapperHotelListProps {
   totalPages: number
 }
 
+// Helper to get variant for taxonomy
+const getTaxonomyVariant = (taxonomy: string): 'radio' | 'checkbox' => {
+  return taxonomy === 'locations' ? 'radio' : 'checkbox'
+}
+
 export default function WrapperHotelList({ taxonomies, data, totalPages }: WrapperHotelListProps) {
   const [openDrawer, setOpenDrawer] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -39,14 +44,14 @@ export default function WrapperHotelList({ taxonomies, data, totalPages }: Wrapp
 
   const filters = mapTaxonomyToFilter(taxonomies)
 
+  // Map taxonomies with variants
+  const taxonomiesWithVariant = taxonomies.map((taxonomy) => ({
+    taxonomy: taxonomy.taxonomy,
+    variant: getTaxonomyVariant(taxonomy.taxonomy),
+  }))
+
   const [filterState, setFilterState] = useState<Record<string, string | string[]>>(() =>
-    parseFilterStateFromURL(
-      searchParams,
-      taxonomies.map((taxonomy) => ({
-        taxonomy: taxonomy.taxonomy,
-        variant: taxonomy.taxonomy === 'locations' ? 'radio' : 'checkbox',
-      })),
-    ),
+    parseFilterStateFromURL(searchParams, taxonomiesWithVariant),
   )
 
   const currentPage = Math.max(1, Number(searchParams.get('paged')) || 1)
@@ -95,8 +100,8 @@ export default function WrapperHotelList({ taxonomies, data, totalPages }: Wrapp
     }
 
     const reset: Record<string, string | string[]> = {}
-    taxonomies.forEach((taxonomy) => {
-      reset[taxonomy.taxonomy] = taxonomy.taxonomy === 'locations' ? '' : []
+    taxonomiesWithVariant.forEach(({ taxonomy, variant }) => {
+      reset[taxonomy] = variant === 'radio' ? '' : []
     })
     pushFilters(reset)
     setOpenDrawer(false)
@@ -113,15 +118,7 @@ export default function WrapperHotelList({ taxonomies, data, totalPages }: Wrapp
 
   // Sync filter state with searchParams
   useEffect(() => {
-    setFilterState(
-      parseFilterStateFromURL(
-        searchParams,
-        taxonomies.map((taxonomy) => ({
-          taxonomy: taxonomy.taxonomy,
-          variant: taxonomy.taxonomy === 'locations' ? 'radio' : 'checkbox',
-        })),
-      ),
-    )
+    setFilterState(parseFilterStateFromURL(searchParams, taxonomiesWithVariant))
   }, [searchParams, taxonomies])
 
   useEffect(() => {
@@ -139,14 +136,14 @@ export default function WrapperHotelList({ taxonomies, data, totalPages }: Wrapp
       <div className='xsm:gap-[1.5rem] flex w-full flex-col items-start gap-[2.5rem]'>
         {/* Filter Desktop */}
         <div className='xsm:hidden flex w-full items-center space-x-[0.75rem]'>
-          {taxonomies.map((taxonomy, i) => (
+          {taxonomies.map((taxonomy) => (
             <FilterPopover
-              key={i}
+              key={taxonomy.taxonomy}
               options={filters[taxonomy.taxonomy] ?? []}
-              label={taxonomy.label}
+              label={t(taxonomy.label)}
               value={filterState[taxonomy.taxonomy]}
               onValueChange={(value) => handleFilterChange(taxonomy.taxonomy, value)}
-              variant={taxonomy.taxonomy === 'locations' ? 'radio' : 'checkbox'}
+              variant={getTaxonomyVariant(taxonomy.taxonomy)}
             />
           ))}
           <button
@@ -176,9 +173,9 @@ export default function WrapperHotelList({ taxonomies, data, totalPages }: Wrapp
             open={openDrawer}
             setOpen={setOpenDrawer}
             data={taxonomies.map((taxonomy) => ({
-              label: taxonomy.label,
+              label: t(taxonomy.label),
               taxonomy: taxonomy.taxonomy,
-              variant: taxonomy.taxonomy === 'locations' ? 'radio' : 'checkbox',
+              variant: getTaxonomyVariant(taxonomy.taxonomy),
               options: filters[taxonomy.taxonomy] || [],
             }))}
             values={filterState}
