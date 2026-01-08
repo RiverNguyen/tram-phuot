@@ -6,6 +6,12 @@ const ENDPOINTS = {
     getCoupons: (slug: string) => `api/v1/coupons?slug=${slug}&post_type=hotels`,
     applyVoucher: 'api/v1/hotel/voucher/apply',
     list: 'api/v1/get-all/hotels',
+    taxonomies: 'api/v1/taxonomies/hotels',
+    detail: 'api/v1/hotels/detail',
+    relatedHotels: 'api/v1/hotels/related-hotels',
+    en: 'wp/v2/pages/559?_fields=acf&acf_format=standard',
+    vi: 'wp/v2/pages/562?_fields=acf&acf_format=standard',
+    coupons: 'api/v1/coupons',
   },
   taxonomy: {
     get: (locale: string, taxonomy: string) =>
@@ -22,16 +28,6 @@ const ENDPOINTS = {
     relatedTours: 'api/v1/tour/related-tours',
     en: 'wp/v2/pages/272?_fields=acf&acf_format=standard',
     vi: 'wp/v2/pages/274?_fields=acf&acf_format=standard',
-    coupons: 'api/v1/coupons',
-  },
-  hotel: {
-    list: 'api/v1/get-all/hotels',
-    taxonomies: 'api/v1/taxonomies/hotels',
-    detail: 'api/v1/hotels/detail',
-    applyVoucher: 'api/v1/hotels/voucher/apply',
-    relatedHotels: 'api/v1/hotels/related-hotels',
-    en: 'wp/v2/pages/559?_fields=acf&acf_format=standard',
-    vi: 'wp/v2/pages/562?_fields=acf&acf_format=standard',
     coupons: 'api/v1/coupons',
   },
   blogs: {
@@ -72,6 +68,14 @@ const ENDPOINTS = {
     form_contact_en: {
       id: '616',
       unit_tag: 'ade750c',
+    },
+    form_booking_hotel_en: {
+      id: '644',
+      unit_tag: '646954a',
+    },
+    form_booking_hotel_vi: {
+      id: '649',
+      unit_tag: 'bafab39',
     },
   },
   contact: {
