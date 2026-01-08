@@ -17,6 +17,8 @@ export default function Footer({ data }: { data: IFooter }) {
 
   const isThankyouPage = pathname === '/thank-you' || pathname === '/cam-on'
 
+  if (isThankyouPage) return null
+
   return (
     <footer
       className={cn(

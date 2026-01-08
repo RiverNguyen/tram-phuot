@@ -1,26 +1,39 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState, useTransition } from 'react'
+import { useEffect, useRef, useState, useTransition } from 'react'
 import { useSearchParams } from 'next/navigation'
-import FilterDrawer from './FilterDrawer'
-import FilterPopover from './FilterPopover'
-import { mapTaxonomyToFilter } from './mapTaxonomyToFilter'
+import FilterDrawer from '@/components/shared/Filter/FilterDrawer2'
+import FilterPopover from '@/components/shared/Filter/FilterPopover'
+import { mapTaxonomyToFilter } from '@/utils/mapTaxonomyToFilter'
 import { ICTrashcan } from '@/components/icons'
 import ICCFilterLine from '@/components/icons/ICCFilterLine'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Pagination } from '@/components/shared'
-import { CouponItem, CouponTaxonomy } from '@/types/coupon.type'
+import { ICoupon, ICouponTaxonomy } from '@/interface/coupon.interface'
 import OngoingPromotionsCard from './OngoingPromotionsCard'
 import { scrollToSection } from '@/utils/scrollToSection'
 import { usePathname, useRouter } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
+import {
+  createQueryString,
+  parseFilterStateFromURL,
+  formatFiltersForURL,
+  hasActiveFilters,
+} from '@/utils/filterHelpers'
+
+// Taxonomy configuration
+const TAXONOMY_CONFIG = [
+  { key: 'locations', variant: 'radio' as const, translationKey: 'destination' },
+  { key: 'tour-type', variant: 'checkbox' as const, translationKey: 'typeTour' },
+] as const
 
 export default function OngoingPromotions({
   data,
   taxonomies,
   totalPages,
 }: {
-  data: CouponItem[]
-  taxonomies: CouponTaxonomy[]
+  data: ICoupon[]
+  taxonomies: ICouponTaxonomy[]
   totalPages?: number
 }) {
   const [openDrawer, setOpenDrawer] = useState(false)
@@ -29,57 +42,58 @@ export default function OngoingPromotions({
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
+  const t = useTranslations('ListCouponPage')
 
-  const filters = mapTaxonomyToFilter(taxonomies)
+  const filters = mapTaxonomyToFilter(taxonomies, TAXONOMY_CONFIG.map((t) => t.key))
 
-  const [filterState, setFilterState] = useState<{ locations: string; 'tour-type': string[] }>({
-    locations: searchParams.get('locations') || '',
-    'tour-type': (searchParams.get('tour-type') || '').split(',').filter(Boolean),
-  })
+  const taxonomiesWithVariant = TAXONOMY_CONFIG.map((config) => ({
+    taxonomy: config.key,
+    variant: config.variant,
+  }))
+
+  const [filterState, setFilterState] = useState<Record<string, string | string[]>>(() =>
+    parseFilterStateFromURL(searchParams, taxonomiesWithVariant),
+  )
 
   const currentPage = Math.max(1, Number(searchParams.get('paged')) || 1)
 
-  const createQueryString = useCallback(
-    (updates: Record<string, string | undefined>) => {
-      const params = new URLSearchParams(searchParams.toString())
-
-      Object.entries(updates).forEach(([k, v]) => {
-        if (v && v.length > 0) params.set(k, v)
-        else params.delete(k)
-      })
-
-      return params.toString()
-    },
-    [searchParams],
-  )
-
-  const pushFilters = (next: { locations: string; 'tour-type': string[] }) => {
+  const pushFilters = (next: Record<string, string | string[]>) => {
     setFilterState(next)
     startTransition(() => {
-      const query = createQueryString({
-        locations: next.locations || undefined,
-        'tour-type': next['tour-type'].length > 0 ? next['tour-type'].join(',') : undefined,
-        paged: undefined,
-      })
+      const updates = formatFiltersForURL(next)
+      updates.paged = undefined
+      const query = createQueryString(searchParams, updates)
       router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
     })
   }
 
-  const handleFilterChange = (key: 'locations' | 'tour-type', value: string | string[]) => {
+  const handleFilterChange = (key: string, value: string | string[]) => {
     pushFilters({
-      locations: key === 'locations' ? (value as string) : filterState.locations,
-      'tour-type': key === 'tour-type' ? (value as string[]) : filterState['tour-type'],
+      ...filterState,
+      [key]: value,
     })
   }
 
   const handleReset = () => {
-    if (filterState.locations === '' && filterState['tour-type'].length === 0) return
-    pushFilters({ locations: '', 'tour-type': [] })
+    if (!hasActiveFilters(filterState)) {
+      if (currentPage <= 1) return
+      startTransition(() => {
+        const query = createQueryString(searchParams, { paged: undefined })
+        router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
+      })
+      return
+    }
+
+    const reset: Record<string, string | string[]> = {}
+    taxonomiesWithVariant.forEach(({ taxonomy, variant }) => {
+      reset[taxonomy] = variant === 'radio' ? '' : []
+    })
+    pushFilters(reset)
   }
 
   const handlePageChange = (page: number) => {
     startTransition(() => {
-      const query = createQueryString({
+      const query = createQueryString(searchParams, {
         paged: page > 1 ? String(page) : undefined,
       })
       router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
@@ -87,10 +101,7 @@ export default function OngoingPromotions({
   }
 
   useEffect(() => {
-    setFilterState({
-      locations: searchParams.get('locations') || '',
-      'tour-type': (searchParams.get('tour-type') || '').split(',').filter(Boolean),
-    })
+    setFilterState(parseFilterStateFromURL(searchParams, taxonomiesWithVariant))
   }, [searchParams])
 
   useEffect(() => {
@@ -115,20 +126,16 @@ export default function OngoingPromotions({
 
           {/* Desktop Filters */}
           <div className='xsm:hidden flex flex-1 items-center gap-[0.75rem]'>
-            <FilterPopover
-              label='Destination'
-              options={filters.locations ?? []}
-              value={filterState.locations}
-              onValueChange={(val) => handleFilterChange('locations', val as string)}
-              variant='radio'
-            />
-            <FilterPopover
-              label='type tour'
-              options={filters['tour-type'] ?? []}
-              value={filterState['tour-type']}
-              onValueChange={(val) => handleFilterChange('tour-type', val as string[])}
-              variant='checkbox'
-            />
+            {TAXONOMY_CONFIG.map((config) => (
+              <FilterPopover
+                key={config.key}
+                label={t(config.translationKey)}
+                options={filters[config.key] ?? []}
+                value={filterState[config.key]}
+                onValueChange={(val) => handleFilterChange(config.key, val)}
+                variant={config.variant}
+              />
+            ))}
             <button
               type='button'
               onClick={handleReset}
@@ -136,7 +143,7 @@ export default function OngoingPromotions({
             >
               <ICTrashcan className='size-[1.125rem] text-[#FF2019]' />
               <span className='font-montserrat text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] text-[#FF2019] uppercase'>
-                Reset all
+                {t('reset')}
               </span>
             </button>
           </div>
@@ -149,14 +156,19 @@ export default function OngoingPromotions({
               className='flex w-full items-center justify-between rounded-[0.5rem] bg-white px-[0.75rem] py-[0.625rem] shadow-[0_2px_4px_0_rgba(0,0,0,0.05)]'
             >
               <span className='font-montserrat text-[0.875rem] leading-[1.3125rem] font-medium text-[rgba(46,46,46,0.75)]'>
-                Category
+                {t('category')}
               </span>
               <ICCFilterLine className='size-[1.28125rem]' />
             </button>
             <FilterDrawer
               open={openDrawer}
               onOpenChange={setOpenDrawer}
-              taxonomies={taxonomies}
+              sections={TAXONOMY_CONFIG.map((config) => ({
+                type: config.variant,
+                key: config.key,
+                title: t(config.translationKey),
+                options: filters[config.key] || [],
+              }))}
               filters={filterState}
               onApply={(next) => pushFilters(next)}
               onReset={handleReset}
@@ -197,7 +209,7 @@ export default function OngoingPromotions({
           ) : (
             <div className='col-span-3 flex w-full items-center justify-center'>
               <span className='font-montserrat text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] text-[#2E2E2E]'>
-                Not found
+                {t('noResult')}
               </span>
             </div>
           )}

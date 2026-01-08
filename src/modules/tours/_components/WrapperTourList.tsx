@@ -4,13 +4,13 @@ import { useCallback, useEffect, useState } from 'react'
 import TourList from './TourList'
 import { Pagination } from '@/components/shared'
 import { ITaxonomy } from '@/interface/taxonomy.interface'
-import FilterPopover from '@/modules/tours/_components/FilterPopover'
+import FilterPopover from '@/components/shared/Filter/FilterPopover'
 import ICTrashcan from '@/components/icons/ICTrashcan'
 import { usePathname, useRouter } from '@/i18n/navigation'
 import { useSearchParams } from 'next/navigation'
 import { ITour } from '@/interface/tour.interface'
 import ICFilter from '@/components/icons/ICFilter'
-import FilterDrawer from '@/modules/tours/_components/FilterDrawer'
+import FilterDrawer from '@/components/shared/Filter/FilterDrawer'
 import { useTransition } from 'react'
 import SkeletonTour from './SkeletonTour'
 import { scrollToSection } from '@/utils/scrollToSection'
@@ -20,6 +20,16 @@ interface WrapperTourListProps {
   taxonomies: ITaxonomy[]
   data: ITour[]
   totalPages: number
+}
+
+// Map taxonomy to translation key
+const getTaxonomyTranslationKey = (taxonomy: string): string => {
+  const map: Record<string, string> = {
+    locations: 'locations',
+    'tour-type': 'tour-type',
+    'tour-duration': 'tour-duration',
+  }
+  return map[taxonomy] || taxonomy.toLowerCase()
 }
 
 export default function WrapperTourList({ taxonomies, data, totalPages }: WrapperTourListProps) {
@@ -162,11 +172,11 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
       <div className='xsm:gap-[1.5rem] flex w-full flex-col items-start gap-[2.5rem]'>
         {/* Filter Desktop */}
         <div className='xsm:hidden flex w-full items-center space-x-[0.75rem]'>
-          {taxonomies.map((taxonomy, i) => (
+          {taxonomies.map((taxonomy) => (
             <FilterPopover
-              key={i}
+              key={taxonomy.taxonomy}
               options={taxonomy.terms.map((term) => ({ label: term.name, value: term.slug }))}
-              label={taxonomy.label}
+              label={t(getTaxonomyTranslationKey(taxonomy.taxonomy))}
               value={filter[taxonomy.taxonomy]}
               onValueChange={(value) => onFilterChange(taxonomy.taxonomy, value)}
               variant={taxonomy.taxonomy === 'locations' ? 'radio' : 'checkbox'}
@@ -197,7 +207,7 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
           </button>
           <FilterDrawer
             data={taxonomies.map((taxonomy) => ({
-              label: taxonomy.label,
+              label: t(getTaxonomyTranslationKey(taxonomy.taxonomy)),
               taxonomy: taxonomy.taxonomy,
               variant: taxonomy.taxonomy === 'locations' ? 'radio' : 'checkbox',
               options: taxonomy.terms.map((term) => ({ label: term.name, value: term.slug })),
