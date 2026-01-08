@@ -67,9 +67,9 @@
     "searchFilter": "Search Filter",
     "done": "Done",
     "all": "All",
-    "locations": "Locations",
-    "tour-type": "Tour Type",
-    "tour-duration": "Tour Duration"
+    "Locations": "Locations",
+    "Tour types": "Tour Types",
+    "Tour durations": "Tour Durations"
   },
   "ListCouponPage": {
     "noResult": "No Result",
@@ -88,8 +88,8 @@
     "selected": "Selected",
     "searchFilter": "Search Filter",
     "done": "Done",
-    "amenities": "Amenities",
-    "locations": "Locations"
+    "Amenities": "Amenities",
+    "Locations": "Locations"
   },
   "DetailsTourPage": {
     "metaTourDuration": "Tour duration:",
