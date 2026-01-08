@@ -297,7 +297,7 @@ export default function OurTours({
                 variant='orangeGradient'
                 classNameButtonContainer='shrink-0 xsm:w-full'
               >
-                {ourTours?.button?.title}
+                {t('exploreMore')}
               </BrandButton>
               <div className='xsm:hidden h-[0.0625rem] grow bg-white/16'></div>
             </div>

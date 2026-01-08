@@ -3,12 +3,12 @@ import Image from 'next/image'
 import FormContact from './_components/FormContact'
 import { Link, usePathname } from '@/i18n/navigation'
 import FooterMenu from './_components/FooterMenu'
-import { ChevronDown } from 'lucide-react'
 import useIsMobile from '@/hooks/use-is-mobile'
 import VectorDecoration from './_components/VectorDecoration'
 import { IFooter } from '@/interface/site-setting.interface'
 import { useTranslations } from 'next-intl'
 import { cn } from '@/lib/utils'
+import LanguageSwitcher from './_components/LanguageSwitcher'
 
 export default function Footer({ data }: { data: IFooter }) {
   const { isLoading, isMobile } = useIsMobile()
@@ -55,14 +55,18 @@ export default function Footer({ data }: { data: IFooter }) {
             <div className='font-montserrat z-1 mx-auto flex h-[1.73825rem] w-[6.52431rem] -rotate-[7.522deg] items-center justify-center rounded-[50%] bg-[#F6CD40] text-center text-[0.47669rem] leading-[0.47669rem] font-bold whitespace-pre text-[#07364D] uppercase sm:hidden'>
               {data?.form_footer?.form_text_decor_2}
             </div>
-            <h3 className='font-motherland xsm:text-[1.40006rem] xsm:rotate-[-3.452deg] xsm:text-center xsm:ml-0 xsm:mt-1.5 relative z-1 ml-[0.75rem] rotate-[-5.037deg] text-[3.3125rem] leading-normal font-normal text-[#F56E0A]'>
-              <span className='text-stroke absolute inset-0'>
-                {data?.form_footer?.form_text_decor}
-              </span>
-              <span className='relative z-1'>{data?.form_footer?.form_text_decor}</span>
+            <h3 className='font-motherland xsm:text-[1.40006rem] xsm:rotate-[-3.452deg] xsm:text-center xsm:ml-0 xsm:mt-1.5 relative z-1 ml-[0.75rem] rotate-[-5.037deg] text-[3.3125rem] leading-normal font-normal text-[#F56E0A] whitespace-pre'>
+              <div
+                dangerouslySetInnerHTML={{ __html: data?.form_footer?.form_text_decor }}
+                className='text-stroke absolute inset-0'
+              ></div>
+              <div
+                dangerouslySetInnerHTML={{ __html: data?.form_footer?.form_text_decor }}
+                className='relative z-1'
+              ></div>
             </h3>
             <div className='xsm:mt-2 xsm:mb-0 relative -mt-4 mb-[1.81rem]'>
-              <h2 className='font-phu-du xsm:max-w-[18.55388rem] xsm:mx-auto xsm:text-4xl xsm:text-center xsm:leading-10 xsm:-rotate-[2.664deg] relative max-w-[34.05738rem] text-[4.125rem] leading-[4.125rem] font-bold text-white uppercase'>
+              <h2 className='font-phu-du xsm:max-w-[18.55388rem] xsm:mx-auto xsm:text-4xl xsm:text-center xsm:leading-10 xsm:-rotate-[2.664deg] relative max-w-[34.05738rem] text-[4.125rem] leading-[4.125rem] font-bold text-white uppercase whitespace-pre'>
                 {data?.form_footer?.form_title}
               </h2>
               <div className='font-montserrat xsm:hidden absolute top-[1.75rem] -right-[0.45rem] z-1 flex h-[3.19075rem] w-[11.976rem] -rotate-[7.522deg] items-center justify-center rounded-[50%] bg-[#F6CD40] text-center text-[0.875rem] leading-[0.875rem] font-bold whitespace-pre text-[#07364D] uppercase'>
@@ -75,7 +79,7 @@ export default function Footer({ data }: { data: IFooter }) {
           </div>
 
           {/* Right */}
-          <div className='xsm:m-0 xsm:pt-[0.75rem] relative -mt-[0.7rem] -mr-[1.75rem]'>
+          <div className='xsm:m-0 xsm:pt-[0.75rem] shrink-0 w-[52.40981rem] xsm:w-[23.4375rem] relative -mt-[0.7rem] -mr-[1.75rem]'>
             <Image
               src={data?.form_footer?.image?.mobile?.url || ''}
               alt={data?.form_footer?.image?.mobile?.alt}
@@ -95,12 +99,12 @@ export default function Footer({ data }: { data: IFooter }) {
       </div>
 
       {/* Bottom Content */}
-      <div className='xsm:h-auto xsm:relative absolute z-4 h-[42.125rem] overflow-hidden sm:right-0 sm:bottom-0 sm:left-0'>
+      <div className='pointer-events-none xsm:h-auto xsm:relative absolute z-4 h-[42.125rem] overflow-hidden sm:right-0 sm:bottom-0 sm:left-0'>
         <div className='xsm:hidden pointer-events-none absolute top-0 right-0 left-0 h-[42.4375rem] w-full bg-[linear-gradient(180deg,rgba(1,86,63,0.00)_0%,rgba(1,68,57,0.25)_10.05%,rgba(2,33,45,0.79)_27.39%,#021429_44.32%,#021028_73.23%,#020E27_100%)] select-none'></div>
 
         <div className='xsm:hidden pointer-events-none absolute right-0 -bottom-[1.15rem] left-0 z-1 h-[43.25rem] bg-[linear-gradient(180deg,rgba(217,217,217,0.00)_0%,#A2A2A2_28.34%,#737373_100%)] mask-[url("/footer/d-footer_bottom_deco.webp")] mask-alpha mask-cover mask-no-repeat'></div>
 
-        <div className='xsm:relative absolute z-2 mx-auto max-w-[87.805rem] sm:right-0 sm:bottom-0 sm:left-0'>
+        <div className='pointer-events-auto xsm:relative absolute z-2 mx-auto max-w-[87.805rem] sm:right-0 sm:bottom-0 sm:left-0'>
           {!isLoading && isMobile && (
             <FormContact
               containerClassName='py-[0.75rem] xsm:px-4'
@@ -206,22 +210,7 @@ export default function Footer({ data }: { data: IFooter }) {
                 <p className='font-phu-du xsm:text-[0.75rem] xsm:text-white/80 xsm:tracking-[0.0625rem] xsm:leading-[1.125rem] xsm:opacity-60 text-[0.875rem] leading-[1.3125rem] font-medium text-white/51'>
                   {translateFooter('copyright')}
                 </p>
-                <button
-                  type='button'
-                  className='font-montserrat xsm:text-white/80 xsm:leading-[1.05rem] flex cursor-pointer items-center space-x-2 text-[0.75rem] leading-[1.125rem] tracking-[0.0625rem] text-white/51 uppercase'
-                >
-                  <span>VIE</span>
-                  <div className='flex items-center space-x-[0.42rem]'>
-                    <Image
-                      src='/footer/d-vn.webp'
-                      alt=''
-                      width={558}
-                      height={558}
-                      className='xsm:size-[1.125rem] size-[1.325rem] object-cover'
-                    />
-                    <ChevronDown className='xsm:size-[1rem] size-[1.1655rem]' />
-                  </div>
-                </button>
+                <LanguageSwitcher />
               </div>
             </div>
           </div>
