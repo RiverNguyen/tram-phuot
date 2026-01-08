@@ -122,6 +122,23 @@
     "textApplyVoucherSuccess": "Áp dụng voucher thành công",
     "textApplyVoucherError": "Áp dụng voucher thất bại"
   },
+  "ContactForm": {
+    "fullNameRequired": "Vui lòng nhập tên của bạn",
+    "emailRequired": "Vui lòng nhập email của bạn",
+    "emailInvalid": "Vui lòng nhập email hợp lệ",
+    "phoneRequired": "Vui lòng nhập số điện thoại của bạn",
+    "phoneInvalid": "Vui lòng nhập số điện thoại hợp lệ",
+    "submitSuccess": "Gửi thông tin thành công",
+    "submitFailed": "Gửi thông tin thất bại",
+    "submitFailedMessage": "Gửi thông tin thất bại. Vui lòng thử lại.",
+    "sending": "Đang gửi...",
+    "sendInformation": "Gửi thông tin",
+    "fullNameLabel": "Tên của bạn",
+    "emailLabel": "Email",
+    "phoneNumberLabel": "Số điện thoại",
+    "messageLabel": "Tin nhắn",
+    "directionsToTheOffice": "Hướng dẫn đến văn phòng"
+  },
   "ContactFormBooking": {
     "title": "Thông tin liên hệ",
     "description": "Vui lòng điền thông tin liên hệ và nhân viên của chúng tôi sẽ liên hệ với bạn sớm nhất.",

@@ -20,7 +20,6 @@ export default async function page({ params }: { params: Promise<{ locale: strin
     homeService.getTaxonomies(locale, 'post'),
   ])
 
-  console.log(dataOurStories)
   return (
     <>
       <BannerHomePage data={dataHome?.acf} />

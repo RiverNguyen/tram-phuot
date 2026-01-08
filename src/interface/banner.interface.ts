@@ -1,3 +1,5 @@
+import { IMedia } from '@/interface/media.interface'
+
 export type WPMedia = {
   url?: string
 }
@@ -9,5 +11,9 @@ export type BannerACF = {
 }
 
 export type PageBannerACF = {
-  banner?: BannerACF
+  banner?: {
+    title?: string
+    background_pc?: IMedia
+    background_mobile?: IMedia
+  }
 }

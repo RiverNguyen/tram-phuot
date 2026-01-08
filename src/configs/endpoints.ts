@@ -49,6 +49,18 @@ const ENDPOINTS = {
       id: '456',
       unit_tag: '79372bc',
     },
+    form_contact_vi: {
+      id: '617',
+      unit_tag: 'bb29756',
+    },
+    form_contact_en: {
+      id: '616',
+      unit_tag: 'ade750c',
+    },
+  },
+  contact: {
+    en: 'wp/v2/pages/160?_fields=acf&acf_format=standard',
+    vi: 'wp/v2/pages/163?_fields=acf&acf_format=standard',
   },
   our_stories: {
     get: (locale: string, kind: string) =>

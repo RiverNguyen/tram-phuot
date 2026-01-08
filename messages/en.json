@@ -123,6 +123,23 @@
     "textApplyVoucherSuccess": "Voucher applied successfully",
     "textApplyVoucherError": "Voucher applied failed"
   },
+  "ContactForm": {
+    "fullNameRequired": "Please enter your full name",
+    "emailRequired": "Please enter your email",
+    "emailInvalid": "Please enter a valid email",
+    "phoneRequired": "Please enter your phone number",
+    "phoneInvalid": "Please enter a valid phone number",
+    "submitSuccess": "Submitted successfully",
+    "submitFailed": "Submitted failed",
+    "submitFailedMessage": "Submitted failed. Please try again.",
+    "sending": "Sending...",
+    "sendInformation": "Send information",
+    "fullNameLabel": "Full name",
+    "emailLabel": "Email",
+    "phoneNumberLabel": "Phone number",
+    "messageLabel": "Message",
+    "directionsToTheOffice": "Directions to the office"
+  },
   "ContactFormBooking": {
     "title": "Contact Information",
     "description": "Please fill in your contact information and our staff will contact you soon.",

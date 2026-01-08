@@ -29,17 +29,18 @@ export default function FloatingLabel({
         {...props}
         type={props.type ? props.type : 'text'}
         placeholder=''
+        style={{ WebkitTextFillColor: '#2E2E2E !important', color: '#2E2E2E !important' }}
         className={cn(
-          'peer font-montserrat block w-full appearance-none border-0 border-b border-b-white/24 bg-transparent px-0 py-[0.9375rem] text-[0.875rem] leading-[1.05rem] font-medium -tracking-[0.00875rem] text-white transition duration-300 focus:border-b-white focus:ring-0 focus:outline-none',
+          'peer font-montserrat block w-full appearance-none border-0 border-b-[0.0625rem] border-b-[rgba(139,139,139,0.4)] bg-transparent px-0 pb-[0.9375rem] text-[0.875rem] leading-[1.05rem] font-normal -tracking-[0.00875rem] text-[#2E2E2E] transition duration-300 focus:border-b-[rgba(139,139,139,0.4)] focus:ring-0 focus:outline-none',
           props.className,
-          props.value && 'border-b-white',
+          props.value && 'border-b-[rgba(139,139,139,0.4)]',
           error && 'border-b-destructive focus:border-b-destructive',
         )}
       />
       <label
         htmlFor={props.id}
         className={cn(
-          'font-phu-du peer-focus:text-fg-brand absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-[1rem] leading-[1.3rem] font-medium text-white uppercase duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-6 peer-focus:scale-75 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4',
+          'font-phu-du peer-focus:text-fg-brand absolute top-0 -z-10 origin-[0] -translate-y-6 scale-75 transform text-[0.875rem] leading-[1.05rem] tracking-[0.00875rem] text-[#8B8B8B] uppercase duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:start-0 peer-focus:-translate-y-[1.4375rem] peer-focus:scale-75 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4',
           labelClassName
         )}
       >

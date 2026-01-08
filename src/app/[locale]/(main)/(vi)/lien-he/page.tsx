@@ -1,5 +1,6 @@
 import Contact from '@/modules/contact'
 
-export default function ContactPage() {
-  return <Contact />
+export default async function ContactPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  return <Contact locale={locale} />
 }
