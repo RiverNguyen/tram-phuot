@@ -39,6 +39,12 @@ export default function BrandButton({
     blueGradient: 'bg-blue-gradient',
     transparent: 'bg-transparent',
   }
+  const classNameHoverButtonVariant: Record<BrandButtonVariant, string> = {
+    greenGradient: 'bg-orange-gradient',
+    orangeGradient: 'bg-green-gradient',
+    blueGradient: 'bg-orange-gradient',
+    transparent: 'bg-orange-gradient ',
+  }
 
   if (type.variant === 'link') {
     return (
@@ -50,6 +56,12 @@ export default function BrandButton({
           classNameButtonContainer,
         )}
       >
+        <div
+          className={cn(
+            'absolute top-0 left-0 size-full opacity-0 transition-all duration-300 ease-out lg:group-hover:opacity-100',
+            classNameHoverButtonVariant[variant],
+          )}
+        ></div>
         <div
           className={cn(
             'xsm:text-[0.75rem] relative z-2 text-[0.875rem] leading-none font-semibold text-white uppercase',
@@ -98,6 +110,12 @@ export default function BrandButton({
         classNameButtonContainer,
       )}
     >
+      <div
+        className={cn(
+          'absolute top-0 left-0 z-0 size-full opacity-0 transition-all duration-300 ease-out lg:group-hover:opacity-100',
+          classNameHoverButtonVariant[variant],
+        )}
+      ></div>
       <div
         className={cn(
           'xsm:text-[0.75rem] relative z-2 text-[0.875rem] leading-none font-semibold text-white uppercase',

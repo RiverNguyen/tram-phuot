@@ -58,12 +58,13 @@ export type DetailsTourApiResponseType = {
       banner: DetailsTourBannerType
       overview: DetailsTourOverviewType
       detail_itinerary: DetailsTourDetailItineraryType
-      price_per_pax: DetailsTourPricePerPaxType
+      // price_per_pax: DetailsTourPricePerPaxType
       transport: string
       pickup_and_dropoff: string
       accommodation: string
       policy: DetailsTourPolicyType
       brief_itinerary: DetailsTourBriefItineraryType
+      price_person: string
     }
     title: string
     tour_duration: TourDurationType
@@ -92,4 +93,39 @@ export type ApplyVoucherResponseType = {
     type: VoucherType
     discount: number
   }
+}
+export type RelatedTourType = {
+  id: number
+  title: string
+  slug: string
+  thumbnail: WPImage
+  locations: WPTaxonomy[]
+  tour_type: WPTaxonomy[]
+  price_person: number
+}
+export type DetailsTourRelatedToursResType = {
+  locale: string
+  success: boolean
+  data: RelatedTourType[]
+}
+
+export type TourCouponItemType = {
+  id: number
+  title: string
+  code: string
+  type: VoucherType
+  percent_sale: number
+  price_discount: number
+  minimum_total_price: number
+  minimum_number_of_nights: number
+  booking_time: { start: string; end: string }
+  time_goes: { start: string; end: string }
+  locations: WPTaxonomy[]
+  for_whom: string
+}
+
+export type TourCouponsResType = {
+  success: boolean
+  locale: string
+  data: TourCouponItemType[]
 }

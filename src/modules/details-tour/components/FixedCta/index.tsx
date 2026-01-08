@@ -43,7 +43,7 @@ export default function FixedCta() {
   }
 
   return (
-    <div className='xsm:hidden fixed right-0 bottom-0 left-0 flex h-13.25 w-full items-center bg-white px-25 shadow-[0_-4px_12px_0_rgba(0,0,0,0.08)]'>
+    <div className='xsm:hidden fixed right-0 bottom-0 left-0 z-50 flex h-13.25 w-full items-center bg-white px-25 shadow-[0_-4px_12px_0_rgba(0,0,0,0.08)]'>
       {SECTIONS.map((item, index) => (
         <button
           key={index}
