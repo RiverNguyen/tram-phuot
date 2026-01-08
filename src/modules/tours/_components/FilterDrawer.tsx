@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItemCustom } from '@/components/ui/radio-group'
 import { Clock8, List, X } from 'lucide-react'
 import { Dispatch, SetStateAction } from 'react'
-import BrandButton from '../BrandButton'
+import BrandButton from '../../../components/shared/BrandButton'
 import ICLocation2 from '@/components/icons/ICLocation2'
 import { useTranslations } from 'next-intl'
 
@@ -60,7 +60,7 @@ export default function FilterDrawer({
       </div>
 
       {/* Content */}
-      <div className='space-y-[0.75rem] overflow-y-auto bg-[#E5EDF6] pt-[4.5rem] pb-[4.125rem]'>
+      <div className='min-h-screen space-y-[0.75rem] overflow-y-auto bg-[#E5EDF6] pt-[4.5rem] pb-[4.125rem]'>
         {data.map((item, i) => {
           const isRadio = item.variant === 'radio'
 

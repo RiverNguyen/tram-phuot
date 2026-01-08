@@ -4,13 +4,13 @@ import { useCallback, useEffect, useState } from 'react'
 import TourList from './TourList'
 import { Pagination } from '@/components/shared'
 import { ITaxonomy } from '@/interface/taxonomy.interface'
-import FilterPopover from '@/components/shared/Filter/FilterPopover'
+import FilterPopover from '@/modules/tours/_components/FilterPopover'
 import ICTrashcan from '@/components/icons/ICTrashcan'
 import { usePathname, useRouter } from '@/i18n/navigation'
 import { useSearchParams } from 'next/navigation'
 import { ITour } from '@/interface/tour.interface'
 import ICFilter from '@/components/icons/ICFilter'
-import FilterDrawer from '@/components/shared/Filter/FilterDrawer'
+import FilterDrawer from '@/modules/tours/_components/FilterDrawer'
 import { useTransition } from 'react'
 import SkeletonTour from './SkeletonTour'
 import { scrollToSection } from '@/utils/scrollToSection'
@@ -157,11 +157,11 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
   return (
     <div
       id='tour-list-container'
-      className='xsm:px-[1rem] xsm:py-[2.5rem] xsm:gap-[2.5rem] relative w-full h-full max-w-[87.5rem] mx-auto flex flex-col items-center gap-[3.75rem] pt-[5rem] pb-[3.75rem]'
+      className='xsm:px-[1rem] xsm:py-[2.5rem] xsm:gap-[2.5rem] relative mx-auto flex h-full w-full max-w-[87.5rem] flex-col items-center gap-[3.75rem] pt-[5rem] pb-[3.75rem]'
     >
-      <div className='xsm:gap-[1.5rem] w-full flex flex-col items-start gap-[2.5rem]'>
+      <div className='xsm:gap-[1.5rem] flex w-full flex-col items-start gap-[2.5rem]'>
         {/* Filter Desktop */}
-        <div className='flex w-full items-center space-x-[0.75rem] xsm:hidden'>
+        <div className='xsm:hidden flex w-full items-center space-x-[0.75rem]'>
           {taxonomies.map((taxonomy, i) => (
             <FilterPopover
               key={i}
@@ -175,24 +175,23 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
           <button
             type='button'
             onClick={resetFilter}
-            className='flex items-center h-[2.75rem] p-[0.75rem_0_0.75rem_0.75rem] items-center space-x-2 font-montserrat text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] uppercase text-[#FF2019] cursor-pointer'
+            className='font-montserrat flex h-[2.75rem] cursor-pointer items-center space-x-2 p-[0.75rem_0_0.75rem_0.75rem] text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] text-[#FF2019] uppercase'
           >
             <ICTrashcan className='size-[1.125rem]' />
             <span>{t('reset')}</span>
           </button>
         </div>
         {/* Filter Mobile */}
-        <div className='sm:hidden w-full'>
+        <div className='w-full sm:hidden'>
           <button
             type='button'
             onClick={() => setOpenDrawer(true)}
-            className='h-[4.25rem] w-full rounded-[0.25rem] flex items-center p-4 justify-between bg-white border border-[#EDEDED] shadow-[266px_185px_91px_0_rgba(0,0,0,0.00),_170px_118px_83px_0_rgba(0,0,0,0.01),_96px_67px_70px_0_rgba(0,0,0,0.04),_42px_30px_52px_0_rgba(0,0,0,0.04),_11px_7px_28px_0_rgba(0,0,0,0.05)]
-  '
+            className='flex h-[4.25rem] w-full items-center justify-between rounded-[0.25rem] border border-[#EDEDED] bg-white p-4 shadow-[266px_185px_91px_0_rgba(0,0,0,0.00),_170px_118px_83px_0_rgba(0,0,0,0.01),_96px_67px_70px_0_rgba(0,0,0,0.04),_42px_30px_52px_0_rgba(0,0,0,0.04),_11px_7px_28px_0_rgba(0,0,0,0.05)]'
           >
-            <span className='bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-transparent font-montserrat text-[0.875rem] font-bold leading-[1.1375rem] tracking-[-0.03125rem]'>
+            <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent'>
               {t('searchFilter')}
             </span>
-            <div className='bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] rounded-[0.5rem] p-[0.625rem] flex items-center justify-center'>
+            <div className='flex items-center justify-center rounded-[0.5rem] bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] p-[0.625rem]'>
               <ICFilter className='w-[1rem]' />
             </div>
           </button>
@@ -213,7 +212,7 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
         </div>
 
         {isPending && (
-          <div className='xsm:grid-cols-1 gap-y-[1.5rem] w-full grid grid-cols-4 gap-y-[2rem] gap-x-[1.125rem]'>
+          <div className='xsm:grid-cols-1 grid w-full grid-cols-4 gap-x-[1.125rem] gap-y-[1.5rem] gap-y-[2rem]'>
             {Array.from({ length: 8 }).map((_, i) => (
               <SkeletonTour key={i} />
             ))}
@@ -225,7 +224,7 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
           (data.length > 0 ? (
             <TourList data={data} />
           ) : (
-            <p className='text-center mx-auto'>{t('noResult')}</p>
+            <p className='mx-auto text-center'>{t('noResult')}</p>
           ))}
       </div>
 
