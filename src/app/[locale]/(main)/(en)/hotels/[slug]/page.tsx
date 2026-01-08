@@ -1,5 +1,22 @@
 import DetailHotel from '@/modules/detail-hotel'
+import hotelService from '@/services/hotel'
 
-export default function page() {
-  return <DetailHotel />
+export default async function page({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>
+}) {
+  const { locale } = await params
+  let { slug } = await params
+  const [detailHotel, taxonomies] = await Promise.all([
+    hotelService.getDetailHotel(slug),
+    hotelService.getTaxonomies(locale),
+  ])
+
+  return (
+    <DetailHotel
+      detailHotel={detailHotel}
+      taxonomies={taxonomies?.data}
+    />
+  )
 }

@@ -1,6 +1,9 @@
 import ENV from '@/configs/env'
 
 const ENDPOINTS = {
+  hotel: {
+    getDetail: (slug: string) => `api/v1/get-detail/hotels?slug=${slug}`,
+  },
   taxonomies: {
     get: (locale: string, type: string) => `api/v1/taxonomies/${type}?lang=${locale}`,
   },
