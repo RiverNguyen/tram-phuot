@@ -1,12 +1,11 @@
 'use client'
 import { format, startOfDay } from 'date-fns'
 import { useState } from 'react'
-import { ControllerRenderProps, FieldPath } from 'react-hook-form'
+import { ControllerRenderProps } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import { FormControl, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import useIsMobile from '@/hooks/useIsMobile'
-import { BookingTourFormValues } from '@/schemas/booking-tour.schema'
 import { cn } from '@/lib/utils'
 import ICCalendar from '@/components/icons/ICCalendar'
 import { CalendarCustom } from '@/components/ui/calendar-custom'
@@ -20,7 +19,7 @@ interface RFHDatePickerFieldProps {
   className?: string
   disabled?: boolean
   required?: boolean
-  field: ControllerRenderProps<BookingTourFormValues, FieldPath<BookingTourFormValues>>
+  field: ControllerRenderProps<any, any>
 }
 
 export default function RFHDatePickerField({

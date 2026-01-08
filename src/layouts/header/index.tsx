@@ -12,7 +12,8 @@ import MobileSheetHeader from '@/layouts/header/_components/mobile/MobileSheetHe
 import MobileSocialMedia from '@/layouts/header/_components/mobile/MobileSocialMedia'
 import { AnimatePresence } from 'motion/react'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { useScrollHeader } from '@/hooks/useScrollHeader'
 
 const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: ISocialMedia[] }) => {
   const navLeft = data?.navigations ? data.navigations.slice(0, 4) : []
@@ -20,6 +21,8 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: ISocialMedi
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [hoveredSide, setHoveredSide] = useState<'left' | 'right' | null>(null)
   const [openSheet, setOpenSheet] = useState(false)
+
+  console.log(socialMedia)
 
   const handleItemHover = (index: number, side: 'left' | 'right') => {
     setHoveredIndex(index)
@@ -43,9 +46,15 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: ISocialMedi
     setHoveredSide(null)
   }
 
+  const headerRef = useRef<HTMLElement>(null)
+  useScrollHeader(headerRef as React.RefObject<HTMLElement>)
+
   return (
     <>
-      <header className='xsm:top-3 xsm:h-[3.75rem] xsm:w-[calc(100%-2rem)] xsm:rounded-[0.75rem] xsm:p-[0.625rem] fixed top-[0.625rem] left-[50%] z-50 h-[4.5rem] w-[87.5rem] translate-x-[-50%] rounded-[1rem] bg-black/50 p-[0_3.125rem] backdrop-blur-[10px]'>
+      <header
+        className='fixed top-[0.625rem] xsm:top-3 left-[50%] z-50 h-[4.5rem] w-[87.5rem] xsm:h-[3.75rem] xsm:w-[calc(100%-2rem)] translate-x-[-50%] transition-transform duration-500 rounded-[1rem] xsm:rounded-[0.75rem] bg-black/50 p-[0_3.125rem] backdrop-blur-[10px] xsm:p-[0.625rem]'
+        ref={headerRef}
+      >
         {/* Desktop Navigation */}
         <div className='xsm:hidden z-[50] flex h-full items-center justify-between'>
           <NavigationMenu
@@ -56,13 +65,15 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: ISocialMedi
             onItemHover={handleItemHover}
             onItemLeave={handleItemLeave}
           />
-          <Image
-            src={data.logo.url}
-            alt={data.logo.alt}
-            width={data.logo.width}
-            height={data.logo.height}
-            className='h-[3rem] w-auto object-cover'
-          />
+          <Link href='/'>
+            <Image
+              src={data.logo.url}
+              alt={data.logo.alt}
+              width={data.logo.width}
+              height={data.logo.height}
+              className='h-[3rem] w-auto object-cover'
+            />
+          </Link>
           <NavigationMenu
             items={navRight}
             side='right'
