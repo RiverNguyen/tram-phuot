@@ -41,4 +41,5 @@ export interface IHotelBanner {
 
 export interface IHotelACF {
   banner: IHotelBanner
+  price_person?: number | string
 }

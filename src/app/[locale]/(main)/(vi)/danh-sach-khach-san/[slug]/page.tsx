@@ -29,6 +29,8 @@ export default async function page({ params }: PageProps) {
     <DetailsTour
       detailsTourData={detailTour}
       siteSettings={siteSettings}
+      relatedTours={relatedTours?.data || []}
+      tourCoupons={[]}
     />
   )
 }

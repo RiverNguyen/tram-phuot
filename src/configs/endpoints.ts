@@ -10,9 +10,9 @@ const ENDPOINTS = {
     detail: 'api/v1/tour/detail',
     applyVoucher: 'api/v1/tour/voucher/apply',
     relatedTours: 'api/v1/tour/related-tours',
-<<<<<<< HEAD
     en: 'wp/v2/pages/272?_fields=acf&acf_format=standard',
     vi: 'wp/v2/pages/274?_fields=acf&acf_format=standard',
+    coupons: 'api/v1/coupons',
   },
   hotel: {
     list: 'api/v1/get-all/hotels',
@@ -22,9 +22,7 @@ const ENDPOINTS = {
     relatedHotels: 'api/v1/hotels/related-hotels',
     en: 'wp/v2/pages/559?_fields=acf&acf_format=standard',
     vi: 'wp/v2/pages/562?_fields=acf&acf_format=standard',
-=======
     coupons: 'api/v1/coupons',
->>>>>>> 16b99b717a1ec55c2629955ed052e39bda45915e
   },
   wordpress: {
     siteSettings: 'api/v1/site-settings',
