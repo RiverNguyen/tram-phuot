@@ -66,7 +66,10 @@
     "selected": "Đã chọn",
     "searchFilter": "Bộ lọc",
     "done": "Hoàn thành",
-    "all": "Tất cả"
+    "all": "Tất cả",
+    "locations": "Địa điểm",
+    "tour-type": "Loại tour",
+    "tour-duration": "Thời gian tour"
   },
   "ListCouponPage": {
     "noResult": "Không có kết quả",
@@ -83,7 +86,9 @@
     "select": "Lựa chọn",
     "selected": "Đã chọn",
     "searchFilter": "Bộ lọc",
-    "done": "Hoàn thành"
+    "done": "Hoàn thành",
+    "amenities": "Tiện ích",
+    "locations": "Địa điểm"
   },
   "DetailsTourPage": {
     "metaTourDuration": "Thời gian tour:",

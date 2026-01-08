@@ -33,6 +33,16 @@ const getTaxonomyVariant = (taxonomy: string): 'radio' | 'checkbox' => {
   return taxonomy === 'locations' ? 'radio' : 'checkbox'
 }
 
+// Map taxonomy to translation key
+const getTaxonomyTranslationKey = (taxonomy: string): string => {
+  const map: Record<string, string> = {
+    locations: 'locations',
+    'hotel-amenities': 'amenities',
+    amenities: 'amenities',
+  }
+  return map[taxonomy] || taxonomy.toLowerCase()
+}
+
 export default function WrapperHotelList({ taxonomies, data, totalPages }: WrapperHotelListProps) {
   const [openDrawer, setOpenDrawer] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -140,7 +150,7 @@ export default function WrapperHotelList({ taxonomies, data, totalPages }: Wrapp
             <FilterPopover
               key={taxonomy.taxonomy}
               options={filters[taxonomy.taxonomy] ?? []}
-              label={t(taxonomy.label)}
+              label={t(getTaxonomyTranslationKey(taxonomy.taxonomy))}
               value={filterState[taxonomy.taxonomy]}
               onValueChange={(value) => handleFilterChange(taxonomy.taxonomy, value)}
               variant={getTaxonomyVariant(taxonomy.taxonomy)}
@@ -173,7 +183,7 @@ export default function WrapperHotelList({ taxonomies, data, totalPages }: Wrapp
             open={openDrawer}
             setOpen={setOpenDrawer}
             data={taxonomies.map((taxonomy) => ({
-              label: t(taxonomy.label),
+              label: t(getTaxonomyTranslationKey(taxonomy.taxonomy)),
               taxonomy: taxonomy.taxonomy,
               variant: getTaxonomyVariant(taxonomy.taxonomy),
               options: filters[taxonomy.taxonomy] || [],

@@ -22,6 +22,16 @@ interface WrapperTourListProps {
   totalPages: number
 }
 
+// Map taxonomy to translation key
+const getTaxonomyTranslationKey = (taxonomy: string): string => {
+  const map: Record<string, string> = {
+    locations: 'locations',
+    'tour-type': 'tour-type',
+    'tour-duration': 'tour-duration',
+  }
+  return map[taxonomy] || taxonomy.toLowerCase()
+}
+
 export default function WrapperTourList({ taxonomies, data, totalPages }: WrapperTourListProps) {
   const [openDrawer, setOpenDrawer] = useState(false)
   const searchParams = useSearchParams()
@@ -162,11 +172,11 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
       <div className='xsm:gap-[1.5rem] flex w-full flex-col items-start gap-[2.5rem]'>
         {/* Filter Desktop */}
         <div className='xsm:hidden flex w-full items-center space-x-[0.75rem]'>
-          {taxonomies.map((taxonomy, i) => (
+          {taxonomies.map((taxonomy) => (
             <FilterPopover
-              key={i}
+              key={taxonomy.taxonomy}
               options={taxonomy.terms.map((term) => ({ label: term.name, value: term.slug }))}
-              label={taxonomy.label}
+              label={t(getTaxonomyTranslationKey(taxonomy.taxonomy))}
               value={filter[taxonomy.taxonomy]}
               onValueChange={(value) => onFilterChange(taxonomy.taxonomy, value)}
               variant={taxonomy.taxonomy === 'locations' ? 'radio' : 'checkbox'}
@@ -197,7 +207,7 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
           </button>
           <FilterDrawer
             data={taxonomies.map((taxonomy) => ({
-              label: taxonomy.label,
+              label: t(getTaxonomyTranslationKey(taxonomy.taxonomy)),
               taxonomy: taxonomy.taxonomy,
               variant: taxonomy.taxonomy === 'locations' ? 'radio' : 'checkbox',
               options: taxonomy.terms.map((term) => ({ label: term.name, value: term.slug })),
