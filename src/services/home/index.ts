@@ -22,6 +22,11 @@ const homeService = {
       api: ENDPOINTS.taxonomies.get(locale, type),
     })
   },
+  getTaxonomy: async (locale: string, taxonomy: string) => {
+    return await fetchData({
+      api: ENDPOINTS.taxonomy.get(locale, taxonomy),
+    })
+  },
 }
 
 export default homeService

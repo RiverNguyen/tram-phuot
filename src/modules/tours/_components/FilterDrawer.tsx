@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItemCustom } from '@/components/ui/radio-group'
 import { Clock8, List, X } from 'lucide-react'
 import { Dispatch, SetStateAction } from 'react'
-import BrandButton from '../BrandButton'
+import BrandButton from '../../../components/shared/BrandButton'
 import ICLocation2 from '@/components/icons/ICLocation2'
 import { useTranslations } from 'next-intl'
 
@@ -60,7 +60,7 @@ export default function FilterDrawer({
       </div>
 
       {/* Content */}
-      <div className='space-y-[0.75rem] overflow-y-auto bg-[#E5EDF6] pt-[4.5rem] pb-[4.125rem]'>
+      <div className='min-h-screen space-y-[0.75rem] overflow-y-auto bg-[#E5EDF6] pt-[4.5rem] pb-[4.125rem]'>
         {data.map((item, i) => {
           const isRadio = item.variant === 'radio'
 
@@ -83,6 +83,19 @@ export default function FilterDrawer({
                   value={value}
                   onValueChange={(value) => onChange(item.taxonomy, value)}
                 >
+                  <div className='flex items-center space-x-2.5 px-[0.81rem] py-4'>
+                    <RadioGroupItemCustom
+                      value={''}
+                      id={`tour-all`}
+                      className='flex size-[1.375rem] items-center justify-center'
+                    />
+                    <Label
+                      htmlFor={`tour-all`}
+                      className='font-montserrat line-clamp-1 cursor-pointer text-[0.875rem] leading-[1.4rem] text-[#303030]'
+                    >
+                      {t('all')}
+                    </Label>
+                  </div>
                   {item.options.map((option, i) => (
                     <div
                       key={option.value}

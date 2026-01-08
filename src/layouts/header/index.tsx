@@ -45,9 +45,9 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: ISocialMedi
 
   return (
     <>
-      <header className='fixed top-[0.625rem] xsm:top-3 left-[50%] z-50 h-[4.5rem] w-[87.5rem] xsm:h-[3.75rem] xsm:w-[calc(100%-2rem)] translate-x-[-50%] rounded-[1rem] xsm:rounded-[0.75rem] bg-black/50 p-[0_3.125rem] backdrop-blur-[10px] xsm:p-[0.625rem]'>
+      <header className='xsm:top-3 xsm:h-[3.75rem] xsm:w-[calc(100%-2rem)] xsm:rounded-[0.75rem] xsm:p-[0.625rem] fixed top-[0.625rem] left-[50%] z-50 h-[4.5rem] w-[87.5rem] translate-x-[-50%] rounded-[1rem] bg-black/50 p-[0_3.125rem] backdrop-blur-[10px]'>
         {/* Desktop Navigation */}
-        <div className='xsm:hidden flex items-center justify-between h-full z-[50]'>
+        <div className='xsm:hidden z-[50] flex h-full items-center justify-between'>
           <NavigationMenu
             items={navLeft}
             side='left'
@@ -74,21 +74,21 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: ISocialMedi
         </div>
 
         {/* Mobile Navigation */}
-        <div className='hidden xsm:flex h-full flex-between'>
+        <div className='xsm:flex flex-between hidden h-full'>
           <Link href='/'>
             <Image
               src={data.logo.url}
               alt={data.logo.alt}
               width={140}
               height={40}
-              className='h-[2.5rem] w-[8.75rem] object-cover mt-0.75'
+              className='mt-0.75 h-[2.5rem] w-[8.75rem] object-cover'
             />
           </Link>
           <button
             onClick={() => setOpenSheet(true)}
-            className='h-[2.5rem] px-4 rounded-[0.5rem] bg-white/20 backdrop-blur-[5px] flex-center text-white text-[0.75rem] font-medium leading-[1.5]'
+            className='flex-center h-[2.5rem] rounded-[0.5rem] bg-white/20 px-4 text-[0.75rem] leading-[1.5] font-medium text-white backdrop-blur-[5px]'
           >
-            <ICCMenu className='w-4 h-[0.7rem] text-white mr-2' />
+            <ICCMenu className='mr-2 h-[0.7rem] w-4 text-white' />
             Menu
           </button>
         </div>
@@ -97,7 +97,7 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: ISocialMedi
         <SheetProvider
           open={openSheet}
           setOpen={setOpenSheet}
-          className='border-0 w-full rounded-none p-0'
+          className='w-full rounded-none border-0 p-0'
           hideCloseButton
         >
           <div>
@@ -107,7 +107,7 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: ISocialMedi
             />
             <MobileNavigation data={data} />
           </div>
-          <div className='py-[1.5rem] absolute bottom-0 left-0 w-full bg-white'>
+          <div className='absolute bottom-0 left-0 w-full bg-white py-[1.5rem]'>
             <MobileSocialMedia socialMedia={socialMedia} />
             <MobileLanguageSwitcher />
           </div>

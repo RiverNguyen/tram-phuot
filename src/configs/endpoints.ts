@@ -1,6 +1,10 @@
 import ENV from '@/configs/env'
 
 const ENDPOINTS = {
+  taxonomy: {
+    get: (locale: string, taxonomy: string) =>
+      `api/v1/taxonomy?taxonomy=${taxonomy}&lang=${locale}&acf=true`,
+  },
   taxonomies: {
     get: (locale: string, type: string) => `api/v1/taxonomies/${type}?lang=${locale}`,
   },
@@ -11,6 +15,9 @@ const ENDPOINTS = {
     applyVoucher: 'api/v1/tour/voucher/apply',
     relatedTours: 'api/v1/tour/related-tours',
     coupons: 'api/v1/coupons',
+  },
+  hotel: {
+    list: 'api/v1/get-all/hotels',
   },
   wordpress: {
     siteSettings: 'api/v1/site-settings',
