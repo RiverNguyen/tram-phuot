@@ -7,9 +7,9 @@ import { ApplyVoucherPayloadType } from '@/types/details-tour.type'
 const tourService = {
   getTours: async ({
     locale,
-    locations = '',
-    tourType = '',
-    tourDuration = '',
+    locations,
+    tourType,
+    tourDuration,
     page = '1',
     limit = 8,
   }: {
@@ -20,22 +20,30 @@ const tourService = {
     page?: string
     limit?: number
   }): Promise<ITourRes> => {
-    let query = `lang=${locale}&acf=price_person&paged=${page}&limit=${limit}&order=DESC&orderby=date`
+    const params = new URLSearchParams({
+      lang: locale,
+      acf: 'price_person',
+      paged: page,
+      limit: String(limit),
+      order: 'DESC',
+      orderby: 'date',
+    })
 
-    if (locations) {
-      query += `&tax=locations&locations=${locations}`
+    const taxMap: Record<string, string | undefined> = {
+      locations,
+      'tour-type': tourType,
+      'tour-duration': tourDuration,
     }
 
-    if (tourType) {
-      query += `&tax=tour-type&tour-type=${tourType}`
-    }
-
-    if (tourDuration) {
-      query += `&tax=tour-duration&tour-duration=${tourDuration}`
-    }
+    Object.entries(taxMap).forEach(([tax, value]) => {
+      if (value) {
+        params.append('tax', tax)
+        params.append(tax, value)
+      }
+    })
 
     return await fetchData({
-      api: `${ENDPOINTS.tour.list}?${query}`,
+      api: `${ENDPOINTS.tour.list}?${params.toString()}`,
     })
   },
   getTaxonomies: async (locale: string): Promise<ITaxonomyRes> => {

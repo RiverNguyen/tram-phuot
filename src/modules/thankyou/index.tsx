@@ -1,34 +1,28 @@
 'use client'
 
 import { BrandButton } from '@/components/shared'
-import useIsMobile from '@/hooks/use-is-mobile'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 
 export default function ThankYou() {
-  const { isLoading, isMobile } = useIsMobile()
   const t = useTranslations('ThankYou')
 
   return (
     <div className='xsm:-mb-[3.25rem] relative w-full overflow-hidden bg-[#FDF4ED]'>
-      {!isLoading && !isMobile && (
-        <Image
-          src='/thankyou/d-thankyou_deco_left.webp'
-          alt=''
-          width={956}
-          height={1029}
-          className='pointer-events-none absolute top-[9.87rem] left-0 h-[42.87231rem] w-auto select-none'
-        />
-      )}
-      {!isLoading && !isMobile && (
-        <Image
-          src='/thankyou/d-thankyou_deco_right.webp'
-          alt=''
-          width={1170}
-          height={1310}
-          className='pointer-events-none absolute top-[7.44rem] right-0 h-[42.87231rem] w-auto select-none'
-        />
-      )}
+      <Image
+        src='/thankyou/d-thankyou_deco_left.webp'
+        alt=''
+        width={956}
+        height={1029}
+        className='xsm:hidden pointer-events-none absolute top-[9.87rem] left-0 h-[42.87231rem] w-auto select-none'
+      />
+      <Image
+        src='/thankyou/d-thankyou_deco_right.webp'
+        alt=''
+        width={1170}
+        height={1310}
+        className='xsm:hidden pointer-events-none absolute top-[7.44rem] right-0 h-[42.87231rem] w-auto select-none'
+      />
       <div className='xsm:pt-[7.5rem] xsm:pb-0 relative z-1 mx-auto w-full max-w-[81.25rem] pt-[10.75rem] pb-[5.5rem] text-center'>
         <h1 className='font-phu-du xsm:mb-[1.5rem] xsm:text-[1.25rem] xsm:leading-[1.375rem] xsm:max-w-[14.0625rem] mx-auto mb-[2.5rem] text-[2rem] leading-[2rem] font-medium text-[#2E2E2E]'>
           {t('title')}
@@ -54,24 +48,21 @@ export default function ThankYou() {
               </BrandButton>
             </div>
           </div>
-          {!isLoading &&
-            (isMobile ? (
-              <Image
-                src='/thankyou/d-thankyou_image_mobile.webp'
-                alt=''
-                width={563}
-                height={402}
-                className='h-auto w-full rounded-[0_0_0.5rem_0.5rem] mask-[linear-gradient(183deg,rgba(196,196,196,0.00)_-14.69%,#B8B8B8_52.78%,rgba(94,94,94,0.00)_97.94%)] mask-alpha mask-no-repeat'
-              />
-            ) : (
-              <Image
-                src='/thankyou/d-thankyou_image.webp'
-                alt=''
-                width={1943}
-                height={483}
-                className='absolute right-0 bottom-0 left-0 h-[20.125rem] w-full mask-[linear-gradient(180deg,rgba(196,196,196,0.00)_0%,#B8B8B8_59.9%,#5E5E5E_100%)] mask-alpha mask-no-repeat object-cover'
-              />
-            ))}
+
+          <Image
+            src='/thankyou/d-thankyou_image_mobile.webp'
+            alt=''
+            width={563}
+            height={402}
+            className='h-auto w-full rounded-[0_0_0.5rem_0.5rem] mask-[linear-gradient(183deg,rgba(196,196,196,0.00)_-14.69%,#B8B8B8_52.78%,rgba(94,94,94,0.00)_97.94%)] mask-alpha mask-no-repeat sm:hidden'
+          />
+          <Image
+            src='/thankyou/d-thankyou_image.webp'
+            alt=''
+            width={1943}
+            height={483}
+            className='xsm:hidden absolute right-0 bottom-0 left-0 h-[20.125rem] w-full mask-[linear-gradient(180deg,rgba(196,196,196,0.00)_0%,#B8B8B8_59.9%,#5E5E5E_100%)] mask-alpha mask-no-repeat object-cover'
+          />
         </div>
       </div>
     </div>
