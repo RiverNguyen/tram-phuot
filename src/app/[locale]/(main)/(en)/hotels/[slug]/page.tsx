@@ -8,15 +8,17 @@ export default async function page({
 }) {
   const { locale } = await params
   let { slug } = await params
-  const [detailHotel, taxonomies] = await Promise.all([
+  const [detailHotel, taxonomies, coupons] = await Promise.all([
     hotelService.getDetailHotel(slug),
     hotelService.getTaxonomies(locale),
+    hotelService.getCoupons(slug),
   ])
 
   return (
     <DetailHotel
       detailHotel={detailHotel}
       taxonomies={taxonomies?.data}
+      coupons={coupons?.data}
     />
   )
 }

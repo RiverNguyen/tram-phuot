@@ -11,17 +11,25 @@ import useIsMobile from '@/hooks/useIsMobile'
 import { ContactFormValues } from '@/schemas/booking-tour.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
-import { useLocale } from 'next-intl'
-import { useEffect, useMemo, useState } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
+import { useParams } from 'next/navigation'
+import { useEffect, useMemo, useState, useTransition } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { z } from 'zod'
+import { formatUSD, normalizePrice } from '@/lib/utils'
+import hotelService from '@/services/hotel'
+import {
+  ApplyHotelVoucherPayloadType,
+  ApplyHotelVoucherResponseType,
+} from '@/types/detail-hotel.type'
+import { IHotelDetail } from '@/interface/hotel.interface'
 import DatePickerFields from './DatePickerFields'
 import HotelContactFormContent from './HotelContactFormContent'
 import NumberStepperField from './NumberStepperField'
 import PriceSummary from './PriceSummary'
 import RoomCard from './RoomCard'
 import VoucherCodeField from './VoucherCodeField'
-import { formatUSD, normalizePrice } from '@/lib/utils'
 
 const formSchema = z.object({
   check_in_date: z.date(),
@@ -43,13 +51,25 @@ type BookingOverviewProps = {
     totalPrice: number
   }[]
   onRemoveRoom?: (id: number | string) => void
+  onClearAllRooms?: () => void
+  detailHotel?: IHotelDetail
 }
 
-export default function BookingOverview({ selectedRooms, onRemoveRoom }: BookingOverviewProps) {
+export default function BookingOverview({
+  selectedRooms,
+  onRemoveRoom,
+  onClearAllRooms,
+  detailHotel,
+}: BookingOverviewProps) {
   const [voucherDiscount, setVoucherDiscount] = useState(0)
   const [openContactForm, setOpenContactForm] = useState(false)
+  const [couponCode, setCouponCode] = useState<string>('')
+  const [isApplyingVoucher, startApplyingTransition] = useTransition()
   const locale = useLocale()
   const isMobile = useIsMobile()
+  const params = useParams()
+  const hotelSlug = params?.slug as string
+  const translateBookingTourForm = useTranslations('BookingTourForm')
 
   // Set default dates: today and tomorrow
   const today = new Date()
@@ -110,10 +130,72 @@ export default function BookingOverview({ selectedRooms, onRemoveRoom }: Booking
     return Math.max(0, provisionalAmount - voucherDiscount)
   }, [provisionalAmount, voucherDiscount])
 
+  const handleApplyVoucher = async () => {
+    startApplyingTransition(async () => {
+      try {
+        const formValues = form.getValues()
+        if (!formValues.check_in_date || !formValues.check_out_date) {
+          toast.error(
+            translateBookingTourForm('startDateRequired') ||
+              'Please select check-in and check-out dates',
+          )
+          return
+        }
+        if (selectedRooms.length === 0) {
+          toast.error('Please select at least one room')
+          return
+        }
+        if (!couponCode) {
+          toast.error('Please enter a voucher code')
+          return
+        }
+
+        const payload: ApplyHotelVoucherPayloadType = {
+          checkInDate: format(formValues.check_in_date, 'dd/MM/yyyy'),
+          checkOutDate: format(formValues.check_out_date, 'dd/MM/yyyy'),
+          hotelSlug: hotelSlug,
+          voucherCode: couponCode,
+          rooms: selectedRooms.map((room) => ({
+            title: room.title,
+            quantity: room.quantity,
+            pricePerNight: normalizePrice(room.pricePerNight),
+          })),
+          adults: Number(formValues.adults) || 0,
+          children: Number(formValues.child) || 0,
+          bookingTime: format(new Date(), 'dd/MM/yyyy'),
+          hotelTitle: detailHotel?.title || '',
+        }
+
+        const response: ApplyHotelVoucherResponseType = await hotelService.applyVoucher(payload)
+        if (response.success) {
+          setVoucherDiscount(response.voucher.discount)
+          toast.success(
+            translateBookingTourForm('textApplyVoucherSuccess') || 'Voucher applied successfully',
+          )
+        } else {
+          toast.error(
+            translateBookingTourForm('textApplyVoucherError') || 'Failed to apply voucher',
+          )
+        }
+      } catch (error) {
+        console.error(error)
+        toast.error(translateBookingTourForm('textApplyVoucherError') || 'Failed to apply voucher')
+      } finally {
+        setCouponCode('')
+        form.setValue('coupon_code', '')
+      }
+    })
+  }
+
   const handleSubmitContactForm = async (contactData: ContactFormValues) => {
     try {
       const formValues = form.getValues()
-      if (!formValues.check_in_date || !formValues.check_out_date || !formValues.adults) {
+      // Ensure dates are selected before submitting booking information
+      if (!formValues.check_in_date || !formValues.check_out_date) {
+        toast.error(
+          translateBookingTourForm('startDateRequired') ||
+            'Please select check-in and check-out dates before sending information.',
+        )
         return { success: false }
       }
 
@@ -124,14 +206,25 @@ export default function BookingOverview({ selectedRooms, onRemoveRoom }: Booking
         adults: formValues.adults,
         children: formValues.child || 0,
         couponCode: formValues.coupon_code || '',
-        rooms: selectedRooms.map((room) => ({
-          title: room.title,
-          quantity: room.quantity,
-          pricePerNight: room.pricePerNight,
-        })),
+        // rooms: selectedRooms.map((room) => ({
+        //   title: room.title,
+        //   quantity: room.quantity,
+        //   pricePerNight: room.pricePerNight,
+        // })),
         provisionalAmount,
         voucherDiscount,
         totalAmount,
+        bookingTime: format(new Date(), 'dd/MM/yyyy'),
+        hotelTitle: detailHotel?.title || '',
+        room: selectedRooms
+          .map(
+            (r, i) =>
+              `${i + 1}. ${r.title}
+          - Qty: ${r.quantity}
+          - Price/Night: ${r.pricePerNight}`,
+          )
+          .join('\n\n'),
+        currentUrl: typeof window !== 'undefined' ? window.location.href : '',
       }
 
       const cf7Request = new CF7Request(formData)
@@ -139,14 +232,34 @@ export default function BookingOverview({ selectedRooms, onRemoveRoom }: Booking
       // You may need to add hotel booking endpoints to ENDPOINTS config
       // For now, using tour endpoints as placeholder
       const CONTACT_ENDPOINT_BY_LOCALE = {
-        vi: ENDPOINTS.contact_form.form_booking_tour_vi,
-        en: ENDPOINTS.contact_form.form_booking_tour_en,
+        vi: ENDPOINTS.contact_form.form_booking_hotel_en,
+        en: ENDPOINTS.contact_form.form_booking_hotel_en,
       }
       const endpoint = CONTACT_ENDPOINT_BY_LOCALE[locale as keyof typeof CONTACT_ENDPOINT_BY_LOCALE]
       const response = await cf7Request.send({ id: endpoint.id, unitTag: endpoint.unit_tag })
 
       if (response.status === 'mail_sent') {
         setOpenContactForm(false)
+        toast.success('Booking successful, our staff will contact you soon.')
+
+        // Reset form values
+        form.reset({
+          check_in_date: today,
+          check_out_date: tomorrow,
+          adults: 0,
+          child: 0,
+          coupon_code: '',
+        })
+
+        // Reset voucher discount and coupon code
+        setVoucherDiscount(0)
+        setCouponCode('')
+
+        // Clear all selected rooms
+        if (onClearAllRooms) {
+          onClearAllRooms()
+        }
+
         return { success: true }
       }
       return { success: false }
@@ -208,6 +321,10 @@ export default function BookingOverview({ selectedRooms, onRemoveRoom }: Booking
           <VoucherCodeField
             register={form.register}
             errors={form.formState.errors}
+            couponCode={couponCode}
+            onCouponCodeChange={setCouponCode}
+            onApply={handleApplyVoucher}
+            isApplying={isApplyingVoucher}
           />
           <PriceSummary
             provisionalAmount={provisionalAmount}

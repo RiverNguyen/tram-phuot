@@ -76,7 +76,7 @@ export default function VoucherItem({
           className='object-cover sm:hidden'
           src='/coupon-card/bg-card-right-mb.svg'
         />
-        <div className='xsm:left-52 font-phu-du xsm:w-[7.15rem] xsm:space-y-[0.8125rem] absolute top-0 left-64.75 flex h-full w-[8.9375rem] flex-col items-center justify-center font-bold tracking-normal text-white'>
+        <div className='xsm:left-52 font-phu-du xsm:w-[7.15rem] xsm:space-y-[0.8125rem] absolute top-0 right-1 flex h-full w-[8.9375rem] flex-col items-center justify-center font-bold tracking-normal text-white'>
           <div className='flex-col items-center justify-center'>
             <div className='xsm:text-[1.11025rem] text-center text-[1.3125rem] leading-[0.9]'>
               {translateComponent('textDiscount')}

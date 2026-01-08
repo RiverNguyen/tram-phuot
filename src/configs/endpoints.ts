@@ -3,6 +3,8 @@ import ENV from '@/configs/env'
 const ENDPOINTS = {
   hotel: {
     getDetail: (slug: string) => `api/v1/get-detail/hotels?slug=${slug}`,
+    getCoupons: (slug: string) => `api/v1/coupons?slug=${slug}&post_type=hotels`,
+    applyVoucher: 'api/v1/hotel/voucher/apply',
   },
   taxonomies: {
     get: (locale: string, type: string) => `api/v1/taxonomies/${type}?lang=${locale}`,
@@ -38,6 +40,14 @@ const ENDPOINTS = {
     form_booking_tour_en: {
       id: '456',
       unit_tag: '79372bc',
+    },
+    form_booking_hotel_en: {
+      id: '644',
+      unit_tag: '646954a',
+    },
+    form_booking_hotel_vi: {
+      id: '649',
+      unit_tag: 'bafab39',
     },
   },
   our_stories: {

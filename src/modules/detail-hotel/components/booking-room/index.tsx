@@ -56,7 +56,15 @@ const BookingRoom = ({ rooms, onChangeSelection, clearRoomIndex }: BookingRoomPr
         const quantity = quantities[idx] ?? 0
         if (!quantity) return acc
 
-        const pricePerNight = Number(room?.acf?.price_reduced ?? room?.acf?.price ?? 0)
+        // Get price string, prefer price_reduced over price
+        const priceString = room?.acf?.price_reduced || room?.acf?.price
+        // Parse price: if it's a string like "4.5" (meaning 4500) or "4500"
+        // Only parse if priceString exists and is not empty
+        let pricePerNight = 0
+        if (priceString && priceString.trim() !== '') {
+          const parsed = Number(priceString)
+          pricePerNight = isNaN(parsed) ? 0 : parsed
+        }
 
         acc.push({
           id: (room as any)?.id ?? (room as any)?.slug ?? idx,
@@ -109,7 +117,7 @@ const BookingRoom = ({ rooms, onChangeSelection, clearRoomIndex }: BookingRoomPr
           initialIndex={openGalleryIndex !== null ? currentSlides[openGalleryIndex] : 0}
         />
       )}
-      <section className='p-8 pr-0 rounded-[0.5rem] bg-white mt-8'>
+      <section className='p-8 pr-0 rounded-[0.5rem] bg-white mt-8 relative z-[0]'>
         <div className='flex items-center space-x-[0.625rem] mb-6'>
           <h3 className='text-[1.5rem] font-phu-du leading-[1.1] font-bold bg-clip-text text-transparent bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
             BOOKING ROOM & DORM
@@ -233,14 +241,17 @@ const BookingRoom = ({ rooms, onChangeSelection, clearRoomIndex }: BookingRoomPr
                           </p>
                           <p className='text-[#2e2e2e]/40 line-through font-phu-du text-[1.125rem] font-medium leading-[1.1] relative'>
                             {room?.acf?.price} USD
-                            <p className='text-[#2e2e2e]/40 font-montserrat text-[0.75rem] font-medium leading-[1.6] absolute -top-1 -right-10'>
+                            <span className='text-[#2e2e2e]/40 font-montserrat text-[0.75rem] font-medium leading-[1.6] absolute -top-1 -right-10'>
                               /night
-                            </p>
+                            </span>
                           </p>
                         </div>
                       ) : (
-                        <p className='text-[#2e2e2e] font-phu-du text-[1.125rem] font-medium leading-[1.1]'>
+                        <p className='text-[#2e2e2e] font-phu-du text-[1.125rem] font-medium leading-[1.1] relative'>
                           {room?.acf?.price} USD
+                          <span className='text-[#2e2e2e]/40 font-montserrat text-[0.75rem] font-medium leading-[1.6] absolute -top-1 -right-10'>
+                            /night
+                          </span>
                         </p>
                       )}
                     </div>

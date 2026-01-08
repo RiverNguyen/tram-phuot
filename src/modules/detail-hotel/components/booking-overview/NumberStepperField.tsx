@@ -49,4 +49,3 @@ export default function NumberStepperField({ label, field }: NumberStepperFieldP
     </div>
   )
 }
-
