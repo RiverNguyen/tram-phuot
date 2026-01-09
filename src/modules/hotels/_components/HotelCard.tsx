@@ -13,23 +13,23 @@ export default function HotelCard({ hotel, className }: { hotel: IHotel; classNa
   const { locale } = useParams()
   const searchParams = useSearchParams()
 
+  console.log(hotel)
+
   const baseHref = locale === 'en' ? `/hotels/${hotel.slug}` : `/danh-sach-khach-san/${hotel.slug}`
-  
+
   // Preserve booking query params
   const checkIn = searchParams.get('checkIn')
   const checkOut = searchParams.get('checkOut')
   const adults = searchParams.get('adults')
   const children = searchParams.get('children')
-  
+
   const queryParams = new URLSearchParams()
   if (checkIn) queryParams.set('checkIn', checkIn)
   if (checkOut) queryParams.set('checkOut', checkOut)
   if (adults) queryParams.set('adults', adults)
   if (children) queryParams.set('children', children)
-  
-  const href = queryParams.toString() 
-    ? `${baseHref}?${queryParams.toString()}` 
-    : baseHref
+
+  const href = queryParams.toString() ? `${baseHref}?${queryParams.toString()}` : baseHref
 
   return (
     <Link
@@ -108,7 +108,7 @@ export default function HotelCard({ hotel, className }: { hotel: IHotel; classNa
                 </div>
                 <p className='xsm:leading-[1.1375rem] font-phu-du leading-[1.3rem] font-medium uppercase'>
                   <span className='xsm:text-[0.875rem] xsm:leading-[1.1375rem] text-[1rem] text-[#FFC542]'>
-                    {hotel?.acf?.price_person || '0'} USD
+                    {hotel?.acf?.banner?.price_person || '0'} USD
                   </span>
                   <span className='xsm:hidden text-[1rem] text-[#FFC542]'>/</span>
                   <span className='xsm:hidden text-[0.75rem] text-[rgba(255,255,255,0.80)]'>

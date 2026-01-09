@@ -1,12 +1,14 @@
 'use client'
 
 import { IRoom } from '@/interface/hotel.interface'
+import { useTranslations } from 'next-intl'
 
 type RoomInfoProps = {
   room: IRoom
 }
 
 const RoomInfo = ({ room }: RoomInfoProps) => {
+  const t = useTranslations('DetailHotelPage')
   return (
     <>
       <div className='flex space-x-1 items-center rounded-[0.25rem] bg-[#2BAB7D] h-[1.25rem] px-2 w-fit'>
@@ -36,16 +38,16 @@ const RoomInfo = ({ room }: RoomInfoProps) => {
       </h4>
       <div className='my-[1.125rem] xsm:mt-4 space-y-5 xsm:space-y-2'>
         <p className='text-[#2e2e2e]/60 text-[0.75rem] font-medium leading-[1.6] tracking-[-0.0075rem]'>
-          Area <strong className='text-[#2e2e2e] ml-1'>{room?.acf?.area}</strong>
+          {t('textArea')} <strong className='text-[#2e2e2e] ml-1'>{room?.acf?.area}</strong>
         </p>
         <p className='text-[#2e2e2e]/60 text-[0.75rem] font-medium leading-[1.6] tracking-[-0.0075rem]'>
-          Room type{' '}
+          {t('textRoomType')}{' '}
           <strong className='text-[#2e2e2e] ml-1'>
             {room?.taxonomies?.['room-and-dorm-type']?.map((type) => type.name).join(', ')}
           </strong>
         </p>
         <p className='text-[#2e2e2e]/60 text-[0.75rem] font-medium leading-[1.6] tracking-[-0.0075rem]'>
-          Number of beds{' '}
+          {t('textNumberOfBeds')}{' '}
           <strong className='text-[#2e2e2e] ml-1'>{room?.acf?.number_of_beds}</strong>
         </p>
       </div>

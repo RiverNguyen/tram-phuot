@@ -15,10 +15,11 @@ export default async function page({
 }) {
   const [{ locale }, sp] = await Promise.all([params, searchParams])
   let { slug } = await params
-  const [detailHotel, taxonomies, coupons] = await Promise.all([
+  const [detailHotel, taxonomies, coupons, relatedHotels] = await Promise.all([
     hotelService.getDetailHotel(slug),
     hotelService.getTaxonomies(locale),
     hotelService.getCoupons(slug),
+    hotelService.getHotels({ locale, limit: 8 }),
   ])
 
   return (
@@ -30,6 +31,7 @@ export default async function page({
       initialCheckOut={sp.checkOut}
       initialAdults={sp.adults}
       initialChildren={sp.children}
+      relatedHotels={relatedHotels?.data || []}
     />
   )
 }
