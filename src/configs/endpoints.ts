@@ -31,6 +31,9 @@ const ENDPOINTS = {
     coupons: 'api/v1/coupons',
   },
   blogs: {
+    list: 'api/v1/get-all/post',
+    taxonomies: 'api/v1/taxonomies/post',
+    featuredNews: 'api/v1/page-acf?page_id=248&name=featured_news&acf=true',
     en: 'wp/v2/pages/248?_fields=acf&acf_format=standard',
     vi: 'wp/v2/pages/250?_fields=acf&acf_format=standard',
   },

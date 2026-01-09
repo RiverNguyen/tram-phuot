@@ -92,6 +92,22 @@
     "Amenities": "Amenities",
     "Locations": "Locations"
   },
+  "BlogsPage": {
+    "seeDetail": "See detail",
+    "sortBy": "Sort by",
+    "sortNewestFirst": "Newest first",
+    "sortAlphabeticalAZ": "Alphabetical A-Z",
+    "sortAlphabeticalZA": "Alphabetical Z-A",
+    "typeNews": "Type news",
+    "kind": "Kind",
+    "reset": "Reset all",
+    "searchFilter": "Search Filter",
+    "noResult": "No Result",
+    "apply": "Apply",
+    "all": "All",
+    "selected": "Selected",
+    "category": "Category"
+  },
   "DetailsTourPage": {
     "metaTourDuration": "Tour duration:",
     "metaPickupAndDropoff": "Pick up & Drop off:",
