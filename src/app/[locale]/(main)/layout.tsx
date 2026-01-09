@@ -2,6 +2,7 @@ import ENDPOINTS from '@/configs/endpoints'
 import fetchData from '@/fetches/fetchData'
 import { ISiteSetting } from '@/interface/site-setting.interface'
 import Footer from '@/layouts/footer'
+import CTA from '@/layouts/cta'
 
 export default async function MainLayout({
   children,
@@ -18,6 +19,7 @@ export default async function MainLayout({
 
   return (
     <>
+      <CTA />
       {children}
       <Footer data={dataSiteSettings?.data?.footer} />
     </>
