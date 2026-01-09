@@ -7,6 +7,12 @@ export interface ISiteSetting {
     footer: IFooter
     social: ISocial[]
     contact: IContact
+    cta: {
+      list: {
+        icon: string
+        link: string
+      }[]
+    }
   }
 }
 

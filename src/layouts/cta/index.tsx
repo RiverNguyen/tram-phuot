@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence, type Variants } from 'framer-motion'
+import Link from 'next/link'
 
 const menuVariants: Variants = {
   open: {
@@ -47,18 +48,12 @@ const itemVariants: Variants = {
   },
 }
 
-const CTA = () => {
+const CTA = ({ data }: { data: { icon: string; link: string }[] }) => {
   const [isOpen, setIsOpen] = useState(false)
-
-  const items = [
-    { id: 'call', label: 'Call', textClass: 'text-xs' },
-    { id: 'zalo', label: 'Zalo', textClass: 'text-xs' },
-    { id: 'insta', label: 'Insta', textClass: 'text-[0.65rem]' },
-    { id: 'mess', label: 'Mess', textClass: 'text-[0.6rem]' },
-  ]
+  console.log(data)
 
   return (
-    <div className='fixed right-8 bottom-8 z-[20] flex flex-col items-center gap-3'>
+    <div className='fixed right-8 bottom-16 xsm:bottom-8 xsm:z-[10] z-[20] flex flex-col items-center gap-3'>
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -67,21 +62,35 @@ const CTA = () => {
             animate='open'
             exit='closed'
             variants={menuVariants}
-            className='flex flex-col items-center gap-4 mb-1'
+            className='flex flex-col items-center space-y-3 mb-1'
           >
-            {items.map((item) => (
-              <motion.button
-                key={item.id}
-                type='button'
-                variants={itemVariants}
-                whileTap={{ scale: 0.9 }}
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-                className='size-10 rounded-full bg-[linear-gradient(139deg,#FFB715_4.6%,#F04C05_101.16%)] flex-center shadow-lg'
-              >
-                <span className={`text-white font-semibold ${item.textClass}`}>{item.label}</span>
-              </motion.button>
-            ))}
+            {Array.isArray(data) &&
+              data?.map((item, index) => (
+                <Link
+                  href={index === 0 ? `tel:${item?.link}` : item?.link}
+                  key={index}
+                  target='_blank'
+                  className='cursor-pointer'
+                >
+                  <motion.button
+                    key={index}
+                    type='button'
+                    variants={itemVariants}
+                    whileTap={{ scale: 0.9 }}
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+                    className='size-10 rounded-full bg-[linear-gradient(139deg,#FFB715_4.6%,#F04C05_101.16%)] flex-center shadow-lg cursor-pointer'
+                  >
+                    <Image
+                      src={item.icon}
+                      alt='cta'
+                      width={20}
+                      height={20}
+                      className='h-[1.25rem] w-auto object-cover'
+                    />
+                  </motion.button>
+                </Link>
+              ))}
           </motion.div>
         )}
       </AnimatePresence>
