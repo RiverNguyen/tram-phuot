@@ -18,23 +18,21 @@ export default function HotelList({ data }: { data: IHotel[] }) {
         data.map((hotel) => {
           const baseHref =
             locale === 'en' ? `/hotels/${hotel.slug}` : `/danh-sach-khach-san/${hotel.slug}`
-          
+
           // Preserve booking query params
           const checkIn = searchParams.get('checkIn')
           const checkOut = searchParams.get('checkOut')
           const adults = searchParams.get('adults')
           const children = searchParams.get('children')
-          
+
           const queryParams = new URLSearchParams()
           if (checkIn) queryParams.set('checkIn', checkIn)
           if (checkOut) queryParams.set('checkOut', checkOut)
           if (adults) queryParams.set('adults', adults)
           if (children) queryParams.set('children', children)
-          
-          const href = queryParams.toString() 
-            ? `${baseHref}?${queryParams.toString()}` 
-            : baseHref
-          
+
+          const href = queryParams.toString() ? `${baseHref}?${queryParams.toString()}` : baseHref
+
           return (
             <Link
               href={href}
@@ -113,7 +111,7 @@ export default function HotelList({ data }: { data: IHotel[] }) {
                         </div>
                         <p className='xsm:leading-[1.625rem] font-phu-du leading-[1.3rem] font-medium uppercase'>
                           <span className='xsm:text-[1.25rem] xsm:leading-[1.625rem] text-[1rem] text-[#FFC542]'>
-                            {hotel?.acf?.price_person} USD
+                            {hotel?.acf?.banner?.price_person} USD
                           </span>
                           <span className='xsm:hidden text-[1rem] text-[#FFC542]'>/</span>
                           <span className='xsm:hidden text-[0.75rem] text-[rgba(255,255,255,0.80)]'>
