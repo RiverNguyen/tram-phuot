@@ -13,7 +13,7 @@ import endpoints from '@/configs/endpoints'
 import TourPageSchema from '@/seo/schemas/TourPageSchema'
 import { SEO_CONFIG } from '@/seo/seo.config'
 
-export const dynamicParams = false
+export const dynamic = 'force-dynamic'
 
 export function generateStaticParams() {
   return [{ locale: 'vi' }]
