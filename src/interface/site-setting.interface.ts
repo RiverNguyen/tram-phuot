@@ -5,6 +5,8 @@ export interface ISiteSetting {
   data: {
     header: IHeader
     footer: IFooter
+    social: ISocial[]
+    contact: IContact
   }
 }
 
@@ -21,6 +23,10 @@ export interface IHeader {
       image: IMedia
     }
   }[]
+  social_media: {
+    image: string
+    link: string
+  }
 }
 
 export interface IMenuFooter {
@@ -60,4 +66,20 @@ export interface IFooter {
     email: string
     social_media: ISocialMedia[]
   }
+}
+
+export interface ISocial {
+  social_image: IMedia
+  social_link: string
+}
+
+export interface IContact {
+  contact_item: IContactItem[]
+  google_map_link: string
+}
+
+export interface IContactItem {
+  label: string
+  value: string
+  icon: IMedia
 }

@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function ICClose(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -13,7 +11,7 @@ export default function ICClose(props: React.SVGProps<SVGSVGElement>) {
       <g opacity='0.7'>
         <path
           d='M24 24L16 16M16 16L8 8M16 16L24 8M16 16L8 24'
-          stroke='white'
+          stroke='currentColor'
           strokeWidth='2.66667'
           strokeLinecap='round'
           strokeLinejoin='round'

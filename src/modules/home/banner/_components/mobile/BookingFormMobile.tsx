@@ -8,14 +8,10 @@ import { StationDrawer } from '@/modules/home/banner/_components/mobile/StationD
 import { GuestsDrawer } from '@/modules/home/banner/_components/mobile/GuestsDrawer'
 import { DateDrawer } from '@/modules/home/banner/_components/mobile/DateDrawer'
 import { SearchButton } from '@/modules/home/banner/_components/mobile/SearchButton'
-
-interface Station {
-  name: string
-  value: string
-}
+import { ILocation } from '@/interface/taxonomy.interface'
 
 interface BookingFormMobileProps {
-  stations: Station[]
+  stations: ILocation[]
   selectedStation: string
   onStationChange: (value: string) => void
   adults: number
@@ -55,28 +51,29 @@ const BookingFormMobile = ({
   }
 
   return (
-    <div className='absolute bottom-[2.26rem] left-[0.9375rem] right-[0.9375rem] xsm:block hidden z-[3]'>
+    <div className='xsm:block absolute right-[0.9375rem] bottom-[2.26rem] left-[0.9375rem] z-[3] hidden'>
       <div
-        className='h-[2.5rem] p-[0.5rem_1rem] flex-center rounded-t-[1rem] w-fit'
+        className='flex-center h-[2.5rem] w-fit rounded-t-[1rem] p-[0.5rem_1rem]'
         style={{
           background: 'linear-gradient(247deg, #03328C 12.24%, #00804D 106.2%), #F56E0A',
         }}
       >
-        <p className='text-white text-[0.875rem] font-semibold leading-[1.6] tracking-[-0.00875rem]'>
+        <p className='text-[0.875rem] leading-[1.6] font-semibold tracking-[-0.00875rem] text-white'>
           {t('text')}
         </p>
       </div>
-      <div className='bg-white py-[0.625rem] w-full grid grid-cols-2 gap-y-[0.8125rem] relative'>
+      <div className='relative grid w-full grid-cols-2 gap-y-[0.8125rem] bg-white py-[0.625rem]'>
         <Separator
           orientation='vertical'
           className='absolute-center h-[7rem]'
         />
-        <Separator className='absolute-center w-full h-[0.0325rem]' />
+        <Separator className='absolute-center h-[0.0325rem] w-full' />
         <FieldItem
           label={t('station')}
           value={
-            <p className='text-[1.25rem] font-medium leading-[1.1] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
-              {stations.find((s) => s.value === selectedStation)?.name.toUpperCase() || 'CAOBANG'}
+            <p className='font-phu-du w-fit bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[1.25rem] leading-[1.1] font-medium text-transparent'>
+              {stations.find((s) => s.slug === selectedStation)?.name.toUpperCase() ||
+                stations[0].name.toUpperCase()}
             </p>
           }
           onClick={() => setOpenStationDrawer(true)}
@@ -85,10 +82,10 @@ const BookingFormMobile = ({
           label={t('numberOfGuests')}
           value={
             <div className='flex items-center space-x-1'>
-              <p className='text-[1.25rem] font-medium leading-[1.1] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
+              <p className='font-phu-du w-fit bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[1.25rem] leading-[1.1] font-medium text-transparent'>
                 {(adults + children).toString().padStart(2, '0')}
               </p>
-              <p className='text-[#2e2e2e]/60 text-[0.625rem] font-medium leading-[1.6] tracking-[-0.00625rem]'>
+              <p className='text-[0.625rem] leading-[1.6] font-medium tracking-[-0.00625rem] text-[#2e2e2e]/60'>
                 {adults} {adults === 1 ? t('adult') : t('adults')}
                 {children > 0 && `, ${children} ${children === 1 ? t('child') : t('children')}`}
               </p>
@@ -100,10 +97,10 @@ const BookingFormMobile = ({
           label={t('checkIn')}
           value={
             <div className='flex items-center space-x-1'>
-              <p className='text-[1.25rem] font-medium leading-[1.1] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
+              <p className='font-phu-du w-fit bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[1.25rem] leading-[1.1] font-medium text-transparent'>
                 {formatDate(checkInDate).day}
               </p>
-              <p className='text-[#2e2e2e]/60 text-[0.625rem] font-medium leading-[1.6] tracking-[-0.00625rem]'>
+              <p className='text-[0.625rem] leading-[1.6] font-medium tracking-[-0.00625rem] text-[#2e2e2e]/60'>
                 {formatDate(checkInDate).month}
               </p>
             </div>
@@ -114,10 +111,10 @@ const BookingFormMobile = ({
           label={t('checkOut')}
           value={
             <div className='flex items-center space-x-1'>
-              <p className='text-[1.25rem] font-medium leading-[1.1] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
+              <p className='font-phu-du w-fit bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[1.25rem] leading-[1.1] font-medium text-transparent'>
                 {formatDate(checkOutDate).day}
               </p>
-              <p className='text-[#2e2e2e]/60 text-[0.625rem] font-medium leading-[1.6] tracking-[-0.00625rem]'>
+              <p className='text-[0.625rem] leading-[1.6] font-medium tracking-[-0.00625rem] text-[#2e2e2e]/60'>
                 {formatDate(checkOutDate).month}
               </p>
             </div>
@@ -128,7 +125,10 @@ const BookingFormMobile = ({
       <StationDrawer
         open={openStationDrawer}
         onOpenChange={setOpenStationDrawer}
-        stations={stations}
+        stations={stations.map((station) => ({
+          name: station.name,
+          value: station.slug,
+        }))}
         selectedStation={selectedStation}
         onStationChange={onStationChange}
       />
@@ -166,7 +166,13 @@ const BookingFormMobile = ({
           return false
         }}
       />
-      <SearchButton />
+      <SearchButton
+        selectedStation={selectedStation}
+        checkInDate={checkInDate}
+        checkOutDate={checkOutDate}
+        adults={adults}
+        children={children}
+      />
     </div>
   )
 }

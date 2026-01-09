@@ -336,21 +336,22 @@ export default function Journey({ explorers }: { explorers: IExplorers }) {
             {explorers?.desc}
           </p>
           <div className='xsm:gap-[1.01075rem] flex items-center gap-[1.1035rem]'>
-            {explorers?.social_media?.map((social, index) => (
-              <Link
-                href={social.link || ''}
-                key={index}
-                className='xsm:size-[3.09138rem] size-[3.375rem]'
-              >
-                <Image
-                  src={social.image?.url || ''}
-                  alt={social.image?.alt || ''}
-                  width={162}
-                  height={162}
-                  className='w-full h-full object-cover'
-                />
-              </Link>
-            ))}
+            {Array.isArray(explorers?.social_media) &&
+              explorers?.social_media?.map((social, index) => (
+                <Link
+                  href={social.link || ''}
+                  key={index}
+                  className='xsm:size-[3.09138rem] size-[3.375rem]'
+                >
+                  <Image
+                    src={social.image?.url || ''}
+                    alt={social.image?.alt || ''}
+                    width={162}
+                    height={162}
+                    className='w-full h-full object-cover'
+                  />
+                </Link>
+              ))}
           </div>
         </div>
         {/* title */}

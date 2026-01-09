@@ -17,7 +17,7 @@ interface MobileNavigationProps {
 
 const MobileNavigation = ({ data }: MobileNavigationProps) => {
   return (
-    <div className='h-[28.5625rem] overflow-auto'>
+    <div className='h-[30.5625rem] overflow-auto hidden_scroll'>
       <Accordion
         type='single'
         collapsible
@@ -94,8 +94,3 @@ const MobileNavigation = ({ data }: MobileNavigationProps) => {
 }
 
 export default MobileNavigation
-
-
-
-
-

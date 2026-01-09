@@ -1,32 +1,15 @@
 'use client'
 
-import { useState } from 'react'
 import { ProgressiveBlur } from '@/components/ui/progressive-blur'
 import { IHomePage } from '@/interface/homepage.interface'
-import { BannerTitle } from './_components/BannerTitle'
+import { ILocation } from '@/interface/taxonomy.interface'
+import { useState } from 'react'
 import { BannerSlider } from './_components/BannerSlider'
+import { BannerTitle } from './_components/BannerTitle'
+import { BookingForm } from './_components/desktop/BookingForm'
 import BookingFormMobile from './_components/mobile/BookingFormMobile'
 
-const stations = [
-  {
-    name: 'Cao Bang',
-    value: 'caobang',
-  },
-  {
-    name: 'Sapa',
-    value: 'sapa',
-  },
-  {
-    name: 'Ha Giang',
-    value: 'hagiang',
-  },
-  {
-    name: 'Ta Xua',
-    value: 'taxua',
-  },
-]
-
-const BannerHomePage = ({ data }: { data: IHomePage }) => {
+const BannerHomePage = ({ data, locations }: { data: IHomePage; locations: ILocation[] }) => {
   // Lấy ngày hiện tại và ngày mai làm giá trị mặc định
   const today = new Date()
   today.setHours(0, 0, 0, 0)
@@ -73,8 +56,8 @@ const BannerHomePage = ({ data }: { data: IHomePage }) => {
           galleryMobile={data?.banner?.gallery_mobile || []}
         />
         {/* Desktop */}
-        <BookingFormMobile
-          stations={stations}
+        <BookingForm
+          stations={locations}
           selectedStation={selectedStation}
           onStationChange={setSelectedStation}
           checkInDate={checkInDate}
@@ -89,7 +72,7 @@ const BannerHomePage = ({ data }: { data: IHomePage }) => {
 
         {/* Mobile */}
         <BookingFormMobile
-          stations={stations}
+          stations={locations}
           selectedStation={selectedStation}
           onStationChange={setSelectedStation}
           adults={adults}

@@ -1,13 +1,52 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
+import { useRouter } from '@/i18n/navigation'
+import { useParams } from 'next/navigation'
+import { format } from 'date-fns'
 
-export const SearchButton = () => {
+interface SearchButtonProps {
+  selectedStation: string
+  checkInDate: Date | undefined
+  checkOutDate: Date | undefined
+  adults: number
+  children: number
+}
+
+export const SearchButton = ({
+  selectedStation,
+  checkInDate,
+  checkOutDate,
+  adults,
+  children,
+}: SearchButtonProps) => {
   const t = useTranslations('HomePage.banner')
+  const router = useRouter()
+  const params = useParams()
+  const locale = params?.locale as string
+
+  const handleClick = () => {
+    if (!checkInDate || !checkOutDate) return
+
+    const hotelsPath = locale === 'en' ? '/hotels' : '/danh-sach-khach-san'
+    const queryParams = new URLSearchParams()
+    
+    if (selectedStation) {
+      queryParams.set('locations', selectedStation)
+    }
+    
+    queryParams.set('checkIn', format(checkInDate, 'yyyy-MM-dd'))
+    queryParams.set('checkOut', format(checkOutDate, 'yyyy-MM-dd'))
+    queryParams.set('adults', adults.toString())
+    queryParams.set('children', children.toString())
+
+    router.push(`${hotelsPath}?${queryParams.toString()}`)
+  }
 
   return (
     <div
-      className='flex-center p-[0.75rem_1rem] h-[2.73rem] rounded-bl-[1rem] rounded-br-[2.5rem]'
+      onClick={handleClick}
+      className='flex-center p-[0.75rem_1rem] h-[2.73rem] rounded-bl-[1rem] rounded-br-[2.5rem] cursor-pointer'
       style={{
         background: 'linear-gradient(139deg, #FFB715 4.6%, #F04C05 101.16%)',
       }}
@@ -35,6 +74,9 @@ export const SearchButton = () => {
     </div>
   )
 }
+
+
+
 
 
 

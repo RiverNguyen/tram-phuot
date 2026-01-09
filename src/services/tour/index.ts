@@ -2,13 +2,14 @@ import ENDPOINTS from '@/configs/endpoints'
 import fetchData from '@/fetches/fetchData'
 import { ITaxonomyRes } from '@/interface/taxonomy.interface'
 import { ITourRes } from '@/interface/tour.interface'
+import { ApplyVoucherPayloadType } from '@/types/details-tour.type'
 
 const tourService = {
   getTours: async ({
     locale,
-    locations = '',
-    tourType = '',
-    tourDuration = '',
+    locations,
+    tourType,
+    tourDuration,
     page = '1',
     limit = 8,
   }: {
@@ -19,8 +20,30 @@ const tourService = {
     page?: string
     limit?: number
   }): Promise<ITourRes> => {
+    const params = new URLSearchParams({
+      lang: locale,
+      acf: 'price_person',
+      paged: page,
+      limit: String(limit),
+      order: 'DESC',
+      orderby: 'date',
+    })
+
+    const taxMap: Record<string, string | undefined> = {
+      locations,
+      'tour-type': tourType,
+      'tour-duration': tourDuration,
+    }
+
+    Object.entries(taxMap).forEach(([tax, value]) => {
+      if (value) {
+        params.append('tax', tax)
+        params.append(tax, value)
+      }
+    })
+
     return await fetchData({
-      api: `${ENDPOINTS.tour.list}?lang=${locale}&tax=locations,tour-type,tour-duration&locations=${locations}&tour-type=${tourType}&tour-duration=${tourDuration}&acf=price_person&paged=${page}&limit=${limit}`,
+      api: `${ENDPOINTS.tour.list}?${params.toString()}`,
     })
   },
   getTaxonomies: async (locale: string): Promise<ITaxonomyRes> => {
@@ -31,6 +54,30 @@ const tourService = {
   getDetailTour: async (slug: string, locale: string, post_type: string) => {
     return await fetchData({
       api: `${ENDPOINTS.tour.detail}?slug=${slug}&locale=${locale}&post_type=${post_type}`,
+    })
+  },
+  applyVoucher: async (payload: ApplyVoucherPayloadType) => {
+    return await fetchData({
+      api: ENDPOINTS.tour.applyVoucher,
+      method: 'POST',
+      option: {
+        body: JSON.stringify(payload),
+      },
+    })
+  },
+  getRelatedTours: async (
+    slug: string,
+    locale: string,
+    fields: string = '',
+    postTypeKey: string = '',
+  ) => {
+    return await fetchData({
+      api: `${ENDPOINTS.tour.relatedTours}?slug=${slug}&locale=${locale}&fields=${fields}&post=${postTypeKey}`,
+    })
+  },
+  getTourCoupons: async (slug: string, locale: string, postTypeKey: string) => {
+    return await fetchData({
+      api: `${ENDPOINTS.tour.coupons}?slug=${slug}&locale=${locale}&post_type=${postTypeKey}`,
     })
   },
 }
