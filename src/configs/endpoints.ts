@@ -33,6 +33,8 @@ const ENDPOINTS = {
   blogs: {
     en: 'wp/v2/pages/248?_fields=acf&acf_format=standard',
     vi: 'wp/v2/pages/250?_fields=acf&acf_format=standard',
+    list: 'api/v1/get-all/post',
+    getDetail: (slug: string) => `api/v1/get-detail/post?slug=${slug}`,
   },
   wordpress: {
     siteSettings: 'api/v1/site-settings',

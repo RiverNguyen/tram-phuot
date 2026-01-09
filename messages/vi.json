@@ -188,5 +188,20 @@
       "textCopied": "Đã sao chép mã giảm giá",
       "textMinApplication": "Giá tối thiểu"
     }
+  },
+  "DetailBlogPage": {
+    "breadcrumbHome": "Trang chủ",
+    "breadcrumbBlogList": "Danh sách tin tức",
+    "contentSummary": "Tóm tắt nội dung",
+    "seeMore": "Xem thêm",
+    "seeLess": "Thu gọn",
+    "postedBy": "Đăng bởi",
+    "postedOn": "Ngày đăng",
+    "share": "Chia sẻ",
+    "otherBlog": "Tin tức khác",
+    "relatedBlogs": "Tin tức liên quan",
+    "viewMore": "Xem thêm",
+    "copyClipboard": "Liên kết đã được sao chép vào bộ nhớ tạm",
+    "copyClipboardError": "Không thể sao chép vào bộ nhớ tạm. Vui lòng thử lại."
   }
 }

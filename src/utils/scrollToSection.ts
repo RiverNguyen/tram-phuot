@@ -31,3 +31,18 @@ export function scrollToSection(
     ease: 'power2.out',
   })
 }
+
+export function scrollToSectionV2(
+  targetElement: Element,
+  duration: number = 1,
+  offsetRem: number = 0,
+): void {
+  const offsetPx = offsetRem * parseFloat(getComputedStyle(document.documentElement).fontSize)
+  const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - offsetPx
+
+  gsap.to(window, {
+    duration: duration,
+    scrollTo: { y: targetPosition, autoKill: true },
+    ease: 'power2.out',
+  })
+}

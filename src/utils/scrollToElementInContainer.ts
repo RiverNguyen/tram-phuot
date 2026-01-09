@@ -45,3 +45,26 @@ export function scrollToElementInContainer(
     ease: 'power2.out',
   })
 }
+
+export function scrollToElementInContainerV2(
+  containerElement: Element,
+  targetElement: Element,
+  duration: number = 1,
+  offsetRem: number = 0,
+): void {
+  // Chuyển đổi offset từ rem sang pixel
+  const offsetPx = offsetRem * parseFloat(getComputedStyle(document.documentElement).fontSize)
+
+  // Vị trí của phần tử trong container
+  const containerRect = containerElement.getBoundingClientRect()
+  const targetRect = targetElement.getBoundingClientRect()
+
+  // Tính toán vị trí scroll đến (tương đối với container)
+  const targetPosition = targetRect.top - containerRect.top + containerElement.scrollTop - offsetPx
+
+  gsap.to(containerElement, {
+    duration: duration,
+    scrollTo: { y: targetPosition, autoKill: true },
+    ease: 'power2.out',
+  })
+}
