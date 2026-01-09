@@ -20,7 +20,7 @@ export default function SpecialOffers({ data, text1 }: { data: ICoupon[], text1:
       </h2>
       <div className='special-offer-swiper mx-auto w-full max-w-[99rem]'>
         <Swiper
-          slidesPerView={3}
+          slidesPerView='auto'
           modules={[Navigation]}
           onBeforeInit={(swiper) => {
             // @ts-ignore
@@ -43,13 +43,13 @@ export default function SpecialOffers({ data, text1 }: { data: ICoupon[], text1:
           <div className='pointer-events-none absolute top-1/2 right-[2.5rem] left-[2.5rem] z-10 flex -translate-y-1/2 items-center justify-between'>
             <div
               ref={prevRef}
-              className='special-offer-prev pointer-events-auto flex size-[2.5rem] cursor-pointer items-center justify-center rounded-full bg-[#479064] shadow-[113px_188px_61px_0_rgba(87,87,87,0.00),73px_120px_56px_0_rgba(87,87,87,0.01),41px_68px_47px_0_rgba(87,87,87,0.05),18px_30px_35px_0_rgba(87,87,87,0.09),5px_8px_19px_0_rgba(87,87,87,0.10)]'
+              className='special-offer-prev pointer-events-auto flex size-[2.5rem] cursor-pointer items-center justify-center rounded-full bg-[#479064] shadow-[113px_188px_61px_0_rgba(87,87,87,0.00),73px_120px_56px_0_rgba(87,87,87,0.01),41px_68px_47px_0_rgba(87,87,87,0.05),18px_30px_35px_0_rgba(87,87,87,0.09),5px_8px_19px_0_rgba(87,87,87,0.10)] hover:opacity-90 transition-opacity duration-300'
             >
               <ICChevron className='size-[0.825rem] rotate-90 text-white' />
             </div>
             <div
               ref={nextRef}
-              className='special-offer-next pointer-events-auto flex size-[2.5rem] cursor-pointer items-center justify-center rounded-full bg-[#479064] shadow-[113px_188px_61px_0_rgba(87,87,87,0.00),73px_120px_56px_0_rgba(87,87,87,0.01),41px_68px_47px_0_rgba(87,87,87,0.05),18px_30px_35px_0_rgba(87,87,87,0.09),5px_8px_19px_0_rgba(87,87,87,0.10)]'
+              className='special-offer-next pointer-events-auto flex size-[2.5rem] cursor-pointer items-center justify-center rounded-full bg-[#479064] shadow-[113px_188px_61px_0_rgba(87,87,87,0.00),73px_120px_56px_0_rgba(87,87,87,0.01),41px_68px_47px_0_rgba(87,87,87,0.05),18px_30px_35px_0_rgba(87,87,87,0.09),5px_8px_19px_0_rgba(87,87,87,0.10)] hover:opacity-90 transition-opacity duration-300'
             >
               <ICChevron className='size-[0.825rem] rotate-270 text-white' />
             </div>

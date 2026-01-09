@@ -1,6 +1,12 @@
 import ENV from '@/configs/env'
 
 const ENDPOINTS = {
+  thank_you: {
+    rank_math: {
+      en: '/thank-you',
+      vi: '/cam-on',
+    },
+  },
   hotel: {
     getDetail: (slug: string) => `api/v1/get-detail/hotels?slug=${slug}`,
     getCoupons: (slug: string) => `api/v1/coupons?slug=${slug}&post_type=hotels`,
@@ -51,7 +57,7 @@ const ENDPOINTS = {
     taxonomies: 'api/v1/taxonomies/post',
     featuredNews: 'api/v1/page-acf?page_id=248&name=featured_news&acf=true',
     rank_math: {
-      en: '/blogs',
+      en: '/blog-list',
       vi: '/danh-sach-bai-viet',
     },
     en: 'wp/v2/pages/248?_fields=acf&acf_format=standard',

@@ -119,7 +119,7 @@ export default function WrapperHotelList({ taxonomies, data, totalPages }: Wrapp
   // Sync filter state with searchParams
   useEffect(() => {
     setFilterState(parseFilterStateFromURL(searchParams, taxonomiesWithVariant))
-  }, [searchParams, taxonomies])
+  }, [searchParams])
 
   useEffect(() => {
     if (!isPending) return

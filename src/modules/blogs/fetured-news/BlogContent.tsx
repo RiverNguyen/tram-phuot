@@ -2,12 +2,11 @@
 
 import { IBlog } from '@/interface/blogs.interface'
 import BrandButton from '@/components/shared/BrandButton'
-import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 
 interface BlogContentProps {
   blog: IBlog
-  baseHref: string
+  baseHref?: string
   variant?: 'desktop' | 'mobile'
   className?: string
 }
@@ -49,12 +48,12 @@ export default function BlogContent({
           {t('seeDetail')}
         </BrandButton>
       ) : (
-        <Link
-          href={`${baseHref}/${blog?.slug}`}
-          className='font-montserrat text-[0.875rem] leading-[1.1.05rem] tracking-[0.00875rem] text-[rgba(46,46,46,0.75)] sm:hidden'
+        <button
+          type='button'
+          className='font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] tracking-[0.00875rem] text-[rgba(46,46,46,0.75)] sm:hidden'
         >
           {t('seeDetail')} →
-        </Link>
+        </button>
       )}
     </div>
   )

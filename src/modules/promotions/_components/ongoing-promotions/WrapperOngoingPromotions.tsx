@@ -81,11 +81,15 @@ export default function OngoingPromotions({
 
   const handleReset = () => {
     if (!hasActiveFilters(filterState)) {
-      if (currentPage <= 1) return
+      if (currentPage <= 1) {
+        setOpenDrawer(false)
+        return
+      }
       startTransition(() => {
         const query = createQueryString(searchParams, { paged: undefined })
         router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
       })
+      setOpenDrawer(false)
       return
     }
 
@@ -94,6 +98,7 @@ export default function OngoingPromotions({
       reset[taxonomy] = variant === 'radio' ? '' : []
     })
     pushFilters(reset)
+    setOpenDrawer(false)
   }
 
   const handlePageChange = (page: number) => {

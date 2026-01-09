@@ -28,3 +28,11 @@
   }
 }
 
+@media (max-width: 639px) {
+  .animate-content {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}

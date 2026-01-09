@@ -5,7 +5,6 @@ import { IBlogRes, IBlogTaxonomyRes } from '@/interface/blogs.interface'
 const blogsService = {
   getBlogs: async ({
     locale,
-    category = '',
     kind = '',
     typeNews = '',
     sort = 'newest-first',
@@ -13,7 +12,6 @@ const blogsService = {
     limit = 6,
   }: {
     locale: string
-    category?: string
     kind?: string
     typeNews?: string
     sort?: string
@@ -26,7 +24,6 @@ const blogsService = {
     query.set('tax', 'category,kind,type-news')
     query.set('limit', String(limit))
 
-    if (category) query.set('category', category)
     if (kind) query.set('kind', kind)
     if (typeNews) query.set('type-news', typeNews)
     if (paged && Number(paged) > 1) query.set('paged', paged)

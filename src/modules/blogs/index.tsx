@@ -9,7 +9,6 @@ export default async function Blogs({
 }: {
   locale: string
   searchParams: {
-    category?: string
     kind?: string
     ['type-news']?: string
     sort?: string
@@ -24,15 +23,14 @@ export default async function Blogs({
   ])
 
   const hasFilters =
-    !!searchParams?.category ||
     !!searchParams?.['type-news'] ||
     !!searchParams?.kind ||
+    !!searchParams?.sort ||
     (searchParams?.paged ? Number(searchParams.paged) > 1 : false)
 
-  const blogsData = hasFilters || searchParams?.sort
+  const blogsData = hasFilters
     ? await blogsService.getBlogs({
         locale,
-        category: searchParams?.category,
         kind: searchParams?.kind,
         typeNews: searchParams?.['type-news'],
         sort: searchParams?.sort || 'newest-first',
