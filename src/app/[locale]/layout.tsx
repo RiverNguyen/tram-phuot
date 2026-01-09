@@ -4,6 +4,9 @@ import Header from '@/layouts/header'
 import { NextIntlClientProvider } from 'next-intl'
 import { ISiteSetting } from '@/interface/site-setting.interface'
 import { TooltipProvider } from '@/components/ui/tooltip'
+import OrganizationSchema from '@/seo/schemas/OrganizationSchema'
+import WebSiteSchema from '@/seo/schemas/WebSiteSchema'
+import { SEO_CONFIG } from '@/seo/seo.config'
 
 export default async function layout({
   children,
@@ -21,6 +24,11 @@ export default async function layout({
   return (
     <NextIntlClientProvider>
       <TooltipProvider>
+        <OrganizationSchema lang={locale} />
+        <WebSiteSchema
+          lang={locale}
+          name={SEO_CONFIG.siteName}
+        />
         <Header
           data={dataSiteSettings?.data?.header}
           socialMedia={dataSiteSettings.data?.header?.social_media}

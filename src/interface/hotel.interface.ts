@@ -98,6 +98,7 @@ export interface IHotelBanner {
   address: string
   gallery: string[]
   review: IHotelReview
+  price_person?: number | string
 }
 
 export interface IHotelACF {

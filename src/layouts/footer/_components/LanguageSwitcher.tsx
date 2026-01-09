@@ -49,7 +49,7 @@ export default function LanguageSwitcher() {
               return (
                 <Link
                   key={loc}
-                  href={`${pathname}`}
+                  href="/"
                   locale={loc}
                   className='flex items-center justify-between space-x-4'
                 >
@@ -97,7 +97,7 @@ export default function LanguageSwitcher() {
             const isActive = loc === currentLocale
             return (
               <Link
-                href={`${pathname}`}
+                href="/"
                 locale={loc}
                 key={i}
                 className={cn(

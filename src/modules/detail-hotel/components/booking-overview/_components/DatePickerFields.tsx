@@ -2,6 +2,7 @@
 
 import { Field, FieldError } from '@/components/ui/field'
 import RFHDatePickerField from '@/modules/details-tour/components/FormControl/RFHDatePickerField'
+import { useTranslations } from 'next-intl'
 import { Control, Controller, FieldErrors } from 'react-hook-form'
 
 type DatePickerFieldsProps = {
@@ -10,6 +11,7 @@ type DatePickerFieldsProps = {
 }
 
 export default function DatePickerFields({ control, errors }: DatePickerFieldsProps) {
+  const t = useTranslations('DetailHotelPage')
   return (
     <div className='grid grid-cols-12 gap-4'>
       <div className='col-span-6'>
@@ -21,7 +23,7 @@ export default function DatePickerFields({ control, errors }: DatePickerFieldsPr
               <RFHDatePickerField
                 field={field}
                 placeholder='Placeholder'
-                label='Check in date'
+                label={t('textCheckInDate')}
                 required
               />
             )}
@@ -39,7 +41,7 @@ export default function DatePickerFields({ control, errors }: DatePickerFieldsPr
               <RFHDatePickerField
                 field={field}
                 placeholder='Placeholder'
-                label='Check out date'
+                label={t('textCheckOutDate')}
                 required
               />
             )}
