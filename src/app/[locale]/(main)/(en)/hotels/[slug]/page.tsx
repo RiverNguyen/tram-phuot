@@ -3,6 +3,8 @@ import hotelService from '@/services/hotel'
 import getMetaDataRankMath from '@/fetches/getMetaDataRankMath'
 import metadataValues from '@/utils/metadataValues'
 import endpoints from '@/configs/endpoints'
+import HotelPageSchema from '@/seo/schemas/HotelPageSchema'
+import { SEO_CONFIG } from '@/seo/seo.config'
 
 export const dynamicParams = false
 export function generateStaticParams() {
@@ -42,16 +44,32 @@ export default async function page({
     hotelService.getHotels({ locale, limit: 8 }),
   ])
 
+  // Build URL for schema
+  const hotelUrl = `${SEO_CONFIG.siteUrl}/hotels/${slug}`
+  const hotelImages = detailHotel?.acf?.banner?.gallery || []
+  const hotelImage = hotelImages.length > 0 ? hotelImages : detailHotel?.thumbnail
+
   return (
-    <DetailHotel
-      detailHotel={detailHotel}
-      taxonomies={taxonomies?.data}
-      coupons={coupons?.data}
-      initialCheckIn={sp.checkIn}
-      initialCheckOut={sp.checkOut}
-      initialAdults={sp.adults}
-      initialChildren={sp.children}
-      relatedHotels={relatedHotels?.data || []}
-    />
+    <>
+      <HotelPageSchema
+        title={detailHotel?.title || ''}
+        url={hotelUrl}
+        image={hotelImage}
+        address={detailHotel?.acf?.banner?.address}
+        description={detailHotel?.acf?.overview?.content}
+        rating={detailHotel?.acf?.banner?.review?.rating}
+        lang={locale}
+      />
+      <DetailHotel
+        detailHotel={detailHotel}
+        taxonomies={taxonomies?.data}
+        coupons={coupons?.data}
+        initialCheckIn={sp.checkIn}
+        initialCheckOut={sp.checkOut}
+        initialAdults={sp.adults}
+        initialChildren={sp.children}
+        relatedHotels={relatedHotels?.data || []}
+      />
+    </>
   )
 }
