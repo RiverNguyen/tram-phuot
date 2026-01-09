@@ -16,7 +16,6 @@ import { useParams } from 'next/navigation'
 
 const LanguageSwitcher = () => {
   const params = useParams()
-  const pathname = usePathname()
 
   const locales = routing.locales
   const currentLocale = (params?.locale as string) || routing.defaultLocale
@@ -46,7 +45,7 @@ const LanguageSwitcher = () => {
                   asChild
                 >
                   <Link
-                    href={`${pathname}`}
+                    href='/'
                     locale={loc}
                     className={cn(
                       'flex-y-center space-x-2 rounded-md px-2 py-1.5 transition-colors',

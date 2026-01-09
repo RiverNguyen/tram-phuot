@@ -1,3 +1,6 @@
+import endpoints from '@/configs/endpoints'
+import ENV from '@/configs/env'
+import getMetaDataRankMath from '@/fetches/getMetaDataRankMath'
 import BannerHomePage from '@/modules/home/banner'
 import TheExplorers from '@/modules/home/explorers'
 import OurStories from '@/modules/home/our-stories/OurStories'
@@ -6,11 +9,20 @@ import Overview from '@/modules/home/overview'
 import homeService from '@/services/home'
 import hotelService from '@/services/hotel'
 import tourService from '@/services/tour'
+import metadataValues from '@/utils/metadataValues'
 
 export const dynamicParams = false
 
 export function generateStaticParams() {
   return [{ locale: 'vi' }, { locale: 'en' }]
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const res = await getMetaDataRankMath(
+    endpoints.home.rank_math[locale as keyof typeof endpoints.home.rank_math],
+  )
+  return metadataValues(res)
 }
 
 export default async function page({ params }: { params: Promise<{ locale: string }> }) {

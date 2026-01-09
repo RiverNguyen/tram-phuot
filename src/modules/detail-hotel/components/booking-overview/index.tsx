@@ -40,8 +40,6 @@ const formSchema = z.object({
   coupon_code: z.string().optional(),
 })
 
-type FormValues = z.infer<typeof formSchema>
-
 type BookingOverviewProps = {
   selectedRooms: {
     id: number | string
@@ -72,6 +70,7 @@ export default function BookingOverview({
   initialAdults,
   initialChildren,
 }: BookingOverviewProps) {
+  const t = useTranslations('DetailHotelPage')
   const [voucherDiscount, setVoucherDiscount] = useState(0)
   const [openContactForm, setOpenContactForm] = useState(false)
   const [couponCode, setCouponCode] = useState<string>('')
@@ -160,7 +159,7 @@ export default function BookingOverview({
   // Auto-update check-out date when check-in date changes (but not on initial mount)
   useEffect(() => {
     if (isInitialMount) return
-    
+
     if (checkInDate) {
       const nextDay = new Date(checkInDate)
       nextDay.setDate(nextDay.getDate() + 1)
@@ -275,7 +274,7 @@ export default function BookingOverview({
     if (adultsValue <= 0) {
       form.setError('adults', {
         type: 'manual',
-        message: 'At least 1 adult is required',
+        message: t('textAtLeast1AdultRequired'),
       })
       return
     }
@@ -290,7 +289,7 @@ export default function BookingOverview({
       if (!formValues.check_in_date || !formValues.check_out_date) {
         toast.error(
           translateBookingTourForm('startDateRequired') ||
-            'Please select check-in and check-out dates before sending information.',
+            t('textPleaseSelectCheckInAndCheckOutDatesBeforeSendingInformation'),
         )
         return { success: false }
       }
@@ -336,7 +335,7 @@ export default function BookingOverview({
 
       if (response.status === 'mail_sent') {
         setOpenContactForm(false)
-        toast.success('Booking successful, our staff will contact you soon.')
+        toast.success(t('textBookingSuccessfulOurStaffWillContactYouSoon'))
 
         // Close parent drawer (mobile) after successful submission
         if (onClose) {
@@ -374,7 +373,7 @@ export default function BookingOverview({
     <div className='relative'>
       <div className='flex-between mb-4 xsm:mb-6'>
         <h3 className='text-[1.5rem] font-phu-du leading-[1.1] font-bold bg-clip-text text-transparent bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit xsm:text-[1.125rem]'>
-          Booking Overview
+          {t('textBookingOverview')}
         </h3>
         <button
           className='sm:hidden'
@@ -401,7 +400,7 @@ export default function BookingOverview({
                 name='adults'
                 render={({ field }) => (
                   <NumberStepperField
-                    label='Adults'
+                    label={t('textAdults')}
                     field={field}
                   />
                 )}
@@ -414,7 +413,7 @@ export default function BookingOverview({
                 name='child'
                 render={({ field }) => (
                   <NumberStepperField
-                    label='Child'
+                    label={t('textChild')}
                     field={field}
                   />
                 )}
@@ -453,7 +452,7 @@ export default function BookingOverview({
             className='w-full xsm:h-[2.5rem]! xsm:rounded-[0.625rem]!'
             onClick={handleBookNow}
           >
-            Book Now
+            {t('textBookNow')}
           </BrandButton2>
         </form>
       </Form>

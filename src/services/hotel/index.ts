@@ -39,7 +39,7 @@ const hotelService = {
     limit?: number
   }): Promise<IHotelRes> => {
     return await fetchData({
-      api: `${ENDPOINTS.hotel.list}?lang=${locale}&limit=${limit}&order=DESC&orderby=date&acf=banner&tax=locations&locations=${locations}`,
+      api: `${ENDPOINTS.hotel.list}?lang=${locale}&limit=${limit}&order=DESC&orderby=date&acf=banner,price_person&tax=locations&locations=${locations}`,
     })
   },
 }

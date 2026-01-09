@@ -1,8 +1,11 @@
+import ENV from '@/configs/env'
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export default function metadataValues(res: any, domain: string) {
+export default function metadataValues(res: any) {
+  const domain = ENV.DOMAIN
   if (!res) {
     return {
-      metadataBase: new URL(domain),
+      metadataBase: new URL(domain || ''),
       title: 'Tram Phuot',
       description: 'Tram Phuot',
       alternates: {
@@ -53,7 +56,7 @@ export default function metadataValues(res: any, domain: string) {
   }
 
   return {
-    metadataBase: new URL(domain),
+    metadataBase: new URL(domain || ''),
     title: result?.title || 'Tram Phuot',
     description: result?.description || 'Tram Phuot',
     alternates: {

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import { IHotelDetail, ITaxonomies } from '@/interface/hotel.interface'
+import { IHotel, IHotelDetail, ITaxonomies } from '@/interface/hotel.interface'
 import Banner from '@/modules/detail-hotel/components/Banner'
 import Overview from '@/modules/detail-hotel/components/overview'
 import BookingRoom from './components/booking-room'
@@ -13,6 +13,7 @@ import BrandButton2 from '@/components/shared/BrandButton2'
 import DrawerProvider from '@/components/provider/DrawerProvider'
 import { formatUSD, normalizePrice } from '@/lib/utils'
 import SectionExploreOtherTours from '../details-tour/components/SectionExploreOtherTours'
+import { useTranslations } from 'next-intl'
 
 export default function DetailHotel({
   detailHotel,
@@ -22,6 +23,7 @@ export default function DetailHotel({
   initialCheckOut,
   initialAdults,
   initialChildren,
+  relatedHotels,
 }: {
   detailHotel: IHotelDetail
   taxonomies: ITaxonomies[]
@@ -30,7 +32,9 @@ export default function DetailHotel({
   initialCheckOut?: string
   initialAdults?: string
   initialChildren?: string
+  relatedHotels: IHotel[]
 }) {
+  const t = useTranslations('DetailHotelPage')
   type SelectedRoomSummary = {
     id: number | string
     index: number
@@ -123,7 +127,7 @@ export default function DetailHotel({
             onClick={() => setOpenBookingOverview(true)}
           >
             <p className='text-[#F9EAD5] text-[0.75rem] font-semibold leading-[1.2] uppercase'>
-              Detail
+              {t('textDetail')}
             </p>
           </BrandButton2>
         </div>
@@ -150,13 +154,8 @@ export default function DetailHotel({
       </div>
       <div className='mt-[5rem] xsm:mt-[2rem]'>
         <SectionExploreOtherTours
-          price={
-            detailHotel?.acf?.room_and_dorm?.select[0]?.acf?.price_reduced ||
-            detailHotel?.acf?.room_and_dorm?.select[0]?.acf?.price ||
-            ''
-          }
           type='hotel'
-          relatedTours={detailHotel?.acf?.related_hotels?.hotels || []}
+          relatedTours={relatedHotels}
         />
       </div>
     </main>

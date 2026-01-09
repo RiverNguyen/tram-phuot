@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/pagination'
 import { Pagination } from 'swiper/modules'
+import { useTranslations } from 'next-intl'
 
 type SelectedRoomSummary = {
   id: number | string
@@ -26,6 +27,7 @@ type BookingRoomProps = {
 }
 
 const BookingRoom = ({ rooms, onChangeSelection, clearRoomIndex }: BookingRoomProps) => {
+  const t = useTranslations('DetailHotelPage')
   const [quantities, setQuantities] = useState<number[]>(() => rooms?.map(() => 0) ?? [])
   const [currentSlides, setCurrentSlides] = useState<number[]>(() => rooms?.map(() => 0) ?? [])
   const [openGalleryIndex, setOpenGalleryIndex] = useState<number | null>(null)
@@ -136,10 +138,10 @@ const BookingRoom = ({ rooms, onChangeSelection, clearRoomIndex }: BookingRoomPr
       >
         <div className='flex items-center space-x-[0.625rem] mb-6 xsm:flex-col xsm:items-start'>
           <h3 className='text-[1.5rem] xsm:text-[1.125rem] font-phu-du leading-[1.1] font-bold bg-clip-text text-transparent bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
-            BOOKING ROOM & DORM
+            {t('textBookingRoomAndDorm')}
           </h3>
           <p className='text-[#2E2E2E]/60 text-[0.875rem] leading-[1.5] xsm:text-[0.75rem] xsm:leading-[1.4] xsm:mt-3'>
-            (* Prices may increase on weekends or holidays)
+            (* {t('textPricesMayIncreaseOnWeekendsOrHolidays')})
           </p>
         </div>
         <ScrollArea className='h-[50.75rem] pr-4 mr-4 xsm:hidden'>
