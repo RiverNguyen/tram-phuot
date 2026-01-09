@@ -1,5 +1,26 @@
 import DetailHotel from '@/modules/detail-hotel'
 import hotelService from '@/services/hotel'
+import getMetaDataRankMath from '@/fetches/getMetaDataRankMath'
+import metadataValues from '@/utils/metadataValues'
+import endpoints from '@/configs/endpoints'
+
+export const dynamicParams = false
+
+export function generateStaticParams() {
+  return [{ locale: 'vi' }]
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>
+}) {
+  const { locale, slug } = await params
+  const res = await getMetaDataRankMath(
+    endpoints.hotel.rank_math_detail[locale as keyof typeof endpoints.hotel.rank_math_detail](slug),
+  )
+  return metadataValues(res)
+}
 
 export default async function page({
   params,
@@ -15,10 +36,11 @@ export default async function page({
 }) {
   const [{ locale }, sp] = await Promise.all([params, searchParams])
   let { slug } = await params
-  const [detailHotel, taxonomies, coupons] = await Promise.all([
+  const [detailHotel, taxonomies, coupons, relatedHotels] = await Promise.all([
     hotelService.getDetailHotel(slug),
     hotelService.getTaxonomies(locale),
     hotelService.getCoupons(slug),
+    hotelService.getHotels({ locale, limit: 8 }),
   ])
 
   return (
@@ -30,6 +52,7 @@ export default async function page({
       initialCheckOut={sp.checkOut}
       initialAdults={sp.adults}
       initialChildren={sp.children}
+      relatedHotels={relatedHotels?.data || []}
     />
   )
 }

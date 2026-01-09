@@ -67,16 +67,14 @@ const MobileLanguageSwitcher = () => {
           setOpen={setOpenLanguageDropdown}
         >
           <div className='p-[1.5rem]'>
-            <p className='text-[#2E2E2E] text-[1rem] leading-[1.6] font-medium'>
-              {t('language')}
-            </p>
+            <p className='text-[#2E2E2E] text-[1rem] leading-[1.6] font-medium'>{t('language')}</p>
             <div className='flex flex-col gap-2 mt-4'>
               {locales.map((loc) => {
                 const isActive = loc === currentLocale
                 return (
                   <Link
                     key={loc}
-                    href={`${pathname}`}
+                    href='/'
                     locale={loc}
                     className='flex items-center justify-between space-x-4'
                   >
@@ -105,12 +103,3 @@ const MobileLanguageSwitcher = () => {
 }
 
 export default MobileLanguageSwitcher
-
-
-
-
-
-
-
-
-

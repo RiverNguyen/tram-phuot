@@ -53,7 +53,8 @@
     "error": "Lỗi",
     "title": "Không tìm thấy trang",
     "message": "Trang bạn đang tìm có thể đã bị xóa, đổi tên hoặc tạm thời không khả dụng",
-    "button": "Quay lại trang chủ"
+    "button": "Quay lại trang chủ",
+    "desc": "Trang bạn đang tìm có thể đã bị xóa, đổi tên hoặc tạm thời không khả dụng"
   },
   "ThankYou": {
     "title": "Cảm ơn bạn đã tin tưởng chúng tôi!",
