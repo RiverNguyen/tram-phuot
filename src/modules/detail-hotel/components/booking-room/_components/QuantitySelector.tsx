@@ -1,5 +1,7 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
+
 type QuantitySelectorProps = {
   quantity: number
   onDecrease: () => void
@@ -7,6 +9,7 @@ type QuantitySelectorProps = {
 }
 
 const QuantitySelector = ({ quantity, onDecrease, onIncrease }: QuantitySelectorProps) => {
+  const t = useTranslations('DetailHotelPage')
   return (
     <div className='flex items-center space-x-[0.625rem]'>
       <button
@@ -34,7 +37,7 @@ const QuantitySelector = ({ quantity, onDecrease, onIncrease }: QuantitySelector
         </svg>
       </button>
       <p className='text-[#2e2e2e] text-[0.75rem] font-semibold leading-[1.6] tracking-[-0.0075rem]'>
-        {quantity} Room
+        {quantity} {t('textRoom')}
       </p>
       <button
         type='button'

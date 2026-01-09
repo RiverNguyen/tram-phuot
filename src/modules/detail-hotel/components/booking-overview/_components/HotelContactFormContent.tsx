@@ -21,6 +21,7 @@ export default function HotelContactFormContent({
 }: HotelContactFormContentProps) {
   const [isPending, startTransition] = useTransition()
   const translateContactFormBooking = useTranslations('ContactFormBooking')
+  const t = useTranslations('DetailHotelPage')
   const translateContactFormBookingMessages = {
     fullNameRequired: translateContactFormBooking('fullNameRequired'),
     emailRequired: translateContactFormBooking('emailRequired'),
@@ -84,7 +85,7 @@ export default function HotelContactFormContent({
                 required
                 field={field as any}
                 className='col-span-full'
-                placeholder='Pham Thanh'
+                placeholder={t('textFullName')}
               />
             )}
           />
@@ -96,7 +97,7 @@ export default function HotelContactFormContent({
                 required
                 field={field as any}
                 className='col-span-1'
-                placeholder='thomas123@gmail.com'
+                placeholder={t('textEmail')}
               />
             )}
           />
@@ -108,7 +109,7 @@ export default function HotelContactFormContent({
                 required
                 field={field as any}
                 className='col-span-1'
-                placeholder='033.8792.9999'
+                placeholder={t('textPhoneNumber')}
               />
             )}
           />
