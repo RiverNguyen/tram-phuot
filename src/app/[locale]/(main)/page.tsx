@@ -29,7 +29,10 @@ export default async function page({ params }: { params: Promise<{ locale: strin
 
   return (
     <>
-      <BannerHomePage data={dataHome?.acf} />
+      <BannerHomePage
+        data={dataHome?.acf}
+        locations={locationRes?.data}
+      />
       <Overview overview={dataHome?.acf?.overview} />
       <OurTours
         initialTours={tourRes?.data}

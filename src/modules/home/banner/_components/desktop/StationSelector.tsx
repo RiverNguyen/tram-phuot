@@ -32,14 +32,14 @@ export const StationSelector = ({
             <p className='text-[#2e2e2e] text-[0.875rem] leading-[1.6]'>{t('station')}</p>
             <h3 className='text-[2.125rem] font-medium leading-[0.9] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
               {stations.find((s) => s.value === selectedStation)?.name.toUpperCase() ||
-                'CAOBANG'}
+                stations[0].name.toUpperCase()}
             </h3>
           </div>
           <ICChevron className='size-4 text-black opacity-24' />
         </div>
       </PopoverTrigger>
       <PopoverContent
-        className='w-[13.5625rem] py-[0.9375rem] px-4 rounded-[0.25rem] shadow-[0_0_40px_0_rgba(0,0,0,0.06)] ml-[-1.875rem]'
+        className='w-[13.5625rem] h-[15rem] overflow-auto hidden_scroll py-[0.9375rem] px-4 rounded-[0.25rem] shadow-[0_0_40px_0_rgba(0,0,0,0.06)] ml-[-1.875rem]'
         align='start'
       >
         <RadioGroup
@@ -69,4 +69,3 @@ export const StationSelector = ({
     </Popover>
   )
 }
-

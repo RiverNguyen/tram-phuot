@@ -23,7 +23,7 @@ export default async function layout({
       <TooltipProvider>
         <Header
           data={dataSiteSettings?.data?.header}
-          socialMedia={dataSiteSettings.data.footer?.footer_content?.social_media}
+          socialMedia={dataSiteSettings.data?.header?.social_media}
         />
         {children}
       </TooltipProvider>

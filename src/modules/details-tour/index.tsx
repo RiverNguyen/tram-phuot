@@ -1,3 +1,4 @@
+'use client'
 import { SectionVoucher } from '@/components/shared'
 import ContactForm from '@/modules/details-tour/components/ContactForm'
 import FixedBookingNowMb from '@/modules/details-tour/components/FixedBookingNowMb'

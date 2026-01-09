@@ -1,11 +1,11 @@
 'use client'
 
-import { ISocialMedia } from '@/interface/site-setting.interface'
 import { Link } from '@/i18n/navigation'
+import { IHeader } from '@/interface/site-setting.interface'
 import Image from 'next/image'
 
 interface MobileSocialMediaProps {
-  socialMedia: ISocialMedia[]
+  socialMedia: IHeader['social_media']
 }
 
 const MobileSocialMedia = ({ socialMedia }: MobileSocialMediaProps) => {
@@ -14,12 +14,12 @@ const MobileSocialMedia = ({ socialMedia }: MobileSocialMediaProps) => {
       {Array.isArray(socialMedia) &&
         socialMedia.map((item, index) => (
           <Link
-            href={item.link?.url || '/'}
+            href={item.link}
             key={index}
           >
             <Image
-              src={item.image?.url || '/'}
-              alt={item.image?.alt || ''}
+              src={item.image}
+              alt={''}
               width={48}
               height={48}
               className='size-[3rem] object-cover'

@@ -136,7 +136,7 @@ const CountrySelect = ({
         </PopoverTrigger>
         <PopoverContent
           align='start'
-          className='w-full p-0'
+          className='w-full p-0 hidden_scroll'
         >
           <Command>
             <CommandInput
