@@ -14,12 +14,12 @@ export default async function MainLayout({
   const { locale } = await params
 
   const dataSiteSettings: ISiteSetting = await fetchData({
-    api: `${ENDPOINTS.site_settings}?locale=${locale}&field=footer`,
+    api: `${ENDPOINTS.site_settings}?locale=${locale}&field=footer,cta`,
   })
 
   return (
     <>
-      <CTA />
+      <CTA data={dataSiteSettings?.data?.cta?.list} />
       {children}
       <Footer data={dataSiteSettings?.data?.footer} />
     </>
