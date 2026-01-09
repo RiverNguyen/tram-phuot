@@ -3,7 +3,7 @@
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { PopupGallery } from '@/components/shared'
 import { IRoom } from '@/interface/hotel.interface'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import RoomCard from './_components/RoomCard'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
@@ -29,6 +29,7 @@ const BookingRoom = ({ rooms, onChangeSelection, clearRoomIndex }: BookingRoomPr
   const [quantities, setQuantities] = useState<number[]>(() => rooms?.map(() => 0) ?? [])
   const [currentSlides, setCurrentSlides] = useState<number[]>(() => rooms?.map(() => 0) ?? [])
   const [openGalleryIndex, setOpenGalleryIndex] = useState<number | null>(null)
+  const prevSummariesRef = useRef<SelectedRoomSummary[]>([])
 
   useEffect(() => {
     setQuantities(rooms?.map(() => 0) ?? [])
@@ -76,9 +77,23 @@ const BookingRoom = ({ rooms, onChangeSelection, clearRoomIndex }: BookingRoomPr
         return acc
       }, [] as SelectedRoomSummary[])
 
-      onChangeSelection(summaries)
+      // Only call onChangeSelection if summaries actually changed
+      const summariesChanged =
+        prevSummariesRef.current.length !== summaries.length ||
+        prevSummariesRef.current.some(
+          (prev, idx) =>
+            !summaries[idx] ||
+            prev.id !== summaries[idx].id ||
+            prev.quantity !== summaries[idx].quantity ||
+            prev.pricePerNight !== summaries[idx].pricePerNight,
+        )
+
+      if (summariesChanged) {
+        prevSummariesRef.current = summaries
+        onChangeSelection(summaries)
+      }
     }
-  }, [quantities, rooms, onChangeSelection])
+  }, [quantities, rooms])
 
   const handleChangeQuantity = (roomIndex: number, delta: number) => {
     setQuantities((prev) => {
