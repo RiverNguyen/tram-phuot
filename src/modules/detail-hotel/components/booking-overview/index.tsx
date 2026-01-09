@@ -55,6 +55,10 @@ type BookingOverviewProps = {
   onClearAllRooms?: () => void
   detailHotel?: IHotelDetail
   onClose?: () => void
+  initialCheckIn?: string
+  initialCheckOut?: string
+  initialAdults?: string
+  initialChildren?: string
 }
 
 export default function BookingOverview({
@@ -63,6 +67,10 @@ export default function BookingOverview({
   onClearAllRooms,
   detailHotel,
   onClose,
+  initialCheckIn,
+  initialCheckOut,
+  initialAdults,
+  initialChildren,
 }: BookingOverviewProps) {
   const [voucherDiscount, setVoucherDiscount] = useState(0)
   const [openContactForm, setOpenContactForm] = useState(false)
@@ -74,41 +82,97 @@ export default function BookingOverview({
   const hotelSlug = params?.slug as string
   const translateBookingTourForm = useTranslations('BookingTourForm')
 
-  // Set default dates: today and tomorrow
+  // Set default dates: today and tomorrow, or use initial values from query params
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const tomorrow = new Date(today)
   tomorrow.setDate(tomorrow.getDate() + 1)
 
+  // Parse initial values from query params
+  const parseInitialCheckIn = () => {
+    if (initialCheckIn) {
+      const date = new Date(initialCheckIn)
+      if (!isNaN(date.getTime())) {
+        date.setHours(0, 0, 0, 0)
+        return date
+      }
+    }
+    return today
+  }
+
+  const parseInitialCheckOut = () => {
+    if (initialCheckOut) {
+      const date = new Date(initialCheckOut)
+      if (!isNaN(date.getTime())) {
+        date.setHours(0, 0, 0, 0)
+        return date
+      }
+    }
+    return tomorrow
+  }
+
+  const parseInitialAdults = () => {
+    if (initialAdults) {
+      const parsed = parseInt(initialAdults, 10)
+      if (!isNaN(parsed) && parsed > 0) {
+        return parsed
+      }
+    }
+    return 0
+  }
+
+  const parseInitialChildren = () => {
+    if (initialChildren) {
+      const parsed = parseInt(initialChildren, 10)
+      if (!isNaN(parsed) && parsed >= 0) {
+        return parsed
+      }
+    }
+    return 0
+  }
+
+  const initialCheckInDate = parseInitialCheckIn()
+  const initialCheckOutDate = parseInitialCheckOut()
+  const initialAdultsValue = parseInitialAdults()
+  const initialChildrenValue = parseInitialChildren()
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      check_in_date: today,
-      check_out_date: tomorrow,
-      adults: 0,
-      child: 0,
+      check_in_date: initialCheckInDate,
+      check_out_date: initialCheckOutDate,
+      adults: initialAdultsValue,
+      child: initialChildrenValue,
       coupon_code: '',
     },
   })
 
   const watchDates = form.watch(['check_in_date', 'check_out_date'])
   const checkInDate = watchDates[0]
+  const [isInitialMount, setIsInitialMount] = useState(true)
 
-  // Auto-update check-out date when check-in date changes
+  // Track initial mount to prevent auto-update on first render
   useEffect(() => {
+    setIsInitialMount(false)
+  }, [])
+
+  // Auto-update check-out date when check-in date changes (but not on initial mount)
+  useEffect(() => {
+    if (isInitialMount) return
+    
     if (checkInDate) {
       const nextDay = new Date(checkInDate)
       nextDay.setDate(nextDay.getDate() + 1)
       nextDay.setHours(0, 0, 0, 0)
 
       const currentCheckOut = form.getValues('check_out_date')
-      // Only update if check-out is not already set to the next day
-      if (!currentCheckOut || currentCheckOut.getTime() !== nextDay.getTime()) {
+      // Only update if check-out is not already set to a valid date after check-in
+      if (!currentCheckOut || currentCheckOut <= checkInDate) {
         form.setValue('check_out_date', nextDay, { shouldValidate: true })
       }
     }
-  }, [checkInDate, form])
+  }, [checkInDate, form, isInitialMount])
 
   // Calculate number of nights
   const numberOfNights = useMemo(() => {

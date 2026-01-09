@@ -8,14 +8,10 @@ import { StationDrawer } from '@/modules/home/banner/_components/mobile/StationD
 import { GuestsDrawer } from '@/modules/home/banner/_components/mobile/GuestsDrawer'
 import { DateDrawer } from '@/modules/home/banner/_components/mobile/DateDrawer'
 import { SearchButton } from '@/modules/home/banner/_components/mobile/SearchButton'
-
-interface Station {
-  name: string
-  value: string
-}
+import { ILocation } from '@/interface/taxonomy.interface'
 
 interface BookingFormMobileProps {
-  stations: Station[]
+  stations: ILocation[]
   selectedStation: string
   onStationChange: (value: string) => void
   adults: number
@@ -76,7 +72,8 @@ const BookingFormMobile = ({
           label={t('station')}
           value={
             <p className='font-phu-du w-fit bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[1.25rem] leading-[1.1] font-medium text-transparent'>
-              {stations.find((s) => s.value === selectedStation)?.name.toUpperCase() || 'CAOBANG'}
+              {stations.find((s) => s.slug === selectedStation)?.name.toUpperCase() ||
+                stations[0].name.toUpperCase()}
             </p>
           }
           onClick={() => setOpenStationDrawer(true)}
@@ -128,7 +125,10 @@ const BookingFormMobile = ({
       <StationDrawer
         open={openStationDrawer}
         onOpenChange={setOpenStationDrawer}
-        stations={stations}
+        stations={stations.map((station) => ({
+          name: station.name,
+          value: station.slug,
+        }))}
         selectedStation={selectedStation}
         onStationChange={onStationChange}
       />
@@ -166,7 +166,13 @@ const BookingFormMobile = ({
           return false
         }}
       />
-      <SearchButton />
+      <SearchButton
+        selectedStation={selectedStation}
+        checkInDate={checkInDate}
+        checkOutDate={checkOutDate}
+        adults={adults}
+        children={children}
+      />
     </div>
   )
 }

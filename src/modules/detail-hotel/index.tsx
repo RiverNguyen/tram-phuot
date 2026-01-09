@@ -18,10 +18,18 @@ export default function DetailHotel({
   detailHotel,
   taxonomies,
   coupons,
+  initialCheckIn,
+  initialCheckOut,
+  initialAdults,
+  initialChildren,
 }: {
   detailHotel: IHotelDetail
   taxonomies: ITaxonomies[]
   coupons: any
+  initialCheckIn?: string
+  initialCheckOut?: string
+  initialAdults?: string
+  initialChildren?: string
 }) {
   type SelectedRoomSummary = {
     id: number | string
@@ -96,6 +104,10 @@ export default function DetailHotel({
             onRemoveRoom={handleRemoveRoom}
             onClearAllRooms={handleClearAllRooms}
             detailHotel={detailHotel}
+            initialCheckIn={initialCheckIn}
+            initialCheckOut={initialCheckOut}
+            initialAdults={initialAdults}
+            initialChildren={initialChildren}
           />
         </div>
         <div className='fixed z-[10] w-[21.4375rem] h-[3.75rem] sm:hidden left-4 right-4 bottom-4 p-[0.625rem_0.75rem] rounded-[0.75rem] bg-black/50 backdrop-blur-[10px] flex-between'>
@@ -129,6 +141,10 @@ export default function DetailHotel({
             onClearAllRooms={handleClearAllRooms}
             detailHotel={detailHotel}
             onClose={() => setOpenBookingOverview(false)}
+            initialCheckIn={initialCheckIn}
+            initialCheckOut={initialCheckOut}
+            initialAdults={initialAdults}
+            initialChildren={initialChildren}
           />
         </DrawerProvider>
       </div>

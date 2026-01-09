@@ -273,13 +273,13 @@ body {
 }
 
 *::-webkit-scrollbar-track {
-  background: #fff;
+  background: #00804d;
 }
 
 *::-webkit-scrollbar-thumb {
-  background-color: #00804d;
+  background-color: #fdf4ed;
   border-radius: 9999px;
-  border: 2px solid #fff;
+  border: 2px solid #00804d;
 }
 
 *::-webkit-scrollbar-thumb:hover {

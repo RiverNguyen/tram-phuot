@@ -96,11 +96,13 @@ export default function VoucherItem({
         <div className='xsm:top-2.5 xsm:left-[0.7125rem] xsm:w-47 xsm:h-31 absolute top-3.75 left-[0.9rem] z-1 flex h-[10.0325rem] w-[14.68844rem] flex-col items-start justify-between'>
           <div className='xsm:space-y-2 space-y-3'>
             {/* tag */}
-            <p className='xsm:h-[0.9686rem] xsm:px-[0.35406rem] xsm:rounded-[0.177rem] flex h-5 w-fit items-center justify-center rounded-[0.25rem] bg-[#F56E0A] px-1.75'>
-              <span className='font-montserrat text-[0.75rem] leading-[1.2rem] font-medium tracking-[-0.0075rem] text-white'>
-                {couponLocation}
-              </span>
-            </p>
+            {couponLocation && (
+              <p className='xsm:h-[0.9686rem] xsm:px-[0.35406rem] xsm:rounded-[0.177rem] flex h-5 w-fit items-center justify-center rounded-[0.25rem] bg-[#F56E0A] px-1.75'>
+                <span className='font-montserrat text-[0.75rem] leading-[1.2rem] font-medium tracking-[-0.0075rem] text-white'>
+                  {couponLocation}
+                </span>
+              </p>
+            )}
             {/* title */}
             <div className='xsm:h-2.5 h-2.75'>
               <h3 className='xsm:text-[0.875rem] xsm:leading-[1.05rem] xsm:tracking-[0.0175rem] font-phu-du text-body-t1 line-clamp-1 text-[1rem] leading-none font-medium'>

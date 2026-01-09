@@ -7,12 +7,29 @@ import { Link } from '@/i18n/navigation'
 import { IHotel } from '@/interface/hotel.interface'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import { useParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 
 export default function HotelCard({ hotel, className }: { hotel: IHotel; className?: string }) {
   const { locale } = useParams()
+  const searchParams = useSearchParams()
 
-  const href = locale === 'en' ? `/hotels/${hotel.slug}` : `/danh-sach-hotel/${hotel.slug}`
+  const baseHref = locale === 'en' ? `/hotels/${hotel.slug}` : `/danh-sach-khach-san/${hotel.slug}`
+  
+  // Preserve booking query params
+  const checkIn = searchParams.get('checkIn')
+  const checkOut = searchParams.get('checkOut')
+  const adults = searchParams.get('adults')
+  const children = searchParams.get('children')
+  
+  const queryParams = new URLSearchParams()
+  if (checkIn) queryParams.set('checkIn', checkIn)
+  if (checkOut) queryParams.set('checkOut', checkOut)
+  if (adults) queryParams.set('adults', adults)
+  if (children) queryParams.set('children', children)
+  
+  const href = queryParams.toString() 
+    ? `${baseHref}?${queryParams.toString()}` 
+    : baseHref
 
   return (
     <Link
