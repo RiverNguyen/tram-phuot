@@ -25,11 +25,19 @@ export default function Map({
   const [pins, setPins] = useState<IPin[]>([])
 
   // Hàm kiểm tra xem province có nên highlight không
-  const shouldHighlight = (dataId: string | null, loc: ILocation): boolean => {
+  const shouldHighlight = (
+    dataId: string | null,
+    loc: ILocation,
+    type: 'highlight' | 'marker',
+  ): boolean => {
     if (!dataId) return false
 
     // Các rule đặc biệt của bạn
-    if (loc.slug === 'hai-phong' && dataId === 'hai-phong-island') return true
+    if (loc.slug === 'hai-phong') {
+      if (type === 'highlight') {
+        return dataId === 'hai-phong' || dataId === 'hai-phong-island'
+      }
+    }
 
     // Rule mặc định: match slug
     return loc.slug === dataId
@@ -47,19 +55,25 @@ export default function Map({
 
     paths.forEach((path) => {
       const dataId = path.getAttribute('data-id')
-      const isHighlighted = locations.some((loc) => shouldHighlight(dataId, loc))
+      const isHighlighted = locations.some((loc) => shouldHighlight(dataId, loc, 'highlight'))
 
       // Highlight màu
       path.style.fill = isHighlighted ? '#FFDE58' : '#F8E9D0'
       path.style.fillOpacity = isHighlighted ? '1' : '0.2'
 
+      const specificDataIds = ['ho-chi-minh', 'phu-quoc']
+
       // Nếu highlight → tính vị trí center để đặt pin
       if (isHighlighted && dataId) {
-        const loc = locations.find((l) => shouldHighlight(dataId, l))
+        const loc = locations.find((l) => shouldHighlight(dataId, l, 'marker'))
         if (loc) {
           const bbox = path.getBBox()
-          const centerX = bbox.x + bbox.width / 2
+          let centerX = bbox.x + bbox.width / 2
           const centerY = bbox.y + bbox.height / 2
+
+          if (specificDataIds.includes(dataId)) {
+            centerX = bbox.x + bbox.width / 4
+          }
 
           // Chuyển sang % so với viewBox (0 0 446 562)
           const percentX = (centerX / 446) * 100

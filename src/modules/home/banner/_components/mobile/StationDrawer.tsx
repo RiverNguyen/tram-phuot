@@ -43,7 +43,7 @@ export const StationDrawer = ({
         <RadioGroup
           value={selectedStation}
           onValueChange={onStationChange}
-          className='space-y-3 px-4'
+          className='space-y-3 px-4 h-[15rem] overflow-auto hidden_scroll'
         >
           {stations.map((station) => (
             <div

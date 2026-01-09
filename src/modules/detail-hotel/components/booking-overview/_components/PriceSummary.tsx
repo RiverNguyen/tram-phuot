@@ -23,14 +23,18 @@ export default function PriceSummary({
           {formatUSD(provisionalAmount)} USD
         </p>
       </div>
-      <div className='flex items-center justify-between'>
-        <p className='text-[#2E2E2E]/75 text-[0.875rem] leading-[1.2] tracking-[0.00875rem]'>
-          Voucher:
-        </p>
-        <p className='text-[#2E2E2E]/75 text-[0.875rem] leading-[1.2] tracking-[0.00875rem]'>
-          {voucherDiscount > 0 ? `- ${formatUSD(voucherDiscount)}` : '0'} USD
-        </p>
-      </div>
+      {voucherDiscount > 0 && (
+        <>
+          <div className='flex items-center justify-between'>
+            <p className='text-[#2E2E2E]/75 text-[0.875rem] leading-[1.2] tracking-[0.00875rem]'>
+              Voucher:
+            </p>
+            <p className='text-[#2E2E2E]/75 text-[0.875rem] leading-[1.2] tracking-[0.00875rem]'>
+              - {formatUSD(voucherDiscount)} USD
+            </p>
+          </div>
+        </>
+      )}
       <div className='h-[0.05rem] w-full bg-[#EDEDED]'></div>
       <div className='flex items-center justify-between'>
         <p className='text-[#2E2E2E] leading-[1.3] font-phu-du font-bold tracking-[-0.00875rem] uppercase'>

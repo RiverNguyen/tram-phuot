@@ -13,6 +13,10 @@ export default async function page({
     locations?: string
     ['hotel-amenities']?: string
     paged?: string
+    checkIn?: string
+    checkOut?: string
+    adults?: string
+    children?: string
   }>
 }) {
   const [{ locale }, sp] = await Promise.all([params, searchParams])

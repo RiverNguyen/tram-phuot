@@ -125,7 +125,15 @@ export default function Banner({ detailHotel }: { detailHotel: IHotelDetail }) {
               </div>
             </div>
           </div>
-          <BrandButton2 className='xsm:mb-4 xsm:space-x-[0.4375rem] cursor-default space-x-[0.625rem]'>
+          <BrandButton2
+            className='xsm:mb-4 xsm:space-x-[0.4375rem] cursor-pointer space-x-[0.625rem]'
+            onClick={() => {
+              const element = document.getElementById('booking-room-dorm')
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              }
+            }}
+          >
             <Image
               src='/detail-hotel/sofa.svg'
               alt=''
