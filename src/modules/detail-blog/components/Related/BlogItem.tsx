@@ -14,17 +14,20 @@ export default function BlogItem({ blog, className }: { blog: IRelatedBlog; clas
     <Link
       href={href}
       className={cn(
-        'xsm:flex-col overflow-hidden xsm:rounded-[0.75rem] xsm:bg-white xsm:shadow-[0_3px_10px_0_rgba(0,0,0,0.08)] xsm:gap-[0.875rem] flex items-center gap-[4.5rem]',
+        'xsm:flex-col overflow-hidden xsm:rounded-[0.75rem] xsm:bg-white xsm:shadow-[0_3px_10px_0_rgba(0,0,0,0.08)] xsm:gap-[0.875rem] flex items-center gap-[4.5rem] group',
         className,
       )}
     >
-      <Image
-        src={blog?.thumbnail?.url}
-        alt={''}
-        width={799}
-        height={478}
-        className='xsm:h-[13.8125rem] xsm:w-full xsm:rounded-none h-[19.75rem] w-[34rem] shrink-0 rounded-[1.25rem]'
-      />
+      <div className='relative overflow-hidden xsm:h-[13.8125rem] xsm:w-full h-[19.75rem] w-[34rem] shrink-0 rounded-[1.25rem] xsm:rounded-none'>
+        <Image
+          src={blog?.thumbnail?.url}
+          alt={''}
+          width={799}
+          height={478}
+          className='size-full object-cover transition-all duration-500 ease-[cubic-bezier(0.65,0.01,0.28,0.98)] lg:group-hover:scale-107'
+        />
+      </div>
+
       <div className='w-full xsm:px-[0.875rem] xsm:pb-[0.875rem] xsm:gap-[1.25rem] flex flex-1 flex-col justify-between gap-[4rem]'>
         <div>
           {/* taxonomies */}
