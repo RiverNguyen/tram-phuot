@@ -47,13 +47,14 @@ export default async function Promotions({
       <div className='relative w-full h-full'>
         <div className='xsm:py-[2.5rem] xsm:gap-0 relative w-full flex flex-col items-center gap-[5.625rem] py-[5rem]'>
           {/* Special offer just for you! */}
-          <SpecialOffers data={couponSpecialOffer} />
+          <SpecialOffers data={couponSpecialOffer} text1={promotionPage?.acf?.text_1}/>
 
           {/* ongoing promotion */}
           <OngoingPromotions
             data={ongoingCoupon?.data}
             taxonomies={taxonomies?.data}
             totalPages={ongoingCoupon?.totalPages}
+            text2={promotionPage?.acf?.text_2}
           />
         </div>
       </div>

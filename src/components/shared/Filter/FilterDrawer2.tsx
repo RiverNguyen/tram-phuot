@@ -192,18 +192,18 @@ export default function FilterDrawer2({
         <div className='flex gap-[0.75rem] self-stretch border-t-[0.5px] border-t-[rgba(46,46,46,0.40)] px-[1rem] pt-[1.25rem] pb-[1rem]'>
           <button
             type='button'
+            onClick={handleReset}
+            className='flex h-[2.5rem] items-center justify-center gap-[0.25rem] rounded-[0.5rem] py-[0.75rem] text-[0.75rem] text-[#FF2019] leading-[1.05rem] tracking-[0.01875rem] uppercase '
+          >
+            <ICTrashcan className='size-[1rem]' />
+            {t('reset')}
+          </button>
+          <button
+            type='button'
             onClick={handleApply}
             className='font-montserrat flex h-[2.5rem] flex-1 items-center justify-center gap-[0.625rem] rounded-[0.625rem] bg-[linear-gradient(50deg,#03328C_-18.36%,#00804D_82.62%)] px-[1.875rem] py-[0.625rem] text-[0.75rem] leading-[0.9rem] font-semibold text-[#F9EAD5] uppercase'
           >
             {t('apply')}
-          </button>
-          <button
-            type='button'
-            onClick={handleReset}
-            className='flex h-[2.5rem] items-center justify-center gap-[0.25rem] rounded-[0.5rem] py-[0.75rem]'
-          >
-            <ICTrashcan className='size-[1rem] text-[#2E2E2E]' />
-            {t('reset')}
           </button>
         </div>
       </div>

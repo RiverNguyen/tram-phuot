@@ -15,6 +15,7 @@ interface FilterPopoverProps {
   onValueChange?: (value: string | string[]) => void
   className?: string
   variant?: 'radio' | 'checkbox'
+  showAllOption?: boolean
 }
 
 export default function FilterPopover({
@@ -24,6 +25,7 @@ export default function FilterPopover({
   onValueChange,
   variant = 'radio',
   className,
+  showAllOption = true,
 }: FilterPopoverProps) {
   const [open, setOpen] = useState(false)
   const t = useTranslations('ListCouponPage')
@@ -72,8 +74,8 @@ export default function FilterPopover({
         )}
       >
         <div className='flex items-center gap-[0.25rem]'>
-          <span className='font-normal text-[rgba(46,46,46,0.60)] uppercase'>{label}:</span>
-          <span>{getDisplayText() || t('all')}</span>
+          <span className='font-normal text-[rgba(46,46,46,0.60)] uppercase shrink-0'>{label}:</span>
+          <span className='line-clamp-1'>{getDisplayText() || (showAllOption ? t('all') : '')}</span>
         </div>
         <ICChevron className='h-auto w-[0.825rem] text-[#A1A1A1]' />
       </PopoverTrigger>
@@ -84,22 +86,24 @@ export default function FilterPopover({
             onValueChange={handleRadioChange}
             className='w-full'
           >
-            <label
-              htmlFor={`radio-all`}
-              className={cn(
-                'flex cursor-pointer items-center gap-[0.625rem] self-stretch rounded-tl-[1rem] rounded-br-[1rem] px-[0.75rem] py-[1rem] lg:hover:bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
-                selectedValue === '' &&
-                  'bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
-              )}
-            >
-              <RadioGroupItemCustom
-                value={''}
-                id={`radio-all`}
-              />
-              <span className='font-montserrat line-clamp-1 text-[0.875rem] leading-[1.3125rem] text-[#303030]'>
-                {t('all')}
-              </span>
-            </label>
+            {showAllOption && (
+              <label
+                htmlFor={`radio-all`}
+                className={cn(
+                  'flex cursor-pointer items-center gap-[0.625rem] self-stretch rounded-tl-[1rem] rounded-br-[1rem] px-[0.75rem] py-[1rem] lg:hover:bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
+                  selectedValue === '' &&
+                    'bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
+                )}
+              >
+                <RadioGroupItemCustom
+                  value={''}
+                  id={`radio-all`}
+                />
+                <span className='font-montserrat line-clamp-1 text-[0.875rem] leading-[1.3125rem] text-[#303030]'>
+                  {t('all')}
+                </span>
+              </label>
+            )}
             {options.map((option) => (
               <label
                 htmlFor={`${label}-${option.value}`}
