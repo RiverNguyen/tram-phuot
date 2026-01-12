@@ -8,7 +8,7 @@ import { useParams } from 'next/navigation'
 import BlogItem from './BlogItem'
 
 export default function Related({ relatedBlogs }: { relatedBlogs: IRelatedBlog[] }) {
-  const { locale } = useParams<{ locale: string }>()
+  const { locale, slug } = useParams<{ locale: string; slug: string }>()
   const t = useTranslations('DetailBlogPage')
 
   return (
@@ -50,13 +50,15 @@ export default function Related({ relatedBlogs }: { relatedBlogs: IRelatedBlog[]
         }}
       >
         {Array.isArray(relatedBlogs) &&
-          relatedBlogs.map((blog) => (
-            <BlogItem
-              blog={blog}
-              key={blog.id}
-              className='xsm:w-[18.75rem] xsm:h-[23.9375rem] xsm:shrink-0'
-            />
-          ))}
+          relatedBlogs
+            .filter((blog) => blog.slug !== slug)
+            .map((blog) => (
+              <BlogItem
+                blog={blog}
+                key={blog.id}
+                className='xsm:w-[18.75rem] xsm:h-[23.9375rem] xsm:shrink-0'
+              />
+            ))}
       </div>
       <BrandButton
         type={{
