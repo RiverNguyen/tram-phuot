@@ -1,6 +1,14 @@
 import ENV from '@/configs/env'
 
 const ENDPOINTS = {
+  about: {
+    en: 'wp/v2/pages/213?_fields=acf&acf_format=standard',
+    vi: 'wp/v2/pages/215?_fields=acf&acf_format=standard',
+    rank_math: {
+      en: '/about-us',
+      vi: '/ve-chung-toi',
+    },
+  },
   thank_you: {
     rank_math: {
       en: '/thank-you',
