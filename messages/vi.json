@@ -69,9 +69,9 @@
     "searchFilter": "Bộ lọc",
     "done": "Hoàn thành",
     "all": "Tất cả",
-    "locations": "Địa điểm",
-    "tour-type": "Loại tour",
-    "tour-duration": "Thời gian tour"
+    "Locations": "Địa điểm",
+    "Tour types": "Loại tour",
+    "Tour durations": "Thời gian tour"
   },
   "ListCouponPage": {
     "noResult": "Không có kết quả",
@@ -89,8 +89,24 @@
     "selected": "Đã chọn",
     "searchFilter": "Bộ lọc",
     "done": "Hoàn thành",
-    "amenities": "Tiện ích",
-    "locations": "Địa điểm"
+    "Amenities": "Tiện ích",
+    "Locations": "Địa điểm"
+  },
+  "BlogsPage": {
+    "seeDetail": "Xem chi tiết",
+    "sortBy": "Sắp xếp",
+    "sortNewestFirst": "Mới nhất trước",
+    "sortAlphabeticalAZ": "A-Z",
+    "sortAlphabeticalZA": "Z-A",
+    "typeNews": "Loại tin tức",
+    "kind": "Thể loại",
+    "reset": "Xóa tất cả",
+    "searchFilter": "Bộ lọc",
+    "noResult": "Không có kết quả",
+    "apply": "Áp dụng",
+    "all": "Tất cả",
+    "selected": "Đã chọn",
+    "category": "Danh mục"
   },
   "DetailsTourPage": {
     "metaTourDuration": "Thời gian tour:",

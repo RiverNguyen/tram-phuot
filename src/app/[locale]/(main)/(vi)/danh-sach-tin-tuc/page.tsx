@@ -1,13 +1,12 @@
-import Blogs from '@/modules/blogs'
-import getMetaDataRankMath from '@/fetches/getMetaDataRankMath'
-import metadataValues from '@/utils/metadataValues'
 import endpoints from '@/configs/endpoints'
-export const dynamicParams = false
+import getMetaDataRankMath from '@/fetches/getMetaDataRankMath'
+import Blogs from '@/modules/blogs'
+import metadataValues from '@/utils/metadataValues'
 
+export const dynamicParams = false
 export function generateStaticParams() {
   return [{ locale: 'vi' }]
 }
-
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   const res = await getMetaDataRankMath(
@@ -16,7 +15,23 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return metadataValues(res)
 }
 
-export default async function BlogsPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params
-  return <Blogs locale={locale} />
+export default async function BlogsPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>
+  searchParams: Promise<{
+    kind?: string
+    ['type-news']?: string
+    sort?: string
+    paged?: string
+  }>
+}) {
+  const [{ locale }, sp] = await Promise.all([params, searchParams])
+  return (
+    <Blogs
+      locale={locale}
+      searchParams={sp}
+    />
+  )
 }

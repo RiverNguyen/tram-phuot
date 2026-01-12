@@ -9,18 +9,18 @@ import { ICChevron } from '@/components/icons'
 import { ICoupon } from '@/interface/coupon.interface'
 import { useRef } from 'react'
 
-export default function SpecialOffers({ data }: { data: ICoupon[] }) {
+export default function SpecialOffers({ data, text1 }: { data: ICoupon[], text1: string }) {
   const prevRef = useRef<HTMLDivElement | null>(null)
   const nextRef = useRef<HTMLDivElement | null>(null)
   const visibleData = data.filter((offer: ICoupon) => !offer?.acf?.private)
   return (
     <div className='xsm:gap-0 flex flex-col items-start gap-[2.5rem] self-stretch'>
       <h2 className='xsm:w-full xsm:px-[1rem] xsm:text-[1.25rem] xsm:leading-[1.5rem] xsm:tracking-[0.025rem] font-phu-du mx-auto w-full max-w-[87.5rem] text-[2.125rem] leading-[2.3375rem] font-medium text-[#2E2E2E]'>
-        Special offer just for you!
+        {text1}
       </h2>
       <div className='special-offer-swiper mx-auto w-full max-w-[99rem]'>
         <Swiper
-          slidesPerView={3}
+          slidesPerView='auto'
           modules={[Navigation]}
           onBeforeInit={(swiper) => {
             // @ts-ignore
@@ -43,13 +43,13 @@ export default function SpecialOffers({ data }: { data: ICoupon[] }) {
           <div className='pointer-events-none absolute top-1/2 right-[2.5rem] left-[2.5rem] z-10 flex -translate-y-1/2 items-center justify-between'>
             <div
               ref={prevRef}
-              className='special-offer-prev pointer-events-auto flex size-[2.5rem] cursor-pointer items-center justify-center rounded-full bg-[#479064] shadow-[113px_188px_61px_0_rgba(87,87,87,0.00),73px_120px_56px_0_rgba(87,87,87,0.01),41px_68px_47px_0_rgba(87,87,87,0.05),18px_30px_35px_0_rgba(87,87,87,0.09),5px_8px_19px_0_rgba(87,87,87,0.10)]'
+              className='special-offer-prev pointer-events-auto flex size-[2.5rem] cursor-pointer items-center justify-center rounded-full bg-[#479064] shadow-[113px_188px_61px_0_rgba(87,87,87,0.00),73px_120px_56px_0_rgba(87,87,87,0.01),41px_68px_47px_0_rgba(87,87,87,0.05),18px_30px_35px_0_rgba(87,87,87,0.09),5px_8px_19px_0_rgba(87,87,87,0.10)] hover:opacity-90 transition-opacity duration-300'
             >
               <ICChevron className='size-[0.825rem] rotate-90 text-white' />
             </div>
             <div
               ref={nextRef}
-              className='special-offer-next pointer-events-auto flex size-[2.5rem] cursor-pointer items-center justify-center rounded-full bg-[#479064] shadow-[113px_188px_61px_0_rgba(87,87,87,0.00),73px_120px_56px_0_rgba(87,87,87,0.01),41px_68px_47px_0_rgba(87,87,87,0.05),18px_30px_35px_0_rgba(87,87,87,0.09),5px_8px_19px_0_rgba(87,87,87,0.10)]'
+              className='special-offer-next pointer-events-auto flex size-[2.5rem] cursor-pointer items-center justify-center rounded-full bg-[#479064] shadow-[113px_188px_61px_0_rgba(87,87,87,0.00),73px_120px_56px_0_rgba(87,87,87,0.01),41px_68px_47px_0_rgba(87,87,87,0.05),18px_30px_35px_0_rgba(87,87,87,0.09),5px_8px_19px_0_rgba(87,87,87,0.10)] hover:opacity-90 transition-opacity duration-300'
             >
               <ICChevron className='size-[0.825rem] rotate-270 text-white' />
             </div>
