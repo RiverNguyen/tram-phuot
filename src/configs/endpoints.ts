@@ -1,6 +1,10 @@
 import ENV from '@/configs/env'
 
 const ENDPOINTS = {
+  about: {
+    en: 'wp/v2/pages/213?_fields=acf&acf_format=standard',
+    vi: 'wp/v2/pages/215?_fields=acf&acf_format=standard',
+  },
   hotel: {
     getDetail: (slug: string) => `api/v1/get-detail/hotels?slug=${slug}`,
     getCoupons: (slug: string) => `api/v1/coupons?slug=${slug}&post_type=hotels`,
