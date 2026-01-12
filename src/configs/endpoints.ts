@@ -60,8 +60,13 @@ const ENDPOINTS = {
       en: '/blog-list',
       vi: '/danh-sach-bai-viet',
     },
+    rank_math_detail: {
+      en: (slug: string) => `/${slug}`,
+      vi: (slug: string) => `/vi/${slug}`,
+    },
     en: 'wp/v2/pages/248?_fields=acf&acf_format=standard',
     vi: 'wp/v2/pages/250?_fields=acf&acf_format=standard',
+    getDetail: (slug: string) => `api/v1/get-detail/post?slug=${slug}`,
   },
   wordpress: {
     siteSettings: 'api/v1/site-settings',

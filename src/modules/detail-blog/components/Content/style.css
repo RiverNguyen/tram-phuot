@@ -1,0 +1,212 @@
+#blog_detail h1,
+#blog_detail h2,
+#blog_detail h3,
+#blog_detail h4,
+#blog_detail h5,
+#blog_detail h6 {
+  font-weight: 500;
+  color: #2e2e2e;
+  margin-top: 2.5rem;
+}
+
+#blog_detail h1 {
+  font-size: 3rem;
+  line-height: 3.6rem;
+}
+
+#blog_detail h2 {
+  font-size: 2.5rem;
+}
+
+#blog_detail h3 {
+  font-size: 1.75rem;
+  line-height: 2.0625rem; /* 117.857% */
+  letter-spacing: -0.03125rem;
+}
+
+#blog_detail h4 {
+  font-size: 1.5rem;
+}
+
+#blog_detail h5 {
+  font-size: 1.25rem;
+}
+
+#blog_detail h6 {
+  font-size: 1rem;
+}
+
+#blog_detail p {
+  font-family: Montserrat;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: rgba(46, 46, 46, 0.75);
+  text-align: justify;
+  margin-top: 1rem;
+}
+
+#blog_detail .wp-caption,
+#blog_detail div:has(img) {
+  width: 100% !important;
+  border-radius: 1rem;
+  background-color: rgba(0, 128, 77, 0.15);
+  overflow: hidden;
+  margin-top: 2.5rem;
+}
+
+#blog_detail .wp-caption-text,
+#blog_detail div:has(p) p {
+  margin: 0;
+  padding: 0.5rem 0;
+  color: #2e2e2e;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 0.8125rem;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 150%; /* 1.21875rem */
+  letter-spacing: -0.00813rem;
+}
+
+#blog_detail img {
+  width: 100%;
+  height: 24.10713rem;
+  object-fit: cover;
+}
+
+#blog_detail table {
+  margin-top: 2.5rem;
+}
+
+#blog_detail th,
+#blog_detail td {
+  font-weight: 400;
+  border: 1px solid #2e2e2e;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 1rem;
+  color: #2e2e2e;
+  padding: 0.5rem;
+}
+
+#blog_detail th {
+  font-weight: 700;
+}
+
+#blog_detail ul {
+  font-family: Montserrat;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: rgba(46, 46, 46, 0.75);
+  margin-top: 1rem;
+  list-style: disc inside;
+}
+
+#blog_detail a {
+  font-family: Montserrat;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #338fe5;
+  margin-top: 1rem;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: all 0.15s ease-in-out;
+}
+
+@media (min-width: 1024px) {
+  #blog_detail a:hover {
+    text-decoration-color: #338fe5;
+  }
+}
+
+@media (max-width: 639px) {
+  #blog_detail h1,
+  #blog_detail h2,
+  #blog_detail h3,
+  #blog_detail h4,
+  #blog_detail h5,
+  #blog_detail h6 {
+    margin-top: 1.25rem;
+  }
+
+  #blog_detail h1 {
+    font-size: 1.25rem;
+    line-height: normal;
+  }
+
+  #blog_detail h2 {
+    font-size: 1.25rem;
+  }
+
+  #blog_detail h3 {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 110%; /* 1.2375rem */
+  }
+
+  #blog_detail h4 {
+    font-size: 1rem;
+  }
+
+  #blog_detail h5 {
+    font-size: 0.875rem;
+  }
+
+  #blog_detail h6 {
+    font-size: 0.75rem;
+  }
+
+  #blog_detail p {
+    font-size: 0.875rem;
+    margin-top: 0.875rem;
+  }
+
+  #blog_detail img {
+    height: 13.75rem;
+  }
+
+  #blog_detail .wp-caption,
+  #blog_detail div:has(img) {
+    border-radius: 0.75rem;
+    margin-top: 1.25rem;
+  }
+
+  #blog_detail .wp-caption-text,
+  #blog_detail div:has(p) p {
+    font-size: 0.625rem;
+    font-style: italic;
+    letter-spacing: -0.00625rem;
+    padding: 0.5rem 1rem;
+  }
+
+  #blog_detail .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+    scrollbar-width: none;
+  }
+
+  #blog_detail table {
+    width: 100%;
+    margin-top: 1.125rem;
+  }
+
+  #blog_detail th,
+  #blog_detail td {
+    white-space: nowrap; /* giữ cột không bị xuống dòng */
+    font-size: 0.875rem;
+    padding: 0.5rem 1rem;
+  }
+
+  #blog_detail ul {
+    font-size: 0.875rem;
+    line-height: normal;
+    margin-top: 0.875rem;
+  }
+
+  #blog_detail a {
+    font-size: 0.875rem;
+    margin-top: 0.875rem;
+    text-decoration-color: #338fe5;
+  }
+}

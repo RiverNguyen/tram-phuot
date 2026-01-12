@@ -206,6 +206,21 @@
       "textMinApplication": "Min application"
     }
   },
+  "DetailBlogPage": {
+    "breadcrumbHome": "Home",
+    "breadcrumbBlogList": "Blog list",
+    "contentSummary": "Content summary",
+    "seeMore": "See more",
+    "seeLess": "See less",
+    "postedBy": "Posted by",
+    "postedOn": "Posted on",
+    "share": "Share",
+    "otherBlog": "Other blog",
+    "relatedBlogs": "Related blogs",
+    "viewMore": "View more",
+    "copyClipboard": "The link has been copied to the clipboard",
+    "copyClipboardError": "Cannot copy to clipboard. Please try again."
+  },
   "DetailHotelPage": {
     "textShowGallery": "Show Gallery",
     "textRoomsAvailable": "Rooms Available!",
