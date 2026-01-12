@@ -4,7 +4,7 @@ import fetchData from '@/fetches/fetchData'
 const homeService = {
   getHome: async (locale: string) => {
     return await fetchData({
-      api: ENDPOINTS.home[locale as keyof typeof ENDPOINTS.home],
+      api: ENDPOINTS.home[locale as 'en' | 'vi'],
     })
   },
   getReviews: async (locale: string) => {

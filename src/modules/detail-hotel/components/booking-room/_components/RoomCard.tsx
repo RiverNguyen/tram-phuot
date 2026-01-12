@@ -6,6 +6,7 @@ import RoomImageSlider from './RoomImageSlider'
 import RoomInfo from './RoomInfo'
 import RoomPrice from './RoomPrice'
 import QuantitySelector from './QuantitySelector'
+import { useTranslations } from 'next-intl'
 
 type RoomCardProps = {
   room: IRoom
@@ -27,12 +28,12 @@ const RoomCard = ({
   onOpenGallery,
 }: RoomCardProps) => {
   const images = room?.acf?.gallery ?? []
-
+  const t = useTranslations('DetailHotelPage')
   return (
     <div className='rounded-[0.5rem] bg-[#f8f8f8] w-full flex overflow-hidden xsm:flex-col xsm:bg-[#FFFFFF]'>
       <RoomImageSlider
         images={images}
-        roomTitle={room?.title ?? 'Room'}
+        roomTitle={room?.title ?? t('textRoom')}
         roomIndex={roomIndex}
         currentSlide={currentSlide}
         onSlideChange={(activeIndex) => onSlideChange(roomIndex, activeIndex)}
