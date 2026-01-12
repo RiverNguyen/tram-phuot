@@ -1,10 +1,7 @@
-import Banner from '@/modules/about-us/_components/Banner'
 import ENDPOINTS from '@/configs/endpoints'
 import fetchData from '@/fetches/fetchData'
-import OurAbout from '@/modules/about-us/_components/OurAbout'
-import OurStoryAbout from '@/modules/about-us/_components/OurStoryAbout'
-import JourneyAbout from '@/modules/about-us/_components/JourneyAbout'
-import VideoStory from '@/modules/about-us/_components/VideoStory'
+import WrapperAbout from '@/modules/about-us'
+
 
 export default async function page({
   params,
@@ -25,22 +22,14 @@ export default async function page({
   })
 
   return (
-    <main className='relative w-full h-full bg-[#FDF4ED] overflow-hidden'>
-      {/* Banner */}
-      <Banner
+    <WrapperAbout
         locale={locale}
-        data={aboutPage?.acf}
-      />
-      <OurAbout
+        banner={aboutPage?.acf}
         about={aboutPage?.acf?.about_us}
-      />
-      
-      <OurStoryAbout content={aboutPage?.acf?.our_story} />
-      <JourneyAbout explorers={aboutPage?.acf.where_dreams_take_flight} />
-      <VideoStory
+        content={aboutPage?.acf?.our_story}
+        explorers={aboutPage?.acf.where_dreams_take_flight}
         theExplorer={aboutPage?.acf.the_explorers}
         video={aboutPage?.acf.video}
       />
-    </main>
   )
 }
