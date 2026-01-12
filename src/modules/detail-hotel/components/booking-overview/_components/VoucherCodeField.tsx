@@ -4,6 +4,7 @@ import ICTicket from '@/components/icons/ICTicket'
 import { Field, FieldError, FieldLabel } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 import { UseFormRegister, FieldErrors } from 'react-hook-form'
+import { useTranslations } from 'next-intl'
 
 type VoucherCodeFieldProps = {
   register: UseFormRegister<any>
@@ -22,13 +23,14 @@ export default function VoucherCodeField({
   onApply,
   isApplying,
 }: VoucherCodeFieldProps) {
+  const t = useTranslations('DetailHotelPage')
   return (
     <Field>
       <FieldLabel
         className='text-[0.875rem] leading-[1.2] tracking-[0.00875rem] text-[#2E2E2E]/75'
         htmlFor='coupon_code'
       >
-        Voucher code
+        {t('textVoucherCode')}
       </FieldLabel>
       <div className='flex space-x-2'>
         <div className='relative flex-1'>
@@ -51,7 +53,7 @@ export default function VoucherCodeField({
           onClick={onApply}
           className='bg-text-title-h2 flex-center cursor-pointer rounded-[0.75rem] px-4 h-[3.25rem] text-[0.875rem] leading-[1.2] font-semibold tracking-[0.00875rem] text-white uppercase disabled:cursor-not-allowed disabled:opacity-50 whitespace-nowrap'
         >
-          Apply
+          {t('textApply')}
         </button>
       </div>
       <FieldError>{errors.coupon_code?.message as string | undefined}</FieldError>

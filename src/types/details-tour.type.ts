@@ -102,6 +102,7 @@ export type RelatedTourType = {
   locations: WPTaxonomy[]
   tour_type: WPTaxonomy[]
   price_person: number
+  taxonomies?: Record<string, WPTaxonomy[]>
 }
 export type DetailsTourRelatedToursResType = {
   locale: string

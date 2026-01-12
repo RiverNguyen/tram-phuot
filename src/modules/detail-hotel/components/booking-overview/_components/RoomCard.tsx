@@ -1,6 +1,7 @@
 'use client'
 
 import ICTrash from '@/components/icons/ICTrash'
+import { useTranslations } from 'next-intl'
 
 type Room = {
   id: number | string
@@ -18,6 +19,7 @@ type RoomCardProps = {
 }
 
 export default function RoomCard({ room, onRemove, formatUSD }: RoomCardProps) {
+  const t = useTranslations('DetailHotelPage')
   return (
     <div className='p-4 bg-[#f8f8f8] rounded-[1rem]'>
       <div className='flex-between mb-[1.375rem]'>
@@ -35,15 +37,15 @@ export default function RoomCard({ room, onRemove, formatUSD }: RoomCardProps) {
       </div>
       <div className='flex-between'>
         <p className='text-[#2e2e2e]/60 text-[0.875rem] leading-[1.5] opacity-80'>
-          {room.quantity} Room
+          {room.quantity} {t('textRoom')}
         </p>
         <p className='text-[#2e2e2e] text-[0.875rem] font-semibold leading-[1.6] tracking-[-0.00875rem]'>
-          Price:{' '}
+          {t('textPrice')}:{' '}
           <span className='font-phu-du font-bold text-base leading-[1.1] text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)]'>
             {formatUSD(room.pricePerNight)} USD
           </span>
-          <span className='text-[0.875rem] font-normal leading-[1.5] ml-1'>/night</span>
-          <span className='text-[0.875rem] font-normal leading-[1.5] ml-1'>/room</span>
+          <span className='text-[0.875rem] font-normal leading-[1.5] ml-1'>/{t('textNight')}</span>
+          <span className='text-[0.875rem] font-normal leading-[1.5] ml-1'>/{t('textRoom')}</span>
         </p>
       </div>
     </div>

@@ -65,9 +65,7 @@ export default function TheExplorers({
                 classNameButtonContainer='xsm:w-full'
               >
                 <div className='flex items-center justify-center gap-[0.625rem]'>
-                  <span className='xsm:text-[0.75rem] xsm:leading-[0.9rem] font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] uppercase bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] bg-clip-text text-transparent'>
-                    {explorers?.button_1?.link?.title}
-                  </span>
+                  <span>{explorers?.button_1?.link?.title}</span>
                   <Image
                     src={explorers?.button_1?.image?.url || ''}
                     alt={explorers?.button_1?.image?.alt || ''}
@@ -85,12 +83,10 @@ export default function TheExplorers({
             >
               <BrandButton
                 variant='transparent'
-                classNameButtonContainer='xsm:w-full'
+                classNameButtonContainer='xsm:w-full group'
               >
                 <div className='flex items-center justify-center gap-[0.625rem]'>
-                  <span className='xsm:text-[0.75rem] xsm:leading-[0.9rem] font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] uppercase bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] bg-clip-text text-transparent'>
-                    {explorers?.button_2?.link?.title}
-                  </span>
+                  <span>{explorers?.button_2?.link?.title}</span>
                   <Image
                     src={explorers?.button_2?.image?.url || ''}
                     alt={explorers?.button_2?.image?.alt || ''}

@@ -3,6 +3,23 @@ import WrapperHotelList from '@/modules/hotels/_components/WrapperHotelList'
 import hotelService from '@/services/hotels'
 import ENDPOINTS from '@/configs/endpoints'
 import fetchData from '@/fetches/fetchData'
+import getMetaDataRankMath from '@/fetches/getMetaDataRankMath'
+import metadataValues from '@/utils/metadataValues'
+import endpoints from '@/configs/endpoints'
+
+export const dynamicParams = false
+
+export function generateStaticParams() {
+  return [{ locale: 'vi' }]
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const res = await getMetaDataRankMath(
+    endpoints.hotel.rank_math[locale as keyof typeof endpoints.hotel.rank_math],
+  )
+  return metadataValues(res)
+}
 
 export default async function page({
   params,
@@ -13,6 +30,10 @@ export default async function page({
     locations?: string
     ['hotel-amenities']?: string
     paged?: string
+    checkIn?: string
+    checkOut?: string
+    adults?: string
+    children?: string
   }>
 }) {
   const [{ locale }, sp] = await Promise.all([params, searchParams])
@@ -33,7 +54,7 @@ export default async function page({
   ])
 
   return (
-    <main className='relative w-full h-full bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")]'>
+    <main className='relative w-full h-full bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")] bg-center bg-cover'>
       {/* Banner */}
       <Banner
         locale={locale}

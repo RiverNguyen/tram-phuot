@@ -3,7 +3,23 @@ import WrapperTourList from '@/modules/tours/_components/WrapperTourList'
 import tourService from '@/services/tour'
 import ENDPOINTS from '@/configs/endpoints'
 import fetchData from '@/fetches/fetchData'
+import endpoints from '@/configs/endpoints'
+import getMetaDataRankMath from '@/fetches/getMetaDataRankMath'
+import metadataValues from '@/utils/metadataValues'
 
+export const dynamicParams = false
+
+export function generateStaticParams() {
+  return [{ locale: 'vi' }]
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const res = await getMetaDataRankMath(
+    endpoints.tour.rank_math[locale as keyof typeof endpoints.tour.rank_math],
+  )
+  return metadataValues(res)
+}
 export default async function page({
   params,
   searchParams,

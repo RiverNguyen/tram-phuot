@@ -1,5 +1,6 @@
 import { IMedia } from '@/interface/media.interface'
 import { ITerm } from '@/interface/taxonomy.interface'
+import { RelatedTourType } from '@/types/details-tour.type'
 
 export interface IHotelDetail {
   slug: string
@@ -29,6 +30,9 @@ export interface IHotelDetail {
     }
     room_and_dorm: {
       select: IRoom[]
+    }
+    related_hotels?: {
+      hotels: RelatedTourType[]
     }
   }
 }
@@ -94,6 +98,7 @@ export interface IHotelBanner {
   address: string
   gallery: string[]
   review: IHotelReview
+  price_person?: number | string
 }
 
 export interface IHotelACF {

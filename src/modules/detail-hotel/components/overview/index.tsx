@@ -1,4 +1,5 @@
 import { IHotelDetail, ITaxonomies } from '@/interface/hotel.interface'
+import { useTranslations } from 'next-intl'
 
 const Overview = ({
   overview,
@@ -7,17 +8,18 @@ const Overview = ({
   overview: IHotelDetail['acf']['overview']
   taxonomies: ITaxonomies[]
 }) => {
+  const t = useTranslations('DetailHotelPage')
   return (
-    <section className='p-8 rounded-[0.5rem] bg-white'>
-      <h3 className='text-[1.5rem] font-phu-du leading-[1.1] font-bold bg-clip-text text-transparent bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit mb-5'>
-        Overview
+    <section className='p-8 rounded-[0.5rem] bg-white xsm:bg-transparent xsm:px-4 xsm:py-0'>
+      <h3 className='text-[1.5rem] font-phu-du leading-[1.1] font-bold bg-clip-text text-transparent bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit mb-5 xsm:mb-4 xsm:text-[1.125rem]'>
+        {t('textOverview')}
       </h3>
       <article
-        className='[&_ul]:list-disc [&_ul]:list-inside [&_ul_li::marker]:text-orange-500 text-body-t1/75 leading-[1.5]'
+        className='[&_ul]:list-disc [&_ul]:list-inside [&_ul_li::marker]:text-orange-500 text-body-t1/75 leading-[1.5] xsm:text-[0.875rem]'
         dangerouslySetInnerHTML={{ __html: overview?.content || '' }}
       />
-      <div className='p-4 bg-[#f8f8f8] rounded-[0.5rem] mt-6'>
-        <p className='text-[#2E2E2E] font-bold leading-[1.1] font-phu-du'>Amenities</p>
+      <div className='p-4 bg-[#f8f8f8] rounded-[0.5rem] mt-6 xsm:mt-[2.25rem] xsm:bg-transparent xsm:p-0'>
+        <p className='text-[#2E2E2E] font-bold leading-[1.1] font-phu-du'>{t('textAmenities')}</p>
         <div className='grid grid-cols-2 mt-[0.875rem] gap-[0.625rem]'>
           {taxonomies
             ?.find((taxonomy) => taxonomy.taxonomy === 'hotel-amenities')
@@ -26,8 +28,8 @@ const Overview = ({
                 key={term.slug}
                 className='flex space-x-2 items-center'
               >
-                <AmenitiesIcon />
-                <p className='text-[#2e2e2e]/75 leading-[1.5]'>{term.name}</p>
+                <AmenitiesIcon className='size-4' />
+                <p className='text-[#2e2e2e]/75 leading-[1.5] xsm:text-[0.875rem]'>{term.name}</p>
               </div>
             ))}
         </div>

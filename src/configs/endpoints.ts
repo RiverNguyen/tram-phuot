@@ -4,6 +4,16 @@ const ENDPOINTS = {
   about: {
     en: 'wp/v2/pages/213?_fields=acf&acf_format=standard',
     vi: 'wp/v2/pages/215?_fields=acf&acf_format=standard',
+    rank_math: {
+      en: '/about-us',
+      vi: '/ve-chung-toi',
+    },
+  },
+  thank_you: {
+    rank_math: {
+      en: '/thank-you',
+      vi: '/cam-on',
+    },
   },
   hotel: {
     getDetail: (slug: string) => `api/v1/get-detail/hotels?slug=${slug}`,
@@ -16,6 +26,14 @@ const ENDPOINTS = {
     en: 'wp/v2/pages/559?_fields=acf&acf_format=standard',
     vi: 'wp/v2/pages/562?_fields=acf&acf_format=standard',
     coupons: 'api/v1/coupons',
+    rank_math: {
+      en: '/hotel-list',
+      vi: '/danh-sach-khach-san',
+    },
+    rank_math_detail: {
+      en: (slug: string) => `/hotels/${slug}`,
+      vi: (slug: string) => `/vi/hotels/${slug}`,
+    },
   },
   taxonomy: {
     get: (locale: string, taxonomy: string) =>
@@ -25,6 +43,14 @@ const ENDPOINTS = {
     get: (locale: string, type: string) => `api/v1/taxonomies/${type}?lang=${locale}`,
   },
   tour: {
+    rank_math: {
+      en: '/tour-list',
+      vi: '/danh-sach-tour',
+    },
+    rank_math_detail: {
+      en: (slug: string) => `/tour/${slug}`,
+      vi: (slug: string) => `/vi/tour/${slug}`,
+    },
     list: 'api/v1/get-all/tour',
     taxonomies: 'api/v1/taxonomies/tour',
     detail: 'api/v1/tour/detail',
@@ -35,8 +61,20 @@ const ENDPOINTS = {
     coupons: 'api/v1/coupons',
   },
   blogs: {
+    list: 'api/v1/get-all/post',
+    taxonomies: 'api/v1/taxonomies/post',
+    featuredNews: 'api/v1/page-acf?page_id=248&name=featured_news&acf=true',
+    rank_math: {
+      en: '/blog-list',
+      vi: '/danh-sach-bai-viet',
+    },
+    rank_math_detail: {
+      en: (slug: string) => `/${slug}`,
+      vi: (slug: string) => `/vi/${slug}`,
+    },
     en: 'wp/v2/pages/248?_fields=acf&acf_format=standard',
     vi: 'wp/v2/pages/250?_fields=acf&acf_format=standard',
+    getDetail: (slug: string) => `api/v1/get-detail/post?slug=${slug}`,
   },
   wordpress: {
     siteSettings: 'api/v1/site-settings',
@@ -48,6 +86,10 @@ const ENDPOINTS = {
   home: {
     en: 'wp/v2/pages/71?_fields=acf&acf_format=standard',
     vi: 'wp/v2/pages/84?_fields=acf&acf_format=standard',
+    rank_math: {
+      en: '/homepage',
+      vi: '/trang-chu',
+    },
   },
   promotion: {
     coupon: 'api/v1/get-all/coupon',
@@ -55,6 +97,10 @@ const ENDPOINTS = {
     couponSpecialOffer: 'api/v1/page-acf?page_id=410&name=coupon&acf=true',
     en: 'wp/v2/pages/410?_fields=acf&acf_format=standard',
     vi: 'wp/v2/pages/412?_fields=acf&acf_format=standard',
+    rank_math: {
+      en: '/promotions',
+      vi: '/khuyen-mai',
+    },
   },
   contact_form: {
     form_booking_tour_vi: {
@@ -92,6 +138,10 @@ const ENDPOINTS = {
     form_booking_hotel_vi: {
       id: '649',
       unit_tag: 'bafab39',
+    },
+    rank_math: {
+      en: '/contact',
+      vi: '/lien-he',
     },
   },
   our_stories: {

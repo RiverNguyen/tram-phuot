@@ -1,6 +1,51 @@
-export const SubmitButton = () => {
+'use client'
+
+import { useRouter } from '@/i18n/navigation'
+import { useParams } from 'next/navigation'
+import { format } from 'date-fns'
+
+interface SubmitButtonProps {
+  selectedStation: string
+  checkInDate: Date | undefined
+  checkOutDate: Date | undefined
+  adults: number
+  children: number
+}
+
+export const SubmitButton = ({
+  selectedStation,
+  checkInDate,
+  checkOutDate,
+  adults,
+  children,
+}: SubmitButtonProps) => {
+  const router = useRouter()
+  const params = useParams()
+  const locale = params?.locale as string
+
+  const handleClick = () => {
+    if (!checkInDate || !checkOutDate) return
+
+    const hotelsPath = locale === 'en' ? '/hotels' : '/danh-sach-khach-san'
+    const queryParams = new URLSearchParams()
+    
+    if (selectedStation) {
+      queryParams.set('locations', selectedStation)
+    }
+    
+    queryParams.set('checkIn', format(checkInDate, 'yyyy-MM-dd'))
+    queryParams.set('checkOut', format(checkOutDate, 'yyyy-MM-dd'))
+    queryParams.set('adults', adults.toString())
+    queryParams.set('children', children.toString())
+
+    router.push(`${hotelsPath}?${queryParams.toString()}`)
+  }
+
   return (
-    <button className='absolute top-0 right-0 h-full cursor-pointer'>
+    <button 
+      onClick={handleClick}
+      className='absolute top-0 right-0 h-full cursor-pointer'
+    >
       <svg
         xmlns='http://www.w3.org/2000/svg'
         width='76'

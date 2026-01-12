@@ -13,10 +13,12 @@ import 'swiper/css'
 import 'swiper/css/autoplay'
 import 'swiper/css/pagination'
 import './style.css'
+import { useTranslations } from 'next-intl'
 
 export default function Banner({ detailHotel }: { detailHotel: IHotelDetail }) {
   const [openGallery, setOpenGallery] = useState(false)
   const { isMobile, isLoading } = useIsMobile()
+  const t = useTranslations('DetailHotelPage')
 
   return (
     <>
@@ -70,7 +72,7 @@ export default function Banner({ detailHotel }: { detailHotel: IHotelDetail }) {
                 height={12}
                 className='size-[0.625rem] object-cover'
               />
-              <span>Show Gallery</span>
+              <span>{t('textShowGallery')}</span>
             </button>
           </div>
         )}
@@ -125,7 +127,15 @@ export default function Banner({ detailHotel }: { detailHotel: IHotelDetail }) {
               </div>
             </div>
           </div>
-          <BrandButton2 className='xsm:mb-4 xsm:space-x-[0.4375rem] cursor-default space-x-[0.625rem]'>
+          <BrandButton2
+            className='xsm:mb-4 xsm:space-x-[0.4375rem] cursor-pointer space-x-[0.625rem]'
+            onClick={() => {
+              const element = document.getElementById('booking-room-dorm')
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              }
+            }}
+          >
             <Image
               src='/detail-hotel/sofa.svg'
               alt=''
@@ -133,7 +143,9 @@ export default function Banner({ detailHotel }: { detailHotel: IHotelDetail }) {
               height={16}
               className='xsm:w-[0.69594rem] xsm:h-[0.75rem] h-[1.25rem] w-[1.15988rem] object-cover'
             />
-            <span>{detailHotel?.acf?.room_and_dorm?.select?.length} Rooms Available!</span>
+            <span>
+              {detailHotel?.acf?.room_and_dorm?.select?.length} {t('textRoomsAvailable')}
+            </span>
           </BrandButton2>
         </div>
 
@@ -211,7 +223,7 @@ export default function Banner({ detailHotel }: { detailHotel: IHotelDetail }) {
                           height={16}
                           className='size-[0.875rem] object-cover'
                         />
-                        <span>Show Gallery</span>
+                        <span>{t('textShowGallery')}</span>
                       </button>
                     </div>
                   )}

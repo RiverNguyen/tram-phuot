@@ -53,7 +53,8 @@
     "error": "Lỗi",
     "title": "Không tìm thấy trang",
     "message": "Trang bạn đang tìm có thể đã bị xóa, đổi tên hoặc tạm thời không khả dụng",
-    "button": "Quay lại trang chủ"
+    "button": "Quay lại trang chủ",
+    "desc": "Trang bạn đang tìm có thể đã bị xóa, đổi tên hoặc tạm thời không khả dụng"
   },
   "ThankYou": {
     "title": "Cảm ơn bạn đã tin tưởng chúng tôi!",
@@ -68,9 +69,9 @@
     "searchFilter": "Bộ lọc",
     "done": "Hoàn thành",
     "all": "Tất cả",
-    "locations": "Địa điểm",
-    "tour-type": "Loại tour",
-    "tour-duration": "Thời gian tour"
+    "Locations": "Địa điểm",
+    "Tour types": "Loại tour",
+    "Tour durations": "Thời gian tour"
   },
   "ListCouponPage": {
     "noResult": "Không có kết quả",
@@ -88,8 +89,24 @@
     "selected": "Đã chọn",
     "searchFilter": "Bộ lọc",
     "done": "Hoàn thành",
-    "amenities": "Tiện ích",
-    "locations": "Địa điểm"
+    "Amenities": "Tiện ích",
+    "Locations": "Địa điểm"
+  },
+  "BlogsPage": {
+    "seeDetail": "Xem chi tiết",
+    "sortBy": "Sắp xếp",
+    "sortNewestFirst": "Mới nhất trước",
+    "sortAlphabeticalAZ": "A-Z",
+    "sortAlphabeticalZA": "Z-A",
+    "typeNews": "Loại tin tức",
+    "kind": "Thể loại",
+    "reset": "Xóa tất cả",
+    "searchFilter": "Bộ lọc",
+    "noResult": "Không có kết quả",
+    "apply": "Áp dụng",
+    "all": "Tất cả",
+    "selected": "Đã chọn",
+    "category": "Danh mục"
   },
   "DetailsTourPage": {
     "metaTourDuration": "Thời gian tour:",
@@ -188,5 +205,55 @@
       "textCopied": "Đã sao chép mã giảm giá",
       "textMinApplication": "Giá tối thiểu"
     }
+  },
+  "DetailBlogPage": {
+    "breadcrumbHome": "Trang chủ",
+    "breadcrumbBlogList": "Danh sách tin tức",
+    "contentSummary": "Tóm tắt nội dung",
+    "seeMore": "Xem thêm",
+    "seeLess": "Thu nhỏ",
+    "postedBy": "Đăng bởi",
+    "postedOn": "Ngày đăng",
+    "share": "Chia sẻ",
+    "otherBlog": "Tin tức khác",
+    "relatedBlogs": "Tin tức liên quan",
+    "viewMore": "Xem thêm",
+    "copyClipboard": "Liên kết đã được sao chép vào bộ nhớ tạm",
+    "copyClipboardError": "Không thể sao chép vào bộ nhớ tạm. Vui lòng thử lại."
+  },
+  "DetailHotelPage": {
+    "textShowGallery": "Thư viện",
+    "textRoomsAvailable": "Phòng có sẵn!",
+    "textOverview": "Tổng quan",
+    "textAmenities": "Tiện ích",
+    "textBookingRoomAndDorm": "Đặt phòng & Dorm",
+    "textPricesMayIncreaseOnWeekendsOrHolidays": "Giá có thể tăng trong ngày cuối tuần hoặc ngày lễ",
+    "textDetail": "Chi tiết",
+    "textArea": "Diện tích",
+    "textRoomType": "Loại phòng",
+    "textNumberOfBeds": "Số giường",
+    "textRoom": "Phòng",
+    "textNight": "đêm",
+    "textLocation": "Địa điểm",
+    "textViewOnGoogleMap": "Xem trên Google Map",
+    "textBookingOverview": "Đặt phòng",
+    "textAdults": "Người lớn",
+    "textChild": "Trẻ em",
+    "textBookNow": "Đặt ngay",
+    "textAtLeast1AdultRequired": "Ít nhất 1 người lớn là bắt buộc",
+    "textPleaseSelectCheckInAndCheckOutDatesBeforeSendingInformation": "Vui lòng chọn ngày nhận và trả phòng trước khi gửi thông tin.",
+    "textBookingSuccessfulOurStaffWillContactYouSoon": "Đặt phòng thành công, nhân viên của chúng tôi sẽ liên hệ với bạn sớm nhất.",
+    "textCheckInDate": "Ngày nhận phòng",
+    "textCheckOutDate": "Ngày trả phòng",
+    "textFullName": "Họ tên",
+    "textEmail": "Email",
+    "textPhoneNumber": "Số điện thoại",
+    "textProvisional": "Tạm tính",
+    "textVoucher": "Voucher",
+    "textTotal": "Tổng cộng",
+    "textPrice": "Giá",
+    "textVoucherCode": "Mã giảm giá",
+    "textApply": "Áp dụng",
+    "textPolicy": "Chính sách"
   }
 }

@@ -1,23 +1,25 @@
 import { IHotelDetail } from '@/interface/hotel.interface'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 const Location = ({ location }: { location: IHotelDetail['acf']['location'] }) => {
+  const t = useTranslations('DetailHotelPage')
   return (
-    <section className='bg-white p-8 rounded-[0.5rem] mt-8'>
-      <div className='flex-y-center space-x-[0.625rem]'>
+    <section className='bg-white p-8 rounded-[0.5rem] mt-8 xsm:bg-transparent xsm:p-0 xsm:pt-8 xsm:rounded-none xsm:border xsm:border-t-black/10'>
+      <div className='flex-y-center space-x-[0.625rem] xsm:px-4'>
         <h3 className='text-[1.5rem] font-phu-du leading-[1.1] font-bold bg-clip-text text-transparent bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
-          Location
+          {t('textLocation')}
         </h3>
         <p className='text-[#2E2E2E]/60 text-[0.875rem] leading-[1.5]'>{location?.detail}</p>
       </div>
-      <div className='mt-6 relative w-full group h-[22.2rem] overflow-hidden'>
+      <div className='mt-6 relative w-full group h-[25.125rem] overflow-hidden'>
         <Image
           src={location?.image.url}
           alt={location?.image.alt}
           width={630}
           height={355}
-          className='w-full h-full object-cover hover:scale-105 transition-all duration-300'
+          className='w-full h-full object-cover lg:hover:scale-105 transition-all duration-300'
         />
         <Link
           href={location?.link_gg_map}
@@ -55,7 +57,7 @@ const Location = ({ location }: { location: IHotelDetail['acf']['location'] }) =
               />
             </svg>
             <p className='text-[0.75rem] text-white font-medium leading-[1.6] tracking-[-0.0075rem]'>
-              View on Google Map
+              {t('textViewOnGoogleMap')}
             </p>
           </div>
         </Link>

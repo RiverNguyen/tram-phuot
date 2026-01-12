@@ -21,10 +21,12 @@ interface BrandButtonProps {
   classNameButtonText?: string
   children: React.ReactNode
   type?: BrandButtonType
+  showIconTransparent?: boolean
 }
 
 export default function BrandButton({
   showButtonTexture = true,
+  showIconTransparent = false,
   variant = 'greenGradient',
   type = { variant: 'button', type: 'button' },
   classNameButtonContainer,
@@ -63,8 +65,10 @@ export default function BrandButton({
         ></div>
         <div
           className={cn(
-            'xsm:text-[0.75rem] relative z-2 text-[0.875rem] leading-none font-semibold text-white uppercase',
-            variant === 'transparent' && 'bg-blue-gradient bg-clip-text text-transparent',
+            'xsm:text-[0.75rem] relative z-2 text-[0.875rem] leading-none font-semibold uppercase',
+            variant === 'transparent'
+              ? 'bg-blue-gradient bg-clip-text text-transparent lg:group-hover:bg-none lg:group-hover:text-white'
+              : 'text-white lg:group-hover:text-white',
             classNameButtonText,
           )}
         >
@@ -77,9 +81,12 @@ export default function BrandButton({
           )}
         ></div>
         {variant === 'transparent' ? (
-          <IconArrowTopRightGradient className='absolute top-2 right-2 size-2.5' />
+          <>
+            <IconArrowTopRightGradient className='absolute top-2 right-2 size-2.5 lg:group-hover:hidden' />
+            <IconArrowTopRightWhite className='absolute top-2 right-2 hidden size-2.5 lg:group-hover:block' />
+          </>
         ) : (
-          <IconArrowTopRightWhite className='absolute top-2 right-2 size-2.5' />
+          <IconArrowTopRightWhite className='absolute top-2 right-2 size-2.5 lg:group-hover:block' />
         )}
         {showButtonTexture && (
           <>
@@ -117,8 +124,10 @@ export default function BrandButton({
       ></div>
       <div
         className={cn(
-          'xsm:text-[0.75rem] relative z-2 text-[0.875rem] leading-none font-semibold text-white uppercase',
-          variant === 'transparent' && 'bg-blue-gradient bg-clip-text text-transparent',
+          'xsm:text-[0.75rem] relative z-2 text-[0.875rem] leading-none font-semibold uppercase',
+          variant === 'transparent'
+            ? 'bg-blue-gradient bg-clip-text text-transparent lg:group-hover:bg-none lg:group-hover:text-white'
+            : 'text-white lg:group-hover:text-white',
           classNameButtonText,
         )}
       >
@@ -131,9 +140,12 @@ export default function BrandButton({
         )}
       ></div>
       {variant === 'transparent' ? (
-        <IconArrowTopRightGradient className='absolute top-2 right-2 size-2.5' />
+        <>
+          <IconArrowTopRightGradient className='absolute top-2 right-2 size-2.5 lg:group-hover:hidden' />
+          <IconArrowTopRightWhite className='absolute top-2 right-2 hidden size-2.5 lg:group-hover:block' />
+        </>
       ) : (
-        <IconArrowTopRightWhite className='absolute top-2 right-2 size-2.5' />
+        <IconArrowTopRightWhite className='absolute top-2 right-2 size-2.5 lg:group-hover:block' />
       )}
       {showButtonTexture && (
         <>

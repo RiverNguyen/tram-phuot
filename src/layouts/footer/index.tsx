@@ -16,11 +16,18 @@ export default function Footer({ data }: { data: IFooter }) {
   const pathname = usePathname()
 
   const isThankyouPage = pathname === '/thank-you' || pathname === '/cam-on'
+  const isBlogDetail = pathname.includes('/blogs') && pathname.split('/').length >= 3
 
   if (isThankyouPage) return null
 
   return (
-    <footer className='relative bg-[#FDF4ED] h-[85.8125rem] xsm:h-auto overflow-hidden z-1'>
+    <footer
+      className={cn(
+        'xsm:h-auto relative z-[11] h-[85.8125rem] overflow-hidden bg-[#FDF4ED]',
+        !isLoading && isMobile && isThankyouPage && 'bg-transparent',
+        isBlogDetail && 'xsm:mb-[2.75rem]',
+      )}
+    >
       {/* Background + mask */}
       <div className="xsm:mask-[url('/footer/d-footer_mask_mobile.webp')] xsm:mask-size-[23.4375rem_32rem] absolute inset-0 mask-alpha mask-no-repeat sm:mask-[url('/footer/d-footer_mask.webp')] sm:mask-size-[100.07813rem_92.876rem]">
         <Image

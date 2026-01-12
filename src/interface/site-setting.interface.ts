@@ -7,6 +7,12 @@ export interface ISiteSetting {
     footer: IFooter
     social: ISocial[]
     contact: IContact
+    cta: {
+      list: {
+        icon: string
+        link: string
+      }[]
+    }
   }
 }
 
@@ -23,6 +29,10 @@ export interface IHeader {
       image: IMedia
     }
   }[]
+  social_media: {
+    image: string
+    link: string
+  }
 }
 
 export interface IMenuFooter {
@@ -66,7 +76,7 @@ export interface IFooter {
 
 export interface ISocial {
   social_image: IMedia
-  social_link: string 
+  social_link: string
 }
 
 export interface IContact {

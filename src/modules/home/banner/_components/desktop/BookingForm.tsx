@@ -7,14 +7,10 @@ import { SubmitButton } from '@/modules/home/banner/_components/desktop/SubmitBu
 import { StationSelector } from '@/modules/home/banner/_components/desktop/StationSelector'
 import { DatePickerField } from '@/modules/home/banner/_components/desktop/DatePickerField'
 import { GuestCounter } from '@/modules/home/banner/_components/desktop/GuestCounter'
-
-interface Station {
-  name: string
-  value: string
-}
+import { ILocation } from '@/interface/taxonomy.interface'
 
 interface BookingFormProps {
-  stations: Station[]
+  stations: ILocation[]
   selectedStation: string
   onStationChange: (value: string) => void
   checkInDate: Date | undefined
@@ -67,10 +63,19 @@ export const BookingForm = ({
           backdropFilter: 'blur(8px)',
         }}
       >
-        <SubmitButton />
+        <SubmitButton
+          selectedStation={selectedStation}
+          checkInDate={checkInDate}
+          checkOutDate={checkOutDate}
+          adults={adults}
+          children={children}
+        />
 
         <StationSelector
-          stations={stations}
+          stations={stations.map((station) => ({
+            name: station.name,
+            value: station.slug,
+          }))}
           selectedStation={selectedStation}
           onStationChange={onStationChange}
         />

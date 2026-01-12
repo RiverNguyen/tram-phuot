@@ -2,8 +2,9 @@
 
 import { ICCMenu } from '@/components/icons'
 import SheetProvider from '@/components/provider/SheetProvider'
-import { IHeader, ISocialMedia } from '@/interface/site-setting.interface'
+import { useScrollHeader } from '@/hooks/useScrollHeader'
 import { Link } from '@/i18n/navigation'
+import { IHeader } from '@/interface/site-setting.interface'
 import DropdownMenu from '@/layouts/header/_components/desktop/DropdownMenu'
 import NavigationMenu from '@/layouts/header/_components/desktop/NavigationMenu'
 import MobileLanguageSwitcher from '@/layouts/header/_components/mobile/MobileLanguageSwitcher'
@@ -13,16 +14,13 @@ import MobileSocialMedia from '@/layouts/header/_components/mobile/MobileSocialM
 import { AnimatePresence } from 'motion/react'
 import Image from 'next/image'
 import { useRef, useState } from 'react'
-import { useScrollHeader } from '@/hooks/useScrollHeader'
 
-const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: ISocialMedia[] }) => {
+const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['social_media'] }) => {
   const navLeft = data?.navigations ? data.navigations.slice(0, 4) : []
   const navRight = data?.navigations ? data.navigations.slice(4) : []
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [hoveredSide, setHoveredSide] = useState<'left' | 'right' | null>(null)
   const [openSheet, setOpenSheet] = useState(false)
-
-  console.log(socialMedia)
 
   const handleItemHover = (index: number, side: 'left' | 'right') => {
     setHoveredIndex(index)
@@ -97,7 +95,7 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: ISocialMedi
           </Link>
           <button
             onClick={() => setOpenSheet(true)}
-            className='flex-center h-[2.5rem] rounded-[0.5rem] bg-white/20 px-4 text-[0.75rem] leading-[1.5] font-medium text-white backdrop-blur-[5px]'
+            className='flex-center h-[2.5rem] rounded-[0.5rem] bg-white/20 border-none px-4 text-[0.75rem] leading-[1.5] font-medium text-white backdrop-blur-[5px]'
           >
             <ICCMenu className='mr-2 h-[0.7rem] w-4 text-white' />
             Menu
@@ -108,7 +106,7 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: ISocialMedi
         <SheetProvider
           open={openSheet}
           setOpen={setOpenSheet}
-          className='w-full rounded-none border-0 p-0'
+          className='w-full rounded-none border-none p-0'
           hideCloseButton
         >
           <div>
