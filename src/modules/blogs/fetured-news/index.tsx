@@ -11,8 +11,7 @@ export default function FeturedNews({
   title: string
   locale: string
 }) {
-
-  const baseHref = locale === 'en' ? '/blogs' : '/danh-sach-tin-tuc'
+  const baseHref = locale === 'en' ? '/blogs' : '/vi/danh-sach-tin-tuc'
   return (
     <div className='xsm:gap-0 flex w-full flex-col gap-[2rem]'>
       <h2 className='xsm:px-[1rem] xsm:text-[1.25rem] xsm:leading-[1.5rem] xsm:tracking-[0.025rem] font-phu-du text-[3rem] leading-[3rem] font-medium text-[#2E2E2E] uppercase'>

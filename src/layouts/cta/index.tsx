@@ -50,7 +50,6 @@ const itemVariants: Variants = {
 
 const CTA = ({ data }: { data: { icon: string; link: string }[] }) => {
   const [isOpen, setIsOpen] = useState(false)
-  console.log(data)
 
   return (
     <div className='fixed right-8 bottom-16 xsm:bottom-8 xsm:z-[10] z-[20] flex flex-col items-center gap-3'>
