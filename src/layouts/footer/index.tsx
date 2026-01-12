@@ -16,6 +16,7 @@ export default function Footer({ data }: { data: IFooter }) {
   const pathname = usePathname()
 
   const isThankyouPage = pathname === '/thank-you' || pathname === '/cam-on'
+  const isBlogDetail = pathname.includes('/blogs') && pathname.split('/').length >= 3
 
   if (isThankyouPage) return null
 
@@ -24,6 +25,7 @@ export default function Footer({ data }: { data: IFooter }) {
       className={cn(
         'xsm:h-auto relative z-[11] h-[85.8125rem] overflow-hidden bg-[#FDF4ED]',
         !isLoading && isMobile && isThankyouPage && 'bg-transparent',
+        isBlogDetail && 'xsm:mb-[2.75rem]',
       )}
     >
       {/* Background + mask */}

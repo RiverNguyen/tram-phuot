@@ -8,56 +8,7 @@ import { toast } from 'sonner'
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 
-function slugify(text: string): string {
-  return text
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .trim()
-    .replace(/\s+/g, '-')
-}
-
-function normalizeCmsHtml(html: string): string {
-  if (!html) return html
-
-  // dùng DOMParser nếu có (browser / edge runtime)
-  if (typeof window !== 'undefined') {
-    const parser = new DOMParser()
-    const doc = parser.parseFromString(html, 'text/html')
-
-    const headings = doc.querySelectorAll('h1, h2, h3, h4, h5, h6')
-    const usedIds = new Set<string>()
-
-    headings.forEach((heading) => {
-      if (heading.id) {
-        usedIds.add(heading.id)
-        return
-      }
-
-      const text = heading.textContent?.trim()
-      if (!text) return
-
-      const baseId = slugify(text)
-      let id = baseId
-      let i = 1
-
-      while (usedIds.has(id)) {
-        id = `${baseId}-${i++}`
-      }
-
-      heading.id = id
-      usedIds.add(id)
-    })
-
-    return doc.body.innerHTML
-  }
-
-  // fallback SSR: return nguyên html
-  return html
-}
-
-export default function Content({ blog }: { blog: IBlogDetail }) {
+export default function Content({ blog, html }: { blog: IBlogDetail; html: string }) {
   const { locale } = useParams<{ locale: string }>()
   const t = useTranslations('DetailBlogPage')
   const [url, setUrl] = useState('')
@@ -83,7 +34,7 @@ export default function Content({ blog }: { blog: IBlogDetail }) {
         id='blog_detail'
         className='pb-10 border-b border-b-[#DFDEDE] font-phu-du xsm:pb-[1.25rem]'
         dangerouslySetInnerHTML={{
-          __html: normalizeCmsHtml(blog?.content || ''),
+          __html: html,
         }}
       ></div>
       <div className='flex sm:items-center justify-between pt-[1.125rem] xsm:flex-col xsm:justify-start xsm:pt-[1.25rem] xsm:space-y-[1.25rem] font-montserrat text-[1rem] leading-[1.5rem] text-[rgba(46,46,46,0.75)] xsm:text-[0.75rem] xsm:leading-[1.05rem]'>

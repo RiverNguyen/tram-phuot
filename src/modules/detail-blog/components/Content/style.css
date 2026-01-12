@@ -78,22 +78,19 @@
   margin-top: 2.5rem;
 }
 
-#blog_detail th {
-  font-weight: 700;
+#blog_detail th,
+#blog_detail td {
+  font-weight: 400;
   border: 1px solid #2e2e2e;
   text-align: center;
   font-family: Montserrat;
   font-size: 1rem;
   color: #2e2e2e;
+  padding: 0.5rem;
 }
 
-#blog_detail td {
-  border: 1px solid #2e2e2e;
-  text-align: center;
-  font-family: Montserrat;
-  font-size: 1rem;
-  color: rgba(46, 46, 46, 0.75);
-  font-weight: 400;
+#blog_detail th {
+  font-weight: 700;
 }
 
 #blog_detail ul {
@@ -184,19 +181,21 @@
 
   #blog_detail .table-wrapper {
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     width: 100%;
+    scrollbar-width: none;
   }
 
   #blog_detail table {
+    width: 100%;
     margin-top: 1.125rem;
   }
 
-  #blog_detail th {
-    font-size: 0.875rem;
-  }
-
+  #blog_detail th,
   #blog_detail td {
+    white-space: nowrap; /* giữ cột không bị xuống dòng */
     font-size: 0.875rem;
+    padding: 0.5rem 1rem;
   }
 
   #blog_detail ul {
