@@ -28,9 +28,11 @@ export default function BlogItem({ blog, className }: { blog: IRelatedBlog; clas
       <div className='w-full xsm:px-[0.875rem] xsm:pb-[0.875rem] xsm:gap-[1.25rem] flex flex-1 flex-col justify-between gap-[4rem]'>
         <div>
           {/* taxonomies */}
-          <div className='xsm:text-[0.75rem] font-montserrat text-[0.875rem] leading-[0.625rem] font-semibold tracking-[-0.00875rem] text-[#F56E0A]'>
-            {blog?.taxonomies?.['type-news'][0].name}
-          </div>
+          {Array.isArray(blog?.taxonomies['type-news']) && (
+            <div className='xsm:text-[0.75rem] font-montserrat text-[0.875rem] leading-[0.625rem] font-semibold tracking-[-0.00875rem] text-[#F56E0A]'>
+              {blog.taxonomies['type-news'][0]?.name}
+            </div>
+          )}
           {/* title */}
           <h3 className='xsm:mt-[0.5rem] xsm:mb-[0.375rem] xsm:text-[1.125rem] xsm:leading-[1.2375rem] font-phu-du my-[1rem] line-clamp-2 text-[2.125rem] leading-[2.3375rem] font-medium text-[#1F4D37]'>
             {blog?.title}
