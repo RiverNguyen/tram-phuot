@@ -21,10 +21,12 @@ interface BrandButtonProps {
   classNameButtonText?: string
   children: React.ReactNode
   type?: BrandButtonType
+  showIconTransparent?: boolean
 }
 
 export default function BrandButton({
   showButtonTexture = true,
+  showIconTransparent = false,
   variant = 'greenGradient',
   type = { variant: 'button', type: 'button' },
   classNameButtonContainer,

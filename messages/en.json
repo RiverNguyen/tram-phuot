@@ -68,9 +68,9 @@
     "searchFilter": "Search Filter",
     "done": "Done",
     "all": "All",
-    "locations": "Locations",
-    "tour-type": "Tour Type",
-    "tour-duration": "Tour Duration"
+    "Locations": "Locations",
+    "Tour types": "Tour Types",
+    "Tour durations": "Tour Durations"
   },
   "ListCouponPage": {
     "noResult": "No Result",
@@ -89,8 +89,24 @@
     "selected": "Selected",
     "searchFilter": "Search Filter",
     "done": "Done",
-    "amenities": "Amenities",
-    "locations": "Locations"
+    "Amenities": "Amenities",
+    "Locations": "Locations"
+  },
+  "BlogsPage": {
+    "seeDetail": "See detail",
+    "sortBy": "Sort by",
+    "sortNewestFirst": "Newest first",
+    "sortAlphabeticalAZ": "Alphabetical A-Z",
+    "sortAlphabeticalZA": "Alphabetical Z-A",
+    "typeNews": "Type news",
+    "kind": "Kind",
+    "reset": "Reset all",
+    "searchFilter": "Search Filter",
+    "noResult": "No Result",
+    "apply": "Apply",
+    "all": "All",
+    "selected": "Selected",
+    "category": "Category"
   },
   "DetailsTourPage": {
     "metaTourDuration": "Tour duration:",
@@ -189,6 +205,21 @@
       "textCopied": "Copied voucher code",
       "textMinApplication": "Min application"
     }
+  },
+  "DetailBlogPage": {
+    "breadcrumbHome": "Home",
+    "breadcrumbBlogList": "Blog list",
+    "contentSummary": "Content summary",
+    "seeMore": "See more",
+    "seeLess": "See less",
+    "postedBy": "Posted by",
+    "postedOn": "Posted on",
+    "share": "Share",
+    "otherBlog": "Other blog",
+    "relatedBlogs": "Related blogs",
+    "viewMore": "View more",
+    "copyClipboard": "The link has been copied to the clipboard",
+    "copyClipboardError": "Cannot copy to clipboard. Please try again."
   },
   "DetailHotelPage": {
     "textShowGallery": "Show Gallery",

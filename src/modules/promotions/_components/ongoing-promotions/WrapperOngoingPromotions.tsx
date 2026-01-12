@@ -31,10 +31,12 @@ export default function OngoingPromotions({
   data,
   taxonomies,
   totalPages,
+  text2,
 }: {
   data: ICoupon[]
   taxonomies: ICouponTaxonomy[]
   totalPages?: number
+  text2: string
 }) {
   const [openDrawer, setOpenDrawer] = useState(false)
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -44,7 +46,10 @@ export default function OngoingPromotions({
   const [isPending, startTransition] = useTransition()
   const t = useTranslations('ListCouponPage')
 
-  const filters = mapTaxonomyToFilter(taxonomies, TAXONOMY_CONFIG.map((t) => t.key))
+  const filters = mapTaxonomyToFilter(
+    taxonomies,
+    TAXONOMY_CONFIG.map((t) => t.key),
+  )
 
   const taxonomiesWithVariant = TAXONOMY_CONFIG.map((config) => ({
     taxonomy: config.key,
@@ -76,11 +81,15 @@ export default function OngoingPromotions({
 
   const handleReset = () => {
     if (!hasActiveFilters(filterState)) {
-      if (currentPage <= 1) return
+      if (currentPage <= 1) {
+        setOpenDrawer(false)
+        return
+      }
       startTransition(() => {
         const query = createQueryString(searchParams, { paged: undefined })
         router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
       })
+      setOpenDrawer(false)
       return
     }
 
@@ -89,6 +98,7 @@ export default function OngoingPromotions({
       reset[taxonomy] = variant === 'radio' ? '' : []
     })
     pushFilters(reset)
+    setOpenDrawer(false)
   }
 
   const handlePageChange = (page: number) => {
@@ -120,8 +130,8 @@ export default function OngoingPromotions({
         className='xsm:gap-[1.25rem] xsm:px-[1rem] xsm:mb-[2.25rem] mx-auto flex w-full max-w-[87.5rem] flex-col items-start gap-[2.5rem] self-stretch'
       >
         <div className='xsm:flex-col xsm:gap-[0.875rem] xsm:items-start flex items-center gap-[2.5rem] self-stretch'>
-          <h2 className='xsm:w-full xsm:text-[1.25rem] xsm:leading-[1.5rem] xsm:tracking-[0.025rem] font-phu-du w-[35.8125rem] text-[2.125rem] leading-[2.3375rem] font-medium text-[#2E2E2E]'>
-            ongoing promotion
+          <h2 className='xsm:w-full xsm:text-[1.25rem] xsm:leading-[1.5rem] xsm:tracking-[0.025rem] line-clamp-1 font-phu-du w-[35.8125rem] text-[2.125rem] leading-[2.3375rem] font-medium text-[#2E2E2E]'>
+            {text2}
           </h2>
 
           {/* Desktop Filters */}

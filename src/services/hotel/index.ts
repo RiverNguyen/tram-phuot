@@ -20,7 +20,6 @@ const hotelService = {
     })
   },
   applyVoucher: async (payload: ApplyHotelVoucherPayloadType) => {
-    console.log(JSON.stringify(payload))
     return await fetchData({
       api: ENDPOINTS.hotel.applyVoucher,
       method: 'POST',
