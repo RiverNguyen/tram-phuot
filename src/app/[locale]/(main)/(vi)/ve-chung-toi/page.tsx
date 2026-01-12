@@ -1,7 +1,20 @@
 import ENDPOINTS from '@/configs/endpoints'
 import fetchData from '@/fetches/fetchData'
+import getMetaDataRankMath from '@/fetches/getMetaDataRankMath'
 import WrapperAbout from '@/modules/about-us'
+import metadataValues from '@/utils/metadataValues'
 
+export function generateStaticParams() {
+  return [{ locale: 'vi' }]
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  const res = await getMetaDataRankMath(
+    ENDPOINTS.about.rank_math[locale as keyof typeof ENDPOINTS.blogs.rank_math],
+  )
+  return metadataValues(res)
+}
 
 export default async function page({
   params,

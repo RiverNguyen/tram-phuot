@@ -220,7 +220,7 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
         className='xsm:h-[10.17713rem] xsm:w-[10.17713rem] absolute bottom-[-1.675rem] right-[14.7rem] w-auto h-[16.56694rem]'
       />
       <Image
-        src={'/about-us/journey/d-ribbon-3 (1).webp'}
+        src={'/about-us/journey/d-ribbon-3-desktop.webp'}
         alt=''
         width={2189}
         height={956}
