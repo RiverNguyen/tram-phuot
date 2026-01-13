@@ -30,7 +30,7 @@ export const StationSelector = ({
         <div className='flex items-end space-x-[1.125rem] cursor-pointer'>
           <div className='space-y-1'>
             <p className='text-[#2e2e2e] text-[0.875rem] leading-[1.6]'>{t('station')}</p>
-            <h3 className='text-[2.125rem] font-medium leading-[0.9] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
+            <h3 className='text-[2.125rem] font-medium leading-[0.9] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-[11rem] line-clamp-1'>
               {stations.find((s) => s.value === selectedStation)?.name.toUpperCase() ||
                 stations[0].name.toUpperCase()}
             </h3>

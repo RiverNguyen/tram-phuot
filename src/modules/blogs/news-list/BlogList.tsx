@@ -7,7 +7,7 @@ import { useTranslations, useLocale } from 'next-intl'
 export default function NewsList({ blogsData }: { blogsData: IBlog[] }) {
   const t = useTranslations('BlogsPage')
   const locale = useLocale()
-  const baseHref = locale === 'en' ? '/blogs' : '/danh-sach-tin-tuc'
+  const baseHref = locale === 'en' ? '/blogs' : '/vi/danh-sach-tin-tuc'
 
   return (
     <div className='xsm:gap-[1.25rem] flex flex-col gap-[1.875rem]'>

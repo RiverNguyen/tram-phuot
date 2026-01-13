@@ -13,8 +13,6 @@ export default function HotelCard({ hotel, className }: { hotel: IHotel; classNa
   const { locale } = useParams()
   const searchParams = useSearchParams()
 
-  console.log(hotel)
-
   const baseHref = locale === 'en' ? `/hotels/${hotel.slug}` : `/danh-sach-khach-san/${hotel.slug}`
 
   // Preserve booking query params

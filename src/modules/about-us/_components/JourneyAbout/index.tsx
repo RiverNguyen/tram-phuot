@@ -154,6 +154,7 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
     },
     { scope: containerRef },
   )
+  console.log(explorers)
 
   return (
     <div
@@ -232,11 +233,11 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
         </div>
         <h3 className='font-motherland xsm:text-[1rem] xsm:text-center xsm:mt-1.5 relative z-1 ml-[0.75rem] rotate-[-5.037deg] text-[3.3125rem] leading-normal font-normal text-[#F56E0A] whitespace-pre'>
           <div
-            dangerouslySetInnerHTML={{ __html: explorers.subtitle || 'Where Dreams Take Flight' }}
+            dangerouslySetInnerHTML={{ __html: explorers?.subtitle || 'Where Dreams Take Flight' }}
             className='text-stroke absolute inset-0'
           ></div>
           <div
-            dangerouslySetInnerHTML={{ __html: explorers.tag || 'Where Dreams Take Flight' }}
+            dangerouslySetInnerHTML={{ __html: explorers?.subtitle || 'Where Dreams Take Flight' }}
             className='relative z-1'
           ></div>
         </h3>
@@ -245,7 +246,7 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
             {explorers.title || 'A sanctuary where every journey begins'}
           </h2>
           <div className='font-montserrat xsm:hidden absolute top-[7rem] left-[12.875rem] z-1 flex h-[3.19075rem] w-[10.11475rem] -rotate-[7.522deg] items-center justify-center rounded-[50%] bg-[#F6CD40] text-center text-[0.875rem] leading-[0.875rem] font-bold text-[#07364D] uppercase line-clamp-2'>
-            {explorers.subtitle || 'Wanderlust station'}
+            {explorers?.tag || 'Wanderlust station'}
           </div>
         </div>
       </div>
