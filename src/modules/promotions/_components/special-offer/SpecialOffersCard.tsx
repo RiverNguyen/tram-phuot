@@ -6,9 +6,11 @@ import { useState } from 'react'
 import { ICoupon } from '@/interface/coupon.interface'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { Check } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 
 export default function SpecialOffersCard({ offer }: { offer: ICoupon }) {
   const [copiedId, setCopiedId] = useState<number | null>(null)
+  const t = useTranslations('ListCouponPage')
   const handleCopy = async (code: string, id: number) => {
     try {
       await navigator.clipboard.writeText(code)
@@ -50,25 +52,31 @@ export default function SpecialOffersCard({ offer }: { offer: ICoupon }) {
           fill
           className='object-cover sm:hidden'
         />
-        {/* percent */}
-        {offer?.acf?.percent_sale && (
-          <div className='xsm:top-[2.8652rem] xsm:left-[14.8254rem] xms:h-[3.625rem] absolute top-[4.0461rem] left-[20.9375rem] h-[5.25rem] flex flex-col text-white font-phu-du font-bold tracking-normal'>
-            <div className='xsm:text-[1rem] text-[1.46738rem] leading-[90%]'>Giảm</div>
-            <div
-              className={cn(
-                'xsm:text-[3.25rem] text-[4.69563rem] leading-[90%]',
-                Number(offer?.acf?.percent_sale) > 9 || Number(offer?.acf?.price_discount) > 9
-                  ? 'ml-[-0.9375rem]'
-                  : '',
-                Number(offer?.acf?.price_discount) > 99 || Number(offer?.acf?.percent_sale) > 99
-                  ? 'xsm:ml-[-1.5rem] ml-[-2.25rem]'
-                  : '',
-              )}
-            >
-              {offer?.acf?.select === 'percent'
-                ? offer?.acf?.percent_sale
-                : offer?.acf?.price_discount}
-              {offer?.acf?.select === 'percent' ? '%' : '$'}
+        {/* percent or price discount */}
+        {((offer?.acf?.select === 'percent' && offer?.acf?.percent_sale) ||
+          (offer?.acf?.select === 'price' && offer?.acf?.price_discount)) && (
+          <div className='xsm:w-[7.1rem] absolute top-0 right-0 w-[10.08rem] h-full text-center'>
+            <div className='z-1 w-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center text-white font-phu-du font-bold tracking-normal'>
+              <div
+                className={cn(
+                  'xsm:text-[1rem] text-[1.46738rem] leading-[90%]',
+                  offer?.acf?.select === 'percent' ? '' : '',
+                )}
+              >
+                {t('discount')}
+              </div>
+              <div className='xsm:text-[3.25rem] text-[4.69563rem] leading-[90%]'>
+                {offer?.acf?.select === 'percent'
+                  ? offer?.acf?.percent_sale
+                  : offer?.acf?.price_discount}
+                {offer?.acf?.select === 'percent' ? '%' : '$'}
+              </div>
+
+              <div className='text-[0.875rem] font-medium leading-[150%]'>OFF</div>
+
+              <div className='xsm:w-[5.375rem] xsm:text-[0.625rem] xsm:leading-[1rem] xsm:tracking-[-0.00625rem] font-montserrat text-[0.75rem] font-medium leading-[1.2rem] tracking-[-0.0075rem]'>
+                {t('minApplication')} {offer?.acf?.minimum_total_price}$
+              </div>
             </div>
           </div>
         )}
@@ -84,14 +92,16 @@ export default function SpecialOffersCard({ offer }: { offer: ICoupon }) {
               </div>
             )}
             {/* title */}
-            <h3 className='xsm:text-[0.875rem] xsm:leading-[0.625rem] xsm:tracking-normal line-clamp-1 self-stretch text-[#2E2E2E] font-phu-du text-[1.25rem] font-bold leading-[1.5rem] tracking-[0.025rem]'>
+            <h3 className='xsm:text-[0.875rem] xsm:leading-[1.1375rem] xsm:tracking-normal line-clamp-1 self-stretch text-[#2E2E2E] font-phu-du text-[1.25rem] font-bold leading-[1.5rem] tracking-[0.025rem]'>
               {offer?.title}
             </h3>
-            <div className='xsm:gap-[0.625rem] flex flex-col gap-[0.875rem] self-stretch'>
+            <div className='xsm:gap-[0.58494rem] flex flex-col gap-[0.875rem] self-stretch'>
               {offer?.acf?.booking_time?.start && (
-                <div className='xsm:gap-[0.26556rem] xsm:text-[0.625rem] xsm:leading-[0.4375rem] xsm:tracking-[-0.00625rem] flex items-start gap-[0.375rem] text-[#2E2E2E] font-montserrat text-[0.875rem] font-medium leading-[0.625rem] tracking-[-0.00875rem] opacity-[0.48]'>
-                  <span>Ngày áp dụng:</span>
-                  <span>{offer?.acf?.booking_time?.start}</span>
+                <div className='whitespace-nowrap xsm:gap-[0.26556rem] xsm:text-[0.625rem] xsm:leading-[0.4375rem] xsm:tracking-[-0.00625rem] flex items-start gap-[0.375rem] text-[#2E2E2E] font-montserrat text-[0.875rem] font-medium leading-[0.625rem] tracking-[-0.00875rem] opacity-[0.48]'>
+                  <span>{t('applicable')}:</span>
+                  <span>
+                    {offer?.acf?.booking_time?.start} - {offer?.acf?.booking_time?.end}
+                  </span>
                 </div>
               )}
               {offer?.acf?.for_whom && (
@@ -107,10 +117,10 @@ export default function SpecialOffersCard({ offer }: { offer: ICoupon }) {
           {offer?.acf?.code && (
             <div className='xsm:gap-[0.44256rem] flex flex-col items-start justify-center gap-[0.625rem]'>
               <h4 className='xsm:text-[0.625rem] xsm:leading-[0.4375rem] xsm:tracking-[-0.00625rem] text-[#2E2E2E] font-montserrat text-[0.875rem] font-medium leading-[0.625rem] tracking-[-0.00875rem] opacity-[0.48]'>
-                Promotion code:
+                {t('code')}:
               </h4>
               <div className='xsm:gap-[1.16981rem] flex items-center gap-[0.75rem]'>
-                <span className='xsm:max-w-[4.375rem] xsm:text-[0.75rem] xsm:leading-[0.5rem] xsm:tracking-[-0.0075rem] max-w-[7.5rem] truncate text-[#1F4D37] font-montserrat text-[0.875rem] font-semibold leading-[0.625rem] tracking-[-0.00875rem]'>
+                <span className='xsm:max-w-[4.375rem] xsm:text-[0.75rem] xsm:leading-[1.2rem] xsm:tracking-[-0.0075rem] max-w-[7.5rem] truncate text-[#1F4D37] font-montserrat text-[0.875rem] font-semibold leading-[1.4rem] tracking-[-0.00875rem]'>
                   {offer?.acf?.code}
                 </span>
                 <Tooltip open={copiedId === offer.id}>
@@ -125,7 +135,7 @@ export default function SpecialOffersCard({ offer }: { offer: ICoupon }) {
                       ) : (
                         <ICCopy className='xsm:size-[0.58088rem] size-[0.875rem]' />
                       )}
-                      Sao chép mã
+                      {t('copy')}
                     </button>
                   </TooltipTrigger>
 
@@ -133,7 +143,7 @@ export default function SpecialOffersCard({ offer }: { offer: ICoupon }) {
                     side='top'
                     className='bg-[#2BAB7D]'
                   >
-                    Đã sao chép!
+                    {t('copied')}
                   </TooltipContent>
                 </Tooltip>
               </div>

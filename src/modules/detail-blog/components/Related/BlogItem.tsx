@@ -14,7 +14,7 @@ export default function BlogItem({ blog, className }: { blog: IRelatedBlog; clas
     <Link
       href={href}
       className={cn(
-        'xsm:flex-col overflow-hidden xsm:rounded-[0.75rem] xsm:bg-white xsm:shadow-[0_3px_10px_0_rgba(0,0,0,0.08)] xsm:gap-[0.875rem] flex items-center gap-[4.5rem] group',
+        'xsm:flex-col group overflow-hidden xsm:rounded-[0.75rem] xsm:bg-white xsm:shadow-[0_3px_10px_0_rgba(0,0,0,0.08)] xsm:gap-[0.875rem] flex items-center gap-[4.5rem] group',
         className,
       )}
     >
@@ -37,7 +37,7 @@ export default function BlogItem({ blog, className }: { blog: IRelatedBlog; clas
             </div>
           )}
           {/* title */}
-          <h3 className='xsm:mt-[0.5rem] xsm:mb-[0.375rem] xsm:text-[1.125rem] xsm:leading-[1.2375rem] font-phu-du my-[1rem] line-clamp-2 text-[2.125rem] leading-[2.3375rem] font-medium text-[#1F4D37]'>
+          <h3 className='xsm:mt-[0.5rem] xsm:mb-[0.375rem] xsm:text-[1.125rem] xsm:leading-[1.2375rem] group-hover:text-[#F56E0A] transition-all duration-300 ease-out font-phu-du my-[1rem] line-clamp-2 text-[2.125rem] leading-[2.3375rem] font-medium text-[#1F4D37]'>
             {blog?.title}
           </h3>
           {/* description */}

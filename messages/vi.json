@@ -73,14 +73,20 @@
     "Tour types": "Loại tour",
     "Tour durations": "Thời gian tour"
   },
-  "ListCouponPage": {
+ "ListCouponPage": {
     "noResult": "Không có kết quả",
     "reset": "Xóa tất cả",
     "all": "Tất cả",
     "category": "Danh mục",
     "destination": "Địa điểm",
     "typeTour": "Loại tour",
-    "apply": "Áp dụng"
+    "apply": "Áp dụng",
+    "applicable": "Ngày áp dụng",
+    "code": "Mã giảm giá",
+    "copy": "Sao chép mã",
+    "copied": "Đã sao chép mã",
+    "discount": "Giảm",
+    "minApplication": "Giá tối thiểu"
   },
   "ListHotelPage": {
     "noResult": "Không có kết quả",

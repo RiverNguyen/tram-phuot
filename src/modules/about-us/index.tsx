@@ -27,7 +27,7 @@ const WrapperAbout=({
     video
 }: Props) => {
   return (
-    <main className='relative w-full h-full bg-[#FDF4ED] overflow-hidden'>
+    <main className='relative w-full h-full bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")] bg-cover bg-center overflow-hidden'>
       <Banner
         locale={locale}
         data={banner}

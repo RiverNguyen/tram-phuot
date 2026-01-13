@@ -80,7 +80,13 @@
     "category": "Category",
     "destination": "Destination",
     "typeTour": "Type tour",
-    "apply": "Apply"
+    "apply": "Apply",
+    "applicable": "Applicable",
+    "code": "Promotion code",
+    "copy": "Copy code",
+    "copied": "Copied code",
+    "discount": "Discount",
+    "minApplication": "Min application"
   },
   "ListHotelPage": {
     "noResult": "No Result",
@@ -169,7 +175,7 @@
     "submitFailedMessage": "Submitted failed. Please try again.",
     "sending": "Sending...",
     "sendInformation": "Send information",
-    "fullNameLabel": "Full name",
+    "fullNameLabel": "Your name",
     "emailLabel": "Email",
     "phoneNumberLabel": "Phone number",
     "messageLabel": "Message",

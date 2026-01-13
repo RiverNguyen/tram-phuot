@@ -180,7 +180,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           alt=''
           width={80}
           height={80}
-          className='xsm:top-[-2.5rem] xsm:rotate-[90deg] xsm:left-[-0.5rem] absolute -top-[2.45rem] left-[52.5rem] h-[4.98338rem] w-[5.85219rem]'
+          className='xsm:top-[-2rem] xsm:rotate-[90deg] xsm:left-0 xsm:w-[4rem] absolute -top-[2.45rem] left-[52.5rem] h-auto w-[4.98338rem]'
         />
         <Image
           src='/about-us/d-temple.webp'

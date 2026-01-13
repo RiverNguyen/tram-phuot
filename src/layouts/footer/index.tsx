@@ -23,7 +23,7 @@ export default function Footer({ data }: { data: IFooter }) {
   return (
     <footer
       className={cn(
-        'xsm:h-auto relative z-[11] h-[85.8125rem] overflow-hidden bg-[#FDF4ED]',
+        'xsm:h-auto relative z-[11] h-[85.8125rem] overflow-hidden bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")] bg-cover bg-center',
         !isLoading && isMobile && isThankyouPage && 'bg-transparent',
         isBlogDetail && 'xsm:mb-[2.75rem]',
       )}

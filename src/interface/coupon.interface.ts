@@ -14,7 +14,7 @@ export interface ICoupon {
     'tour-type': ITerm[]
   }
   acf: {
-    select: 'percent' | 'amount'
+    select: 'percent' | 'price'
     percent_sale: string
     code: string
     for_whom: string
