@@ -228,10 +228,10 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
         className='xsm:hidden absolute top-0 right-0 w-full h-full'
       />
       <div className='absolute top-[11.625rem] left-[8.25rem] xsm:top-[7.56rem] xsm:left-[1.75rem]'>
-        <div className='absolute top-[3rem] right-[2.1rem] z-10 w-[4.54594rem] -rotate-[7.522deg] rounded-[50%] bg-[#F6CD40] px-[0.4rem] py-[0.25rem] text-center text-[0.34438rem] leading-[0.45rem] font-bold font-montserrat text-[#07364D] uppercase sm:hidden'>
+        <div className='xsm:right-[1.75rem] absolute top-[3rem] right-[2.1rem] z-10 w-[4.54594rem] -rotate-[7.522deg] rounded-[50%] bg-[#F6CD40] px-[0.4rem] py-[0.25rem] text-center text-[0.34438rem] leading-[0.45rem] font-bold font-montserrat text-[#07364D] uppercase sm:hidden'>
           {explorers.tag || 'Wanderlust station'}
         </div>
-        <h3 className='font-motherland xsm:text-[1rem] xsm:text-center xsm:mt-1.5 relative z-1 ml-[0.75rem] rotate-[-5.037deg] text-[3.3125rem] leading-normal font-normal text-[#F56E0A] whitespace-pre'>
+        <h3 className='font-motherland xsm:text-[1rem] xsm:text-center xsm:m-[1rem_0_-0.75rem_0.5rem] relative z-1 ml-[0.75rem] rotate-[-5.037deg] text-[2.5rem] leading-normal font-normal text-[#F56E0A] whitespace-pre'>
           <div
             dangerouslySetInnerHTML={{ __html: explorers?.subtitle || 'Where Dreams Take Flight' }}
             className='text-stroke absolute inset-0'

@@ -40,6 +40,8 @@
     "language": "Ngôn ngữ:"
   },
   "Footer": {
+    "emailRequired": "Vui lòng nhập email của bạn",
+    "emailInvalid": "Vui lòng nhập email hợp lệ",
     "yourMessage": "Tin nhắn của bạn",
     "formDesc": "Chúng tôi đảm bảo rằng mọi thông tin của bạn đều được bảo mật",
     "buttonSubmit": "Đang gửi",
@@ -71,7 +73,9 @@
     "all": "Tất cả",
     "Locations": "Địa điểm",
     "Tour types": "Loại tour",
-    "Tour durations": "Thời gian tour"
+    "Tour durations": "Thời gian tour",
+    "more": "Xem thêm",
+    "less": "Thu gọn"
   },
  "ListCouponPage": {
     "noResult": "Không có kết quả",
@@ -166,6 +170,7 @@
   },
   "ContactForm": {
     "fullNameRequired": "Vui lòng nhập tên của bạn",
+    "fullNameInvalid": "Tên chỉ được chứa chữ cái và khoảng trắng",
     "emailRequired": "Vui lòng nhập email của bạn",
     "emailInvalid": "Vui lòng nhập email hợp lệ",
     "phoneRequired": "Vui lòng nhập số điện thoại của bạn",
@@ -187,6 +192,7 @@
     "submitButton": "Gửi thông tin",
     "textMessage": "Tin nhắn",
     "fullNameRequired": "Vui lòng nhập tên của bạn",
+    "fullNameInvalid": "Tên chỉ được chứa chữ cái và khoảng trắng",
     "emailRequired": "Vui lòng nhập email của bạn",
     "emailInvalid": "Vui lòng nhập email hợp lệ",
     "phoneRequired": "Vui lòng nhập số điện thoại của bạn",

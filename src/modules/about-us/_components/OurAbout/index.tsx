@@ -117,7 +117,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           alt=''
           width={0}
           height={0}
-          className='xsm:h-[4.51338rem] xsm:w-[6.11381rem] xsm:bottom-[-2.5rem] xsm:left-[-0.5rem] absolute bottom-[-3rem] left-0 z-3 h-[6.97206rem] w-[9.44444rem]'
+          className='xsm:w-[6.11381rem] xsm:bottom-[-2.75rem] xsm:left-0 absolute bottom-[-3rem] left-0 z-3 h-auto w-[9.44444rem]'
         />
         <Image
           src='/about-us/d-multicolor.svg'
@@ -183,6 +183,13 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           className='xsm:top-[-2rem] xsm:rotate-[90deg] xsm:left-0 xsm:w-[4rem] absolute -top-[2.45rem] left-[52.5rem] h-auto w-[4.98338rem]'
         />
         <Image
+          src='/about-us/d-gradient-orange-mb.svg'
+          alt=''
+          width={43}
+          height={35}
+          className='sm:hidden absolute top-[13.4277rem] left-[18.894rem] h-auto w-[2.69088rem]'
+        />
+        <Image
           src='/about-us/d-temple.webp'
           alt=''
           width={328}
@@ -201,7 +208,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           alt=''
           width={146}
           height={98}
-          className='xsm:right-[0.925rem] xsm:top-[-3rem] xsm:h-[5.21719rem] absolute right-[17.1rem] top-[4.38rem] z-1 h-[6.36581rem] w-auto'
+          className='xsm:right-[0.925rem] xsm:top-[-4.35rem] xsm:h-[7.21719rem] absolute right-[17.1rem] top-[-3.95rem] z-1 h-[8.36581rem] w-auto'
         />
         <Image
           src='/about-us/d-cake.webp'

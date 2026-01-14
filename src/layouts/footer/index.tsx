@@ -16,6 +16,7 @@ export default function Footer({ data }: { data: IFooter }) {
   const pathname = usePathname()
 
   const isThankyouPage = pathname === '/thank-you' || pathname === '/cam-on'
+  const isHomePage = pathname === '/' || pathname === '/vi'
   const isBlogDetail = pathname.includes('/blogs') && pathname.split('/').length >= 3
 
   if (isThankyouPage) return null
@@ -23,11 +24,17 @@ export default function Footer({ data }: { data: IFooter }) {
   return (
     <footer
       className={cn(
-        'xsm:h-auto relative z-[11] h-[85.8125rem] overflow-hidden bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")] bg-cover bg-center',
+        'xsm:h-auto relative z-[11] h-[85.8125rem] overflow-hidden bg-[#FDF4ED]',
         !isLoading && isMobile && isThankyouPage && 'bg-transparent',
         isBlogDetail && 'xsm:mb-[2.75rem]',
       )}
     >
+      {isHomePage ? (
+        <div className="pointer-events-none absolute inset-0 bg-[url('/home/explorers/bg-pc.webp')] bg-[length:100%_auto] bg-top bg-repeat-y opacity-5" />
+      ) : (
+        <div className="pointer-events-none absolute inset-0 bg-[url('/uu-dai/bg.webp')] bg-cover bg-center" />
+      )}
+
       {/* Background + mask */}
       <div className="xsm:mask-[url('/footer/d-footer_mask_mobile.webp')] xsm:mask-size-[23.4375rem_32rem] absolute inset-0 mask-alpha mask-no-repeat sm:mask-[url('/footer/d-footer_mask.webp')] sm:mask-size-[100.07813rem_92.876rem]">
         <Image

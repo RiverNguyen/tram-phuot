@@ -31,7 +31,7 @@ const Article = ({ about, isInView, className }: ArticleProps) => {
       </div>
 
       <p
-        className='xsm:w-[21.32519rem] text-[0.875rem] xsm:indent-0 mt-4 font-medium leading-[2.0] tracking-[-0.02] xsm:line-clamp-4 xsm:line-clamp-none xsm:text-[#07364D]'
+        className='xsm:w-[21.32519rem] text-[0.875rem] xsm:indent-0 mt-4 font-medium leading-[2.0] tracking-[-0.02] xsm:line-clamp-4 xsm:line-clamp-none xsm:text-[#07364D] [&_ul]:list-disc [&_ol]:list-decimal [&_ol]:pl-8 [&_ul]:pl-8 [&_table]:w-full [&_table]:block [&_table]:overflow-x-auto [&_th]:border [&_td]:border [&_th]:bg-gray-50 [&_th]:font-semibold [&_td]:px-3 [&_td]:py-2'
         style={{
           textDecoration: 'underline dotted #AEAFAE',
         }}

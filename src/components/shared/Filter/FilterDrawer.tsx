@@ -168,7 +168,7 @@ export default function FilterDrawer({
                     onClick={() => toggleRadioExpand(item.taxonomy)}
                   >
                     <span className='font-montserrat text-[1rem] leading-[1.3rem] text-[#124681] font-bold'>
-                      {expandedRadios[item.taxonomy] ? 'Less' : 'More'}
+                      {expandedRadios[item.taxonomy] ? t('less') : t('more')}
                     </span>
                     <ICPlus
                       className={cn(

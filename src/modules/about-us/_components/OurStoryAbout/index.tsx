@@ -129,7 +129,7 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
                       alt=''
                       fill
                       priority
-                      className='object-cover'
+                      className='object-cover object-bottom'
                     />
                   </div>
 
