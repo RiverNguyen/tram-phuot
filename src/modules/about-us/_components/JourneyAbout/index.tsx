@@ -244,7 +244,7 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
           <h2 className='font-phu-du xsm:max-w-[14rem] xsm:text-[1.75rem] xsm:leading-[1] relative max-w-[35.8125rem] text-[4.125rem] leading-[4.125rem] font-bold text-white uppercase line-clamp-3'>
             {explorers.title || 'A sanctuary where every journey begins'}
           </h2>
-          <div className='font-montserrat xsm:hidden absolute top-[7rem] left-[12.875rem] z-1 flex h-[3.19075rem] w-[10.11475rem] -rotate-[7.522deg] items-center justify-center rounded-[50%] bg-[#F6CD40] text-center text-[0.875rem] leading-[0.875rem] font-bold text-[#07364D] uppercase line-clamp-2'>
+          <div className='font-montserrat xsm:hidden absolute top-[7.35rem] left-[12.875rem] z-1 flex h-[3.19075rem] w-[10.11475rem] -rotate-[7.522deg] items-center justify-center rounded-[50%] bg-[#F6CD40] text-center text-[0.875rem] leading-[0.875rem] font-bold text-[#07364D] uppercase line-clamp-2'>
             {explorers.subtitle || 'Wanderlust station'}
           </div>
         </div>
