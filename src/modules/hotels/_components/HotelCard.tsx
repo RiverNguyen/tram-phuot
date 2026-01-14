@@ -42,7 +42,7 @@ export default function HotelCard({ hotel, className }: { hotel: IHotel; classNa
         src={hotel?.thumbnail.url || '/default.webp'}
         alt='hotel card'
         fill
-        className='object-cover transition-all duration-500 ease-[cubic-bezier(0.65,0.01,0.28,0.98)] lg:group-hover:scale-107'
+        className='object-cover transition-all duration-500 ease-[cubic-bezier(0.65,0.01,0.28,0.98)] lg:group-hover:scale-110'
       />
       {/* Hotel Type */}
       <div className='xsm:px-[0.84069rem] xsm:py-[0.70056rem] absolute top-0 left-0 inline-flex w-full px-[0.75rem] py-[0.625rem]'>
