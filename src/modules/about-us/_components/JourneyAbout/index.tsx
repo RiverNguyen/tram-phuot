@@ -154,6 +154,7 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
     },
     { scope: containerRef },
   )
+  console.log(explorers)
 
   return (
     <div
@@ -232,11 +233,11 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
         </div>
         <h3 className='font-motherland xsm:text-[1rem] xsm:text-center xsm:mt-1.5 relative z-1 ml-[0.75rem] rotate-[-5.037deg] text-[2.5rem] leading-normal font-normal text-[#F56E0A] whitespace-pre'>
           <div
-            dangerouslySetInnerHTML={{ __html: explorers.subtitle || 'Where Dreams Take Flight' }}
+            dangerouslySetInnerHTML={{ __html: explorers?.subtitle || 'Where Dreams Take Flight' }}
             className='text-stroke absolute inset-0'
           ></div>
           <div
-            dangerouslySetInnerHTML={{ __html: explorers.subtitle || 'Where Dreams Take Flight' }}
+            dangerouslySetInnerHTML={{ __html: explorers?.subtitle || 'Where Dreams Take Flight' }}
             className='relative z-1'
           ></div>
         </h3>

@@ -1,14 +1,15 @@
 import { ICoupon } from '@/interface/coupon.interface'
-import Link from 'next/link'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 export default function OngoingPromotionsCard({ card }: { card: ICoupon }) {
   if (card?.acf?.private) return null
+  const t = useTranslations('ListCouponPage')
 
   return (
     <div className='xsm:gap-[0.875rem] xsm:rounded-[0.75rem] xsm:bg-white xsm:shadow-[0_3px_10px_0_rgba(0,0,0,0.08)] relative flex h-full w-full flex-col items-center justify-start gap-[1.125rem]'>
       <Image
-        src={card?.thumbnail?.url}
+        src={card?.thumbnail?.url || '/default.webp'}
         alt={card?.title}
         width={1360}
         height={813}
@@ -44,7 +45,7 @@ export default function OngoingPromotionsCard({ card }: { card: ICoupon }) {
         <div className='xsm:gap-[0.625rem] flex flex-col items-start gap-[0.75rem]'>
           {card?.acf?.code ? (
             <div className='xsm:text-[0.875rem] xsm:leading-[1.3125rem] xsm:tracking-normal font-montserrat flex items-start gap-[0.5rem] text-[1rem] leading-[1.5rem] font-medium tracking-[-0.01563rem] text-[#2E2E2E] opacity-[0.48]'>
-              <span className='shrink-0'>Promotion code:</span>
+              <span className='shrink-0'>{t('code')}:</span>
               <span className='min-w-0 break-all'>{card?.acf?.code}</span>
             </div>
           ) : (

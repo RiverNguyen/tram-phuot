@@ -1,18 +1,14 @@
 'use client'
 import Image from 'next/image'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { useParams } from 'next/navigation'
-import useIsMobile from '@/hooks/use-is-mobile'
 import { IAboutUs, IAboutUsContent } from '@/interface/about.interface'
 import Article from './_components/Article'
 import { useInView } from 'motion/react'
 import Article2 from './_components/Article2'
 
 export default function OurAbout({ about }: { about: IAboutUs }) {
-  const [isFetching, setIsFetching] = useState(false)
-  const { isLoading, isMobile } = useIsMobile()
-  const [tab, setTab] = useState<'stayPoints' | 'tourAndChill'>('tourAndChill')
   const t = useTranslations('HomePage.ourTours')
   const { locale } = useParams<{ locale: string }>()
   const sectionRef = useRef(null)
@@ -48,7 +44,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
         alt=''
         width={512}
         height={257}
-        className='xsm:hidden absolute left-[-7.2rem] bottom-[46.625rem] h-[16rem] w-[32rem] object-cover'
+        className='xsm:hidden absolute left-[-7.2rem] bottom-[48.625rem] h-[16rem] w-[32rem] object-cover'
       />
       <Image
         src='/about-us/d-layer-logo.webp'
@@ -57,12 +53,12 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
         height={257}
         className='xsm:hidden absolute left-[21rem] bottom-[10rem] h-[19.5625rem] w-[20.8125rem] object-cover'
       />
-      <div className='xsm:ml-[1.5rem] xsm:pb-[22rem] xsm:pt-0 relative h-full w-full pb-[12rem] ml-[6.25rem] pt-[10rem] z-[5]'>
+      <div className='xsm:ml-[1.5rem] xsm:pb-[22rem] xsm:pt-0 relative h-full w-full pb-[12rem] ml-[6.25rem] pt-[12rem] z-[5]'>
         <Article
           about={about.content_1}
           isInView={isInView}
         />
-        <div className='xsm:flex-col xsm:gap-[2.25rem] xsm:pt-[24rem] pt-[22rem] flex justify-start gap-[19rem] w-full '>
+        <div className='xsm:flex-col xsm:gap-[2.25rem] xsm:pt-[24rem] pt-[18rem] flex justify-start gap-[19rem] w-full '>
           <Article2
             about={about.content_2}
             isInView={isInView}
@@ -76,9 +72,9 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           />
         </div>
       </div>
-      <div className='absolute right-0 top-[18rem] xsm:top-[27.1875rem] xsm:left-[-10.55rem] xsm:w-[36.35006rem]'>
+      <div className='absolute right-0 top-[20rem] xsm:top-[27.1875rem] xsm:left-[-10.55rem] xsm:w-[36.35006rem]'>
         {/* image dynamic 1 */}
-        <div className='xsm:top-[-2rem] xsm:left-[17.37rem] xsm:w-[9.53106rem] xsm:h-[6.30244rem] xsm:p-[0.14356rem] xsm:rotate-[-5.691deg] xsm:shadow-[-35.89px_72.068px_22.396px_0_rgba(0,0,0,0),-22.97px_45.94px_20.673px_0_rgba(0,0,0,0.01),-12.921px_25.841px_17.514px_0_rgba(0,0,0,0.05),-5.742px_11.485px_12.921px_0_rgba(0,0,0,0.09),-1.436px_2.871px_7.178px_0_rgba(0,0,0,0.1)] image-dynamic-1 z-2 absolute top-[-8.84rem] left-[34rem] w-[26.43281rem] h-[17.47875rem] rotate-[-5.681deg] p-[0.42931rem] overflow-hidden bg-white shadow-[-107.323px_215.505px_66.97px_0_rgba(0,0,0,0),-68.687px_137.373px_61.818px_0_rgba(0,0,0,0.01),-38.636px_77.273px_52.374px_0_rgba(0,0,0,0.05),-17.172px_34.343px_38.636px_0_rgba(0,0,0,0.09),-4.293px_8.586px_21.465px_0_rgba(0,0,0,0.10)]'>
+        <div className='xsm:top-[-2rem] xsm:left-[17.37rem] xsm:w-[9.53106rem] xsm:h-[6.30244rem] xsm:p-[0.14356rem] xsm:rotate-[-5.691deg] xsm:shadow-[-35.89px_72.068px_22.396px_0_rgba(0,0,0,0),-22.97px_45.94px_20.673px_0_rgba(0,0,0,0.01),-12.921px_25.841px_17.514px_0_rgba(0,0,0,0.05),-5.742px_11.485px_12.921px_0_rgba(0,0,0,0.09),-1.436px_2.871px_7.178px_0_rgba(0,0,0,0.1)] image-dynamic-1 z-2 absolute top-[-8.84rem] left-[35rem] w-[26.43281rem] h-[17.47875rem] rotate-[-5.681deg] p-[0.42931rem] overflow-hidden bg-white shadow-[-107.323px_215.505px_66.97px_0_rgba(0,0,0,0),-68.687px_137.373px_61.818px_0_rgba(0,0,0,0.01),-38.636px_77.273px_52.374px_0_rgba(0,0,0,0.05),-17.172px_34.343px_38.636px_0_rgba(0,0,0,0.09),-4.293px_8.586px_21.465px_0_rgba(0,0,0,0.10)]'>
           <Image
             src={about?.decor_images.framed_image_1?.url || ''}
             alt='Image dynamic 1'
@@ -136,7 +132,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           alt=''
           width={0}
           height={0}
-          className='xsm:h-[4.51338rem] xsm:w-[6.11381rem] xsm:bottom-[-2.5rem] xsm:left-[-0.5rem] absolute bottom-[-3rem] left-0 z-3 h-[6.97206rem] w-[9.44444rem]'
+          className='xsm:w-[6.11381rem] xsm:bottom-[-2.75rem] xsm:left-0 absolute bottom-[-3rem] left-0 z-3 h-auto w-[9.44444rem]'
         />
         <Image
           src='/about-us/d-multicolor.svg'

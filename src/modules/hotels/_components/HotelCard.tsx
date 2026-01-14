@@ -13,8 +13,6 @@ export default function HotelCard({ hotel, className }: { hotel: IHotel; classNa
   const { locale } = useParams()
   const searchParams = useSearchParams()
 
-  console.log(hotel)
-
   const baseHref = locale === 'en' ? `/hotels/${hotel.slug}` : `/danh-sach-khach-san/${hotel.slug}`
 
   // Preserve booking query params
@@ -41,7 +39,7 @@ export default function HotelCard({ hotel, className }: { hotel: IHotel; classNa
     >
       {/* background */}
       <Image
-        src={hotel?.thumbnail.url}
+        src={hotel?.thumbnail.url || '/default.webp'}
         alt='hotel card'
         fill
         className='object-cover transition-all duration-500 ease-[cubic-bezier(0.65,0.01,0.28,0.98)] lg:group-hover:scale-107'

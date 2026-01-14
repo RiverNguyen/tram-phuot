@@ -69,7 +69,7 @@ export default function FilterPopover({
     >
       <PopoverTrigger
         className={cn(
-          'font-montserrat flex h-[2.75rem] flex-1 items-center justify-between rounded-[0.625rem] border-none bg-white px-[1rem] py-[0.75rem] text-[0.875rem] leading-[1.4rem] font-bold tracking-[0.035rem] text-[#2E2E2E] uppercase shadow-none ring-0 outline-none focus:ring-0 focus:ring-offset-0',
+          'font-montserrat flex h-[2.75rem] flex-1 items-center justify-between rounded-[0.625rem] border-none bg-white px-[1rem] py-[0.75rem] text-[0.875rem] leading-[1.4rem] font-bold tracking-[0.035rem] text-[#2E2E2E] uppercase shadow-none ring-0 outline-none focus:ring-0 focus:ring-offset-0 cursor-pointer',
           className,
         )}
       >

@@ -137,7 +137,7 @@ useGSAP(
                     classNameButtonContainer='xsm:w-full xsm:px-4'
                   >
                     <div className='flex items-center justify-center gap-[0.625rem]'>
-                      <span className='xsm:text-[0.625rem] xsm:leading-[0.75rem] font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] uppercase bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] bg-clip-text text-transparent'>
+                      <span className='whitespace-nowrap xsm:text-[0.625rem] xsm:leading-[0.75rem] font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] uppercase bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] bg-clip-text text-transparent'>
                         {content?.button_links.link_google_review?.title || 'Google Review'}
                       </span>
                       <Image
@@ -160,7 +160,7 @@ useGSAP(
                     classNameButtonContainer='xsm:w-full'
                   >
                     <div className='flex items-center justify-center gap-[0.625rem] xsm:gap-[0.375rem]'>
-                      <span className='xsm:text-[0.625rem] xsm:leading-[0.75rem] font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] uppercase bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] bg-clip-text text-transparent'>
+                      <span className='whitespace-nowrap xsm:text-[0.625rem] xsm:leading-[0.75rem] font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] uppercase bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] bg-clip-text text-transparent'>
                         {content?.button_links.link_tripadvisor?.title || 'Tripadvisor'}
                       </span>
                       <Image
@@ -217,47 +217,47 @@ useGSAP(
                 />
               </div>
             </div>
-            <div className="relative w-full h-[25rem] flex flex-nowrap justify-between items-center gap-4 overflow-x-auto xsm:gap-[0.75rem] xsm:items-start xsm:mt-[2rem] xsm:h-auto"
+            <div
+              className='relative w-full h-[25rem] flex flex-nowrap justify-between items-center gap-4 overflow-x-auto xsm:gap-[0.75rem] xsm:items-start xsm:mt-[2rem] xsm:h-auto'
               style={{
                 scrollbarWidth: 'none',
               }}
             >
-  <Image
-    src="/about-us/d-ellipse.webp"
-    alt=""
-    width={1335}
-    height={377}
-    className="xsm:hidden absolute -top-[9.7rem] mx-[2rem] h-[23.5625rem] w-auto"
-  />
+              <Image
+                src='/about-us/d-ellipse.webp'
+                alt=''
+                width={1335}
+                height={377}
+                className='xsm:hidden absolute -top-[9.7rem] mx-[2rem] h-[23.5625rem] w-auto'
+              />
 
-  {Array.isArray(content.who_we_are) &&
-    content.who_we_are.map((item, index) => (
-      <div
-        key={index}
-        className={`xsm:w-[18.8125rem] xsm:first:ml-4 xsm:last:mr-4 xsm:px-[0.375rem] xsm:pt-[1.5rem] flex-shrink-0 w-[24.0625rem] flex flex-col items-start gap-[0.625rem] pt-[2.5rem] px-[0.625rem] pb-[0.625rem] rounded-[1.25rem] bg-[linear-gradient(180deg,rgba(189,222,187,0.91)_14.98%,#F7E9DD_85.05%)] bg-repeat [background-blend-mode:color-burn,normal] backdrop-blur-[2px] ${
-          index % 2 === 1 ? 'mt-[3.3125rem] xsm:mt-0' : ''
-          }
+              {Array.isArray(content.who_we_are) &&
+                content.who_we_are.map((item, index) => (
+                  <div
+                    key={index}
+                    className={`xsm:w-[18.8125rem] xsm:first:ml-4 xsm:last:mr-4 xsm:px-[0.375rem] xsm:pt-[1.5rem] flex-shrink-0 w-[24.0625rem] flex flex-col items-start gap-[0.625rem] pt-[2.5rem] px-[0.625rem] pb-[0.625rem] rounded-[1.25rem] bg-[linear-gradient(180deg,rgba(189,222,187,0.91)_14.98%,#F7E9DD_85.05%)] bg-repeat [background-blend-mode:color-burn,normal] ${
+                      index % 2 === 1 ? 'mt-[3.3125rem] xsm:mt-0' : ''
+                    }
           ${index === 0 ? 'xsm:ml-4' : ''}
     ${index === 2 ? 'xsm:mr-4' : ''}
           `}
-      >
-        <div className="xsm:p-[0.875rem] xsm:rounded-[0.5rem] bg-white flex flex-col items-start rounded-[0.75rem] p-4 self-stretch gap-[0.625rem]">
-          <div className="flex flex-col items-start gap-3">
-            <h2 className="xsm:text-[2rem] xsm:leading-[1] font-phu-du text-[3rem] font-medium leading-[1.2] bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-transparent">
-              {item.title}
-            </h2>
-            <p className="xsm:text-[1rem] xsm:leading-1 text-[1.125rem] text-[#2E2E2E] leading-[1.1] font-phu-du">
-              {item.subtitle}
-            </p>
-          </div>
-          <span className="xsm:text-[0.875rem] text-base leading-[1.5] font-montserrat font-[400] text-[#2E2E2EBF]">
-            {item.description}
-          </span>
-        </div>
-      </div>
-    ))}
-</div>
-
+                  >
+                    <div className='xsm:p-[0.875rem] xsm:rounded-[0.5rem] bg-white flex flex-col items-start rounded-[0.75rem] p-4 self-stretch gap-[0.625rem]'>
+                      <div className='flex flex-col items-start gap-3'>
+                        <h2 className='xsm:text-[2rem] xsm:leading-[1] font-phu-du text-[3rem] font-medium leading-[1.2] bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-transparent'>
+                          {item.title}
+                        </h2>
+                        <p className='xsm:text-[1rem] xsm:leading-1 text-[1.125rem] text-[#2E2E2E] leading-[1.1] font-phu-du'>
+                          {item.subtitle}
+                        </p>
+                      </div>
+                      <span className='xsm:text-[0.875rem] text-base leading-[1.5] font-montserrat font-[400] text-[#2E2E2EBF]'>
+                        {item.description}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
       </div>

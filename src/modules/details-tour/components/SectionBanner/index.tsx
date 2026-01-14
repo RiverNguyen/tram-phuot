@@ -108,9 +108,9 @@ export default function SectionBanner({
           </ul>
         </div>
       </div>
-      <div className='xsm:hidden pointer-events-none absolute right-0 bottom-0 left-0 z-1 h-126.75 bg-[linear-gradient(180deg,rgba(2,3,5,0.00)_0%,#000_89.18%)] opacity-68 backdrop-blur-[2px]'></div>
-      <div className='xsm:hidden pointer-events-none absolute right-0 bottom-0 left-0 z-1 h-67 bg-[linear-gradient(180deg,rgba(2,3,5,0.00)_0%,#000_89.18%)] opacity-68 backdrop-blur-[2px]'></div>
-      <div className='xsm:block pointer-events-none absolute bottom-0 left-0 z-1 hidden h-173 w-full bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,rgba(2,3,5,0.08)_13.88%,#192842_100%)] opacity-68 backdrop-blur-[2px]'></div>
+      <div className='xsm:hidden pointer-events-none absolute right-0 bottom-0 left-0 z-1 h-126.75 bg-[linear-gradient(180deg,rgba(2,3,5,0.00)_0%,#000_89.18%)] opacity-68'></div>
+      <div className='xsm:hidden pointer-events-none absolute right-0 bottom-0 left-0 z-1 h-67 bg-[linear-gradient(180deg,rgba(2,3,5,0.00)_0%,#000_89.18%)] opacity-68'></div>
+      <div className='xsm:block pointer-events-none absolute bottom-0 left-0 z-1 hidden h-173 w-full bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,rgba(2,3,5,0.08)_13.88%,#192842_100%)] opacity-68'></div>
       <div className='xsm:hidden absolute top-0 left-0 block size-full'>
         {banner?.background_pc && (
           <Image

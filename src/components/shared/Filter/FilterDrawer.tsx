@@ -9,6 +9,8 @@ import { Dispatch, SetStateAction } from 'react'
 import BrandButton from '../BrandButton'
 import ICLocation2 from '@/components/icons/ICLocation2'
 import { useTranslations } from 'next-intl'
+import { cn } from '@/lib/utils'
+import { useState } from 'react'
 
 interface FilterData {
   label: string
@@ -37,6 +39,14 @@ export default function FilterDrawer({
   onChange,
 }: FilterDrawerProps) {
   const t = useTranslations('ListTourPage')
+  const RADIO_VISIBLE_COUNT = 4
+  const [expandedRadios, setExpandedRadios] = useState<Record<string, boolean>>({})
+  const toggleRadioExpand = (taxonomy: string) => {
+    setExpandedRadios((prev) => ({
+      ...prev,
+      [taxonomy]: !prev[taxonomy],
+    }))
+  }
 
   return (
     <DrawerProvider
@@ -48,7 +58,7 @@ export default function FilterDrawer({
       <div className='flex max-h-screen w-full flex-col overflow-hidden'>
         {/* Header */}
         <div className='sticky top-0 z-10 flex h-[4.5rem] w-full items-center justify-between bg-[#E5EDF6] p-3 pt-6'>
-          <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent'>
+          <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent uppercase'>
             {t('searchFilter')}
           </span>
           <button
@@ -66,69 +76,43 @@ export default function FilterDrawer({
             const isRadio = item.variant === 'radio'
 
             const value = values[item.taxonomy] as string
+            const isExpanded = expandedRadios[item.taxonomy]
+            const visibleOptions = isExpanded
+              ? item.options
+              : item.options.slice(0, RADIO_VISIBLE_COUNT)
 
             return (
               <div
-                className='bg-white p-3'
+                className='bg-white pt-3 rounded-[0.5rem]'
                 key={i}
               >
-                <div className='font-montserrat flex items-center justify-between rounded-[0.5rem] bg-[#F6F6F6] p-[0.875rem_0.625rem] text-[0.875rem] leading-[1.3125rem] font-bold text-[#07364D] uppercase'>
-                  <span>{item.label}</span>
-                  {item.taxonomy === 'locations' && <ICLocation2 className='size-[1.25rem]' />}
-                  {item.taxonomy === 'tour-duration' && <Clock8 className='size-[1.25rem]' />}
-                  {item.taxonomy === 'tour-type' && <List className='size-[1.25rem]' />}
-                </div>
+                <div className='px-3'>
+                  <div className='font-montserrat flex items-center justify-between rounded-[0.5rem] bg-[#F6F6F6] p-[0.875rem_0.625rem] text-[0.875rem] leading-[1.3125rem] font-bold text-[#07364D] uppercase'>
+                    <span>{item.label}</span>
+                    {item.taxonomy === 'locations' && <ICLocation2 className='size-[1.25rem]' />}
+                    {item.taxonomy === 'tour-duration' && <Clock8 className='size-[1.25rem]' />}
+                    {item.taxonomy === 'tour-type' && <List className='size-[1.25rem]' />}
+                  </div>
 
-                {isRadio ? (
-                  <RadioGroup
-                    value={value}
-                    onValueChange={(value) => onChange(item.taxonomy, value)}
-                  >
-                    {item.options.map((option, i) => (
-                      <div
-                        key={option.value}
-                        className='flex items-center space-x-2.5 px-[0.81rem] py-4'
-                      >
-                        <RadioGroupItemCustom
-                          value={option.value}
-                          id={`tour-${option.value}`}
-                          className='flex size-[1.375rem] items-center justify-center'
-                        />
-                        <Label
-                          htmlFor={`tour-${option.value}`}
-                          className='font-montserrat line-clamp-1 cursor-pointer text-[0.875rem] leading-[1.4rem] text-[#303030]'
-                        >
-                          {option.label}
-                        </Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
-                ) : (
-                  <div>
-                    {item.options.map((option, i) => {
-                      const newValues = values[item.taxonomy] as string[]
-
-                      const isChecked = newValues.includes(option.value)
-
-                      return (
+                  {isRadio ? (
+                    <RadioGroup
+                      value={value}
+                      onValueChange={(value) => onChange(item.taxonomy, value)}
+                    >
+                      {visibleOptions.map((option, i) => (
                         <div
-                          key={i}
-                          className='flex items-center gap-[0.3125rem] py-[0.75rem]'
+                          key={option.value}
+                          className={cn(
+                            'flex items-center space-x-2.5 px-[0.81rem] py-4',
+                            value === option.value &&
+                              'rounded-tl-[1rem] rounded-br-[1rem] border border-[#EDEDED] bg-[linear-gradient(90deg,rgba(255,183,21,0.10)_0%,rgba(255,157,21,0.20)_100%)]',
+                          )}
                         >
-                          <div className='p-[0.5rem]'>
-                            <Checkbox
-                              id={`tour-${option.value}`}
-                              checked={isChecked}
-                              onCheckedChange={(checked) => {
-                                const values = checked
-                                  ? [...newValues, option.value]
-                                  : newValues.filter((value) => value !== option.value)
-
-                                onChange(item.taxonomy, values)
-                              }}
-                              className='size-[1.375rem] rounded-[0.375rem] border-2 border-[rgba(46,46,46,0.4)]/80 shadow-none data-[state=checked]:border-none data-[state=checked]:bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)]'
-                            />
-                          </div>
+                          <RadioGroupItemCustom
+                            value={option.value}
+                            id={`tour-${option.value}`}
+                            className='flex size-[1.375rem] items-center justify-center'
+                          />
                           <Label
                             htmlFor={`tour-${option.value}`}
                             className='font-montserrat line-clamp-1 cursor-pointer text-[0.875rem] leading-[1.4rem] text-[#303030]'
@@ -136,9 +120,63 @@ export default function FilterDrawer({
                             {option.label}
                           </Label>
                         </div>
-                      )
-                    })}
-                  </div>
+                      ))}
+                    </RadioGroup>
+                  ) : (
+                    <div>
+                      {item.options.map((option, i) => {
+                        const newValues = values[item.taxonomy] as string[]
+
+                        const isChecked = newValues.includes(option.value)
+
+                        return (
+                          <div
+                            key={i}
+                            className='flex items-center gap-[0.3125rem] py-[0.75rem]'
+                          >
+                            <div className='p-[0.5rem]'>
+                              <Checkbox
+                                id={`tour-${option.value}`}
+                                checked={isChecked}
+                                onCheckedChange={(checked) => {
+                                  const values = checked
+                                    ? [...newValues, option.value]
+                                    : newValues.filter((value) => value !== option.value)
+
+                                  onChange(item.taxonomy, values)
+                                }}
+                                className='size-[1.375rem] rounded-[0.375rem] border-2 border-[rgba(46,46,46,0.4)]/80 shadow-none data-[state=checked]:border-none data-[state=checked]:bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)]'
+                              />
+                            </div>
+                            <Label
+                              htmlFor={`tour-${option.value}`}
+                              className='font-montserrat line-clamp-1 cursor-pointer text-[0.875rem] leading-[1.4rem] text-[#303030]'
+                            >
+                              {option.label}
+                            </Label>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                {isRadio && item.options.length > RADIO_VISIBLE_COUNT && (
+                  <button
+                    type='button'
+                    className='w-full flex py-[0.875rem] px-[2.125rem] justify-center items-center gap-[0.375rem] border-t-[1px] border-[rgba(205,205,205,0.60)]'
+                    onClick={() => toggleRadioExpand(item.taxonomy)}
+                  >
+                    <span className='font-montserrat text-[1rem] leading-[1.3rem] text-[#124681] font-bold'>
+                      {expandedRadios[item.taxonomy] ? t('less') : t('more')}
+                    </span>
+                    <ICPlus
+                      className={cn(
+                        'size-[1.25rem] transition-transform duration-300',
+                        expandedRadios[item.taxonomy] && 'rotate-45',
+                      )}
+                    />
+                  </button>
                 )}
               </div>
             )
@@ -148,6 +186,7 @@ export default function FilterDrawer({
         {/* Footer */}
         <div className='sticky bottom-0 z-10 flex w-full items-center space-x-[0.75rem] bg-white p-3'>
           <BrandButton
+            variant='blueGradient'
             classNameButtonContainer='w-full'
             type={{
               variant: 'button',
@@ -173,5 +212,26 @@ export default function FilterDrawer({
         </div>
       </div>
     </DrawerProvider>
+  )
+}
+
+const ICPlus = (props: React.SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      xmlns='http://www.w3.org/2000/svg'
+      width='20'
+      height='20'
+      viewBox='0 0 20 20'
+      fill='none'
+      {...props}
+    >
+      <path
+        d='M5 10H10M10 10H15M10 10V15M10 10V5'
+        stroke='#124681'
+        strokeWidth='1.66667'
+        strokeLinecap='round'
+        strokeLinejoin='round'
+      />
+    </svg>
   )
 }

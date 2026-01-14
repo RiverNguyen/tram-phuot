@@ -34,7 +34,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
       {/* content */}
       <div className='xsm:top-[7.25rem] xsm:left-[1rem] xsm:gap-[0.75rem] absolute top-[10.25rem] left-[6.25rem] inline-flex flex-col items-start gap-[2rem] w-[46.875rem] xsm:w-[21.4375rem]'>
         <Breadcrumb breadcrumbItems={breadcrumbItems} />
-        <h1 className='xsm:text-[1.875rem] xsm:leading-[2.25rem] xsm:tracking-[0.01875rem] xsm:font-normal font-phu-du text-[3rem] leading-[3.09rem] tracking-[-0.03rem] text-white uppercase text-shadow-[0_4.702px_4.702px_rgba(0,0,0,0.50)]'>
+        <h1 className='xsm:text-[1.875rem] xsm:leading-[2.25rem] xsm:tracking-[0.01875rem] xsm:font-normal font-phu-du text-[3rem] leading-[3.09rem] tracking-[-0.03rem] text-white uppercase text-shadow-[0_4.702px_4.702px_rgba(0,0,0,0.50)] line-clamp-4'>
           {data?.banner?.title}
         </h1>
       </div>
