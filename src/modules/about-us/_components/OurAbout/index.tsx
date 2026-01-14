@@ -1,18 +1,14 @@
 'use client'
 import Image from 'next/image'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { useParams } from 'next/navigation'
-import useIsMobile from '@/hooks/use-is-mobile'
 import { IAboutUs, IAboutUsContent } from '@/interface/about.interface'
 import Article from './_components/Article'
 import { useInView } from 'motion/react'
 import Article2 from './_components/Article2'
 
 export default function OurAbout({ about }: { about: IAboutUs }) {
-  const [isFetching, setIsFetching] = useState(false)
-  const { isLoading, isMobile } = useIsMobile()
-  const [tab, setTab] = useState<'stayPoints' | 'tourAndChill'>('tourAndChill')
   const t = useTranslations('HomePage.ourTours')
   const { locale } = useParams<{ locale: string }>()
   const sectionRef = useRef(null)
@@ -34,7 +30,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
   return (
     <section
       ref={sectionRef}
-      className='xsm:min-h-[103.6rem] xsm:py-[4rem] relative z-5 h-[106.125rem] w-full sm:mt-[-15.075rem]'
+      className='xsm:min-h-[103.6rem] xsm:py-[4rem] relative z-5 min-h-[110.125rem] w-full sm:mt-[-7.075rem]'
     >
       <Image
         src='/about-us/d-bg-white.svg'
@@ -48,7 +44,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
         alt=''
         width={512}
         height={257}
-        className='xsm:hidden absolute left-[-7.2rem] bottom-[46.625rem] h-[16rem] w-[32rem] object-cover'
+        className='xsm:hidden absolute left-[-7.2rem] bottom-[48.625rem] h-[16rem] w-[32rem] object-cover'
       />
       <Image
         src='/about-us/d-layer-logo.webp'
@@ -57,9 +53,28 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
         height={257}
         className='xsm:hidden absolute left-[21rem] bottom-[10rem] h-[19.5625rem] w-[20.8125rem] object-cover'
       />
-      <div className='absolute right-0 top-[18rem] xsm:top-[27.1875rem] xsm:left-[-10.55rem] xsm:w-[36.35006rem]'>
+      <div className='xsm:ml-[1.5rem] xsm:pb-[22rem] xsm:pt-0 relative h-full w-full pb-[12rem] ml-[6.25rem] pt-[12rem] z-[5]'>
+        <Article
+          about={about.content_1}
+          isInView={isInView}
+        />
+        <div className='xsm:flex-col xsm:gap-[2.25rem] xsm:pt-[24rem] pt-[18rem] flex justify-start gap-[19rem] w-full '>
+          <Article2
+            about={about.content_2}
+            isInView={isInView}
+            className='w-[29.26269rem] xsm:w-[21.4rem]'
+          />
+  
+          <Article2
+            about={about.content_3}
+            isInView={isInView}
+            className='w-[26.95019rem] xsm:w-[21.4rem] sm:mt-[7.12rem]'
+          />
+        </div>
+      </div>
+      <div className='absolute right-0 top-[20rem] xsm:top-[27.1875rem] xsm:left-[-10.55rem] xsm:w-[36.35006rem]'>
         {/* image dynamic 1 */}
-        <div className='xsm:top-[-2rem] xsm:left-[17.37rem] xsm:w-[9.53106rem] xsm:h-[6.30244rem] xsm:p-[0.14356rem] xsm:rotate-[-5.691deg] xsm:shadow-[-35.89px_72.068px_22.396px_0_rgba(0,0,0,0),-22.97px_45.94px_20.673px_0_rgba(0,0,0,0.01),-12.921px_25.841px_17.514px_0_rgba(0,0,0,0.05),-5.742px_11.485px_12.921px_0_rgba(0,0,0,0.09),-1.436px_2.871px_7.178px_0_rgba(0,0,0,0.1)] image-dynamic-1 z-2 absolute top-[-8.84rem] left-[34rem] w-[26.43281rem] h-[17.47875rem] rotate-[-5.681deg] p-[0.42931rem] overflow-hidden bg-white shadow-[-107.323px_215.505px_66.97px_0_rgba(0,0,0,0),-68.687px_137.373px_61.818px_0_rgba(0,0,0,0.01),-38.636px_77.273px_52.374px_0_rgba(0,0,0,0.05),-17.172px_34.343px_38.636px_0_rgba(0,0,0,0.09),-4.293px_8.586px_21.465px_0_rgba(0,0,0,0.10)]'>
+        <div className='xsm:top-[-2rem] xsm:left-[17.37rem] xsm:w-[9.53106rem] xsm:h-[6.30244rem] xsm:p-[0.14356rem] xsm:rotate-[-5.691deg] xsm:shadow-[-35.89px_72.068px_22.396px_0_rgba(0,0,0,0),-22.97px_45.94px_20.673px_0_rgba(0,0,0,0.01),-12.921px_25.841px_17.514px_0_rgba(0,0,0,0.05),-5.742px_11.485px_12.921px_0_rgba(0,0,0,0.09),-1.436px_2.871px_7.178px_0_rgba(0,0,0,0.1)] image-dynamic-1 z-2 absolute top-[-8.84rem] left-[35rem] w-[26.43281rem] h-[17.47875rem] rotate-[-5.681deg] p-[0.42931rem] overflow-hidden bg-white shadow-[-107.323px_215.505px_66.97px_0_rgba(0,0,0,0),-68.687px_137.373px_61.818px_0_rgba(0,0,0,0.01),-38.636px_77.273px_52.374px_0_rgba(0,0,0,0.05),-17.172px_34.343px_38.636px_0_rgba(0,0,0,0.09),-4.293px_8.586px_21.465px_0_rgba(0,0,0,0.10)]'>
           <Image
             src={about?.decor_images.framed_image_1?.url || ''}
             alt='Image dynamic 1'
@@ -166,7 +181,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           alt=''
           width={478}
           height={280}
-          className='xsm:h-[5.35844rem] xsm:w-[4.4555rem] xsm:left-[18rem] xsm:bottom-[-1rem] xsm:z-10 absolute bottom-[-1.65rem] left-[31.0675rem] z-1 h-[10.11594rem] w-[8.41138rem]'
+          className='xsm:h-[5.35844rem] xsm:w-[4.4555rem] xsm:left-[18rem] xsm:bottom-[-1.36rem] xsm:z-10 absolute bottom-[-1.65rem] left-[31.0675rem] z-1 h-[10.11594rem] w-[8.41138rem]'
         />
         <Image
           src='/home/our-tours/d-gradient-1.svg'
@@ -176,18 +191,18 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           className='absolute bottom-[6.71rem] left-[43rem] h-[4.79713rem] w-[5.85219rem]'
         />
         <Image
+          src='/about-us/d-gradient-orange.svg'
+          alt=''
+          width={0}
+          height={0}
+          className='sm:hidden absolute bottom-[2.4rem] right-[1.85rem] h-[2.216rem] w-[2.69088rem]'
+        />
+        <Image
           src='/about-us/d-bg-tiles.webp'
           alt=''
           width={80}
           height={80}
-          className='xsm:top-[-2rem] xsm:rotate-[90deg] xsm:left-0 xsm:w-[4rem] absolute -top-[2.45rem] left-[52.5rem] h-auto w-[4.98338rem]'
-        />
-        <Image
-          src='/about-us/d-gradient-orange-mb.svg'
-          alt=''
-          width={43}
-          height={35}
-          className='sm:hidden absolute top-[13.4277rem] left-[18.894rem] h-auto w-[2.69088rem]'
+          className='xsm:top-[-1.95rem] xsm:rotate-[90deg] xsm:left-0 xsm:w-[4rem] xsm:h-[4rem] absolute -top-[2.45rem] left-[52.5rem] h-[4.98338rem] w-[5.85219rem]'
         />
         <Image
           src='/about-us/d-temple.webp'
@@ -208,7 +223,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           alt=''
           width={146}
           height={98}
-          className='xsm:right-[0.925rem] xsm:top-[-4.35rem] xsm:h-[7.21719rem] absolute right-[17.1rem] top-[-3.95rem] z-1 h-[8.36581rem] w-auto'
+          className='xsm:right-[0.925rem] top-[-3rem] xsm:w-[6.18169rem] xsm:h-[5.21719rem] absolute right-[17.1rem] z-1 w-[7.54256rem] h-[6.36581rem]'
         />
         <Image
           src='/about-us/d-cake.webp'
@@ -232,7 +247,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           className='xsm:hidden absolute -top-[calc(4.0385rem+0.32rem)] right-[0.28rem] z-1 h-[7.85rem] w-[13.375rem]'
         />
       </div>
-      <Article
+      {/*<Article
         about={about.content_1}
         isInView={isInView}
       />
@@ -247,7 +262,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
         about={about.content_3}
         isInView={isInView}
         className='right-[18.125rem] bottom-[22.25rem] w-[26.95019rem] xsm:w-[21.4rem] xsm:top-[66rem] xsm:left-[1.5rem]'
-      />
+      />*/}
     </section>
   )
 }

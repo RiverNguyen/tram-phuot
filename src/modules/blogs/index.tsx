@@ -39,7 +39,7 @@ export default async function Blogs({
     : blogs
 
   return (
-    <main className='relative h-full w-full bg-[url("/uu-dai/bg.webp")] bg-cover bg-center overflow-hidden'>
+    <main className='relative h-full w-full bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")] bg-cover bg-fixed bg-center'>
       <Banner
         locale={locale}
         data={blogsPage?.acf}
