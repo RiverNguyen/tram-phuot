@@ -54,7 +54,7 @@ export default function MapItemTooltip({ pin, onFilter }: MapItemTooltipProps) {
             viewBox='0 0 30 36'
             fill='none'
             xmlns='http://www.w3.org/2000/svg'
-            className='h-auto w-[1.48594rem]'
+            className='h-auto w-[1.48594rem] drop-shadow-[0_3.549px_8.696px_rgba(48,48,48,0.6)]'
           >
             <mask
               id='path-1-inside-1_26_3234'
