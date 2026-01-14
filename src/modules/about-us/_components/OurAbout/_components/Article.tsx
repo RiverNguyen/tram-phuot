@@ -27,7 +27,7 @@ const Article = ({ about, isInView }: ArticleProps) => {
           : { opacity: 0, y: yOffset, filter: 'blur(10px)' }
       }
       transition={{ duration: 1.5, ease: [0.39, 0.02, 0.15, 0.85], delay: 0.2 }}
-      className='absolute top-[11.26075rem] xsm:left-[1.5rem] xsm:top-[4rem] left-[6.25rem] z-[5]'
+      className='xsm:w-[19.75rem] w-[39.625rem]'
     >
       <motion.div
         initial={{ y: '3rem' }}
@@ -43,13 +43,13 @@ const Article = ({ about, isInView }: ArticleProps) => {
         initial={{ y: '3rem' }}
         animate={isInView ? { y: 0 } : { y: '3rem' }}
         transition={{ duration: 1.5, ease: [0.39, 0.02, 0.15, 0.85], delay: 0.3 }}
-        className="font-motherland text-[3.3125rem] xsm:text-[1.5rem] rotate-[-5.037deg] pl-[3.735rem] translate-y-[1.5rem] xsm:pl-8 xsm:translate-y-[0.5rem] bg-clip-text text-transparent bg-[linear-gradient(230deg,#03328C_5.76%,#29C486_100.15%)]"
+        className="relative z-[-1] xsm:pb-0 xsm:pt-[0.5rem] pb-[0.5rem] font-motherland text-[3.3125rem] xsm:text-[1.5rem] rotate-[-5.037deg] pl-[3.85rem] translate-y-[1.5rem] xsm:pl-8 xsm:translate-y-[0.5rem] bg-clip-text text-transparent bg-[linear-gradient(230deg,#03328C_5.76%,#29C486_100.15%)]"
       >
         {about?.subtitle}
       </motion.h3>
 
 
-      <div className="w-[39.5625rem] xsm:w-full text-[3.69456rem] xsm:text-[1.75rem] font-bold leading-[1]">
+      <div className="xsm:w-[19.75rem] w-[39.5625rem] xsm:w-full text-[3.69456rem] xsm:text-[1.75rem] font-bold leading-[1]">
         <h2 className="font-phu-du indent-[6rem] xsm:indent-[3rem] text-[#2E2E2E]">
           {line1}:
         </h2>
@@ -61,7 +61,7 @@ const Article = ({ about, isInView }: ArticleProps) => {
       </div>
 
       <p
-        className='w-[32rem] xsm:w-[21.32519rem] xsm:text-[0.875rem] xsm:indent-0 mt-4 text-[1.125rem] font-medium leading-[2.0] tracking-[-0.02] xsm:line-clamp-4 xsm:line-clamp-6'
+        className='w-[32rem] xsm:w-[21.32519rem] xsm:text-[0.875rem] xsm:indent-0 mt-8 text-[1.125rem] font-medium leading-[2.0] tracking-[-0.02] xsm:line-clamp-4 xsm:line-clamp-6'
         style={{
           textDecoration: 'underline dotted #AEAFAE',
         }}
