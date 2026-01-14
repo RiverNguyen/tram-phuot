@@ -16,7 +16,7 @@ export default async function Contact({ locale }: { locale: string }) {
   const contactPage = await getContactPage(locale)
 
   return (
-    <div className='z-[5] relative h-full w-full bg-[url("/uu-dai/bg.webp")] bg-cover bg-center'>
+    <div className='z-[12] relative h-full w-full bg-[url("/uu-dai/bg.webp")] bg-cover bg-center'>
       <Banner
         locale={locale}
         data={{ banner: contactPage?.acf?.banner }}

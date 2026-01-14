@@ -15,7 +15,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
     <div className='xsm:h-[34.375rem] relative h-[36.375rem] w-full overflow-hidden'>
       {data?.banner?.background_pc?.url && (
         <Image
-          src={data.banner.background_pc.url}
+          src={data.banner.background_pc.url || '/default.webp'}
           alt='banner'
           width={1600}
           height={582}
@@ -25,7 +25,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
       )}
       {data?.banner?.background_mobile?.url && (
         <Image
-          src={data.banner.background_mobile.url}
+          src={data.banner.background_mobile.url || '/default.webp'}
           alt='banner mb'
           width={375}
           height={692}
@@ -34,7 +34,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
         />
       )}
       {/* overlay */}
-      <div className='xsm:opacity-[0.68] xsm:black-blur-[2px] xsm:top-[14.8125rem] xsm:h-[19.5625rem] absolute top-[14.8125rem] left-0 h-[31.25rem] w-full bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,#000_100%)]' />
+      <div className='xsm:opacity-[0.68] xsm:top-[14.8125rem] xsm:h-[19.5625rem] absolute top-[5.125rem] left-0 h-[31.25rem] w-full bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,#000_100%)]' />
       {/* content */}
       <div className='xsm:top-[24rem] xsm:left-[1rem] xsm:gap-[1rem] absolute top-[21.9375rem] left-[7.125rem] inline-flex flex-col items-start gap-[2rem]'>
         <Breadcrumb breadcrumbItems={breadcrumbItems} />

@@ -85,13 +85,15 @@ export default function Summary({ tocs }: { tocs: TocItem[] }) {
             </li>
           ))}
         </ul>
-        <button
-          type='button'
-          onClick={() => setExpand((prev) => !prev)}
-          className='text-[#338FE5] font-montserrat text-[1rem] font-medium leading-[1.5rem] -tracking-[0.01563rem] cursor-pointer'
-        >
-          {expand ? t('seeLess') : t('seeMore')}
-        </button>
+        {tocs.length > 4 && (
+          <button
+            type='button'
+            onClick={() => setExpand((prev) => !prev)}
+            className='text-[#338FE5] font-montserrat text-[1rem] font-medium leading-[1.5rem] -tracking-[0.01563rem] cursor-pointer'
+          >
+            {expand ? t('seeLess') : t('seeMore')}
+          </button>
+        )}
       </aside>
 
       {!isLoading && isMobile && (
@@ -142,12 +144,15 @@ export default function Summary({ tocs }: { tocs: TocItem[] }) {
                 </li>
               ))}
             </ul>
-            <button
-              type='button'
-              className='text-[#338FE5] text-left font-montserrat text-[0.875rem] font-medium leading-[1.3125rem] cursor-pointer'
-            >
-              {expand ? t('seeLess') : t('seeMore')}
-            </button>
+            {tocs.length > 4 && (
+              <button
+                onClick={() => setExpand((prev) => !prev)}
+                type='button'
+                className='text-[#338FE5] text-left font-montserrat text-[0.875rem] font-medium leading-[1.3125rem] cursor-pointer'
+              >
+                {expand ? t('seeLess') : t('seeMore')}
+              </button>
+            )}
           </DrawerProvider>
         </>
       )}

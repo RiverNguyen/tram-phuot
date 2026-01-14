@@ -31,7 +31,7 @@ const hotelService = {
   getHotels: async ({
     locale,
     locations = '',
-    limit = 8,
+    limit = 12,
   }: {
     locale: string
     locations?: string

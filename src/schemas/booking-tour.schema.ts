@@ -25,7 +25,12 @@ export const bookingTourSchema = (messages: Record<string, string>) =>
 
 export const contactFormSchema = (messages: Record<string, string>) =>
   z.object({
-    fullName: z.string().min(1, messages.fullNameRequired),
+    fullName: z
+      .string()
+      .min(1, messages.fullNameRequired)
+      .regex(/^[a-zA-ZÀ-ỹ\s]+$/, {
+        message: messages.fullNameInvalid,
+      }),
     email: z.string().min(1, messages.emailRequired).email(messages.emailInvalid),
     phoneNumber: z
       .string()

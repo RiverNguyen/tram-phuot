@@ -21,11 +21,11 @@ export default function NewsList({ blogsData }: { blogsData: IBlog[] }) {
           >
             <div className='xsm:h-[13.8125rem] xsm:w-full xsm:rounded-none h-[19.75rem] w-[34rem] shrink-0 rounded-[1.25rem] overflow-hidden'>
               <Image
-                src={blog?.thumbnail?.url}
+                src={blog?.thumbnail?.url || '/default.webp'}
                 alt='news item'
                 width={799}
                 height={478}
-                className='w-full h-full object-cover group-hover:scale-107 transition-all duration-500 ease-[cubic-bezier(0.65,0.01,0.28,0.98)]'
+                className='w-full h-full object-cover group-hover:scale-110 transition-all duration-300 ease-out'
               />
             </div>
             <div className='xsm:px-[0.875rem] xsm:pb-[0.875rem] xsm:gap-[1.25rem] w-full flex flex-1 flex-col gap-[4rem]'>
@@ -35,7 +35,7 @@ export default function NewsList({ blogsData }: { blogsData: IBlog[] }) {
                   {blog?.taxonomies?.['type-news']?.[0]?.name}
                 </div>
                 {/* title */}
-                <h3 className='xsm:mt-[0.5rem] xsm:mb-[0.375rem] xsm:text-[1.125rem] xsm:leading-[1.2375rem] font-phu-du my-[1rem] line-clamp-2 text-[2.125rem] leading-[2.3375rem] font-medium text-[#1F4D37]'>
+                <h3 className='xsm:mt-[0.5rem] xsm:mb-[0.375rem] xsm:text-[1.125rem] xsm:leading-[1.2375rem] font-phu-du my-[1rem] line-clamp-2 text-[2.125rem] leading-[2.3375rem] font-medium text-[#1F4D37] lg:group-hover:text-[#F56E0A] transition-all duration-300 ease-out'>
                   {blog?.title}
                 </h3>
                 {/* description */}
@@ -46,7 +46,11 @@ export default function NewsList({ blogsData }: { blogsData: IBlog[] }) {
 
               {/* date */}
               <div className='xsm:text-[0.75rem] xsm:tracking-[-0.0075rem] font-montserrat text-[0.875rem] leading-[0.625rem] font-semibold tracking-[-0.00875rem] text-[rgba(46,46,46,0.60)]'>
-                {blog?.published}
+                {new Date(blog?.published).toLocaleDateString(locale, {
+                  day: '2-digit',
+                  month: 'long',
+                  year: 'numeric',
+                })}
               </div>
             </div>
           </Link>

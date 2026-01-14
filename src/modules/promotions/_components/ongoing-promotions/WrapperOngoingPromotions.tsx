@@ -149,10 +149,10 @@ export default function OngoingPromotions({
             <button
               type='button'
               onClick={handleReset}
-              className='flex h-[2.75rem] cursor-pointer items-center justify-center gap-[0.5rem] rounded-[0.5rem] py-[0.75rem] pl-[0.75rem]'
+              className='group flex h-[2.75rem] cursor-pointer items-center justify-center gap-[0.5rem] rounded-[0.5rem] py-[0.75rem] pl-[0.75rem] font-montserrat text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] text-[#FF2019] uppercase'
             >
-              <ICTrashcan className='size-[1.125rem] text-[#FF2019]' />
-              <span className='font-montserrat text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] text-[#FF2019] uppercase'>
+              <ICTrashcan className='size-[1.125rem]' />
+              <span className='relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-0 after:bg-[#FF2019] after:transition-all after:duration-500 after:ease-out group-hover:after:opacity-100'>
                 {t('reset')}
               </span>
             </button>

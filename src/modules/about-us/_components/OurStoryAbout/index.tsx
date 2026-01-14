@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export default function OurStoryAbout({ content }: { content: IContentAbout }) {
+  console.log('content', content?.story_content)
   return (
     <section className='relative sm:mt-[3.44rem] xsm:py-[4rem] sm:pb-[9rem]'>
       <Image
@@ -18,7 +19,7 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
         alt=''
         width={413}
         height={465}
-        className='absolute xsm:w-[4.46819rem] xsm:right-[-1.5rem] right-[12.56rem] top-[1.77rem] w-[13.5rem] h-auto object-cover'
+        className='absolute xsm:w-[5.46819rem] xsm:top-[2.625rem] xsm:right-[-1.5rem] right-[12.56rem] top-[1.77rem] w-[13.5rem] h-auto object-cover'
       />
       <div className='absolute top-[46%] left-1/2 -translate-x-1/2 -translate-y-1/2'>
         <Image
@@ -42,16 +43,17 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
           </div>
 
           <div className='xsm:pt-4 xsm:pb-0 flex justify-center items-center max-w-[47.875rem] p-[8.5625rem_1.78125rem_2.3125rem_1.84375rem]'>
-            <p className='w-[44.25rem] xsm:w-[19.6875rem] font-phu-du xsm:text-[1.25rem] xsm:indent-0 mt-4 text-[2.125rem] font-medium leading-[2.3375rem] tracking-[-0.02] text-center not-italic'>
+            <p className='w-[44.25rem] xsm:w-[19.6875rem] font-phu-du xsm:text-[1.25rem] xsm:indent-0 mt-4 text-[2.125rem] font-medium leading-[2.3375rem] xsm:leading-[1.375rem] tracking-normal text-center not-italic'>
               {content?.story_content
-                ?.split('.')
+                ?.split('. ')
                 .filter(Boolean)
-                .map((sentence, index) => (
+                .map((sentence, index, arr) => (
                   <span
                     key={index}
                     className={index % 2 === 0 ? 'text-[#2E2E2E]' : 'text-[#2E2E2E]/60'}
                   >
-                    {sentence.trim()}.
+                    {sentence.trim()}
+                    {index < arr.length - 1 && '. '}
                   </span>
                 ))}
             </p>
@@ -69,7 +71,7 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
                     classNameButtonContainer='xsm:w-full'
                   >
                     <div className='flex items-center justify-center gap-[0.625rem]'>
-                      <span className='xsm:text-[0.625rem] xsm:leading-[0.75rem] font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] uppercase bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] bg-clip-text text-transparent'>
+                      <span className='whitespace-nowrap xsm:text-[0.625rem] xsm:leading-[0.75rem] font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] uppercase bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] bg-clip-text text-transparent'>
                         {content?.button_links.link_google_review?.title || 'Google Review'}
                       </span>
                       <Image
@@ -92,7 +94,7 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
                     classNameButtonContainer='xsm:w-full'
                   >
                     <div className='flex items-center justify-center gap-[0.625rem] xsm:gap-[0.375rem]'>
-                      <span className='xsm:text-[0.625rem] xsm:leading-[0.75rem] font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] uppercase bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] bg-clip-text text-transparent'>
+                      <span className='whitespace-nowrap xsm:text-[0.625rem] xsm:leading-[0.75rem] font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] uppercase bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] bg-clip-text text-transparent'>
                         {content?.button_links.link_tripadvisor?.title || 'Tripadvisor'}
                       </span>
                       <Image
@@ -127,7 +129,7 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
                       alt=''
                       fill
                       priority
-                      className='object-cover'
+                      className='object-cover object-bottom'
                     />
                   </div>
 
@@ -149,47 +151,47 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
                 />
               </div>
             </div>
-            <div className="relative w-full h-[25rem] flex flex-nowrap justify-between items-center gap-4 overflow-x-auto xsm:gap-[0.75rem] xsm:items-start xsm:mt-[2rem] xsm:h-auto"
+            <div
+              className='relative w-full h-[25rem] flex flex-nowrap justify-between items-center gap-4 overflow-x-auto xsm:gap-[0.75rem] xsm:items-start xsm:mt-[2rem] xsm:h-auto'
               style={{
                 scrollbarWidth: 'none',
               }}
             >
-  <Image
-    src="/about-us/d-ellipse.webp"
-    alt=""
-    width={1335}
-    height={377}
-    className="xsm:hidden absolute -top-[9.7rem] mx-[2rem] h-[23.5625rem] w-auto"
-  />
+              <Image
+                src='/about-us/d-ellipse.webp'
+                alt=''
+                width={1335}
+                height={377}
+                className='xsm:hidden absolute -top-[9.7rem] mx-[2rem] h-[23.5625rem] w-auto'
+              />
 
-  {Array.isArray(content.who_we_are) &&
-    content.who_we_are.map((item, index) => (
-      <div
-        key={index}
-        className={`xsm:w-[18.8125rem] xsm:first:ml-4 xsm:last:mr-4 xsm:px-[0.375rem] xsm:pt-[1.5rem] flex-shrink-0 w-[24.0625rem] flex flex-col items-start gap-[0.625rem] pt-[2.5rem] px-[0.625rem] pb-[0.625rem] rounded-[1.25rem] bg-[linear-gradient(180deg,rgba(189,222,187,0.91)_14.98%,#F7E9DD_85.05%)] bg-repeat [background-blend-mode:color-burn,normal] backdrop-blur-[2px] ${
-          index % 2 === 1 ? 'mt-[3.3125rem] xsm:mt-0' : ''
-          }
+              {Array.isArray(content.who_we_are) &&
+                content.who_we_are.map((item, index) => (
+                  <div
+                    key={index}
+                    className={`xsm:w-[18.8125rem] xsm:first:ml-4 xsm:last:mr-4 xsm:px-[0.375rem] xsm:pt-[1.5rem] flex-shrink-0 w-[24.0625rem] flex flex-col items-start gap-[0.625rem] pt-[2.5rem] px-[0.625rem] pb-[0.625rem] rounded-[1.25rem] bg-[linear-gradient(180deg,rgba(189,222,187,0.91)_14.98%,#F7E9DD_85.05%)] bg-repeat [background-blend-mode:color-burn,normal] ${
+                      index % 2 === 1 ? 'mt-[3.3125rem] xsm:mt-0' : ''
+                    }
           ${index === 0 ? 'xsm:ml-4' : ''}
     ${index === 2 ? 'xsm:mr-4' : ''}
           `}
-      >
-        <div className="xsm:p-[0.875rem] xsm:rounded-[0.5rem] bg-white flex flex-col items-start rounded-[0.75rem] p-4 self-stretch gap-[0.625rem]">
-          <div className="flex flex-col items-start gap-3">
-            <h2 className="xsm:text-[2rem] xsm:leading-[1] font-phu-du text-[3rem] font-medium leading-[1.2] bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-transparent">
-              {item.title}
-            </h2>
-            <p className="xsm:text-[1rem] xsm:leading-1 text-[1.125rem] text-[#2E2E2E] leading-[1.1] font-phu-du">
-              {item.subtitle}
-            </p>
-          </div>
-          <span className="xsm:text-[0.875rem] text-base leading-[1.5] font-montserrat font-[400] text-[#2E2E2EBF]">
-            {item.description}
-          </span>
-        </div>
-      </div>
-    ))}
-</div>
-
+                  >
+                    <div className='xsm:p-[0.875rem] xsm:rounded-[0.5rem] bg-white flex flex-col items-start rounded-[0.75rem] p-4 self-stretch gap-[0.625rem]'>
+                      <div className='flex flex-col items-start gap-3'>
+                        <h2 className='xsm:text-[2rem] xsm:leading-[1] font-phu-du text-[3rem] font-medium leading-[1.2] bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-transparent'>
+                          {item.title}
+                        </h2>
+                        <p className='xsm:text-[1rem] xsm:leading-1 text-[1.125rem] text-[#2E2E2E] leading-[1.1] font-phu-du'>
+                          {item.subtitle}
+                        </p>
+                      </div>
+                      <span className='xsm:text-[0.875rem] text-base leading-[1.5] font-montserrat font-[400] text-[#2E2E2EBF]'>
+                        {item.description}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+            </div>
           </div>
         </div>
       </div>

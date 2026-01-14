@@ -6,7 +6,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
     {
-      label: locale === 'en' ? 'News List' : 'Danh sách tin tức',
+      label: locale === 'en' ? 'Blog List' : 'Danh sách tin tức',
       href: locale === 'en' ? '/blogs' : '/danh-sach-tin-tuc',
     },
   ]
@@ -15,7 +15,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
     <div className='xsm:h-[34.375rem] relative h-[36.375rem] w-full overflow-hidden'>
       {data?.banner?.background_pc?.url && (
         <Image
-          src={data.banner.background_pc.url}
+          src={data.banner.background_pc.url || '/default.webp'}
           alt='banner'
           width={1600}
           height={582}
@@ -25,7 +25,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
       )}
       {data?.banner?.background_mobile?.url && (
         <Image
-          src={data.banner.background_mobile.url}
+          src={data.banner.background_mobile.url || '/default.webp'}
           alt='banner mb'
           width={375}
           height={692}
@@ -34,7 +34,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
         />
       )}
       {/* overlay */}
-      <div className='xsm:top-[14.8125rem] absolute top-[16.8125rem] left-0 h-[19.5625rem] w-full bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,rgba(2,3,5,0.08)_13.88%,#192842_100%)] opacity-[0.68] backdrop-blur-[2px]' />
+      <div className='xsm:top-[14.8125rem] absolute top-[16.8125rem] left-0 h-[19.5625rem] w-full bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,rgba(2,3,5,0.08)_13.88%,#192842_100%)] opacity-[0.68]' />
       {/* content */}
       <div className='xsm:top-[23.8125rem] xsm:left-[1rem] xsm:gap-[1rem] absolute top-[21.9375rem] left-[7.125rem] inline-flex flex-col items-start gap-[2rem]'>
         <Breadcrumb breadcrumbItems={breadcrumbItems} />

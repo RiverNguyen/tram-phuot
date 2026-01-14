@@ -47,7 +47,7 @@ export default async function page({
       locations: sp.locations || '',
       hotelAmenities: sp['hotel-amenities'] || '',
       page: sp.paged || '1',
-      limit: 8,
+      limit: 12,
     }),
   ])
 
