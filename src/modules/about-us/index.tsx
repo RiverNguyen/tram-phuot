@@ -4,38 +4,34 @@ import OurAbout from '@/modules/about-us/_components/OurAbout'
 import OurStoryAbout from '@/modules/about-us/_components/OurStoryAbout'
 import JourneyAbout from '@/modules/about-us/_components/JourneyAbout'
 import VideoStory from '@/modules/about-us/_components/VideoStory'
-import {PageBannerACF} from '@/interface/banner.interface'
-import {IAboutUs, IContentAbout, ITheExplorers, IVideoAbout, IWhereDreamsTakeFlight} from '@/interface/about.interface'
+import { PageBannerACF } from '@/interface/banner.interface'
+import {
+  IAboutUs,
+  IContentAbout,
+  ITheExplorers,
+  IVideoAbout,
+  IWhereDreamsTakeFlight,
+} from '@/interface/about.interface'
 
 interface Props {
-    locale?: string;
-    banner?: PageBannerACF
-    about: IAboutUs
-    content: IContentAbout
-    explorers: IWhereDreamsTakeFlight
-    theExplorer: ITheExplorers
-    video: IVideoAbout
+  locale?: string
+  banner?: PageBannerACF
+  about: IAboutUs
+  content: IContentAbout
+  explorers: IWhereDreamsTakeFlight
+  theExplorer: ITheExplorers
+  video: IVideoAbout
 }
 
-const WrapperAbout=({
-    locale,
-    banner,
-    about,
-    content,
-    explorers,
-    theExplorer,
-    video
-}: Props) => {
+const WrapperAbout = ({ locale, banner, about, content, explorers, theExplorer, video }: Props) => {
   return (
-    <main className='relative w-full h-full bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")] bg-cover bg-center overflow-hidden'>
+    <main className='relative h-full w-full bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")] bg-cover bg-fixed bg-center'>
       <Banner
         locale={locale}
         data={banner}
       />
-      <OurAbout
-        about={about}
-      />
-      
+      <OurAbout about={about} />
+
       <OurStoryAbout content={content} />
       <JourneyAbout explorers={explorers} />
       <VideoStory

@@ -15,6 +15,7 @@ import { useTransition } from 'react'
 import SkeletonTour from './SkeletonTour'
 import { scrollToSection } from '@/utils/scrollToSection'
 import { useTranslations } from 'next-intl'
+import EmptyTourResult from './EmptyTourResult'
 
 interface WrapperTourListProps {
   taxonomies: ITaxonomy[]
@@ -178,7 +179,9 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
             className='group font-montserrat flex h-[2.75rem] cursor-pointer items-center space-x-2 p-[0.75rem_0_0.75rem_0.75rem] text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] text-[#FF2019] uppercase'
           >
             <ICTrashcan className='size-[1.125rem]' />
-            <span className='relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-0 after:bg-[#FF2019] after:transition-all after:duration-500 after:ease-out group-hover:after:opacity-100'>{t('reset')}</span>
+            <span className='relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-0 after:bg-[#FF2019] after:transition-all after:duration-500 after:ease-out group-hover:after:opacity-100'>
+              {t('reset')}
+            </span>
           </button>
         </div>
         {/* Filter Mobile */}
@@ -212,7 +215,7 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
         </div>
 
         {isPending && (
-          <div className='xsm:grid-cols-1 grid w-full grid-cols-4 gap-x-[1.125rem] gap-y-[1.5rem] gap-y-[2rem]'>
+          <div className='xsm:grid-cols-1 grid w-full grid-cols-4 gap-x-[1.125rem] gap-y-[2rem]'>
             {Array.from({ length: 8 }).map((_, i) => (
               <SkeletonTour key={i} />
             ))}
@@ -221,11 +224,7 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
 
         {/* Tour list */}
         {!isPending &&
-          (data.length > 0 ? (
-            <TourList data={data} />
-          ) : (
-            <p className='mx-auto text-center'>{t('noResult')}</p>
-          ))}
+          (data.length > 0 ? <TourList data={data} /> : <EmptyTourResult onReset={resetFilter} />)}
       </div>
 
       {/* pagination */}

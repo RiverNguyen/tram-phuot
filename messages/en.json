@@ -74,7 +74,8 @@
     "Tour types": "Tour Types",
     "Tour durations": "Tour Durations",
     "more": "More",
-    "less": "Less"
+    "less": "Less",
+    "noResultDesc": "No tour found. Please try again with different filters."
   },
   "ListCouponPage": {
     "noResult": "No Result",

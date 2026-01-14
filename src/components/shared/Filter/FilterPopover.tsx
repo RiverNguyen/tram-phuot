@@ -74,12 +74,16 @@ export default function FilterPopover({
         )}
       >
         <div className='flex items-center gap-[0.25rem]'>
-          <span className='font-normal text-[rgba(46,46,46,0.60)] uppercase shrink-0'>{label}:</span>
-          <span className='line-clamp-1'>{getDisplayText() || (showAllOption ? t('all') : '')}</span>
+          <span className='font-normal text-[rgba(46,46,46,0.60)] uppercase shrink-0'>
+            {label}:
+          </span>
+          <span className='line-clamp-1'>
+            {getDisplayText() || (showAllOption ? t('all') : '')}
+          </span>
         </div>
         <ICChevron className='h-auto w-[0.825rem] text-[#A1A1A1]' />
       </PopoverTrigger>
-      <PopoverContent className='flex w-[var(--radix-popover-trigger-width)] flex-col items-start gap-[0.25rem] rounded-[1rem] bg-white py-[0.75rem] pr-[1rem] pl-[0.75rem] shadow-[7px_10px_34.3px_0_rgba(0,0,0,0.12)]'>
+      <PopoverContent className='flex w-[var(--radix-popover-trigger-width)] flex-col items-start gap-[0.25rem] rounded-[1rem] bg-white py-[0.75rem] pr-[1rem] pl-[0.75rem] shadow-[7px_10px_34.3px_0_rgba(0,0,0,0.12)] max-h-[20rem] overflow-y-auto'>
         {isRadio ? (
           <RadioGroup
             value={selectedValue}

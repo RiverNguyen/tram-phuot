@@ -33,7 +33,7 @@ export default function HotelCard({ hotel, className }: { hotel: IHotel; classNa
     <Link
       href={href}
       className={cn(
-        'xsm:h-[31.03531rem] xsm:rounded-[0.56044rem] group relative block h-[22.6875rem] w-full overflow-hidden rounded-[0.5rem] bg-[#FFFCE3]',
+        'xsm:h-[31.03531rem] xsm:rounded-[0.56044rem] group relative block h-[28.6875rem] w-full overflow-hidden rounded-[0.5rem] bg-[#FFFCE3]',
         className,
       )}
     >
