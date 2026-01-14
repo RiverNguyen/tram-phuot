@@ -40,6 +40,8 @@
     "language": "Language:"
   },
   "Footer": {
+    "emailRequired": "Please enter your email",
+    "emailInvalid": "Please enter a valid email",
     "yourMessage": "Your Message",
     "formDesc": "We ensure that all your information is kept confidential",
     "buttonSubmit": "Submitting",
@@ -70,7 +72,9 @@
     "all": "All",
     "Locations": "Locations",
     "Tour types": "Tour Types",
-    "Tour durations": "Tour Durations"
+    "Tour durations": "Tour Durations",
+    "more": "More",
+    "less": "Less"
   },
   "ListCouponPage": {
     "noResult": "No Result",
@@ -80,7 +84,13 @@
     "category": "Category",
     "destination": "Destination",
     "typeTour": "Type tour",
-    "apply": "Apply"
+    "apply": "Apply",
+    "applicable": "Applicable",
+    "code": "Promotion code",
+    "copy": "Copy code",
+    "copied": "Copied code",
+    "discount": "Discount",
+    "minApplication": "Min application"
   },
   "ListHotelPage": {
     "noResult": "No Result",
@@ -160,6 +170,7 @@
   },
   "ContactForm": {
     "fullNameRequired": "Please enter your full name",
+    "fullNameInvalid": "Name must only contain letters and spaces",
     "emailRequired": "Please enter your email",
     "emailInvalid": "Please enter a valid email",
     "phoneRequired": "Please enter your phone number",
@@ -169,7 +180,7 @@
     "submitFailedMessage": "Submitted failed. Please try again.",
     "sending": "Sending...",
     "sendInformation": "Send information",
-    "fullNameLabel": "Full name",
+    "fullNameLabel": "Your name",
     "emailLabel": "Email",
     "phoneNumberLabel": "Phone number",
     "messageLabel": "Message",
@@ -181,6 +192,7 @@
     "submitButton": "Send information",
     "textMessage": "Message",
     "fullNameRequired": "Please enter your full name",
+    "fullNameInvalid": "Name must only contain letters and spaces",
     "emailRequired": "Please enter your email",
     "emailInvalid": "Please enter a valid email",
     "phoneRequired": "Please enter your phone number",
@@ -232,8 +244,11 @@
     "textArea": "Area",
     "textRoomType": "Room type",
     "textNumberOfBeds": "Number of beds",
+    "textBed": "Bed",
+    "textBeds": "Beds",
     "textRoom": "Room",
     "textNight": "night",
+    "textNights": "nights",
     "textLocation": "Location",
     "textViewOnGoogleMap": "View on Google Map",
     "textBookingOverview": "Booking Overview",
@@ -255,6 +270,8 @@
     "textVoucherCode": "Voucher code",
     "textApply": "Apply",
     "textPolicy": "Policy",
-    "textExploreOtherHotels": "Explore other hotels"
+    "textExploreOtherHotels": "Explore other hotels",
+    "textVoucherResetOnDateChange": "Voucher has been reset due to date change. Please apply again.",
+    "textPromotionCode": "Promotion code"
   }
 }

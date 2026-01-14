@@ -95,7 +95,7 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
           </Link>
           <button
             onClick={() => setOpenSheet(true)}
-            className='flex-center h-[2.5rem] rounded-[0.5rem] bg-white/20 border-none px-4 text-[0.75rem] leading-[1.5] font-medium text-white backdrop-blur-[5px]'
+            className='flex-center h-[2.5rem] rounded-[0.5rem] bg-white/20 border-none px-4 text-[0.75rem] leading-[1.5] font-medium text-white'
           >
             <ICCMenu className='mr-2 h-[0.7rem] w-4 text-white' />
             Menu
@@ -114,7 +114,10 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
               data={data}
               onClose={() => setOpenSheet(false)}
             />
-            <MobileNavigation data={data} />
+            <MobileNavigation
+              data={data}
+              onNavigate={() => setOpenSheet(false)}
+            />
           </div>
           <div className='absolute bottom-0 left-0 w-full bg-white py-[1.5rem]'>
             <MobileSocialMedia socialMedia={socialMedia} />

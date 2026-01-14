@@ -24,15 +24,6 @@ interface FormContactProps {
   containerClassName?: string
 }
 
-const formSchema = z.object({
-  email: z.email({
-    error: 'Email không hợp lệ',
-  }),
-  message: z.string().optional(),
-})
-
-type IContact = z.infer<typeof formSchema>
-
 export default function FormContact({
   containerClassName,
   buttonSubmitText = 'VIETNAM TRAVEL GUIDE BOOK',
@@ -42,6 +33,19 @@ export default function FormContact({
   const currentLocale = (params?.locale as string) || routing.defaultLocale
 
   const translateFooter = useTranslations('Footer')
+  const messages = {
+    emailRequired: translateFooter('emailRequired'),
+    emailInvalid: translateFooter('emailInvalid'),
+  }
+
+  const formSchema = z.object({
+    email: z.email({
+      error: messages.emailInvalid,
+    }),
+    message: z.string().optional(),
+  })
+
+  type IContact = z.infer<typeof formSchema>
 
   const form = useForm<IContact>({
     resolver: zodResolver(formSchema),

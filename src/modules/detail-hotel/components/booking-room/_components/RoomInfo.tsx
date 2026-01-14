@@ -48,7 +48,10 @@ const RoomInfo = ({ room }: RoomInfoProps) => {
         </p>
         <p className='text-[#2e2e2e]/60 text-[0.75rem] font-medium leading-[1.6] tracking-[-0.0075rem]'>
           {t('textNumberOfBeds')}{' '}
-          <strong className='text-[#2e2e2e] ml-1'>{room?.acf?.number_of_beds}</strong>
+          <strong className='text-[#2e2e2e] ml-1'>
+            {room?.acf?.number_of_beds}{' '}
+            {Number(room?.acf?.number_of_beds) === 1 ? t('textBed') : t('textBeds')}
+          </strong>
         </p>
       </div>
     </>

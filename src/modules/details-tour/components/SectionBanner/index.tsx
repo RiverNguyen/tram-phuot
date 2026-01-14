@@ -59,21 +59,21 @@ export default function SectionBanner({
     },
   ]
   return (
-    <section className='xsm:h-124.75 relative h-160 overflow-hidden 2xl:h-screen'>
-      <div className='xsm:bottom-14 xsm:px-4 absolute right-0 bottom-23.5 left-0 z-5 mx-auto flex max-w-350 items-end justify-between'>
+    <section className='xsm:h-[31.1875rem] relative h-160 overflow-hidden 2xl:h-screen z-[10]'>
+      <div className='xsm:bottom-[3rem] xsm:px-4 absolute right-0 bottom-23.5 left-0 z-5 mx-auto flex max-w-350 items-end justify-between'>
         <div className='xsm:w-full w-151.5 shrink-0'>
           <Breadcrumb
             breadcrumbItems={breadcrumbItems}
             classNameBreadcrumbList='mb-8 xsm:mb-4.5'
           />
-          <h1 className='font-phu-du xsm:text-[0_2.661px_2.661px_rgba(0,0,0,0.50)] xsm:mb-[0.7125rem] xsm:text-[1.5rem] mb-5 text-[2.125rem] leading-[1.1] font-medium text-white text-shadow-[0_4.702px_4.702px_rgba(0,0,0,0.50)]'>
+          <h1 className='font-phu-du xsm:text-shadow-[0_2.661px_2.661px_rgba(0,0,0,0.50)] xsm:font-normal xsm:mb-[0.7125rem] xsm:text-[1.875rem] mb-5 text-[2.125rem] leading-[1.1] font-medium text-white text-shadow-[0_4.702px_4.702px_rgba(0,0,0,0.50)]'>
             {title || ''}
           </h1>
           <div className='xsm:space-x-2.5 flex items-center space-x-4'>
             <p className='xsm:space-x-[0.57rem] flex items-center space-x-4'>
               <ICCompass className='xsm:size-[0.90106rem] xsm:mt-[0.2rem] mt-1.5 size-[1.59194rem] text-[#FFC542]' />
               <span className='xsm:space-x-[0.28rem] flex items-center space-x-2'>
-                <span className='font-phu-du xsm:text-[1.25rem] text-[2.5rem] leading-12 font-medium text-[#FFC542]'>
+                <span className='font-phu-du xsm:text-[1.25rem] text-[2.5rem] leading-12 xsm:leading-[1.2] font-medium text-[#FFC542]'>
                   {fromPricePerPax || '0'}$ USD
                 </span>
                 <span className='font-montserrat xsm:text-[0.75rem] inline-block text-[1rem] leading-6 text-white'>
@@ -108,9 +108,9 @@ export default function SectionBanner({
           </ul>
         </div>
       </div>
-      <div className='xsm:hidden pointer-events-none absolute right-0 bottom-0 left-0 z-1 h-126.75 bg-[linear-gradient(180deg,rgba(2,3,5,0.00)_0%,#000_89.18%)] opacity-68 backdrop-blur-[2px]'></div>
-      <div className='xsm:hidden pointer-events-none absolute right-0 bottom-0 left-0 z-1 h-67 bg-[linear-gradient(180deg,rgba(2,3,5,0.00)_0%,#000_89.18%)] opacity-68 backdrop-blur-[2px]'></div>
-      <div className='xsm:block pointer-events-none absolute bottom-0 left-0 z-1 hidden h-173 w-full bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,rgba(2,3,5,0.08)_13.88%,#192842_100%)] opacity-68 backdrop-blur-[2px]'></div>
+      <div className='xsm:hidden pointer-events-none absolute right-0 bottom-0 left-0 z-1 h-126.75 bg-[linear-gradient(180deg,rgba(2,3,5,0.00)_0%,#000_89.18%)] opacity-68'></div>
+      <div className='xsm:hidden pointer-events-none absolute right-0 bottom-0 left-0 z-1 h-67 bg-[linear-gradient(180deg,rgba(2,3,5,0.00)_0%,#000_89.18%)] opacity-68'></div>
+      <div className='xsm:block pointer-events-none absolute bottom-0 left-0 z-1 hidden h-173 w-full bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,rgba(2,3,5,0.08)_13.88%,#192842_100%)] opacity-68'></div>
       <div className='xsm:hidden absolute top-0 left-0 block size-full'>
         {banner?.background_pc && (
           <Image
@@ -146,7 +146,7 @@ export default function SectionBanner({
           className='h-auto w-full'
         />
       </div>
-      <div className='xsm:block pointer-events-none absolute right-0 bottom-[-2px] left-0 z-10 hidden'>
+      <div className='xsm:block pointer-events-none absolute right-0 bottom-[-3px] left-0 z-10 hidden'>
         <Image
           alt=''
           width={375}

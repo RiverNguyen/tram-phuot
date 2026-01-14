@@ -43,6 +43,13 @@ const BookingFormMobile = ({
   const [openCheckInDrawer, setOpenCheckInDrawer] = useState(false)
   const [openCheckOutDrawer, setOpenCheckOutDrawer] = useState(false)
 
+  // Tạo ngày hôm nay một lần để tái sử dụng
+  const today = (() => {
+    const date = new Date()
+    date.setHours(0, 0, 0, 0)
+    return date
+  })()
+
   const formatDate = (date: Date | undefined) => {
     if (!date) return { day: '', month: '' }
     const day = date.getDate()
@@ -147,10 +154,12 @@ const BookingFormMobile = ({
         selectedDate={checkInDate}
         onDateChange={onCheckInChange}
         disabled={(date) => {
-          const today = new Date()
-          today.setHours(0, 0, 0, 0)
-          return date < today
+          const dateTime = new Date(date)
+          dateTime.setHours(0, 0, 0, 0)
+          return dateTime < today
         }}
+        fromDate={today}
+        fromMonth={today}
       />
       <DateDrawer
         open={openCheckOutDrawer}
@@ -159,12 +168,18 @@ const BookingFormMobile = ({
         selectedDate={checkOutDate}
         onDateChange={onCheckOutChange}
         disabled={(date) => {
-          const today = new Date()
-          today.setHours(0, 0, 0, 0)
-          if (date < today) return true
-          if (checkInDate && date <= checkInDate) return true
+          const dateTime = new Date(date)
+          dateTime.setHours(0, 0, 0, 0)
+          if (dateTime < today) return true
+          if (checkInDate) {
+            const checkInTime = new Date(checkInDate)
+            checkInTime.setHours(0, 0, 0, 0)
+            if (dateTime <= checkInTime) return true
+          }
           return false
         }}
+        fromDate={checkInDate || today}
+        fromMonth={checkInDate || today}
       />
       <SearchButton
         selectedStation={selectedStation}

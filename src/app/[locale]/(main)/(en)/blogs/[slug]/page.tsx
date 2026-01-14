@@ -35,7 +35,7 @@ export default async function page({
   const typeNews = Array.isArray(blog?.taxonomies['type-news'])
     ? blog.taxonomies['type-news'].map((tax) => tax.slug).join(',')
     : ''
-  const { data: relatedBlogs } = await blogService.getRelated({ locale, typeNews, limit: 3 })
+  const { data: relatedBlogs } = await blogService.getRelated({ locale, typeNews, limit: 4 })
 
   return (
     <DetailBlog

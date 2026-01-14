@@ -31,14 +31,14 @@ const hotelService = {
   getHotels: async ({
     locale,
     locations = '',
-    limit = 8,
+    limit = 12,
   }: {
     locale: string
     locations?: string
     limit?: number
   }): Promise<IHotelRes> => {
     return await fetchData({
-      api: `${ENDPOINTS.hotel.list}?lang=${locale}&limit=${limit}&order=DESC&orderby=date&acf=banner,price_person&tax=locations&locations=${locations}`,
+      api: `${ENDPOINTS.hotel.list}?lang=${locale}&limit=${limit}&order=DESC&orderby=date&acf=banner,price_person&tax=locations&locations=${locations}&acf=banner`,
     })
   },
 }

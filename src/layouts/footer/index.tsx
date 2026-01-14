@@ -16,6 +16,7 @@ export default function Footer({ data }: { data: IFooter }) {
   const pathname = usePathname()
 
   const isThankyouPage = pathname === '/thank-you' || pathname === '/cam-on'
+  const isHomePage = pathname === '/' || pathname === '/vi'
   const isBlogDetail = pathname.includes('/blogs') && pathname.split('/').length >= 3
 
   if (isThankyouPage) return null
@@ -28,6 +29,12 @@ export default function Footer({ data }: { data: IFooter }) {
         isBlogDetail && 'xsm:mb-[2.75rem]',
       )}
     >
+      {isHomePage ? (
+        <div className="pointer-events-none absolute inset-0 bg-[url('/home/explorers/bg-pc.webp')] bg-[length:100%_auto] bg-top bg-repeat-y opacity-5" />
+      ) : (
+        <div className="pointer-events-none absolute inset-0 bg-[url('/uu-dai/bg.webp')] bg-cover bg-center" />
+      )}
+
       {/* Background + mask */}
       <div className="xsm:mask-[url('/footer/d-footer_mask_mobile.webp')] xsm:mask-size-[23.4375rem_32rem] absolute inset-0 mask-alpha mask-no-repeat sm:mask-[url('/footer/d-footer_mask.webp')] sm:mask-size-[100.07813rem_92.876rem]">
         <Image
@@ -140,19 +147,19 @@ export default function Footer({ data }: { data: IFooter }) {
                     menus={data?.footer_content?.menu}
                   />
                   <FooterMenu
-                    title={`${translateFooter('stationStop')}:`}
+                    title={`${translateFooter('stationStop')}`}
                     menus={data?.footer_content?.station_stop}
                     containerClassName='xsm:w-[13.375rem]'
                   />
                   <FooterMenu
-                    title={`${translateFooter('toursAndExperiences')}:`}
+                    title={`${translateFooter('toursAndExperiences')}`}
                     menus={data?.footer_content?.tours}
                   />
                 </div>
 
                 <div className='xsm:w-full xsm:grid-cols-1 xsm:border-t xsm:border-dashed xsm:border-t-white/20 xsm:pt-[1.25rem] xsm:gap-y-[1.25rem] grid h-fit w-[37.11438rem] shrink-0 grid-cols-3'>
                   <FooterMenu
-                    title={`${translateFooter('representativeOffice')}:`}
+                    title={`${translateFooter('representativeOffice')}`}
                     containerClassName='col-span-3 xsm:col-span-1 border-b border-dashed border-b-white/20 pb-[1.86rem] xsm:pb-[1.25rem]'
                     content={
                       <Link

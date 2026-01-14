@@ -23,7 +23,9 @@ export default function VoucherListMB({ tourCoupons }: VoucherListPCProps) {
             couponDiscountPrice={item?.price_discount}
             couponForWhom={item?.for_whom}
             couponMinPrice={item?.minimum_total_price}
-            classNameCard='xsm:size-full '
+            classNameCard='xsm:size-full'
+            couponApplyEndDate={item?.time_goes?.end}
+            minimumNumberOfNights={item?.minimum_number_of_nights}
           />
         </div>
       ))}
