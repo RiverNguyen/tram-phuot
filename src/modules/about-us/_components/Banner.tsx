@@ -39,7 +39,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
         </h1>
       </div>
       {/* overlay bottom */}
-      <div className='xsm:hidden w-[104.67619rem] h-[36.85738rem] absolute bottom-[-4.04rem] left-0 z-4'>
+      <div className='xsm:hidden w-[104.67619rem] h-[36.85738rem] absolute bottom-[-11rem] left-0 z-4'>
         <Image
           src={'/about-us/d-stock-2.webp'}
           alt='overview-stock'
@@ -52,7 +52,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
         alt='overview-paper'
         width={1440}
         height={500}
-        className='xsm:hidden w-auto h-[15.1875rem] object-cover absolute bottom-[4.36rem] left-0 z-10 pointer-events-none '
+        className='xsm:hidden w-auto h-[15.1875rem] object-cover absolute bottom-[-3.84rem] left-0 z-10 pointer-events-none '
       />
     </div>
   )

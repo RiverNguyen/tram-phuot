@@ -1,11 +1,89 @@
-import { BrandButton } from '@/components/shared'
+'use client'
+import {BrandButton} from '@/components/shared'
 import { IContentAbout } from '@/interface/about.interface'
+import {useGSAP} from '@gsap/react'
+import {gsap} from 'gsap'
+import {SplitText} from 'gsap/SplitText'
 import Image from 'next/image'
 import Link from 'next/link'
+import {useEffect, useRef, useState} from 'react'
 
-export default function OurStoryAbout({ content }: { content: IContentAbout }) {
+gsap.registerPlugin(SplitText)
+
+export default function OurStoryAbout({content}: {content: IContentAbout}) {
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const textRef=useRef<HTMLParagraphElement>(null)
+  const splitRef = useRef<SplitText|null>(null)
+  const tlRef = useRef<gsap.core.Timeline | null>(null)
+
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const [isVisible, setIsVisible] = useState(false)
+  useEffect(() => {
+    const onScroll = () => {
+      if (!sectionRef.current) return
+      const rect = sectionRef.current?.getBoundingClientRect()
+      if (rect?.top < window.innerHeight * 0.8) {
+        setIsVisible(true)
+        window.removeEventListener('scroll', onScroll)
+      }
+    }
+    window.addEventListener('scroll', onScroll)
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+useGSAP(
+    () => {
+      const isDesktop = window.innerWidth >= 640
+      const createAnimation = () => {
+        // Clean up previous animations
+        if (splitRef.current) {
+          splitRef.current.revert()
+          splitRef.current = null
+        }
+        if (tlRef.current) {
+          tlRef.current.kill()
+          tlRef.current = null
+        }
+
+        splitRef.current = new SplitText(textRef.current, {
+          type: 'words, chars',
+        })
+
+        tlRef.current = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: isDesktop ? 'top 80%' : 'top 80%',
+            end: isDesktop ? '+=120%' : 'bottom 20%',
+            // pin: isDesktop,
+            scrub: 1,
+            once: !isDesktop,
+            pinType: 'transform',
+            // endTrigger: '#value-to-customer',
+          },
+        })
+
+        tlRef.current.set(
+          splitRef.current.chars,
+          {
+            color: '#2E2E2E',
+            stagger: 0.1,
+          },
+          0.1,
+        )
+      }
+
+      createAnimation()
+    },
+    {dependencies: [], scope: sectionRef},
+  )
+
   return (
-    <section className='relative sm:mt-[3.44rem] xsm:py-[4rem] sm:pb-[9rem]'>
+    <section ref={sectionRef} style={{
+        position: isVisible ? 'sticky' : 'relative',
+        top: isVisible ? '-6rem' : 'auto',
+      }} className='relative sm:mt-[3.44rem] xsm:py-[4rem] sm:pb-[9rem]'>
       <Image
         src={'/about-us/d-leaf-our-story.webp'}
         alt=''
@@ -18,7 +96,7 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
         alt=''
         width={413}
         height={465}
-        className='absolute xsm:w-[4.46819rem] xsm:right-[-1.5rem] right-[12.56rem] top-[1.77rem] w-[13.5rem] h-auto object-cover'
+        className='absolute xsm:w-[4.46819rem] xsm:right-[-1rem] right-[12.56rem] top-[1.77rem] w-[13.5rem] h-auto object-cover'
       />
       <div className='absolute top-[46%] left-1/2 -translate-x-1/2 -translate-y-1/2'>
         <Image
@@ -42,23 +120,13 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
           </div>
 
           <div className='xsm:pt-4 xsm:pb-0 flex justify-center items-center max-w-[47.875rem] p-[8.5625rem_1.78125rem_2.3125rem_1.84375rem]'>
-            <p className='w-[44.25rem] xsm:w-[19.6875rem] font-phu-du xsm:text-[1.25rem] xsm:indent-0 mt-4 text-[2.125rem] font-medium leading-[2.3375rem] tracking-[-0.02] text-center not-italic'>
-              {content?.story_content
-                ?.split('.')
-                .filter(Boolean)
-                .map((sentence, index) => (
-                  <span
-                    key={index}
-                    className={index % 2 === 0 ? 'text-[#2E2E2E]' : 'text-[#2E2E2E]/60'}
-                  >
-                    {sentence.trim()}.
-                  </span>
-                ))}
+            <p ref={textRef} className='w-[44.25rem] xsm:w-[19.6875rem] font-phu-du xsm:text-[1.25rem] xsm:leading-[1.375rem] xsm:indent-0 mt-4 text-[2.125rem] font-medium leading-[2.3375rem] tracking-[-0.02] text-center not-italic text-[#2E2E2E99]'>
+              {content?.story_content}
             </p>
           </div>
           <div className='flex flex-col items-center self-stretch'>
             <div className='flex w-[68.4375rem] flex-col items-center'>
-              <div className='xsm:px-[1.5rem] inline-flex items-center gap-[1.25rem] justify-center self-stretch'>
+              <div className='xsm:px-[1.5rem] xsm:gap-[0.5rem] inline-flex items-center gap-[1.25rem] justify-center self-stretch'>
                 <Link
                   href={content?.button_links.link_google_review?.url || ''}
                   target={'_blank'}
@@ -66,7 +134,7 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
                 >
                   <BrandButton
                     variant='transparent'
-                    classNameButtonContainer='xsm:w-full'
+                    classNameButtonContainer='xsm:w-full xsm:px-4'
                   >
                     <div className='flex items-center justify-center gap-[0.625rem]'>
                       <span className='xsm:text-[0.625rem] xsm:leading-[0.75rem] font-montserrat text-[0.875rem] font-semibold leading-[1.05rem] uppercase bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] bg-clip-text text-transparent'>
@@ -127,7 +195,7 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
                       alt=''
                       fill
                       priority
-                      className='object-cover'
+                      className='object-cover object-[80%_105%]'
                     />
                   </div>
 
