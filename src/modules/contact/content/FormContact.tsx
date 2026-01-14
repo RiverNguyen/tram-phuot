@@ -11,7 +11,74 @@ import CF7Request from '@/fetches/cf7Request'
 import { useLocale, useTranslations } from 'next-intl'
 import { PhoneInput } from '@/components/ui/phone-input-custom'
 import { cn } from '@/lib/utils'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { ControllerFieldState, ControllerRenderProps } from 'react-hook-form'
+
+function PhoneNumberFieldContent({
+  field,
+  fieldState,
+  label,
+}: {
+  field: ControllerRenderProps<ContactFormValues, 'phoneNumber'>
+  fieldState: ControllerFieldState
+  label: string
+}) {
+  const [isFocused, setIsFocused] = useState(false)
+  const hasValue = !!field.value
+  const shouldFloat = isFocused || hasValue
+  const wrapperRef = useRef<HTMLDivElement>(null)
+
+  const focusNumberInput = () => {
+    const input = wrapperRef.current?.querySelector(
+      `input[name="${field.name}"]`,
+    ) as HTMLInputElement | null
+    input?.focus()
+  }
+
+  return (
+    <div className='relative z-0'>
+      <div
+        ref={wrapperRef}
+        className='relative flex items-center pb-3.75'
+        onMouseDown={(e) => {
+          const target = e.target as HTMLElement
+          if (target.closest('button,[role="button"],a')) return
+          if (target.closest('input,select,textarea')) return
+          e.preventDefault()
+          focusNumberInput()
+        }}
+      >
+        <PhoneInput
+          {...field}
+          defaultCountry='VN'
+          placeholder=' '
+          numberInputProps={{ id: field.name }}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          className='peer text-body-t1 h-4.25 rounded-none border-none! px-0 py-0 text-[0.875rem] leading-[1.2] tracking-[0.00875rem] shadow-none! ring-0! outline-0!'
+        />
+        <label
+          htmlFor={field.name}
+          className={cn(
+            'font-montserrat pointer-events-none absolute top-0 z-0 origin-left transform cursor-text text-[0.875rem] leading-[1.05rem] tracking-[0.00875rem] text-[#8B8B8B] normal-case duration-300',
+            shouldFloat
+              ? '-translate-y-5.75 scale-75 translate-x-0'
+              : 'translate-y-0 scale-100 translate-x-14',
+          )}
+        >
+          {label}
+          <span className='text-[#EF2020] ml-1'>*</span>
+        </label>
+      </div>
+      <div
+        className={cn(
+          'h-px w-full transition-colors duration-300',
+          fieldState.error ? 'bg-destructive' : 'bg-[#8B8B8B]/40',
+        )}
+      ></div>
+    </div>
+  )
+}
 
 export default function FormContact({ title }: { title?: string }) {
   const locale = useLocale()
@@ -94,59 +161,18 @@ export default function FormContact({ title }: { title?: string }) {
           <FormField
             control={form.control}
             name='phoneNumber'
-            render={({ field, fieldState }) => {
-              const [isFocused, setIsFocused] = useState(false)
-              const hasValue = !!field.value
-              const shouldFloat = isFocused || hasValue
-
-              return (
-                <FormItem>
-                  <FormControl>
-                    <div className='relative z-0'>
-                      <div className='relative flex items-center pb-3.75'>
-                        <PhoneInput
-                          {...field}
-                          defaultCountry='VN'
-                          placeholder=' '
-                          onFocus={() => setIsFocused(true)}
-                          onBlur={() => {
-                            if (!field.value) {
-                              setIsFocused(false)
-                            }
-                          }}
-                          className='peer text-body-t1 h-4.25 rounded-none border-none! px-0 py-0 text-[0.875rem] leading-[1.2] tracking-[0.00875rem] shadow-none! ring-0! outline-0!'
-                        />
-                        <label
-                          htmlFor={field.name}
-                          onClick={() => {
-                            const input = document.querySelector(
-                              `input[name="${field.name}"]`,
-                            ) as HTMLInputElement
-                            input?.focus()
-                          }}
-                          className={cn(
-                            'font-montserrat pointer-events-auto absolute top-0 -z-10 origin-left transform cursor-text text-[0.875rem] leading-[1.05rem] tracking-[0.00875rem] text-[#8B8B8B] normal-case duration-300',
-                            shouldFloat
-                              ? '-translate-y-5.75 scale-75 translate-x-0'
-                              : 'translate-y-0 scale-100 translate-x-14',
-                          )}
-                        >
-                          {translateContactForm('phoneNumberLabel')}
-                          <span className='text-[#EF2020] ml-1'>*</span>
-                        </label>
-                      </div>
-                      <div
-                        className={cn(
-                          'h-px w-full transition-colors duration-300',
-                          fieldState.error ? 'bg-destructive' : 'bg-[#8B8B8B]/40',
-                        )}
-                      ></div>
-                    </div>
-                  </FormControl>
-                  <FormMessage className='font-montserrat' />
-                </FormItem>
-              )
-            }}
+            render={({ field, fieldState }) => (
+              <FormItem>
+                <FormControl>
+                  <PhoneNumberFieldContent
+                    field={field}
+                    fieldState={fieldState}
+                    label={translateContactForm('phoneNumberLabel')}
+                  />
+                </FormControl>
+                <FormMessage className='font-montserrat' />
+              </FormItem>
+            )}
           />
           <FormField
             control={form.control}

@@ -11,7 +11,7 @@ const tourService = {
     tourType,
     tourDuration,
     page = '1',
-    limit = 8,
+    limit = 12,
   }: {
     locale: string
     locations?: string
@@ -35,12 +35,21 @@ const tourService = {
       'tour-duration': tourDuration,
     }
 
-    Object.entries(taxMap).forEach(([tax, value]) => {
-      if (value) {
-        params.append('tax', tax)
-        params.append(tax, value)
-      }
-    })
+    const activeTaxes = Object.entries(taxMap).filter(([, value]) => !!value)
+
+    if (activeTaxes.length > 0) {
+      params.set(
+        'tax',
+        activeTaxes
+          .map(([tax]) => tax)
+          .filter(Boolean)
+          .join(','),
+      )
+
+      activeTaxes.forEach(([tax, value]) => {
+        if (value) params.set(tax, value)
+      })
+    }
 
     return await fetchData({
       api: `${ENDPOINTS.tour.list}?${params.toString()}`,

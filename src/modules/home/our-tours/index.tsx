@@ -1,11 +1,10 @@
 'use client'
-import { BrandButton, BrandTitle } from '@/components/shared'
+import { BrandButton, BrandTitle, TourCard } from '@/components/shared'
 import { IOurTourHomePage } from '@/interface/homepage.interface'
 import Image from 'next/image'
 import { useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
-import TourCard from '@/modules/tours/_components/TourCard'
 import { cn, convertRemToPx } from '@/lib/utils'
 import { motion } from 'motion/react'
 import { ITour } from '@/interface/tour.interface'
@@ -231,8 +230,15 @@ export default function OurTours({
                         className='xsm:w-[15.67125rem]! w-[19.125rem]!'
                       >
                         <TourCard
-                          tour={tour}
-                          className='xsm:h-[22.6875rem] h-[27.6875rem]'
+                          tourType={tour?.taxonomies?.['tour-type']?.[0]?.name || ''}
+                          tourName={tour?.title}
+                          tourLocation={tour?.taxonomies?.locations?.[0]?.name || ''}
+                          tourPrice={Number.parseFloat(tour?.acf?.price_person || '0') || 0}
+                          tourThumbnail={tour?.thumbnail as any}
+                          tourSlug={tour?.slug}
+                          type='tour'
+                          size='medium'
+                          classNameCard='xsm:h-[22.6875rem] h-[27.6875rem]'
                         />
                       </SwiperSlide>
                     )
@@ -274,9 +280,16 @@ export default function OurTours({
                 tours.map((tour, i) => {
                   return (
                     <TourCard
-                      tour={tour}
                       key={i}
-                      className='xsm:h-[22.6875rem] xsm:w-[15.67125rem] h-[27.6875rem] w-[19.125rem] shrink-0'
+                      tourType={tour?.taxonomies?.['tour-type']?.[0]?.name || ''}
+                      tourName={tour?.title}
+                      tourLocation={tour?.taxonomies?.locations?.[0]?.name || ''}
+                      tourPrice={Number.parseFloat(tour?.acf?.price_person || '0') || 0}
+                      tourThumbnail={tour?.thumbnail as any}
+                      tourSlug={tour?.slug}
+                      type='tour'
+                      size='medium'
+                      classNameCard='xsm:h-[22.6875rem] xsm:w-[15.67125rem] h-[27.6875rem] w-[19.125rem] shrink-0'
                     />
                   )
                 })

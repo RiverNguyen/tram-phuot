@@ -46,7 +46,7 @@ export default async function page({
       tourType: sp['tour-type'],
       tourDuration: sp['tour-duration'],
       page: sp.page,
-      limit: 8,
+      limit: 12,
     }),
   ])
 
