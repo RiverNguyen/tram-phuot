@@ -55,48 +55,41 @@ export default function TheExplorers({
           </div>
 
           <div className='xsm:px-[1rem] xsm:flex-col xsm:items-start inline-flex items-center gap-[1.25rem] xsm:mt-[2.5rem] justify-center self-stretch'>
-            <Link
-              href={explorers?.button_1?.link?.url || ''}
-              target={'_blank'}
-              className='xsm:w-full'
+            <BrandButton
+              variant='transparent'
+              classNameButtonContainer='xsm:w-full'
+              type={{ variant: 'link', href: explorers?.button_1?.link?.url || '' }}
+              target='_blank'
             >
-              <BrandButton
-                variant='transparent'
-                classNameButtonContainer='xsm:w-full'
-              >
-                <div className='flex items-center justify-center gap-[0.625rem]'>
-                  <span>{explorers?.button_1?.link?.title}</span>
-                  <Image
-                    src={explorers?.button_1?.image?.url || ''}
-                    alt={explorers?.button_1?.image?.alt || ''}
-                    width={24}
-                    height={25}
-                    className='w-[1.37388rem] h-auto'
-                  />
-                </div>
-              </BrandButton>
-            </Link>
-            <Link
-              href={explorers?.button_2?.link?.url || ''}
-              target={'_blank'}
-              className='xsm:w-full'
+              <div className='flex items-center justify-center gap-[0.625rem]'>
+                <span>{explorers?.button_1?.link?.title}</span>
+                <Image
+                  src={explorers?.button_1?.image?.url || ''}
+                  alt={explorers?.button_1?.image?.alt || ''}
+                  width={24}
+                  height={25}
+                  className='w-[1.37388rem] h-auto'
+                />
+              </div>
+            </BrandButton>
+
+            <BrandButton
+              variant='transparent'
+              classNameButtonContainer='xsm:w-full group'
+              type={{ variant: 'link', href: explorers?.button_2?.link?.url || '' }}
+              target='_blank'
             >
-              <BrandButton
-                variant='transparent'
-                classNameButtonContainer='xsm:w-full group'
-              >
-                <div className='flex items-center justify-center gap-[0.625rem]'>
-                  <span>{explorers?.button_2?.link?.title}</span>
-                  <Image
-                    src={explorers?.button_2?.image?.url || ''}
-                    alt={explorers?.button_2?.image?.alt || ''}
-                    width={24}
-                    height={25}
-                    className='w-[1.37388rem] h-auto'
-                  />
-                </div>
-              </BrandButton>
-            </Link>
+              <div className='flex items-center justify-center gap-[0.625rem]'>
+                <span>{explorers?.button_2?.link?.title}</span>
+                <Image
+                  src={explorers?.button_2?.image?.url || ''}
+                  alt={explorers?.button_2?.image?.alt || ''}
+                  width={24}
+                  height={25}
+                  className='w-[1.37388rem] h-auto'
+                />
+              </div>
+            </BrandButton>
           </div>
         </div>
       </div>
