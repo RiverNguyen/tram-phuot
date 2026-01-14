@@ -25,7 +25,7 @@ interface Props {
 
 const WrapperAbout = ({ locale, banner, about, content, explorers, theExplorer, video }: Props) => {
   return (
-    <main className='relative h-full w-full bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")] bg-cover bg-fixed bg-center'>
+    <main className='relative h-full w-full bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")] bg-cover bg-fixed bg-center overflow-hidden'>
       <Banner
         locale={locale}
         data={banner}
