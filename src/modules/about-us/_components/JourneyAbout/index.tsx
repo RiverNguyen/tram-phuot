@@ -230,7 +230,7 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
         <div className='absolute top-[2.84rem] left-[9.375rem] z-10 w-[4.54594rem] -rotate-[7.522deg] rounded-[50%] bg-[#F6CD40] px-[0.4rem] py-[0.25rem] text-center text-[0.34438rem] leading-[0.45rem] font-bold font-montserrat text-[#07364D] uppercase sm:hidden'>
           {explorers.subtitle || 'Wanderlust station'}
         </div>
-        <h3 className='font-motherland xsm:text-[1rem] xsm:text-center xsm:mt-1.5 relative z-1 ml-[0.75rem] rotate-[-5.037deg] text-[2.5rem] leading-normal font-normal text-[#F56E0A] whitespace-pre'>
+        <h3 className='xsm:ml-[0.35rem] font-motherland xsm:text-[1rem] xsm:text-center xsm:mt-1.5 relative z-1 ml-[0.75rem] rotate-[-5.037deg] text-[2.5rem] leading-normal font-normal text-[#F56E0A] whitespace-pre'>
           <div
             dangerouslySetInnerHTML={{ __html: explorers?.subtitle || 'Where Dreams Take Flight' }}
             className='text-stroke absolute inset-0'
@@ -240,7 +240,7 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
             className='relative z-1'
           ></div>
         </h3>
-        <div className='xsm:mt-2 xsm:mb-0 relative -mt-1 mb-[1.81rem]'>
+        <div className='xsm:mb-0 xsm:-mt-[0.15rem] relative -mt-1 mb-[1.81rem]'>
           <h2 className='font-phu-du xsm:max-w-[14rem] xsm:text-[1.75rem] xsm:leading-[1] relative max-w-[35.8125rem] text-[4.125rem] leading-[4.125rem] font-bold text-white uppercase line-clamp-3'>
             {explorers.title || 'A sanctuary where every journey begins'}
           </h2>

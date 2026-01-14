@@ -80,10 +80,7 @@ useGSAP(
   )
 
   return (
-    <section ref={sectionRef} style={{
-        position: isVisible ? 'sticky' : 'relative',
-        top: isVisible ? '-6rem' : 'auto',
-      }} className='relative sm:mt-[3.44rem] xsm:py-[4rem] sm:pb-[9rem]'>
+    <section ref={sectionRef} className='relative sm:mt-[3.44rem] xsm:py-[4rem] sm:pb-[9rem]'>
       <Image
         src={'/about-us/d-leaf-our-story.webp'}
         alt=''
