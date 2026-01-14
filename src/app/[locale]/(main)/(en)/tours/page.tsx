@@ -51,7 +51,7 @@ export default async function page({
   ])
 
   return (
-    <main className='relative w-full h-full bg-[#FDF4ED]'>
+    <main className='relative w-full h-full bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")]'>
       {/* Banner */}
       <Banner
         locale={locale}

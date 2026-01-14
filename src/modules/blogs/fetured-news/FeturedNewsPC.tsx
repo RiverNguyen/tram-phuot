@@ -25,7 +25,7 @@ export default function FeturedNewsPC({
   }
 
   return (
-    <div className='xsm:relative xsm:flex-col xsm:gap-[1.25rem] xsm:rounded-[0.75rem] xsm:bg-white xsm:shadow-[0_4px_12px_0_rgba(0,0,0,0.10)] group/image flex items-center gap-[2.5rem]'>
+    <div className='xsm:relative xsm:flex-col xsm:gap-[1.25rem] xsm:rounded-[0.75rem] xsm:bg-white xsm:shadow-[0_4px_12px_0_rgba(0,0,0,0.10)] flex items-center gap-[2.5rem]'>
       {/* image slider */}
       <div className='xsm:static xsm:w-full xsm:h-[15.3125rem] xsm:rounded-none relative w-[49.9375rem] h-[29.875rem] rounded-[1.25rem]'>
         <Swiper
@@ -58,11 +58,11 @@ export default function FeturedNewsPC({
                 data-swiper-parallax='70%'
               >
                 <Image
-                  src={item?.thumbnail?.url}
+                  src={item?.thumbnail?.url || '/default.webp'}
                   alt='featured news'
                   width={799}
                   height={478}
-                  className='w-full h-full object-cover will-change-transform group-hover/image:scale-107 transition-all duration-500 ease-[cubic-bezier(0.65,0.01,0.28,0.98)]'
+                  className='w-full h-full object-cover will-change-transform transition-all duration-500 ease-[cubic-bezier(0.65,0.01,0.28,0.98)]'
                   preload
                 />
               </div>

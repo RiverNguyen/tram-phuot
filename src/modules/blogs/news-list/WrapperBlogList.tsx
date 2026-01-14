@@ -214,10 +214,10 @@ export default function WrapperBlogList({
           <button
             type='button'
             onClick={handleReset}
-            className='font-montserrat flex h-[2.75rem] cursor-pointer items-center space-x-2 p-[0.75rem_0_0.75rem_0.75rem] text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] text-[#FF2019] uppercase'
+            className='group font-montserrat flex h-[2.75rem] cursor-pointer items-center space-x-2 p-[0.75rem_0_0.75rem_0.75rem] text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] text-[#FF2019] uppercase'
           >
             <ICTrashcan className='size-[1.125rem]' />
-            <span>{t('reset')}</span>
+            <span className='relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-0 after:bg-[#FF2019] after:transition-all after:duration-500 after:ease-out group-hover:after:opacity-100'>{t('reset')}</span>
           </button>
           {/* )} */}
         </div>
