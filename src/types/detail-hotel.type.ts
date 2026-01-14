@@ -16,6 +16,8 @@ export type ApplyHotelVoucherPayloadType = {
   hotelTitle: string
 }
 
+type VoucherApiMessage = string | { vi?: string; en?: string }
+
 export type ApplyHotelVoucherResponseType = {
   success: boolean
   number_of_nights: number
@@ -26,5 +28,6 @@ export type ApplyHotelVoucherResponseType = {
     type: VoucherType
     discount: number
   }
+  // API sometimes returns a message alongside the success flag
+  message?: VoucherApiMessage
 }
-

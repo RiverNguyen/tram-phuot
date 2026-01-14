@@ -48,6 +48,16 @@ export default function DetailHotel({
   const [clearRoomIndex, setClearRoomIndex] = useState<number | null>(null)
   const [openBookingOverview, setOpenBookingOverview] = useState(false)
 
+  // Store form state to preserve data when drawer closes
+  const [savedFormState, setSavedFormState] = useState<{
+    checkIn?: string
+    checkOut?: string
+    adults?: string
+    children?: string
+    voucherDiscount?: number
+    appliedVoucherCode?: string | null
+  } | null>(null)
+
   // Calculate total price from selected rooms
   const totalPrice = useMemo(() => {
     return selectedRooms.reduce((total, room) => {
@@ -116,7 +126,7 @@ export default function DetailHotel({
         </div>
         <div className='fixed z-[10] w-[21.4375rem] h-[3.75rem] sm:hidden left-4 right-4 bottom-4 p-[0.625rem_0.75rem] rounded-[0.75rem] bg-black/50 backdrop-blur-[10px] flex-between'>
           <div className=''>
-            <p className='text-white text-[0.875rem] leading-[1.5] mb-1'>Total</p>
+            <p className='text-white text-[0.875rem] leading-[1.5] mb-1'>{t('textTotal')}</p>
             <p className='text-[#FF7B4A] font-bold font-phu-du leading-[1.1]'>
               {formatUSD(totalPrice)} USD
             </p>
@@ -145,10 +155,13 @@ export default function DetailHotel({
             onClearAllRooms={handleClearAllRooms}
             detailHotel={detailHotel}
             onClose={() => setOpenBookingOverview(false)}
-            initialCheckIn={initialCheckIn}
-            initialCheckOut={initialCheckOut}
-            initialAdults={initialAdults}
-            initialChildren={initialChildren}
+            initialCheckIn={savedFormState?.checkIn || initialCheckIn}
+            initialCheckOut={savedFormState?.checkOut || initialCheckOut}
+            initialAdults={savedFormState?.adults || initialAdults}
+            initialChildren={savedFormState?.children || initialChildren}
+            onFormStateChange={setSavedFormState}
+            savedVoucherDiscount={savedFormState?.voucherDiscount}
+            savedAppliedVoucherCode={savedFormState?.appliedVoucherCode}
           />
         </DrawerProvider>
       </div>

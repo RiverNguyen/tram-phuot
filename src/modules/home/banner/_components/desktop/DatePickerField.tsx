@@ -11,9 +11,11 @@ interface DatePickerFieldProps {
   date: Date | undefined
   onDateChange: (date: Date | undefined) => void
   disabled?: (date: Date) => boolean
+  fromDate?: Date
+  fromMonth?: Date
 }
 
-export const DatePickerField = ({ label, date, onDateChange, disabled }: DatePickerFieldProps) => {
+export const DatePickerField = ({ label, date, onDateChange, disabled, fromDate, fromMonth }: DatePickerFieldProps) => {
   const t = useTranslations('HomePage.banner')
   const locale = useLocale()
 
@@ -56,6 +58,8 @@ export const DatePickerField = ({ label, date, onDateChange, disabled }: DatePic
           selected={date}
           onSelect={onDateChange}
           disabled={disabled}
+          fromDate={fromDate}
+          fromMonth={fromMonth}
           className='w-full rounded-md border-0'
           localeCode={locale}
         />

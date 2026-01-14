@@ -140,19 +140,19 @@ export default function Footer({ data }: { data: IFooter }) {
                     menus={data?.footer_content?.menu}
                   />
                   <FooterMenu
-                    title={`${translateFooter('stationStop')}:`}
+                    title={`${translateFooter('stationStop')}`}
                     menus={data?.footer_content?.station_stop}
                     containerClassName='xsm:w-[13.375rem]'
                   />
                   <FooterMenu
-                    title={`${translateFooter('toursAndExperiences')}:`}
+                    title={`${translateFooter('toursAndExperiences')}`}
                     menus={data?.footer_content?.tours}
                   />
                 </div>
 
                 <div className='xsm:w-full xsm:grid-cols-1 xsm:border-t xsm:border-dashed xsm:border-t-white/20 xsm:pt-[1.25rem] xsm:gap-y-[1.25rem] grid h-fit w-[37.11438rem] shrink-0 grid-cols-3'>
                   <FooterMenu
-                    title={`${translateFooter('representativeOffice')}:`}
+                    title={`${translateFooter('representativeOffice')}`}
                     containerClassName='col-span-3 xsm:col-span-1 border-b border-dashed border-b-white/20 pb-[1.86rem] xsm:pb-[1.25rem]'
                     content={
                       <Link

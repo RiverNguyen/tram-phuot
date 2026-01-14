@@ -114,7 +114,10 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
               data={data}
               onClose={() => setOpenSheet(false)}
             />
-            <MobileNavigation data={data} />
+            <MobileNavigation
+              data={data}
+              onNavigate={() => setOpenSheet(false)}
+            />
           </div>
           <div className='absolute bottom-0 left-0 w-full bg-white py-[1.5rem]'>
             <MobileSocialMedia socialMedia={socialMedia} />

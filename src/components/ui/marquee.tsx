@@ -190,6 +190,12 @@ const Marquee = ({
   const lastPointerPosition = useRef({ x: 0, y: 0 })
 
   const handlePointerDown = (e: React.PointerEvent) => {
+    // If slowdownOnHover is enabled and not draggable, treat touch as hover (only for touch events, not mouse)
+    if (slowdownOnHover && !draggable && e.pointerType === 'touch') {
+      isHovered.current = true
+      return
+    }
+
     if (!draggable) return // Capture the pointer to receive events even when pointer moves outside
     ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
 
@@ -232,6 +238,12 @@ const Marquee = ({
   }
 
   const handlePointerUp = (e: React.PointerEvent) => {
+    // If slowdownOnHover is enabled and not draggable, treat touch release as hover end (only for touch events)
+    if (slowdownOnHover && !draggable && e.pointerType === 'touch') {
+      isHovered.current = false
+      return
+    }
+
     if (!draggable) return // Release pointer capture
     ;(e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId)
 

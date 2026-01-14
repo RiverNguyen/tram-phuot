@@ -232,8 +232,11 @@
     "textArea": "Area",
     "textRoomType": "Room type",
     "textNumberOfBeds": "Number of beds",
+    "textBed": "Bed",
+    "textBeds": "Beds",
     "textRoom": "Room",
     "textNight": "night",
+    "textNights": "nights",
     "textLocation": "Location",
     "textViewOnGoogleMap": "View on Google Map",
     "textBookingOverview": "Booking Overview",
@@ -255,6 +258,8 @@
     "textVoucherCode": "Voucher code",
     "textApply": "Apply",
     "textPolicy": "Policy",
-    "textExploreOtherHotels": "Explore other hotels"
+    "textExploreOtherHotels": "Explore other hotels",
+    "textVoucherResetOnDateChange": "Voucher has been reset due to date change. Please apply again.",
+    "textPromotionCode": "Promotion code"
   }
 }

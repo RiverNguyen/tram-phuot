@@ -2,7 +2,6 @@ import VoucherListPC from '@/components/shared/SectionVoucher/VoucherListPC'
 import { TourCouponItemType } from '@/types/details-tour.type'
 import { useTranslations } from 'next-intl'
 
-import '@/components/shared/SectionVoucher/style.css'
 import { SVGProps } from 'react'
 import VoucherListMB from '@/components/shared/SectionVoucher/VoucherListMB'
 
@@ -24,7 +23,7 @@ export default function SectionVoucher({ tourCoupons }: SectionVoucherProps) {
           </div>
         </div>
         <div className='xsm:px-4 xsm:pb-0 px-8 pb-3'>
-          <h2 className='sm:section-title-h2 xsm:text-[1.25rem] xsm:pr-0 xsm:tracking-[0.025rem] xsm:leading-[1.2] xsm:text-body-t1 font-phu-du w-fit pr-2 text-[1.75rem] leading-8.25 font-bold tracking-[-0.03125rem] uppercase'>
+          <h2 className='sm:section-title-h2 xsm:text-[1.25rem] xsm:pr-0 xsm:tracking-[0.025rem] xsm:leading-[1.2] xsm:text-body-t1 font-phu-du w-fit pr-2 text-[1.75rem] leading-8.25 font-bold tracking-[-0.03125rem] uppercase xsm:font-medium'>
             {translateComponents('SectionVoucher.title')}
           </h2>
         </div>

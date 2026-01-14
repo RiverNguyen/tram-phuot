@@ -232,8 +232,11 @@
     "textArea": "Diện tích",
     "textRoomType": "Loại phòng",
     "textNumberOfBeds": "Số giường",
+    "textBed": "Giường",
+    "textBeds": "Giường",
     "textRoom": "Phòng",
     "textNight": "đêm",
+    "textNights": "đêm",
     "textLocation": "Địa điểm",
     "textViewOnGoogleMap": "Xem trên Google Map",
     "textBookingOverview": "Đặt phòng",
@@ -254,6 +257,8 @@
     "textPrice": "Giá",
     "textVoucherCode": "Mã giảm giá",
     "textApply": "Áp dụng",
-    "textPolicy": "Chính sách"
+    "textPolicy": "Chính sách",
+    "textVoucherResetOnDateChange": "Voucher đã được reset do thay đổi ngày. Vui lòng áp dụng lại voucher.",
+    "textPromotionCode": "Mã giảm giá"
   }
 }

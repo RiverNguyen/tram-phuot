@@ -61,6 +61,7 @@ export default function TestimonialItem({ review }: TestimonialItemProps) {
             key={index}
             href={link?.link || ''}
             target='_blank'
+            className='lg:hover:scale-110 transition-all duration-300'
           >
             <Image
               src={link?.image || ''}

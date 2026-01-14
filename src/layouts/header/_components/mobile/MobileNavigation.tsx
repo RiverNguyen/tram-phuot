@@ -13,9 +13,10 @@ import { Fragment } from 'react'
 
 interface MobileNavigationProps {
   data: IHeader
+  onNavigate?: () => void
 }
 
-const MobileNavigation = ({ data }: MobileNavigationProps) => {
+const MobileNavigation = ({ data, onNavigate }: MobileNavigationProps) => {
   return (
     <div className='h-[30.5625rem] overflow-auto hidden_scroll'>
       <Accordion
@@ -35,6 +36,7 @@ const MobileNavigation = ({ data }: MobileNavigationProps) => {
                     href={item.page_link_parent?.title?.url || '/'}
                     key={index}
                     className='h-[4.37rem] flex-y-center mx-[0.5625rem] block'
+                    onClick={onNavigate}
                   >
                     <p className='flex pl-[1rem] text-[#2e2e2e] font-phu-du font-medium leading-[1.3] uppercase'>
                       {item.page_link_parent?.title?.title}
@@ -53,6 +55,7 @@ const MobileNavigation = ({ data }: MobileNavigationProps) => {
                       <Link
                         href={item.page_link_parent?.title?.url || '/'}
                         className='flex text-[#2e2e2e] text-base font-phu-du font-medium leading-[1.3] uppercase'
+                        onClick={onNavigate}
                       >
                         {item.page_link_parent?.title?.title}
                       </Link>
@@ -64,6 +67,7 @@ const MobileNavigation = ({ data }: MobileNavigationProps) => {
                             key={linkIndex}
                             href={linkItem?.item?.url || '/'}
                             className='text-[#2E2E2E]/75 text-[0.875rem] leading-[1.6]'
+                            onClick={onNavigate}
                           >
                             {linkItem?.item?.title}
                           </Link>
@@ -80,6 +84,7 @@ const MobileNavigation = ({ data }: MobileNavigationProps) => {
                   href={item.page_link_normal?.url || '/'}
                   key={index}
                   className='h-[4.37rem] flex-y-center border-b border-[#A1A1A1]/18 mx-[0.5625rem]'
+                  onClick={onNavigate}
                 >
                   <p className='flex pl-[1rem] text-[#2e2e2e] font-phu-du font-medium leading-[1.3] uppercase'>
                     {item.page_link_normal?.title}

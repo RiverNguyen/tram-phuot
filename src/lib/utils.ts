@@ -32,7 +32,7 @@ export const normalizePrice = (price: number): number => {
 // Format USD currency
 export const formatUSD = (amount: number): string => {
   const normalizedAmount = normalizePrice(amount)
-  return new Intl.NumberFormat('vi-VN', {
+  return new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(normalizedAmount)

@@ -1,5 +1,6 @@
 'use client'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -82,7 +83,14 @@ export default function BrandButton({
         ></div>
         {variant === 'transparent' ? (
           <>
-            <IconArrowTopRightGradient className='absolute top-2 right-2 size-2.5 lg:group-hover:hidden' />
+            {/* <IconArrowTopRightGradient className='absolute top-2 right-2 block size-2.5 lg:group-hover:hidden' /> */}
+            <Image
+              src='/home/icon-right.svg'
+              alt='icon-right'
+              width={10}
+              height={10}
+              className='absolute top-2 right-2 block size-2.5 lg:group-hover:hidden'
+            />
             <IconArrowTopRightWhite className='absolute top-2 right-2 hidden size-2.5 lg:group-hover:block' />
           </>
         ) : (

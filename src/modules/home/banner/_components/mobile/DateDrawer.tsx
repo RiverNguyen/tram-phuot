@@ -13,6 +13,8 @@ interface DateDrawerProps {
   selectedDate: Date | undefined
   onDateChange: (date: Date | undefined) => void
   disabled?: (date: Date) => boolean
+  fromDate?: Date
+  fromMonth?: Date
 }
 
 export const DateDrawer = ({
@@ -22,6 +24,8 @@ export const DateDrawer = ({
   selectedDate,
   onDateChange,
   disabled,
+  fromDate,
+  fromMonth,
 }: DateDrawerProps) => {
   const locale = useLocale()
 
@@ -42,6 +46,8 @@ export const DateDrawer = ({
             selected={selectedDate}
             onSelect={onDateChange}
             disabled={disabled}
+            fromDate={fromDate}
+            fromMonth={fromMonth}
             className='rounded-md border-0 w-full'
             localeCode={locale}
           />
