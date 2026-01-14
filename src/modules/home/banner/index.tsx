@@ -18,7 +18,7 @@ const BannerHomePage = ({ data, locations }: { data: IHomePage; locations: ILoca
 
   const [checkInDate, setCheckInDate] = useState<Date | undefined>(today)
   const [checkOutDate, setCheckOutDate] = useState<Date | undefined>(tomorrow)
-  const [selectedStation, setSelectedStation] = useState<string>('caobang')
+  const [selectedStation, setSelectedStation] = useState<string>(locations[0]?.slug || '')
   const [adults, setAdults] = useState<number>(2)
   const [children, setChildren] = useState<number>(1)
 

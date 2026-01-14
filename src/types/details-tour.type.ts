@@ -85,14 +85,21 @@ export type ApplyVoucherPayloadType = {
 export type VoucherType = 'price' | 'percent'
 export type ApplyVoucherResponseType = {
   success: boolean
-  number_of_nights: number
+  reason?: string
+  message?: {
+    vi: string
+    en: string
+  }
+  number_of_nights?: number
   provisional_price: number
   final_price: number
+  currency?: string
+  currency_symbol?: string
   voucher: {
     code: string
     type: VoucherType
     discount: number
-  }
+  } | null
 }
 export type RelatedTourType = {
   id: number

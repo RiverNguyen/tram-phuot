@@ -33,7 +33,7 @@ export default function HotelCard({ hotel, className }: { hotel: IHotel; classNa
     <Link
       href={href}
       className={cn(
-        'xsm:h-[31.03531rem] xsm:rounded-[0.56044rem] group relative block h-[22.6875rem] w-full overflow-hidden rounded-[0.5rem] bg-[#FFFCE3]',
+        'xsm:h-[31.03531rem] xsm:rounded-[0.56044rem] group relative block h-[28.6875rem] w-full overflow-hidden rounded-[0.5rem] bg-[#FFFCE3]',
         className,
       )}
     >
@@ -45,13 +45,16 @@ export default function HotelCard({ hotel, className }: { hotel: IHotel; classNa
         className='object-cover transition-all duration-500 ease-[cubic-bezier(0.65,0.01,0.28,0.98)] lg:group-hover:scale-107'
       />
       {/* Hotel Type */}
-      <div className='xsm:px-[0.84069rem] xsm:py-[0.70056rem] absolute top-0 left-0 inline-flex w-full px-[0.75rem] py-[0.625rem]'>
-        <div className='xsm:h-[1.75144rem] xsm:px-[0.99013rem] xsm:rounded-tl-[0.84069rem] xsm:rounded-br-[0.84069rem] flex h-[1.5625rem] items-center justify-center rounded-tl-[0.75rem] rounded-br-[0.75rem] bg-[#2BAB7D] px-[0.88331rem]'>
-          <span className='xsm:text-[0.625rem] xsm:leading-[1.75rem] xsm:tracking-[-0.0175rem] font-phu-du line-clamp-1 text-[0.75rem] leading-[1.5rem] font-medium tracking-[-0.015rem] text-white'>
-            {hotel?.type}
-          </span>
-        </div>
-      </div>
+      {Array.isArray(hotel?.taxonomies?.['hotel-amenities']) &&
+        hotel?.taxonomies?.['hotel-amenities']?.length > 0 && (
+          <div className='xsm:px-[0.84069rem] xsm:py-[0.70056rem] absolute top-0 left-0 inline-flex w-full px-[0.75rem] py-[0.625rem]'>
+            <div className='xsm:h-[1.75144rem] xsm:px-[0.99013rem] xsm:rounded-tl-[0.84069rem] xsm:rounded-br-[0.84069rem] flex h-[1.5625rem] items-center justify-center rounded-tl-[0.75rem] rounded-br-[0.75rem] bg-[#2BAB7D] px-[0.88331rem]'>
+              <span className='xsm:text-[0.625rem] xsm:leading-[1.75rem] xsm:tracking-[-0.0175rem] font-phu-du line-clamp-1 text-[0.75rem] leading-[1.5rem] font-medium tracking-[-0.015rem] text-white'>
+                {hotel.taxonomies['hotel-amenities'][0]?.name || ''}
+              </span>
+            </div>
+          </div>
+        )}
       {/* content */}
       <div className='xsm:min-h-auto xsm:pt-[3.50288rem] xsm:px-[0.84069rem] xsm:pb-4 xsm:items-center absolute bottom-0 left-0 flex min-h-[12.375rem] w-full items-end justify-between bg-[linear-gradient(180deg,rgba(6,42,25,0.00)_0%,rgba(6,42,25,0.58)_24.91%,#062A19_100%)] px-[0.75rem] pt-[3.125rem] pb-[1.1875rem]'>
         <div className='xsm:gap-[0.91075rem] flex h-full w-full flex-col items-start gap-[0.8125rem]'>

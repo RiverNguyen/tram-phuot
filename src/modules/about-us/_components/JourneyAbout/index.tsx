@@ -154,7 +154,6 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
     },
     { scope: containerRef },
   )
-  console.log(explorers)
 
   return (
     <div

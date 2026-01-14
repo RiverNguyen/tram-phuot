@@ -56,12 +56,7 @@ const Article = ({ overview, isInView }: ArticleProps) => {
         <p>{overview?.title?.line_3}</p>
         <p className='pl-[5rem] xsm:pl-8'>{overview?.title?.line_4}</p>
       </h2>
-      <p
-        className='w-[37.4502rem] xsm:w-[21.4375rem] xsm:text-[0.875rem] xsm:indent-0 mt-4 text-[1.125rem] font-medium leading-[2.0] tracking-[-0.02] indent-[4rem] xsm:ml-[-2rem] xsm:line-clamp-4'
-        style={{
-          textDecoration: 'underline dotted #AEAFAE',
-        }}
-      >
+      <p className='w-[37.4502rem] xsm:w-[21.4375rem] xsm:text-[0.875rem] xsm:indent-0 mt-4 text-[1.125rem] font-medium leading-[2.0] tracking-[-0.02] indent-[4rem] xsm:ml-[-2rem] xsm:line-clamp-4 underline decoration-dotted decoration-[#AEAFAE] xsm:no-underline'>
         {overview?.description}
       </p>
       <div className='flex space-x-[0.6875rem] mt-[1.72rem] xsm:flex-col xsm:space-y-[0.875rem] xsm:ml-[-2rem]'>

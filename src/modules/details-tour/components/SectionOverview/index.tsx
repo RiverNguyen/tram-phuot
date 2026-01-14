@@ -51,7 +51,7 @@ export default function SectionOverview({ overview, siteSettings }: SectionOverv
         </div>
 
         <div className='xsm:block xsm:h-auto xsm:space-x-0 xsm:space-y-2 flex h-129.5 space-x-3'>
-          <div className='xsm:w-full xsm:h-[32.99563rem] h-full w-78.25 shrink-0'>
+          <div className='xsm:w-full xsm:h-[35.25rem] h-full w-73 shrink-0'>
             <OverviewVideo
               overviewVideo={overview?.video || {}}
               siteSettings={siteSettings}

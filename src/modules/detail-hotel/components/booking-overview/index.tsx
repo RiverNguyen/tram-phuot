@@ -13,7 +13,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
 import { useLocale, useTranslations } from 'next-intl'
 import { useParams } from 'next/navigation'
-import { useEffect, useMemo, useState, useTransition } from 'react'
+import { useEffect, useMemo, useRef, useState, useTransition } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -32,13 +32,18 @@ import RoomCard from './_components/RoomCard'
 import VoucherCodeField from './_components/VoucherCodeField'
 import { XIcon } from 'lucide-react'
 
-const formSchema = z.object({
-  check_in_date: z.date(),
-  check_out_date: z.date(),
-  adults: z.coerce.number().min(1, 'At least 1 adult is required'),
-  child: z.coerce.number().optional(),
-  coupon_code: z.string().optional(),
-})
+const formSchema = z
+  .object({
+    check_in_date: z.date(),
+    check_out_date: z.date(),
+    adults: z.coerce.number().min(1, 'At least 1 adult is required'),
+    child: z.coerce.number().optional(),
+    coupon_code: z.string().optional(),
+  })
+  .refine((data) => data.check_out_date > data.check_in_date, {
+    message: 'Check-out date must be after check-in date',
+    path: ['check_out_date'],
+  })
 
 type BookingOverviewProps = {
   selectedRooms: {
@@ -57,6 +62,16 @@ type BookingOverviewProps = {
   initialCheckOut?: string
   initialAdults?: string
   initialChildren?: string
+  onFormStateChange?: (state: {
+    checkIn?: string
+    checkOut?: string
+    adults?: string
+    children?: string
+    voucherDiscount?: number
+    appliedVoucherCode?: string | null
+  }) => void
+  savedVoucherDiscount?: number
+  savedAppliedVoucherCode?: string | null
 }
 
 export default function BookingOverview({
@@ -69,11 +84,17 @@ export default function BookingOverview({
   initialCheckOut,
   initialAdults,
   initialChildren,
+  onFormStateChange,
+  savedVoucherDiscount,
+  savedAppliedVoucherCode,
 }: BookingOverviewProps) {
   const t = useTranslations('DetailHotelPage')
-  const [voucherDiscount, setVoucherDiscount] = useState(0)
+  const [voucherDiscount, setVoucherDiscount] = useState(savedVoucherDiscount || 0)
   const [openContactForm, setOpenContactForm] = useState(false)
   const [couponCode, setCouponCode] = useState<string>('')
+  const [appliedVoucherCode, setAppliedVoucherCode] = useState<string | null>(
+    savedAppliedVoucherCode || null,
+  )
   const [isApplyingVoucher, startApplyingTransition] = useTransition()
   const locale = useLocale()
   const isMobile = useIsMobile()
@@ -148,13 +169,63 @@ export default function BookingOverview({
   })
 
   const watchDates = form.watch(['check_in_date', 'check_out_date'])
+  const watchAdults = form.watch('adults')
+  const watchChildren = form.watch('child')
   const checkInDate = watchDates[0]
+  const checkOutDate = watchDates[1]
   const [isInitialMount, setIsInitialMount] = useState(true)
+  const previousDatesRef = useRef<{
+    checkIn: Date | null
+    checkOut: Date | null
+  }>({ checkIn: null, checkOut: null })
+  const previousPaxQuantityRef = useRef<{ adults: number; children: number }>({
+    adults: 0,
+    children: 0,
+  })
+  const previousRoomsRef = useRef<string>('') // Store stringified rooms for comparison
+
+  // Save form state to parent component when form values change
+  useEffect(() => {
+    if (!onFormStateChange || isInitialMount) return
+
+    const checkInStr = checkInDate ? format(checkInDate, 'yyyy-MM-dd') : undefined
+    const checkOutStr = checkOutDate ? format(checkOutDate, 'yyyy-MM-dd') : undefined
+    const adultsStr = watchAdults ? String(watchAdults) : undefined
+    const childrenStr = watchChildren !== undefined ? String(watchChildren) : undefined
+
+    onFormStateChange({
+      checkIn: checkInStr,
+      checkOut: checkOutStr,
+      adults: adultsStr,
+      children: childrenStr,
+      voucherDiscount,
+      appliedVoucherCode,
+    })
+  }, [
+    checkInDate,
+    checkOutDate,
+    watchAdults,
+    watchChildren,
+    voucherDiscount,
+    appliedVoucherCode,
+    onFormStateChange,
+    isInitialMount,
+  ])
 
   // Track initial mount to prevent auto-update on first render
   useEffect(() => {
     setIsInitialMount(false)
   }, [])
+
+  // Restore saved voucher state when component mounts with saved state
+  useEffect(() => {
+    if (savedVoucherDiscount !== undefined) {
+      setVoucherDiscount(savedVoucherDiscount)
+    }
+    if (savedAppliedVoucherCode !== undefined) {
+      setAppliedVoucherCode(savedAppliedVoucherCode)
+    }
+  }, []) // Only run on mount
 
   // Auto-update check-out date when check-in date changes (but not on initial mount)
   useEffect(() => {
@@ -172,6 +243,144 @@ export default function BookingOverview({
       }
     }
   }, [checkInDate, form, isInitialMount])
+
+  // Tự động validate lại voucher khi ngày, số lượng pax, hoặc phòng thay đổi
+  useEffect(() => {
+    if (isInitialMount) {
+      // Initialize previous values on first mount
+      if (checkInDate && checkOutDate) {
+        previousDatesRef.current = { checkIn: checkInDate, checkOut: checkOutDate }
+      }
+      previousPaxQuantityRef.current = {
+        adults: Number(watchAdults) || 0,
+        children: Number(watchChildren) || 0,
+      }
+      previousRoomsRef.current = JSON.stringify(selectedRooms)
+      return
+    }
+
+    if (!checkInDate || !checkOutDate) return
+
+    // Initialize previous values if not set
+    if (!previousDatesRef.current.checkIn || !previousDatesRef.current.checkOut) {
+      previousDatesRef.current = { checkIn: checkInDate, checkOut: checkOutDate }
+      previousPaxQuantityRef.current = {
+        adults: Number(watchAdults) || 0,
+        children: Number(watchChildren) || 0,
+      }
+      previousRoomsRef.current = JSON.stringify(selectedRooms)
+      return
+    }
+
+    // Check if dates have actually changed
+    const datesChanged =
+      checkInDate.getTime() !== previousDatesRef.current.checkIn.getTime() ||
+      checkOutDate.getTime() !== previousDatesRef.current.checkOut.getTime()
+
+    // Check if pax quantity has changed
+    const currentAdults = Number(watchAdults) || 0
+    const currentChildren = Number(watchChildren) || 0
+    const paxQuantityChanged =
+      previousPaxQuantityRef.current.adults !== currentAdults ||
+      previousPaxQuantityRef.current.children !== currentChildren
+
+    // Check if rooms have changed
+    const roomsChanged = previousRoomsRef.current !== JSON.stringify(selectedRooms)
+
+    // Nếu có thay đổi và có voucher đã áp dụng, validate lại
+    if ((datesChanged || paxQuantityChanged || roomsChanged) && appliedVoucherCode) {
+      const validateVoucher = async () => {
+        try {
+          const formValues = form.getValues()
+          if (
+            !formValues.check_in_date ||
+            !formValues.check_out_date ||
+            selectedRooms.length === 0
+          ) {
+            // Nếu thiếu thông tin cần thiết, reset voucher
+            setVoucherDiscount(0)
+            setAppliedVoucherCode(null)
+            return
+          }
+
+          const payload: ApplyHotelVoucherPayloadType = {
+            checkInDate: format(formValues.check_in_date, 'dd/MM/yyyy'),
+            checkOutDate: format(formValues.check_out_date, 'dd/MM/yyyy'),
+            hotelSlug: hotelSlug,
+            voucherCode: appliedVoucherCode,
+            rooms: selectedRooms.map((room) => ({
+              title: room.title,
+              quantity: room.quantity,
+              pricePerNight: normalizePrice(room.pricePerNight),
+            })),
+            adults: Number(formValues.adults) || 0,
+            children: Number(formValues.child) || 0,
+            bookingTime: format(new Date(), 'dd/MM/yyyy'),
+            hotelTitle: detailHotel?.title || '',
+          }
+
+          const response: ApplyHotelVoucherResponseType = await hotelService.applyVoucher(payload)
+          if (response.success) {
+            // Voucher vẫn hợp lệ, cập nhật discount
+            setVoucherDiscount(response.voucher.discount)
+          } else {
+            // Voucher không còn hợp lệ, reset và hiển thị thông báo
+            setVoucherDiscount(0)
+            setAppliedVoucherCode(null)
+            const formatErrorMessage = (
+              rawMessage?: string | { vi?: string; en?: string } | null,
+            ) => {
+              if (!rawMessage) return ''
+              if (typeof rawMessage === 'object') {
+                const localized =
+                  (locale === 'vi' ? rawMessage.vi : rawMessage.en) ??
+                  rawMessage.en ??
+                  rawMessage.vi
+                if (localized) return localized
+                return ''
+              }
+              const parts = rawMessage.split(': ')
+              return parts[parts.length - 1] || rawMessage
+            }
+            const errorMessage = formatErrorMessage(response.message)
+            toast.error(
+              errorMessage ||
+                translateBookingTourForm('textApplyVoucherError') ||
+                'Voucher is not applicable',
+            )
+          }
+        } catch (error) {
+          console.error('Error validating voucher:', error)
+          // Nếu có lỗi khi validate, reset voucher để tránh hiển thị sai
+          setVoucherDiscount(0)
+          setAppliedVoucherCode(null)
+        }
+      }
+
+      validateVoucher()
+    }
+
+    // Update previous values
+    previousDatesRef.current = { checkIn: checkInDate, checkOut: checkOutDate }
+    previousPaxQuantityRef.current = {
+      adults: Number(watchAdults) || 0,
+      children: Number(watchChildren) || 0,
+    }
+    previousRoomsRef.current = JSON.stringify(selectedRooms)
+  }, [
+    checkInDate,
+    checkOutDate,
+    watchAdults,
+    watchChildren,
+    selectedRooms,
+    isInitialMount,
+    appliedVoucherCode,
+    hotelSlug,
+    detailHotel?.title,
+    locale,
+    translateBookingTourForm,
+    form,
+  ])
 
   // Calculate number of nights
   const numberOfNights = useMemo(() => {
@@ -197,7 +406,37 @@ export default function BookingOverview({
   }, [provisionalAmount, voucherDiscount])
 
   const handleApplyVoucher = async () => {
+    const formatErrorMessage = (rawMessage?: string | { vi?: string; en?: string } | null) => {
+      if (!rawMessage) return ''
+
+      // API might return localized object; prefer current locale
+      if (typeof rawMessage === 'object') {
+        const localized =
+          (locale === 'vi' ? rawMessage.vi : rawMessage.en) ?? rawMessage.en ?? rawMessage.vi
+        if (localized) return localized
+        return ''
+      }
+
+      const parts = rawMessage.split(': ')
+      return parts[parts.length - 1] || rawMessage
+    }
+
+    const getErrorMessage = (error: unknown) => {
+      if (typeof error === 'string') return error
+      if (error instanceof Error) return error.message
+      if (error && typeof error === 'object' && 'message' in error) {
+        const message = (error as { message?: unknown }).message
+        if (typeof message === 'string' || (message && typeof message === 'object')) {
+          return message as string | { vi?: string; en?: string }
+        }
+      }
+      return ''
+    }
+
     startApplyingTransition(async () => {
+      const defaultErrorMessage =
+        translateBookingTourForm('textApplyVoucherError') || 'Failed to apply voucher'
+
       try {
         const formValues = form.getValues()
         if (!formValues.check_in_date || !formValues.check_out_date) {
@@ -235,17 +474,22 @@ export default function BookingOverview({
         const response: ApplyHotelVoucherResponseType = await hotelService.applyVoucher(payload)
         if (response.success) {
           setVoucherDiscount(response.voucher.discount)
+          setAppliedVoucherCode(couponCode)
           toast.success(
             translateBookingTourForm('textApplyVoucherSuccess') || 'Voucher applied successfully',
           )
         } else {
-          toast.error(
-            translateBookingTourForm('textApplyVoucherError') || 'Failed to apply voucher',
-          )
+          setVoucherDiscount(0)
+          setAppliedVoucherCode(null)
+          const responseMessage = formatErrorMessage(response.message)
+          toast.error(responseMessage || defaultErrorMessage)
         }
       } catch (error) {
         console.error(error)
-        toast.error(translateBookingTourForm('textApplyVoucherError') || 'Failed to apply voucher')
+        setVoucherDiscount(0)
+        setAppliedVoucherCode(null)
+        const parsedError = formatErrorMessage(getErrorMessage(error))
+        toast.error(parsedError || defaultErrorMessage)
       } finally {
         setCouponCode('')
         form.setValue('coupon_code', '')
@@ -354,6 +598,19 @@ export default function BookingOverview({
         // Reset voucher discount and coupon code
         setVoucherDiscount(0)
         setCouponCode('')
+        setAppliedVoucherCode(null)
+
+        // Reset saved form state
+        if (onFormStateChange) {
+          onFormStateChange({
+            checkIn: undefined,
+            checkOut: undefined,
+            adults: undefined,
+            children: undefined,
+            voucherDiscount: 0,
+            appliedVoucherCode: null,
+          })
+        }
 
         // Clear all selected rooms
         if (onClearAllRooms) {
@@ -378,7 +635,27 @@ export default function BookingOverview({
         <button
           className='sm:hidden'
           type='button'
-          onClick={onClose}
+          onClick={() => {
+            // Save form state before closing
+            if (onFormStateChange) {
+              const checkInStr = checkInDate ? format(checkInDate, 'yyyy-MM-dd') : undefined
+              const checkOutStr = checkOutDate ? format(checkOutDate, 'yyyy-MM-dd') : undefined
+              const adultsStr = watchAdults ? String(watchAdults) : undefined
+              const childrenStr = watchChildren !== undefined ? String(watchChildren) : undefined
+
+              onFormStateChange({
+                checkIn: checkInStr,
+                checkOut: checkOutStr,
+                adults: adultsStr,
+                children: childrenStr,
+                voucherDiscount,
+                appliedVoucherCode,
+              })
+            }
+            if (onClose) {
+              onClose()
+            }
+          }}
         >
           <XIcon className='size-5 text-[#2E2E2E]' />
         </button>

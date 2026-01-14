@@ -9,7 +9,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import { convertRemToPx } from '@/lib/utils'
 import { IHotel } from '@/interface/hotel.interface'
-import { WPImage } from '@/types/acf-wordpress.type'
+import { WPImage, WPTaxonomy } from '@/types/acf-wordpress.type'
 
 interface SectionExploreOtherToursProps {
   relatedTours: RelatedTourType[] | IHotel[]
@@ -79,6 +79,41 @@ export default function SectionExploreOtherTours({
     }
   }
 
+  // Helper function to get rating
+  const getRating = (item: RelatedTourType | IHotel): number | undefined => {
+    if (isRelatedTourType(item)) {
+      // Tours don't have rating
+      return undefined
+    } else {
+      // Hotels have rating in acf.banner.review.rating
+      const rating = item.acf?.banner?.review?.rating
+      if (rating) {
+        return typeof rating === 'string' ? parseFloat(rating) : rating
+      }
+      return undefined
+    }
+  }
+
+  // Helper function to get taxonomies as WPTaxonomy[]
+  const getTaxonomies = (item: RelatedTourType | IHotel): WPTaxonomy[] => {
+    if (isRelatedTourType(item)) {
+      // For tours, taxonomies is Record<string, WPTaxonomy[]>
+      // Return all taxonomies flattened or empty array
+      if (item.taxonomies) {
+        return Object.values(item.taxonomies).flat()
+      }
+      return []
+    } else {
+      // For hotels, convert ITerm[] to WPTaxonomy[]
+      const hotelAmenities = item.taxonomies?.['hotel-amenities'] || []
+      return hotelAmenities.map((term) => ({
+        id: term.id,
+        name: term.name,
+        slug: term.slug,
+      }))
+    }
+  }
+
   return (
     <section className='xsm:pt-8 xsm:pb-20 relative'>
       <div className='mx-auto'>
@@ -137,6 +172,7 @@ export default function SectionExploreOtherTours({
                   className='w-fit'
                 >
                   <TourCard
+                    taxonomies={getTaxonomies(tour)}
                     type={type}
                     key={tour.id || index}
                     tourType={getTourType(tour)}
@@ -145,6 +181,7 @@ export default function SectionExploreOtherTours({
                     tourPrice={getPrice(tour)}
                     tourThumbnail={getThumbnail(tour)}
                     tourSlug={tour?.slug || ''}
+                    rating={getRating(tour)}
                     classNameCard='col-span-1 xsm:shrink-0 xsm:w-[15.625rem] xsm:h-[22.6205rem] xsm:first:ml-4 xsm:last:mr-4'
                   />
                 </SwiperSlide>
@@ -173,6 +210,7 @@ export default function SectionExploreOtherTours({
           {Array.isArray(relatedTours) &&
             relatedTours.map((tour, index) => (
               <TourCard
+                taxonomies={getTaxonomies(tour)}
                 key={tour.id || index}
                 tourType={getTourType(tour)}
                 tourName={tour?.title || ''}
@@ -180,6 +218,8 @@ export default function SectionExploreOtherTours({
                 tourPrice={getPrice(tour)}
                 tourThumbnail={getThumbnail(tour)}
                 tourSlug={tour?.slug || ''}
+                rating={getRating(tour)}
+                type={type}
                 classNameCard='col-span-1 xsm:shrink-0 xsm:w-[15.625rem] xsm:h-[22.6205rem] xsm:first:ml-4 sm:hidden'
               />
             ))}
@@ -188,7 +228,7 @@ export default function SectionExploreOtherTours({
         <div className='xsm:flex hidden items-center justify-center'>
           <BrandButton
             variant='transparent'
-            type={{ variant: 'link', href: '/' }}
+            type={{ variant: 'link', href: type === 'tour' ? '/tours' : '/hotels' }}
             classNameButtonContainer='w-[9.0625rem] h-[2.5rem]'
           >
             <span className='leading-[1.2]'>
