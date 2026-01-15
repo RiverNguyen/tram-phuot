@@ -11,7 +11,6 @@ export type RequestPostGuest = {
 }
 
 export default async function fetchData(request: RequestPostGuest) {
-  console.log('🔥 CALL CMS API', `${request.api}`)
   try {
     const res = await fetch(`${ENV.CMS}${ENV.API!}${request.api}`, {
       method: request.method || 'GET',
