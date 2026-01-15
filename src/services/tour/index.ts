@@ -35,20 +35,20 @@ const tourService = {
       'tour-duration': tourDuration,
     }
 
-    const activeTaxes = Object.entries(taxMap).filter(([, value]) => !!value)
+    // Build taxonomy-related params so that:
+    // /api/v1/get-all/tour?lang=en&acf=price_person&paged=1&limit=8&order=DESC&orderby=date
+    // &tax=locations,tour-duration&locations=dak-lak&tour-duration=2-days-1-night
+    const activeTaxes: string[] = []
 
-    if (activeTaxes.length > 0) {
-      params.set(
-        'tax',
-        activeTaxes
-          .map(([tax]) => tax)
-          .filter(Boolean)
-          .join(','),
-      )
+    Object.entries(taxMap).forEach(([tax, value]) => {
+      if (value) {
+        activeTaxes.push(tax)
+        params.append(tax, value)
+      }
+    })
 
-      activeTaxes.forEach(([tax, value]) => {
-        if (value) params.set(tax, value)
-      })
+    if (activeTaxes.length) {
+      params.set('tax', activeTaxes.join(','))
     }
 
     return await fetchData({

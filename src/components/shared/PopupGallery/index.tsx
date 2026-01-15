@@ -82,7 +82,7 @@ export default function PopupGallery({
     >
       <DialogContent
         showCloseButton={false}
-        className='xsm:p-0 h-screen w-screen max-w-full! rounded-none! border-none! bg-black/60'
+        className='xsm:p-0 h-screen w-screen max-w-full! rounded-none! border-none! bg-black/80 backdrop-blur-sm'
       >
         <DialogHeader className='hidden'>
           <DialogTitle>{title || 'Thư viện hình ảnh'}</DialogTitle>
@@ -112,6 +112,7 @@ export default function PopupGallery({
               onSlideChange={(swiper) => {
                 setCurrentIndex(swiper.activeIndex)
               }}
+              speed={800}
               className='swiper-main-gallery xsm:h-69.5 xsm:absolute! xsm:top-1/2 xsm:left-0 xsm:-translate-y-1/2 h-153.75 w-full'
             >
               {items.map((item, index) => (
@@ -135,6 +136,7 @@ export default function PopupGallery({
               modules={[FreeMode, Thumbs]}
               spaceBetween={6}
               slidesPerView='auto'
+              speed={800}
               freeMode
               watchSlidesProgress
               className='swiper-thumbs-gallery xsm:px-[0.35rem]! xsm:absolute! xsm:bottom-0 xsm:left-0 h-18.25 w-full'

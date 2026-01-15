@@ -146,7 +146,6 @@ export default function DetailHotel({
         <DrawerProvider
           open={openBookingOverview}
           setOpen={setOpenBookingOverview}
-          showDrawerDrag={false}
           className='rounded-t-[0.5rem] p-4'
         >
           <BookingOverview

@@ -1,11 +1,14 @@
 import { IOurStoriesData } from '@/interface/homepage.interface'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useParams } from 'next/navigation'
 
 const StoriesCard = ({ story }: { story: IOurStoriesData }) => {
+  const { locale } = useParams()
+  const href = locale === 'en' ? `/blogs/${story.slug}` : `/danh-sach-tin-tuc/${story.slug}`
   return (
     <Link
-      href={story?.slug}
+      href={href}
       className='xsm:w-[15.6875rem] relative flex w-full max-w-[28.25rem] flex-col gap-[1.125rem] xsm:shrink-0'
     >
       <div className='xsm:left-[0.63rem] xsm:top-[0.56rem] xsm:h-[1.3125rem] xsm:px-[0.625rem] xsm:text-[0.625rem] xsm:leading-[1.25rem] xsm:tracking-[-0.0125rem] line-clamp-1 absolute top-[0.57rem] left-[0.63rem] flex h-[2rem] px-[0.88331rem] justify-center items-center rounded-tl-[0.75rem] rounded-br-[0.75rem] bg-[#2BAB7D] text-white font-phu-du text-[0.71763rem] font-medium leading-[1.43525rem] tracking-[-0.01438rem] z-10'>
@@ -22,7 +25,7 @@ const StoriesCard = ({ story }: { story: IOurStoriesData }) => {
       </div>
 
       <div className='xsm:w-full flex flex-col w-[27.08938rem] gap-[0.875rem]'>
-        <h3 className='xsm:text-[1rem] xsm:leading-[1.3rem] xsm:tracking-normal line-clamp-2 text-[#1F4D37] font-phu-du text-[1.75rem] font-medium leading-[2.0625rem] tracking-[-0.03125rem]'>
+        <h3 className='xsm:text-[1rem] xsm:leading-[1.3rem] xsm:tracking-normal line-clamp-2 text-[#1F4D37] font-phu-du text-[1.75rem] font-medium leading-[2.0625rem] tracking-[-0.03125rem] h-[4.3125rem] xsm:h-[2.5rem]'>
           {story?.title}
         </h3>
         <p className='line-clamp-1 text-[#FF7B4A] font-montserrat text-[0.875rem] font-normal font-semibold leading-[1.4rem] tracking-[-0.00875rem]'>

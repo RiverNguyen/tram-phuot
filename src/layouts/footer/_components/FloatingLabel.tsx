@@ -32,6 +32,7 @@ export default function FloatingLabel({
           props.className,
           props.value && 'border-b-white',
           error && 'border-b-destructive focus:border-b-destructive',
+          'input-white',
         )}
       />
       <label

@@ -96,7 +96,10 @@ export default function DetailsTour({
           tourDuration={detailsTourData?.data?.tour_duration}
           pricePerPax={Number(detailsTourData?.data?.acf?.price_person)}
         />
-        <ContactForm pricePerPax={Number(detailsTourData?.data?.acf?.price_person)} />
+        <ContactForm
+          pricePerPax={Number(detailsTourData?.data?.acf?.price_person)}
+          tourTitle={detailsTourData?.data?.title || ''}
+        />
       </main>
     </BookingTourProvider>
   )

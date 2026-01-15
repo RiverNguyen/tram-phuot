@@ -15,7 +15,14 @@ interface DatePickerFieldProps {
   fromMonth?: Date
 }
 
-export const DatePickerField = ({ label, date, onDateChange, disabled, fromDate, fromMonth }: DatePickerFieldProps) => {
+export const DatePickerField = ({
+  label,
+  date,
+  onDateChange,
+  disabled,
+  fromDate,
+  fromMonth,
+}: DatePickerFieldProps) => {
   const t = useTranslations('HomePage.banner')
   const locale = useLocale()
 
@@ -50,7 +57,7 @@ export const DatePickerField = ({ label, date, onDateChange, disabled, fromDate,
         </div>
       </PopoverTrigger>
       <PopoverContent
-        className='-ml-8 w-89 pt-4 pb-6'
+        className='-ml-8 w-89 pt-4 pb-6 rounded-[0.25rem]'
         align='start'
       >
         <CalendarCustom

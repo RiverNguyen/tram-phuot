@@ -18,7 +18,7 @@ const DrawerProvider: FC<DrawerProviderProps> = ({
   className,
   open,
   setOpen,
-  showDrawerDrag = true,
+  showDrawerDrag = false,
 }) => {
   return (
     <Drawer

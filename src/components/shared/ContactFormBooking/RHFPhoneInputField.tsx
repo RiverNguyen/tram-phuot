@@ -2,12 +2,12 @@ import { FormControl, FormItem, FormMessage } from '@/components/ui/form'
 import { PhoneInput } from '@/components/ui/phone-input-custom'
 import { cn } from '@/lib/utils'
 import { ContactFormValues } from '@/schemas/booking-tour.schema'
-import { ControllerRenderProps, FieldPath } from 'react-hook-form'
+import { ControllerRenderProps } from 'react-hook-form'
 
 interface RHFPhoneInputFieldProps {
   placeholder?: string
   required?: boolean
-  field: ControllerRenderProps<ContactFormValues, FieldPath<ContactFormValues>>
+  field: ControllerRenderProps<ContactFormValues, any>
   className?: string
 }
 

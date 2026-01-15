@@ -341,6 +341,7 @@ export default function Journey({ explorers }: { explorers: IExplorers }) {
                 <Link
                   href={social.link || ''}
                   key={index}
+                  target='_blank'
                   className='xsm:size-[3.09138rem] size-[3.375rem]'
                 >
                   <Image
