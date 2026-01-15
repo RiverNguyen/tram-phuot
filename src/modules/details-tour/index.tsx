@@ -34,7 +34,7 @@ export default function DetailsTour({
 }: DetailsTourProps) {
   return (
     <BookingTourProvider pricePerPax={Number(detailsTourData?.data?.acf?.price_person)}>
-      <main className="xsm:bg-[url('/details-tour/background-mb.webp')] relative bg-[#FDF4ED] bg-[url('/details-tour/background-pc.webp')] bg-cover bg-fixed bg-center bg-no-repeat">
+      <main className="xsm:bg-[url('/details-tour/background-mb.webp')] relative bg-[#FDF4ED] bg-[url('/details-tour/background-pc.webp')] bg-cover bg-fixed bg-center">
         <SectionBanner
           title={detailsTourData?.data?.title || ''}
           banner={detailsTourData?.data?.acf?.banner}
@@ -44,7 +44,7 @@ export default function DetailsTour({
           accommodation={detailsTourData?.data?.acf?.accommodation || ''}
           pickupAndDropoff={detailsTourData?.data?.acf?.pickup_and_dropoff || ''}
         />
-        <div className='xsm:mt-6.5 relative mx-auto mt-25 mb-8 flex max-w-351 items-start justify-between'>
+        <div className='xsm:pt-6.5 relative mx-auto pt-25 mb-8 flex max-w-351 items-start justify-between z-[5]'>
           <div className='xsm:w-full xsm:space-y-6 w-full max-w-222 shrink-0 space-y-8'>
             <SectionOverview
               overview={detailsTourData?.data?.acf?.overview}

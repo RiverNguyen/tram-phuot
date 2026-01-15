@@ -21,9 +21,10 @@ export default function VoucherListPC({ tourCoupons }: VoucherListPCProps) {
   const isMobile = useIsMobile()
   const nextSlideBtnRef = useRef<HTMLButtonElement>(null)
   const prevSlideBtnRef = useRef<HTMLButtonElement>(null)
+  const paginationRef = useRef<HTMLDivElement>(null)
   const [swiper, setSwiper] = useState<SwiperType | null>(null)
 
-  // Update navigation after swiper and refs are ready
+  // Update navigation and pagination after swiper and refs are ready
   useEffect(() => {
     if (swiper && prevSlideBtnRef.current && nextSlideBtnRef.current) {
       swiper.params.navigation = {
@@ -35,6 +36,19 @@ export default function VoucherListPC({ tourCoupons }: VoucherListPCProps) {
       swiper.navigation?.destroy()
       swiper.navigation?.init()
       swiper.navigation?.update()
+    }
+
+    if (swiper && paginationRef.current) {
+      swiper.params.pagination = {
+        ...(typeof swiper.params.pagination === 'object' ? swiper.params.pagination : {}),
+        el: paginationRef.current,
+        clickable: true,
+      }
+
+      swiper.pagination?.destroy()
+      swiper.pagination?.init()
+      swiper.pagination?.render()
+      swiper.pagination?.update()
     }
   }, [swiper])
 
@@ -58,11 +72,10 @@ export default function VoucherListPC({ tourCoupons }: VoucherListPCProps) {
         onSwiper={setSwiper}
         slidesPerView={2}
         spaceBetween={convertRemToPx(1) || 16}
-        pagination={{
-          clickable: true,
-        }}
         modules={[Pagination, Navigation]}
-        className='relative w-full px-8! pt-6! pb-14! [&_.swiper-pagination-bullet]:bg-[#1F4D37] [&_.swiper-pagination-bullet-active]:bg-[#1F4D37]!'
+        grabCursor={true}
+        speed={800}
+        className='relative w-full px-8! pt-6! pb-14!'
       >
         {tourCoupons?.map((item, index) => (
           <SwiperSlide key={index}>
@@ -70,16 +83,22 @@ export default function VoucherListPC({ tourCoupons }: VoucherListPCProps) {
               couponTitle={item?.title}
               couponType={item?.type}
               couponApplyStartDate={item?.time_goes?.start}
+              couponApplyEndDate={item?.time_goes?.end}
               couponCode={item?.code}
               couponLocation={item?.locations?.[0]?.name}
               couponDiscountPercent={item?.percent_sale}
               couponDiscountPrice={item?.price_discount}
               couponMinPrice={item?.minimum_total_price}
               couponForWhom={item?.for_whom}
+              minimumNumberOfNights={item?.minimum_number_of_nights || 0}
             />
           </SwiperSlide>
         ))}
       </Swiper>
+      <div
+        ref={paginationRef}
+        className='voucher-pagination swiper-pagination'
+      ></div>
     </div>
   )
 }

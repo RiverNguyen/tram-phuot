@@ -154,7 +154,6 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
     },
     { scope: containerRef },
   )
-  console.log(explorers)
 
   return (
     <div
@@ -218,7 +217,7 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
         alt=''
         width={357}
         height={265}
-        className='xsm:h-[7.54638rem] xsm:top-[18.2009rem] xsm:left-[11.6119rem] xsm:bottom-auto absolute top-[25.375rem] left-[62.8125rem] w-auto h-[16.56694rem]'
+        className='xsm:h-[7.54638rem] xsm:w-[10.17713rem] absolute xsm:bottom-[-0.8rem] xsm:right-[1.58rem] bottom-[-1.675rem] right-[14.7rem] w-auto h-[16.56694rem]'
       />
       <Image
         src={'/about-us/journey/d-ribbon-3-desktop.webp'}
@@ -227,11 +226,11 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
         height={956}
         className='xsm:hidden absolute top-0 right-0 w-full h-full'
       />
-      <div className='absolute top-[11.625rem] left-[8.25rem] xsm:top-[7.56rem] xsm:left-[1.75rem]'>
-        <div className='xsm:right-[1.75rem] absolute top-[3rem] right-[2.1rem] z-10 w-[4.54594rem] -rotate-[7.522deg] rounded-[50%] bg-[#F6CD40] px-[0.4rem] py-[0.25rem] text-center text-[0.34438rem] leading-[0.45rem] font-bold font-montserrat text-[#07364D] uppercase sm:hidden'>
-          {explorers.tag || 'Wanderlust station'}
+      <div className='absolute top-[13.625rem] left-[6.25rem] xsm:top-[7.56rem] xsm:left-[1.75rem]'>
+        <div className='absolute top-[2.84rem] left-[9.375rem] z-10 w-[4.54594rem] -rotate-[7.522deg] rounded-[50%] bg-[#F6CD40] px-[0.4rem] py-[0.25rem] text-center text-[0.34438rem] leading-[0.45rem] font-bold font-montserrat text-[#07364D] uppercase sm:hidden'>
+          {explorers.subtitle || 'Wanderlust station'}
         </div>
-        <h3 className='font-motherland xsm:text-[1rem] xsm:text-center xsm:m-[1rem_0_-0.75rem_0.5rem] relative z-1 ml-[0.75rem] rotate-[-5.037deg] text-[2.5rem] leading-normal font-normal text-[#F56E0A] whitespace-pre'>
+        <h3 className='xsm:ml-[0.35rem] font-motherland xsm:text-[1rem] xsm:text-center xsm:mt-1.5 relative z-1 ml-[0.75rem] rotate-[-5.037deg] text-[2.5rem] leading-normal font-normal text-[#F56E0A] whitespace-pre'>
           <div
             dangerouslySetInnerHTML={{ __html: explorers?.subtitle || 'Where Dreams Take Flight' }}
             className='text-stroke absolute inset-0'
@@ -241,12 +240,12 @@ export default function JourneyAbout({ explorers }: { explorers: IWhereDreamsTak
             className='relative z-1'
           ></div>
         </h3>
-        <div className='xsm:mt-2 xsm:mb-0 relative -mt-4 mb-[1.81rem]'>
+        <div className='xsm:mb-0 xsm:-mt-[0.15rem] relative -mt-1 mb-[1.81rem]'>
           <h2 className='font-phu-du xsm:max-w-[14rem] xsm:text-[1.75rem] xsm:leading-[1] relative max-w-[35.8125rem] text-[4.125rem] leading-[4.125rem] font-bold text-white uppercase line-clamp-3'>
             {explorers.title || 'A sanctuary where every journey begins'}
           </h2>
-          <div className='font-montserrat xsm:hidden absolute top-[7rem] left-[12.875rem] z-1 flex h-[3.19075rem] w-[10.11475rem] -rotate-[7.522deg] items-center justify-center rounded-[50%] bg-[#F6CD40] text-center text-[0.875rem] leading-[0.875rem] font-bold text-[#07364D] uppercase line-clamp-2'>
-            {explorers?.tag || 'Wanderlust station'}
+          <div className='font-montserrat xsm:hidden absolute top-[7.35rem] left-[12.875rem] z-1 flex h-[3.19075rem] w-[10.11475rem] -rotate-[7.522deg] items-center justify-center rounded-[50%] bg-[#F6CD40] text-center text-[0.875rem] leading-[0.875rem] font-bold text-[#07364D] uppercase line-clamp-2'>
+            {explorers.subtitle || 'Wanderlust station'}
           </div>
         </div>
       </div>

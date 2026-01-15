@@ -2,6 +2,7 @@
 import ICTicket from '@/components/icons/ICTicket'
 import { BrandButton } from '@/components/shared'
 import { PaxType } from '@/enums'
+import { formatUSD } from '@/lib/utils'
 import ICArrowRight from '@/modules/details-tour/icons/ICArrowRight'
 import { BookingTourContext } from '@/modules/details-tour/providers/BookingTourProvider'
 import tourService from '@/services/tour'
@@ -12,7 +13,7 @@ import {
   TourDurationType,
 } from '@/types/details-tour.type'
 import { useLocale, useTranslations } from 'next-intl'
-import { useContext, useState, useTransition } from 'react'
+import { useContext, useEffect, useRef, useState, useTransition } from 'react'
 import { toast } from 'sonner'
 
 interface BookingOverviewProps {
@@ -39,13 +40,23 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
   const translateDetailsTourPage = useTranslations('DetailsTourPage')
   const [couponCode, setCouponCode] = useState<string>('')
   const [isApplyingVoucher, startApplyingTransition] = useTransition()
+  const [appliedVoucherCode, setAppliedVoucherCode] = useState<string | null>(null)
+  const previousDatesRef = useRef<{ startDate?: Date; endDate?: Date }>({})
+  const previousPaxQuantityRef = useRef<{ adults: number; children58: number; children14: number }>(
+    {
+      adults: 0,
+      children58: 0,
+      children14: 0,
+    },
+  )
+  const isInitialMountRef = useRef(true)
 
   const formatDateByLocale = (date?: Date, locale = 'en') => {
     if (!date) return ''
 
     return new Intl.DateTimeFormat(locale === 'vi' ? 'vi-VN' : 'en-US', {
       day: 'numeric',
-      month: 'long',
+      month: 'short',
       year: 'numeric',
     }).format(date)
   }
@@ -96,10 +107,20 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
 
         const response: ApplyVoucherResponseType = await tourService.applyVoucher(payload)
         if (response.success) {
-          setTourPrice((prevData) => ({ ...prevData, discountPrice: response.voucher.discount }))
+          setTourPrice((prevData) => ({
+            ...prevData,
+            discountPrice: response.voucher?.discount || 0,
+          }))
+          setAppliedVoucherCode(couponCode) // Lưu voucher code đã áp dụng thành công
           toast.success(translateBookingTourForm('textApplyVoucherSuccess'))
         } else {
-          toast.error(translateBookingTourForm('textApplyVoucherError'))
+          setTourPrice((prevData) => ({ ...prevData, discountPrice: 0 }))
+          setAppliedVoucherCode(null) // Reset voucher code khi apply fail
+          // Hiển thị message cụ thể từ API nếu có, nếu không thì dùng message mặc định
+          const errorMessage = response.message
+            ? response.message[locale as 'vi' | 'en'] || response.message.en || response.message.vi
+            : translateBookingTourForm('textApplyVoucherError')
+          toast.error(errorMessage)
         }
       } catch (error) {
         console.error(error)
@@ -110,20 +131,102 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
     })
   }
 
+  // Tự động validate lại voucher khi ngày check-in/check-out hoặc số lượng pax thay đổi
+  useEffect(() => {
+    // Bỏ qua lần mount đầu tiên
+    if (isInitialMountRef.current) {
+      isInitialMountRef.current = false
+      previousDatesRef.current = { startDate, endDate }
+      previousPaxQuantityRef.current = { adults, children58, children14 }
+      return
+    }
+
+    // Kiểm tra xem ngày có thay đổi không
+    const datesChanged =
+      previousDatesRef.current.startDate?.getTime() !== startDate?.getTime() ||
+      previousDatesRef.current.endDate?.getTime() !== endDate?.getTime()
+
+    // Kiểm tra xem số lượng pax có thay đổi không
+    const paxQuantityChanged =
+      previousPaxQuantityRef.current.adults !== adults ||
+      previousPaxQuantityRef.current.children58 !== children58 ||
+      previousPaxQuantityRef.current.children14 !== children14
+
+    // Nếu ngày hoặc số lượng pax thay đổi và có voucher đã áp dụng, validate lại
+    if ((datesChanged || paxQuantityChanged) && appliedVoucherCode && startDate && endDate) {
+      const validateVoucher = async () => {
+        try {
+          const payload: ApplyVoucherPayloadType = {
+            startDate: startDate,
+            endDate: endDate,
+            tourSlug: tourSlug,
+            voucherCode: appliedVoucherCode,
+            paxQuantity: {
+              adults: adults,
+              children58: children58,
+              children14: children14,
+            },
+          }
+
+          const response: ApplyVoucherResponseType = await tourService.applyVoucher(payload)
+          if (response.success) {
+            // Voucher vẫn hợp lệ, cập nhật discount price
+            setTourPrice((prevData) => ({
+              ...prevData,
+              discountPrice: response.voucher?.discount || 0,
+            }))
+          } else {
+            // Voucher không còn hợp lệ, reset và hiển thị thông báo
+            setTourPrice((prevData) => ({ ...prevData, discountPrice: 0 }))
+            setAppliedVoucherCode(null)
+            const errorMessage = response.message
+              ? response.message[locale as 'vi' | 'en'] ||
+                response.message.en ||
+                response.message.vi
+              : translateBookingTourForm('textApplyVoucherError')
+            toast.error(errorMessage)
+          }
+        } catch (error) {
+          console.error('Error validating voucher:', error)
+          // Nếu có lỗi khi validate, reset voucher để tránh hiển thị sai
+          setTourPrice((prevData) => ({ ...prevData, discountPrice: 0 }))
+          setAppliedVoucherCode(null)
+        }
+      }
+
+      validateVoucher()
+    }
+
+    // Cập nhật previous dates và pax quantity
+    previousDatesRef.current = { startDate, endDate }
+    previousPaxQuantityRef.current = { adults, children58, children14 }
+  }, [
+    startDate,
+    endDate,
+    appliedVoucherCode,
+    tourSlug,
+    adults,
+    children58,
+    children14,
+    locale,
+    translateBookingTourForm,
+    setTourPrice,
+  ])
+
   return (
     <>
       <div className='font-montserrat xsm:px-5 xsm:mb-3 xsm:overflow-y-auto xsm:max-h-[60vh] space-y-3.5'>
         <div className='flex items-start rounded-[1rem] bg-[#F5F5F5] px-3.5 py-2'>
           <div className='shrink-0 space-y-1.5'>
             <span className='text-[0.875rem] leading-normal text-[#3B3943]'>Duration:</span>
-            <p className='xsm:uppercase xsm:tracking-normal xsm:text-[0.75rem] text-[0.875rem] leading-[1.2] font-semibold tracking-[0.00875rem] text-[#F56E0A]'>
+            <p className='capitalize xsm:tracking-normal xsm:text-[0.75rem] text-[0.875rem] leading-[1.2] font-semibold tracking-[0.00875rem] text-[#F56E0A] xsm:mr-[0.8125rem]'>
               {tourDuration?.name || ''}
             </p>
           </div>
           <div className='xsm:ml-1 mr-5 ml-5.75 shrink-0 self-stretch border-r border-solid border-black/12'></div>
           <div className='space-y-1.5'>
             <span className='text-[0.875rem] leading-normal text-[#3B3943]'>Schedule:</span>
-            <p className='xsm:uppercase xsm:tracking-normal xsm:text-[0.75rem] space-x-1 text-[0.875rem] leading-[1.2] font-semibold tracking-[0.00875rem] text-[#F56E0A]'>
+            <p className='xsm:capitalize xsm:tracking-normal xsm:text-[0.75rem] space-x-1 text-[0.875rem] leading-[1.2] font-semibold tracking-[0.00875rem] text-[#F56E0A]'>
               {startDate && endDate ? (
                 <>
                   <span>{formatDateByLocale(startDate, locale)}</span>
@@ -150,7 +253,7 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
                 <span className='text-[rgba(48,48,48,0.70)]'>{item.label}</span>
               </p>
               <p className='font-montserrat section-title-h2 text-[1rem] leading-normal font-semibold tracking-[-0.01563rem]'>
-                {item?.price}$
+                {formatUSD(item?.price || 0)}$
               </p>
             </div>
           ))}
@@ -189,24 +292,26 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
               {translateDetailsTourPage('textProvisional')}:
             </p>
             <p className='font-montserrat text-body/75 text-[1.125rem] leading-loose font-medium tracking-[-0.0225rem] opacity-80'>
-              {tourPrice?.provisionalPrice || 0}$
+              {formatUSD(tourPrice?.provisionalPrice || 0)}$
             </p>
           </div>
-          <div className='flex items-center justify-between'>
-            <p className='font-montserrat text-[1rem] leading-[1.6] tracking-[0.04rem] text-black'>
-              {translateDetailsTourPage('textVoucher')}:
-            </p>
-            <p className='font-montserrat text-[1rem] leading-[1.6] tracking-[0.04rem] text-black'>
-              {tourPrice?.discountPrice || 0}$
-            </p>
-          </div>
+          {tourPrice?.discountPrice != null && tourPrice.discountPrice > 0 && (
+            <div className='flex items-center justify-between'>
+              <p className='text-body/75 font-montserrat text-[1rem] leading-normal opacity-80'>
+                {translateDetailsTourPage('textVoucher')}:
+              </p>
+              <p className='font-montserrat text-body/75 text-[1.125rem] leading-loose font-medium tracking-[-0.0225rem] opacity-80'>
+                - {formatUSD(tourPrice.discountPrice)}$
+              </p>
+            </div>
+          )}
           <div className='h-[0.05rem] w-full bg-[#ccc]'></div>
           <div className='flex items-center justify-between'>
             <p className='font-phu-du text-[1rem] leading-[1.3] font-bold tracking-[-0.01875rem] text-black uppercase'>
               {translateDetailsTourPage('textTotal')}
             </p>
             <p className='font-phu-du section-title-h2 text-[1.75rem] leading-8.25 font-bold tracking-[-0.03125rem] uppercase'>
-              {tourPrice?.provisionalPrice - tourPrice?.discountPrice || 0}$
+              {formatUSD(tourPrice?.provisionalPrice - tourPrice?.discountPrice || 0)}$
             </p>
           </div>
         </div>

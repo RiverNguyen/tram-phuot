@@ -58,7 +58,7 @@ function CalendarCustom({
         ),
         button_previous: cn(
           buttonVariants({ variant: buttonVariant }),
-          'size-4 hover:bg-none select-none p-0 aria-disabled:opacity-50',
+          'size-4 hover:bg-none select-none p-0 aria-disabled:opacity-0',
           defaultClassNames.button_previous,
         ),
         button_next: cn(

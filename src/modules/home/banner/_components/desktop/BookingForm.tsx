@@ -37,6 +37,13 @@ export const BookingForm = ({
   onChildrenChange,
 }: BookingFormProps) => {
   const t = useTranslations('HomePage.banner')
+  
+  // Tạo ngày hôm nay một lần để tái sử dụng
+  const today = (() => {
+    const date = new Date()
+    date.setHours(0, 0, 0, 0)
+    return date
+  })()
 
   return (
     <div className='xsm:hidden absolute right-[7.5375rem] bottom-[3.5625rem] z-[3] flex w-[55.6875rem] flex-col'>
@@ -89,6 +96,13 @@ export const BookingForm = ({
           label={t('checkIn')}
           date={checkInDate}
           onDateChange={onCheckInChange}
+          disabled={(date) => {
+            const dateTime = new Date(date)
+            dateTime.setHours(0, 0, 0, 0)
+            return dateTime < today
+          }}
+          fromDate={today}
+          fromMonth={today}
         />
 
         <Separator
@@ -108,6 +122,8 @@ export const BookingForm = ({
             dateTime.setHours(0, 0, 0, 0)
             return dateTime <= checkInTime
           }}
+          fromDate={checkInDate || today}
+          fromMonth={checkInDate || today}
         />
 
         <Separator

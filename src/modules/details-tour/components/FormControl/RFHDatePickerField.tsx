@@ -1,6 +1,6 @@
 'use client'
-import { format, startOfDay } from 'date-fns'
-import { useState } from 'react'
+import { format, startOfDay, startOfMonth } from 'date-fns'
+import { useState, useMemo } from 'react'
 import { ControllerRenderProps } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
 import { FormControl, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
@@ -20,6 +20,7 @@ interface RFHDatePickerFieldProps {
   disabled?: boolean
   required?: boolean
   field: ControllerRenderProps<any, any>
+  disabledDates?: (date: Date) => boolean
 }
 
 export default function RFHDatePickerField({
@@ -29,16 +30,50 @@ export default function RFHDatePickerField({
   required,
   disabled,
   className,
+  disabledDates,
 }: RFHDatePickerFieldProps) {
   const t = useTranslations('BookingTourForm')
   const isMobile = useIsMobile()
   const [open, setOpen] = useState<boolean>(false)
   const locale = useLocale()
 
+  const [pendingDate, setPendingDate] = useState<Date | undefined>(
+    field.value instanceof Date ? field.value : undefined,
+  )
+
+  const today = new Date()
+  const todayStart = startOfDay(today)
+  const currentMonthStart = startOfMonth(today)
+
+  // Tính toán defaultMonth: nếu có giá trị đã chọn thì hiển thị tháng đó, nếu không thì hiển thị tháng hiện tại
+  // Nhưng phải đảm bảo không nhỏ hơn fromMonth
+  const defaultMonth = useMemo(() => {
+    const selectedDate = field.value instanceof Date ? field.value : undefined
+    if (selectedDate) {
+      const selectedMonthStart = startOfMonth(selectedDate)
+      // Nếu tháng của ngày đã chọn >= tháng hiện tại, dùng tháng đó
+      if (selectedMonthStart >= currentMonthStart) {
+        return selectedMonthStart
+      }
+    }
+    // Mặc định dùng tháng hiện tại
+    return currentMonthStart
+  }, [field.value, currentMonthStart])
+
+  // Desktop: chọn là áp dụng luôn
   const handleSelect = (date?: Date) => {
     if (!date) return
     field.onChange(date)
     setOpen(false)
+  }
+
+  const getDisabledDates = (date: Date) => {
+    // If custom disabledDates function provided, use it exclusively
+    if (disabledDates) {
+      return disabledDates(date)
+    }
+    // Default: disable past dates
+    return startOfDay(date) < todayStart
   }
 
   return (
@@ -87,7 +122,10 @@ export default function RFHDatePickerField({
               mode='single'
               selected={field.value instanceof Date ? field.value : undefined}
               onSelect={handleSelect}
-              disabled={(date) => startOfDay(date) <= startOfDay(new Date())}
+              disabled={getDisabledDates}
+              fromDate={todayStart}
+              fromMonth={currentMonthStart}
+              defaultMonth={defaultMonth}
               className='font-montserrat rounded-md border-0 p-4'
               localeCode={locale}
             />
@@ -101,7 +139,11 @@ export default function RFHDatePickerField({
             <Button
               type='button'
               ref={field.ref}
-              onClick={() => setOpen(true)}
+              onClick={() => {
+                // Khi mở popup, sync lại pendingDate với giá trị hiện tại
+                setPendingDate(field.value instanceof Date ? field.value : undefined)
+                setOpen(true)
+              }}
               disabled={disabled}
               variant={'outline'}
               className={cn(
@@ -137,9 +179,15 @@ export default function RFHDatePickerField({
                 </div>
                 <CalendarCustom
                   mode='single'
-                  selected={field.value instanceof Date ? field.value : undefined}
-                  onSelect={handleSelect}
-                  disabled={(date) => startOfDay(date) <= startOfDay(new Date())}
+                  selected={pendingDate ?? (field.value instanceof Date ? field.value : undefined)}
+                  onSelect={(date) => {
+                    if (!date) return
+                    setPendingDate(date)
+                  }}
+                  disabled={getDisabledDates}
+                  fromDate={todayStart}
+                  fromMonth={currentMonthStart}
+                  defaultMonth={defaultMonth}
                   className='font-montserrat mb-6 rounded-md border-0 p-4'
                   localeCode={locale}
                 />
@@ -147,7 +195,13 @@ export default function RFHDatePickerField({
                 <div className='border-t-[0.5px] border-solid border-[#EDEDED] px-4 pt-5 pb-4'>
                   <button
                     type='button'
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      // Chỉ khi bấm Apply mới apply giá trị vào form
+                      if (pendingDate) {
+                        field.onChange(pendingDate)
+                      }
+                      setOpen(false)
+                    }}
                     className='bg-button-ph flex-center h-10 w-full rounded-[0.625rem] px-7.5 text-[0.75rem] leading-[1.2] font-semibold text-[#F9EAD5]'
                   >
                     {t('textApply')}

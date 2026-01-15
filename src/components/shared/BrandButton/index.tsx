@@ -1,5 +1,6 @@
 'use client'
 import { cn } from '@/lib/utils'
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -22,9 +23,11 @@ interface BrandButtonProps {
   children: React.ReactNode
   type?: BrandButtonType
   showIconTransparent?: boolean
+  target?: string | undefined
 }
 
 export default function BrandButton({
+  target = undefined,
   showButtonTexture = true,
   showIconTransparent = false,
   variant = 'greenGradient',
@@ -51,6 +54,7 @@ export default function BrandButton({
     return (
       <Link
         href={type.href}
+        target={target}
         className={cn(
           'group flex-center font-montserrat xsm:h-10.5 relative h-12 w-auto cursor-pointer overflow-hidden rounded-[1.25rem_0.125rem] bg-transparent px-7',
           classNameButtonVariant[variant],
@@ -77,12 +81,19 @@ export default function BrandButton({
         <div
           className={cn(
             'bg-blue-gradient mask-border pointer-events-none absolute top-0 left-0 z-5 hidden size-full rounded-[inherit] p-0.25',
-            variant === 'transparent' && 'block',
+            variant === 'transparent' && 'block lg:group-hover:hidden',
           )}
         ></div>
         {variant === 'transparent' ? (
           <>
-            <IconArrowTopRightGradient className='absolute top-2 right-2 size-2.5 lg:group-hover:hidden' />
+            {/* <IconArrowTopRightGradient className='absolute top-2 right-2 block size-2.5 lg:group-hover:hidden' /> */}
+            <Image
+              src='/home/icon-right.svg'
+              alt='icon-right'
+              width={10}
+              height={10}
+              className='absolute top-2 right-2 block size-2.5 lg:group-hover:hidden'
+            />
             <IconArrowTopRightWhite className='absolute top-2 right-2 hidden size-2.5 lg:group-hover:block' />
           </>
         ) : (

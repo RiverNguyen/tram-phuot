@@ -20,12 +20,17 @@ export default function Banner({ detailHotel }: { detailHotel: IHotelDetail }) {
   const { isMobile, isLoading } = useIsMobile()
   const t = useTranslations('DetailHotelPage')
 
+  // Safely get gallery array
+  const gallery = Array.isArray(detailHotel?.acf?.banner?.gallery)
+    ? detailHotel.acf.banner.gallery
+    : []
+
   return (
     <>
       <PopupGallery
         open={openGallery}
         setOpen={setOpenGallery}
-        items={detailHotel?.acf?.banner?.gallery?.map((data, i) => ({
+        items={gallery.map((data, i) => ({
           id: i,
           url: data,
           alt: `Banner ${i + 1}`,
@@ -47,18 +52,17 @@ export default function Banner({ detailHotel }: { detailHotel: IHotelDetail }) {
               autoplay
               modules={[Pagination, Autoplay]}
             >
-              {Array.isArray(detailHotel?.acf?.banner?.gallery) &&
-                detailHotel?.acf?.banner?.gallery?.map((data, i) => (
-                  <SwiperSlide key={i}>
-                    <Image
-                      src={data}
-                      alt={`Banner ${i + 1}`}
-                      width={1600}
-                      height={1334}
-                      className='h-[18.125rem] w-full object-cover'
-                    />
-                  </SwiperSlide>
-                ))}
+              {gallery.map((data, i) => (
+                <SwiperSlide key={i}>
+                  <Image
+                    src={data}
+                    alt={`Banner ${i + 1}`}
+                    width={1600}
+                    height={1334}
+                    className='h-[18.125rem] w-full object-cover'
+                  />
+                </SwiperSlide>
+              ))}
             </Swiper>
             <button
               type='button'
@@ -152,83 +156,82 @@ export default function Banner({ detailHotel }: { detailHotel: IHotelDetail }) {
         {/* PC */}
         {!isLoading && !isMobile && (
           <div className='grid grid-cols-4 gap-3'>
-            {Array.isArray(detailHotel?.acf?.banner?.gallery) &&
-              detailHotel.acf.banner.gallery.length > 0 && (
-                <>
-                  {/* Ảnh lớn đầu tiên */}
-                  {detailHotel.acf.banner.gallery[0] && (
-                    <div className='col-span-2 row-span-2'>
+            {gallery.length > 0 && (
+              <>
+                {/* Ảnh lớn đầu tiên */}
+                {gallery[0] && (
+                  <div className='col-span-2 row-span-2'>
+                    <Image
+                      src={gallery[0]}
+                      alt={`Banner 1`}
+                      width={1600}
+                      height={480}
+                      className='h-[30.0625rem] w-auto object-cover'
+                    />
+                  </div>
+                )}
+                {/* 3 ảnh nhỏ tiếp theo */}
+                {gallery[1] && (
+                  <div>
+                    <Image
+                      src={gallery[1]}
+                      alt={`Banner 2`}
+                      width={1600}
+                      height={1064}
+                      className='h-[14.65625rem] w-[21.3125rem] object-cover'
+                    />
+                  </div>
+                )}
+                {gallery[2] && (
+                  <div>
+                    <Image
+                      src={gallery[2]}
+                      alt={`Banner 3`}
+                      width={1600}
+                      height={1172}
+                      className='h-[14.65625rem] w-[21.3125rem] object-cover'
+                    />
+                  </div>
+                )}
+                {gallery[3] && (
+                  <div>
+                    <Image
+                      src={gallery[3]}
+                      alt={`Banner 4`}
+                      width={1600}
+                      height={1068}
+                      className='h-[14.65625rem] w-[21.3125rem] object-cover'
+                    />
+                  </div>
+                )}
+                {/* Ảnh cuối cùng với button overlay */}
+                {gallery[4] && (
+                  <div className='relative'>
+                    <Image
+                      src={gallery[4]}
+                      alt={`Banner 5`}
+                      width={1600}
+                      height={1068}
+                      className='h-[14.65625rem] w-[21.3125rem] object-cover'
+                    />
+                    <button
+                      type='button'
+                      onClick={() => setOpenGallery(true)}
+                      className='font-phu-du absolute right-[0.75rem] bottom-[0.71875rem] flex cursor-pointer items-center justify-center space-x-2 rounded-[62.5rem] bg-white p-[0.3125rem_1rem] text-[0.75rem] font-medium tracking-[-0.015rem] text-black'
+                    >
                       <Image
-                        src={detailHotel.acf.banner.gallery[0]}
-                        alt={`Banner 1`}
-                        width={1600}
-                        height={480}
-                        className='h-[30.0625rem] w-auto object-cover'
+                        src='/detail-hotel/gallery.svg'
+                        alt=''
+                        width={16}
+                        height={16}
+                        className='size-[0.875rem] object-cover'
                       />
-                    </div>
-                  )}
-                  {/* 3 ảnh nhỏ tiếp theo */}
-                  {detailHotel.acf.banner.gallery[1] && (
-                    <div>
-                      <Image
-                        src={detailHotel.acf.banner.gallery[1]}
-                        alt={`Banner 2`}
-                        width={1600}
-                        height={1064}
-                        className='h-[14.65625rem] w-[21.3125rem] object-cover'
-                      />
-                    </div>
-                  )}
-                  {detailHotel.acf.banner.gallery[2] && (
-                    <div>
-                      <Image
-                        src={detailHotel.acf.banner.gallery[2]}
-                        alt={`Banner 3`}
-                        width={1600}
-                        height={1172}
-                        className='h-[14.65625rem] w-[21.3125rem] object-cover'
-                      />
-                    </div>
-                  )}
-                  {detailHotel.acf.banner.gallery[3] && (
-                    <div>
-                      <Image
-                        src={detailHotel.acf.banner.gallery[3]}
-                        alt={`Banner 4`}
-                        width={1600}
-                        height={1068}
-                        className='h-[14.65625rem] w-[21.3125rem] object-cover'
-                      />
-                    </div>
-                  )}
-                  {/* Ảnh cuối cùng với button overlay */}
-                  {detailHotel.acf.banner.gallery[4] && (
-                    <div className='relative'>
-                      <Image
-                        src={detailHotel.acf.banner.gallery[4]}
-                        alt={`Banner 5`}
-                        width={1600}
-                        height={1068}
-                        className='h-[14.65625rem] w-[21.3125rem] object-cover'
-                      />
-                      <button
-                        type='button'
-                        onClick={() => setOpenGallery(true)}
-                        className='font-phu-du absolute right-[0.75rem] bottom-[0.71875rem] flex cursor-pointer items-center justify-center space-x-2 rounded-[62.5rem] bg-white p-[0.3125rem_1rem] text-[0.75rem] font-medium tracking-[-0.015rem] text-black'
-                      >
-                        <Image
-                          src='/detail-hotel/gallery.svg'
-                          alt=''
-                          width={16}
-                          height={16}
-                          className='size-[0.875rem] object-cover'
-                        />
-                        <span>{t('textShowGallery')}</span>
-                      </button>
-                    </div>
-                  )}
-                </>
-              )}
+                      <span>{t('textShowGallery')}</span>
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
           </div>
         )}
       </section>

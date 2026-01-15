@@ -231,7 +231,7 @@ export default function OurTours({
                       >
                         <TourCard
                           tourType={tour?.taxonomies?.['tour-type']?.[0]?.name || ''}
-                          tourDuration={tour?.taxonomies?.['tour-duration'] || []}
+                          taxonomies={tour?.taxonomies?.['tour-duration'] || []}
                           tourName={tour?.title}
                           tourLocation={tour?.taxonomies?.locations?.[0]?.name || ''}
                           tourPrice={Number.parseFloat(tour?.acf?.price_person || '0') || 0}
@@ -283,7 +283,7 @@ export default function OurTours({
                     <TourCard
                       key={i}
                       tourType={tour?.taxonomies?.['tour-type']?.[0]?.name || ''}
-                      tourDuration={tour?.taxonomies?.['tour-duration'] || []}
+                      taxonomies={tour?.taxonomies?.['tour-duration'] || []}
                       tourName={tour?.title}
                       tourLocation={tour?.taxonomies?.locations?.[0]?.name || ''}
                       tourPrice={Number.parseFloat(tour?.acf?.price_person || '0') || 0}

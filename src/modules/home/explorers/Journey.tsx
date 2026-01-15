@@ -349,6 +349,7 @@ export default function Journey({ explorers }: { explorers: IExplorers }) {
                     width={162}
                     height={162}
                     className='w-full h-full object-cover'
+                    unoptimized
                   />
                 </Link>
               ))}

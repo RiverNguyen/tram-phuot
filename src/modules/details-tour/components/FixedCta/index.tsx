@@ -13,6 +13,7 @@ const SECTIONS = [
 
 export default function FixedCta() {
   const [activeId, setActiveId] = useState(SECTIONS[0].id)
+  const [isFooterVisible, setIsFooterVisible] = useState(false)
 
   // Scroll spy
   useEffect(() => {
@@ -38,9 +39,29 @@ export default function FixedCta() {
     return () => observer.disconnect()
   }, [])
 
+  // Hide when footer enters viewport
+  useEffect(() => {
+    const footerEl = document.querySelector('footer')
+    if (!footerEl) return
+
+    const footerObserver = new IntersectionObserver(
+      ([entry]) => {
+        setIsFooterVisible(Boolean(entry?.isIntersecting))
+      },
+      {
+        threshold: 0,
+      },
+    )
+
+    footerObserver.observe(footerEl)
+    return () => footerObserver.disconnect()
+  }, [])
+
   const handleClickCta = (sectionId: string) => {
     scrollToSection(sectionId, 1, 6)
   }
+
+  if (isFooterVisible) return null
 
   return (
     <div className='xsm:hidden fixed right-0 bottom-0 left-0 z-50 flex h-13.25 w-full items-center bg-white px-25 shadow-[0_-4px_12px_0_rgba(0,0,0,0.08)]'>

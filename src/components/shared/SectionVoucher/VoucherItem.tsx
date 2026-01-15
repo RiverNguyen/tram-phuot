@@ -1,7 +1,7 @@
 'use client'
 
 import ICCopy from '@/components/icons/ICCopy'
-import { cn } from '@/lib/utils'
+import { cn, formatUSD } from '@/lib/utils'
 import { VoucherType } from '@/types/details-tour.type'
 import { useCopyToClipboard } from '@uidotdev/usehooks'
 import { useTranslations } from 'next-intl'
@@ -16,9 +16,11 @@ interface VoucherItemProps {
   couponDiscountPercent: number
   couponDiscountPrice: number
   couponApplyStartDate: string
+  couponApplyEndDate: string
   couponMinPrice: number
   couponForWhom: string
   classNameCard?: string
+  minimumNumberOfNights: number
 }
 
 export default function VoucherItem({
@@ -29,11 +31,14 @@ export default function VoucherItem({
   couponDiscountPercent,
   couponDiscountPrice,
   couponApplyStartDate,
+  couponApplyEndDate,
   couponForWhom,
   couponMinPrice,
   classNameCard,
+  minimumNumberOfNights,
 }: VoucherItemProps) {
   const translateComponent = useTranslations('Components.CouponCard')
+  const t = useTranslations('DetailHotelPage')
   const [_, copyToClipboard] = useCopyToClipboard()
   const handleCopyVoucher = async (couponCode: string) => {
     try {
@@ -76,21 +81,34 @@ export default function VoucherItem({
           className='object-cover sm:hidden'
           src='/coupon-card/bg-card-right-mb.svg'
         />
-        <div className='xsm:left-52 font-phu-du xsm:w-[7.15rem] xsm:space-y-[0.8125rem] absolute top-0 right-1 flex h-full w-[8.9375rem] flex-col items-center justify-center font-bold tracking-normal text-white'>
+        <div className='xsm:left-52 font-phu-du xsm:w-[7.15rem] xsm:space-y-[0.2125rem] absolute top-0 right-1 flex h-full w-[8.9375rem] flex-col items-center justify-center font-bold tracking-normal text-white'>
           <div className='flex-col items-center justify-center'>
-            <div className='xsm:text-[1.11025rem] text-center text-[1.3125rem] leading-[0.9]'>
-              {translateComponent('textDiscount')}
-            </div>
-            <div className='xsm:text-[3.25rem] text-center text-[4rem] leading-[0.9]'>
-              {couponType === 'percent' ? couponDiscountPercent + '%' : couponDiscountPrice + '$'}
+            <div className='text-[3.5rem] xsm:text-[2.5rem] text-white font-phu-du leading-[1] font-bold'>
+              {couponType === 'percent'
+                ? couponDiscountPercent + '%'
+                : formatUSD(couponDiscountPrice) + '$'}
             </div>
           </div>
+          <div className='xsm:text-[1.11025rem] text-center text-[1.125rem] leading-[1]'>
+            {translateComponent('textDiscount')}
+          </div>
+          {(couponMinPrice || minimumNumberOfNights > 0) && (
+            <p className='font-montserrat text-center mt-[0.75rem] xsm:mt-1 text-[0.625rem] leading-[1.6] font-medium tracking-[-0.00625rem] text-white'>
+              <span>{translateComponent('textMinApplication')}</span>
+              <br />
 
-          <p className='xsm:block font-montserrat hidden text-center text-[0.625rem] leading-[1.6] font-medium tracking-[-0.00625rem] text-white'>
-            <span>{translateComponent('textMinApplication')}</span>
-            <br />
-            <span>{couponMinPrice}$</span>
-          </p>
+              {couponMinPrice && <span>{formatUSD(couponMinPrice)}$</span>}
+
+              {couponMinPrice && minimumNumberOfNights > 0 && <span> - </span>}
+
+              {minimumNumberOfNights > 0 && (
+                <span>
+                  {minimumNumberOfNights}{' '}
+                  {minimumNumberOfNights > 1 ? t('textNights') : t('textNight')}
+                </span>
+              )}
+            </p>
+          )}
         </div>
 
         <div className='xsm:top-2.5 xsm:left-[0.7125rem] xsm:w-47 xsm:h-31 absolute top-3.75 left-[0.9rem] z-1 flex h-[10.0325rem] w-[14.68844rem] flex-col items-start justify-between'>
@@ -113,7 +131,9 @@ export default function VoucherItem({
               <div className='xsm:h-1.75 h-2.5'>
                 <div className='xsm:space-x-[0.28375rem] xsm:text-[0.625rem] xsm:leading-4 xsm:tracking-[-0.00625rem] font-montserrat text-body-t1/48 flex items-center space-x-[0.33256rem] text-[0.75rem] leading-[1.2] font-medium tracking-[-0.0075rem]'>
                   <span>{translateComponent('textApplyDate')}:</span>
-                  <span>{couponApplyStartDate}</span>
+                  <span>
+                    {couponApplyStartDate} - {couponApplyEndDate}
+                  </span>
                 </div>
               </div>
               <div className='xsm:h-[1.13162rem] xsm:px-[0.35406rem] xsm:h-[1.1456rem] xsm:rounded-[0.18913rem] xsm:text-[0.625rem] xsm:leading-[1.6] xsm:tracking-[-0.00625rem] font-montserrat flex h-[1.3869rem] w-fit items-center justify-center rounded-[0.25rem] bg-[#2BAB7D] p-[0.44344rem] text-[0.75rem] leading-[1.2] font-medium tracking-[-0.0075rem] text-white'>
@@ -124,7 +144,7 @@ export default function VoucherItem({
           <div className='xsm:space-y-[0.47288rem] w-full space-y-[0.55rem]'>
             <div className='xsm:h-1.75 h-2'>
               <p className='xsm:text-[0.625rem] xsm:leading-4 xsm:tracking-[-0.00625rem] font-montserrat text-body-t1/48 text-[0.75rem] leading-none font-medium tracking-[-0.0075rem]'>
-                {translateComponent('textApplyDate')}:
+                {t('textPromotionCode')}:
               </p>
             </div>
             <div className='xsm:gap-[0.56744rem] xsm:justify-between flex items-center space-x-[0.66513rem]'>
