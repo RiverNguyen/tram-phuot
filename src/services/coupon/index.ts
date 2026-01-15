@@ -35,18 +35,27 @@ const getCachedPromotionPage = (locale: string) =>
   )()
 
 // Cache special offer - không thay đổi khi filter
-const getCachedCouponSpecialOffer = unstable_cache(
-  async () => {
-    return await fetchData({
-      api: ENDPOINTS.promotion.couponSpecialOffer,
-    })
-  },
-  ['coupon-special-offer'],
-  {
-    tags: ['coupon-special-offer'],
-    revalidate: 300, // 5 phút
-  },
-)
+const getCachedCouponSpecialOffer = (locale: string) =>
+  unstable_cache(
+    async () => {
+      try {
+        const endpoint =
+          locale === 'en'
+            ? ENDPOINTS.promotion.couponSpecialOfferEn
+            : ENDPOINTS.promotion.couponSpecialOfferVi
+
+        const response = await fetchData({ api: endpoint })
+        return Array.isArray(response) ? response : []
+      } catch {
+        return []
+      }
+    },
+    [`coupon-special-offer-${locale}`],
+    {
+      tags: [`coupon-special-offer-${locale}`],
+      revalidate: 300, // 5 phút
+    },
+  )()
 
 // Cache coupons by query parameters - cache khi quay lại filter cũ
 const getCachedCoupons = (
@@ -105,7 +114,7 @@ const couponService = {
     return getCachedPromotionPage(locale)
   },
   getCouponSpecialOffer: async (locale: string) => {
-    return getCachedCouponSpecialOffer()
+    return getCachedCouponSpecialOffer(locale)
   },
 }
 
