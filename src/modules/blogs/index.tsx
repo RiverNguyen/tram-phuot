@@ -39,12 +39,12 @@ export default async function Blogs({
     : blogs
 
   return (
-    <main className='relative h-full w-full bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")] bg-cover bg-fixed bg-center'>
+    <main className='relative h-full w-full bg-[#FDF4ED]'>
       <Banner
         locale={locale}
         data={blogsPage?.acf}
       />
-      <div className='xsm:gap-0 xsm:py-[2.5rem] relative mx-auto flex h-full w-full max-w-[87.5rem] flex-col gap-[4.5rem] py-[5rem]'>
+      <div className='xsm:gap-0 xsm:py-[2.5rem] relative mx-auto flex h-full w-full max-w-[87.5rem] flex-col gap-[4.5rem] py-[5rem] bg-[url("/uu-dai/bg.webp")] bg-cover bg-top'>
         <FeturedNews
           featuredNewsData={featuredNews}
           title={blogsPage?.acf?.title_1}
