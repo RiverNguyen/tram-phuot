@@ -14,26 +14,26 @@ export default async function Promotions({
     paged?: string
   }
 }) {
-  const [coupon, taxonomies, promotionPage, couponSpecialOffer] = await Promise.all([
-    couponService.getCoupons({ locale }),
-    couponService.getTaxonomies(locale),
-    couponService.getPromotionPage(locale),
-    couponService.getCouponSpecialOffer(locale),
-  ])
-
   const hasFilters =
     !!searchParams?.locations ||
     !!searchParams?.['tour-type'] ||
     (searchParams?.paged ? Number(searchParams.paged) > 1 : false)
 
-  const ongoingCoupon = hasFilters
-    ? await couponService.getCoupons({
-        locale,
-        locations: searchParams?.locations,
-        tourType: searchParams?.['tour-type'],
-        paged: searchParams?.paged,
-      })
-    : coupon
+  const [ongoingCoupon, taxonomies, promotionPage, couponSpecialOffer] = await Promise.all([
+    couponService.getCoupons(
+      hasFilters
+        ? {
+            locale,
+            locations: searchParams?.locations,
+            tourType: searchParams?.['tour-type'],
+            paged: searchParams?.paged,
+          }
+        : { locale },
+    ),
+    couponService.getTaxonomies(locale),
+    couponService.getPromotionPage(locale),
+    couponService.getCouponSpecialOffer(locale),
+  ])
 
   return (
     <main className='relative w-full h-full bg-[url("/uu-dai/bg.webp")] bg-cover bg-center'>

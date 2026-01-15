@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import Link from 'next/link'
@@ -48,11 +48,104 @@ const itemVariants: Variants = {
   },
 }
 
+const ScrollToTopIcon = ({
+  circleRef,
+}: {
+  circleRef: React.RefObject<SVGCircleElement | null>
+}) => {
+  return (
+    <svg
+      width='61'
+      height='61'
+      viewBox='0 0 61 61'
+      fill='none'
+      xmlns='http://www.w3.org/2000/svg'
+      className='size-10'
+    >
+      <g clipPath='url(#clip0_604_10721)'>
+        <circle
+          id='circle'
+          ref={circleRef}
+          cx='30.4477'
+          cy='30.3598'
+          r='28.8142'
+          stroke='#F56E0A'
+          strokeWidth='1.82947'
+        />
+        <path
+          d='M30.0777 41.7945L30.0777 21.6703'
+          stroke='#F56E0A'
+          strokeWidth='3.65894'
+        />
+        <path
+          d='M20.9648 30.7812L30.0726 21.6735L39.1804 30.7812'
+          stroke='#F56E0A'
+          strokeWidth='3.65894'
+        />
+      </g>
+      <defs>
+        <clipPath id='clip0_604_10721'>
+          <rect
+            width='59.4578'
+            height='59.4578'
+            fill='white'
+            transform='translate(0.71875 0.630859)'
+          />
+        </clipPath>
+      </defs>
+    </svg>
+  )
+}
+
 const CTA = ({ data }: { data: { icon: string; link: string }[] }) => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
+  const circleRef = useRef<SVGCircleElement | null>(null)
+
+  useEffect(() => {
+    const circle = circleRef.current
+    if (!circle) return
+
+    const radius = circle.r.baseVal.value
+    const circumference = 2 * Math.PI * radius
+
+    circle.style.strokeDasharray = `${circumference} ${circumference}`
+    circle.style.strokeDashoffset = `${circumference}`
+    circle.style.transform = 'rotate(-90deg)'
+    circle.style.transformOrigin = '50% 50%'
+
+    const updateProgress = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop
+      const height = document.documentElement.scrollHeight - window.innerHeight
+      const progress = height > 0 ? Math.min(Math.max(scrollTop / height, 0), 1) : 0
+      const offset = circumference - progress * circumference
+      circle.style.strokeDashoffset = `${offset}`
+    }
+
+    updateProgress()
+    window.addEventListener('scroll', updateProgress, { passive: true })
+    window.addEventListener('resize', updateProgress)
+
+    return () => {
+      window.removeEventListener('scroll', updateProgress)
+      window.removeEventListener('resize', updateProgress)
+    }
+  }, [])
+
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   return (
-    <div className='fixed right-8 bottom-16 xsm:bottom-8 xsm:z-[10] z-[20] flex flex-col items-center gap-3'>
+    <div className='fixed xsm:right-4 right-8 bottom-10 xsm:bottom-8 xsm:z-[20] z-[30] flex flex-col items-center gap-5'>
+      {/* <button
+        type='button'
+        onClick={handleScrollToTop}
+        aria-label='Scroll to top'
+        className='cursor-pointer'
+      >
+        <ScrollToTopIcon circleRef={circleRef} />
+      </button> */}
+
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -95,30 +188,47 @@ const CTA = ({ data }: { data: { icon: string; link: string }[] }) => {
       </AnimatePresence>
 
       {/* Nút toggle chính */}
-      <motion.button
+      {/* Wrapper để chứa ripple */}
+      <div className="relative inline-flex items-center justify-center">
+        {/* Ripple layer – chỉ hiện khi !isOpen */}
+        {!isOpen && <span className="ripple_video" />}
+
+        {/* Nút toggle chính */}
+        <motion.button
+          type="button"
+          onClick={() => setIsOpen((prev) => !prev)}
+          whileTap={{ scale: 0.9 }}
+          animate={{
+            rotate: isOpen ? 90 : 0,
+            scale: isOpen ? 1.05 : 1,
+            transition: { type: "spring", stiffness: 260, damping: 20 },
+          }}
+          className="relative z-10 size-10 rounded-full
+      bg-[linear-gradient(139deg,#FFB715_4.6%,#F04C05_101.16%)]
+      flex items-center justify-center shadow-lg"
+        >
+          {isOpen ? (
+            <span className="text-white text-2xl leading-none">×</span>
+          ) : (
+            <Image
+              src="/cta/logo.svg"
+              alt="cta"
+              width={20}
+              height={20}
+              className="w-[1.375rem] h-[1.3125rem] object-cover"
+            />
+          )}
+        </motion.button>
+      </div>
+
+      <button
         type='button'
-        onClick={() => setIsOpen((prev) => !prev)}
-        whileTap={{ scale: 0.9 }}
-        animate={{
-          rotate: isOpen ? 90 : 0,
-          scale: isOpen ? 1.05 : 1,
-          transition: { type: 'spring', stiffness: 260, damping: 20 },
-        }}
-        className='size-10 rounded-full bg-[linear-gradient(139deg,#FFB715_4.6%,#F04C05_101.16%)] flex-center shadow-lg'
+        onClick={handleScrollToTop}
+        aria-label='Scroll to top'
+        className='cursor-pointer h-full w-full'
       >
-        {isOpen ? (
-          // Icon close
-          <span className='text-white text-2xl leading-none'>×</span>
-        ) : (
-          <Image
-            src='/cta/logo.svg'
-            alt='cta'
-            width={20}
-            height={20}
-            className='w-[1.375rem] h-[1.3125rem] object-cover'
-          />
-        )}
-      </motion.button>
+        <ScrollToTopIcon circleRef={circleRef} />
+      </button>
     </div>
   )
 }

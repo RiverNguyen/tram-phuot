@@ -63,7 +63,7 @@ export default function TourCard({
             width={305}
             height={450}
             src={tourThumbnail.url}
-            className='pointer-events-none size-full rounded-[inherit] object-cover select-none lg:transition-all lg:duration-600 lg:ease-[cubic-bezier(0.53,0.01,0.19,1)] lg:group-hover:scale-120'
+            className='pointer-events-none size-full rounded-[inherit] object-cover select-none lg:transition-all lg:duration-500 lg:ease-[cubic-bezier(0.65,0.01,0.28,0.98)] lg:group-hover:scale-110'
           />
         )}
 
