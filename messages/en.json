@@ -33,7 +33,8 @@
       "tourAndChill": "Tour and chill",
       "exploreTheTour": "Explore the tour",
       "noResult": "No Result",
-      "exploreMore": "Explore more"
+      "exploreMore": "Explore more",
+      "resetAll": "Reset all"
     }
   },
   "Header": {

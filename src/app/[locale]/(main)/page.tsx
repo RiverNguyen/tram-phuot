@@ -47,10 +47,11 @@ export default async function page({ params }: { params: Promise<{ locale: strin
       />
       <Overview overview={dataHome?.acf?.overview} />
       <OurTours
-        initialTours={tourRes?.data}
-        initialHotels={hotelRes?.data}
+        tourRes={tourRes}
+        hotelRes={hotelRes}
         locations={locationRes?.data}
         ourTours={dataHome?.acf?.our_tours}
+        locale={locale}
       />
       <div className='relative bg-[#FDF4ED]'>
         <div className="pointer-events-none absolute inset-0 bg-[url('/home/explorers/bg-pc.webp')] bg-[length:100%_auto] bg-top bg-repeat-y opacity-8" />

@@ -7,66 +7,78 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import { cn, convertRemToPx } from '@/lib/utils'
 import { motion } from 'motion/react'
-import { ITour } from '@/interface/tour.interface'
-import { IHotel } from '@/interface/hotel.interface'
+import { ITourRes } from '@/interface/tour.interface'
+import { IHotelRes } from '@/interface/hotel.interface'
 import HotelCard from '@/modules/hotels/_components/HotelCard'
 import { useTranslations } from 'next-intl'
 import Map from './_components/Map'
 import { ILocation } from '@/interface/taxonomy.interface'
-import { useParams } from 'next/navigation'
 import tourService from '@/services/tour'
 import hotelService from '@/services/hotel'
 import SkeletonTour from '@/modules/tours/_components/SkeletonTour'
-import useIsMobile from '@/hooks/use-is-mobile'
+import useSWR from 'swr'
+
+const tourFetcher = ([_, locale, location]: [string, string, string | undefined]) => {
+  return tourService.getTours({
+    locale,
+    locations: location,
+  })
+}
+
+const hotelFetcher = ([_, locale, location]: [string, string, string | undefined]) =>
+  hotelService.getHotels({
+    locale,
+    locations: location,
+  })
 
 export default function OurTours({
   ourTours,
-  initialTours,
-  initialHotels,
+  tourRes,
+  hotelRes,
   locations,
+  locale,
 }: {
+  tourRes: ITourRes
+  hotelRes: IHotelRes
   ourTours: IOurTourHomePage
-  initialTours: ITour[]
-  initialHotels: IHotel[]
   locations: ILocation[]
+  locale: string
 }) {
-  const [isFetching, setIsFetching] = useState(false)
-  const [tours, setTours] = useState(initialTours)
-  const [hotels, setHotels] = useState(initialHotels)
-  const { isLoading, isMobile } = useIsMobile()
+  const [location, setLocation] = useState<string | null>(null)
   const [tab, setTab] = useState<'stayPoints' | 'tourAndChill'>('tourAndChill')
   const t = useTranslations('HomePage.ourTours')
-  const { locale } = useParams<{ locale: string }>()
+  const {
+    data: { data: tourData },
+    isLoading: tourLoading,
+  } = useSWR(location ? ['home-tours', locale, location] : null, tourFetcher, {
+    fallbackData: tourRes,
+    revalidateOnFocus: false,
+    keepPreviousData: true,
+  })
+  const {
+    data: { data: hotelData },
+    isLoading: hotelLoading,
+  } = useSWR(location ? ['home-hotels', locale, location] : null, hotelFetcher, {
+    fallbackData: hotelRes,
+    revalidateOnFocus: false,
+    keepPreviousData: true,
+  })
+
+  const tours = tourData ?? tourRes?.data
+  const hotels = hotelData ?? hotelRes?.data
+
+  const isFetching = tourLoading || hotelLoading
+  const isFilter = Boolean(location)
 
   const exploreMoreTour = locale === 'en' ? '/tours' : '/danh-sach-tour'
   const exploreMoreHotel = locale === 'en' ? '/hotels' : '/danh-sach-khach-san'
 
-  const handleFilterByLocation = async (locationSlug: string) => {
-    try {
-      setIsFetching(true)
-      const [tourRes, hotelRes] = await Promise.all([
-        tourService.getTours({
-          locations: locationSlug,
-          locale,
-        }),
-        hotelService.getHotels({
-          locations: locationSlug,
-          locale,
-        }),
-      ])
+  const handleFilterByLocation = (slug: string) => {
+    setLocation(slug)
+  }
 
-      if (tourRes.success) {
-        setTours(tourRes.data)
-      }
-
-      if (hotelRes.success) {
-        setHotels(hotelRes.data)
-      }
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setIsFetching(false)
-    }
+  const handleReset = () => {
+    setLocation(null)
   }
 
   return (
@@ -133,6 +145,16 @@ export default function OurTours({
           />
           <div className='relative z-1 sm:pointer-events-none sm:pt-[4.12rem]'>
             <div className='xsm:px-4 xsm:mb-[1.5rem] pointer-events-auto mb-[1.7rem] flex w-full items-center justify-end space-x-[0.56rem] sm:pr-[6.4rem]'>
+              {isFilter && (
+                <button
+                  type='button'
+                  onClick={handleReset}
+                  className='text-white cursor-pointer font-montserrat text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] text-uppercase xsm:hidden'
+                >
+                  {t('resetAll')}
+                </button>
+              )}
+
               <button
                 type='button'
                 onClick={() => setTab('stayPoints')}
@@ -173,47 +195,16 @@ export default function OurTours({
               </button>
             </div>
 
-            {/* Desktop SwiperSlide */}
-            {!isLoading && !isMobile && (
-              <Swiper
-                slidesPerView='auto'
-                touchEventsTarget='container'
-                grabCursor
-                spaceBetween={convertRemToPx(0.725)}
-                className='pointer-events-auto! mb-[1.25rem]! rounded-[0.5rem] pr-4!'
-              >
-                {tab === 'stayPoints' ? (
-                  isFetching ? (
-                    Array.from({ length: 8 }).map((_, i) => (
-                      <SwiperSlide
-                        key={i}
-                        className='xsm:w-[15.67125rem]! w-[19.125rem]!'
-                      >
-                        <SkeletonTour className='xsm:h-[22.6875rem] h-[27.6875rem]' />
-                      </SwiperSlide>
-                    ))
-                  ) : Array.isArray(hotels) && hotels.length > 0 ? (
-                    hotels.map((hotel, i) => {
-                      hotel.type = t('stayPoints')
-
-                      return (
-                        <SwiperSlide
-                          key={i}
-                          className='xsm:w-[15.67125rem]! w-[19.125rem]!'
-                        >
-                          <HotelCard
-                            hotel={hotel}
-                            className='xsm:h-[22.6875rem] h-[27.6875rem]'
-                          />
-                        </SwiperSlide>
-                      )
-                    })
-                  ) : (
-                    <div className='font-montserrat xsm:h-[22.6875rem] relative z-2 flex h-[27.6875rem] items-center justify-center text-center text-white'>
-                      {t('noResult')}
-                    </div>
-                  )
-                ) : isFetching ? (
+            {/* Desktop Swiper */}
+            <Swiper
+              slidesPerView='auto'
+              touchEventsTarget='container'
+              grabCursor
+              spaceBetween={convertRemToPx(0.725)}
+              className='pointer-events-auto! mb-[1.25rem]! rounded-[0.5rem] h-[27.6875rem] pr-4! xsm:hidden'
+            >
+              {tab === 'stayPoints' ? (
+                isFetching ? (
                   Array.from({ length: 8 }).map((_, i) => (
                     <SwiperSlide
                       key={i}
@@ -222,24 +213,18 @@ export default function OurTours({
                       <SkeletonTour className='xsm:h-[22.6875rem] h-[27.6875rem]' />
                     </SwiperSlide>
                   ))
-                ) : Array.isArray(tours) && tours.length > 0 ? (
-                  tours.map((tour, i) => {
+                ) : Array.isArray(hotels) && hotels.length > 0 ? (
+                  hotels.map((hotel, i) => {
+                    hotel.type = t('stayPoints')
+
                     return (
                       <SwiperSlide
                         key={i}
-                        className='xsm:w-[15.67125rem]! w-[19.125rem]!'
+                        className='xsm:w-[15.67125rem]! w-[19.125rem]! h-[27.6875rem]'
                       >
-                        <TourCard
-                          tourType={tour?.taxonomies?.['tour-type']?.[0]?.name || ''}
-                          taxonomies={tour?.taxonomies?.['tour-duration'] || []}
-                          tourName={tour?.title}
-                          tourLocation={tour?.taxonomies?.locations?.[0]?.name || ''}
-                          tourPrice={Number.parseFloat(tour?.acf?.price_person || '0') || 0}
-                          tourThumbnail={tour?.thumbnail as any}
-                          tourSlug={tour?.slug}
-                          type='tour'
-                          size='medium'
-                          classNameCard='xsm:h-[22.6875rem] h-[27.6875rem]'
+                        <HotelCard
+                          hotel={hotel}
+                          className='xsm:h-[22.6875rem] h-[27.6875rem]'
                         />
                       </SwiperSlide>
                     )
@@ -248,9 +233,44 @@ export default function OurTours({
                   <div className='font-montserrat xsm:h-[22.6875rem] relative z-2 flex h-[27.6875rem] items-center justify-center text-center text-white'>
                     {t('noResult')}
                   </div>
-                )}
-              </Swiper>
-            )}
+                )
+              ) : isFetching ? (
+                Array.from({ length: 8 }).map((_, i) => (
+                  <SwiperSlide
+                    key={i}
+                    className='xsm:w-[15.67125rem]! w-[19.125rem]!'
+                  >
+                    <SkeletonTour className='xsm:h-[22.6875rem] h-[27.6875rem]' />
+                  </SwiperSlide>
+                ))
+              ) : Array.isArray(tours) && tours.length > 0 ? (
+                tours.map((tour, i) => {
+                  return (
+                    <SwiperSlide
+                      key={i}
+                      className='xsm:w-[15.67125rem]! w-[19.125rem]!'
+                    >
+                      <TourCard
+                        tourType={tour?.taxonomies?.['tour-type']?.[0]?.name || ''}
+                        taxonomies={tour?.taxonomies?.['tour-duration'] || []}
+                        tourName={tour?.title}
+                        tourLocation={tour?.taxonomies?.locations?.[0]?.name || ''}
+                        tourPrice={Number.parseFloat(tour?.acf?.price_person || '0') || 0}
+                        tourThumbnail={tour?.thumbnail as any}
+                        tourSlug={tour?.slug}
+                        type='tour'
+                        size='medium'
+                        classNameCard='xsm:h-[22.6875rem] h-[27.6875rem]'
+                      />
+                    </SwiperSlide>
+                  )
+                })
+              ) : (
+                <div className='font-montserrat xsm:h-[22.6875rem] relative z-2 flex h-[27.6875rem] items-center justify-center text-center text-white'>
+                  {t('noResult')}
+                </div>
+              )}
+            </Swiper>
 
             {/* Mobile Slide */}
             <div

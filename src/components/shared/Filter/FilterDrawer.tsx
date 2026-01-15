@@ -53,9 +53,9 @@ export default function FilterDrawer({
       open={open}
       setOpen={setOpen}
       showDrawerDrag={false}
-      className='max-h-screen overflow-hidden'
+      className={'max-h-full overflow-hidden'}
     >
-      <div className='flex max-h-screen w-full flex-col overflow-hidden'>
+      <div className='flex w-full flex-col overflow-hidden'>
         {/* Header */}
         <div className='sticky top-0 z-10 flex h-[4.5rem] w-full items-center justify-between bg-[#E5EDF6] p-3 pt-6'>
           <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent uppercase'>

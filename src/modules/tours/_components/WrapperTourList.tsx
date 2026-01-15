@@ -1,36 +1,70 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import TourList from './TourList'
 import { Pagination } from '@/components/shared'
 import { ITaxonomy } from '@/interface/taxonomy.interface'
 import FilterPopover from '@/components/shared/Filter/FilterPopover'
 import ICTrashcan from '@/components/icons/ICTrashcan'
 import { usePathname, useRouter } from '@/i18n/navigation'
-import { useSearchParams } from 'next/navigation'
-import { ITour } from '@/interface/tour.interface'
+import { ITourRes } from '@/interface/tour.interface'
 import ICFilter from '@/components/icons/ICFilter'
 import FilterDrawer from '@/components/shared/Filter/FilterDrawer'
-import { useTransition } from 'react'
 import SkeletonTour from './SkeletonTour'
-import { scrollToSection } from '@/utils/scrollToSection'
 import { useTranslations } from 'next-intl'
-import EmptyTourResult from './EmptyTourResult'
+import { useSearchParams } from 'next/navigation'
+import EmptyResult from './EmptyResult'
+import tourService from '@/services/tour'
+import useSWR from 'swr'
+import { scrollToSection } from '@/utils/scrollToSection'
 
 interface WrapperTourListProps {
   taxonomies: ITaxonomy[]
-  data: ITour[]
-  totalPages: number
+  tourRes: ITourRes
+  locale: string
 }
 
-export default function WrapperTourList({ taxonomies, data, totalPages }: WrapperTourListProps) {
+const tourFetcher = async (key: {
+  locale: string
+  locations?: string
+  tourType?: string
+  tourDuration?: string
+  page?: string
+}) => {
+  return tourService.getTours({
+    locale: key.locale,
+    locations: key.locations,
+    tourType: key.tourType,
+    tourDuration: key.tourDuration,
+    page: key.page,
+  })
+}
+
+export default function WrapperTourList({ taxonomies, tourRes, locale }: WrapperTourListProps) {
   const [openDrawer, setOpenDrawer] = useState(false)
   const searchParams = useSearchParams()
-  const [currentPage, setCurrentPage] = useState(+(searchParams.get('page') || '1'))
   const router = useRouter()
   const pathname = usePathname()
-  const [isPending, startTransition] = useTransition()
   const t = useTranslations('ListTourPage')
+  const currentPage = +(searchParams.get('page') || '1')
+  const prevSearchRef = useRef<string | null>(null)
+
+  const swrKey = {
+    locale,
+    locations: searchParams.get('locations') || undefined,
+    tourType: searchParams.get('tour-type') || undefined,
+    tourDuration: searchParams.get('tour-duration') || undefined,
+    page: searchParams.get('page') || '1',
+  }
+
+  const { data: swrData, isLoading } = useSWR(swrKey, tourFetcher, {
+    fallbackData: tourRes,
+    revalidateOnFocus: false,
+    keepPreviousData: true,
+  })
+
+  const tours = swrData?.data ?? []
+  const pages = swrData?.totalPages ?? 1
 
   const initialFilter = taxonomies.reduce(
     (acc, curr) => {
@@ -53,17 +87,16 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
   const [filter, setFilter] = useState<Record<string, string | string[]>>(initialFilter)
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-    startTransition(() => {
-      router.push(`${pathname}?${createQueryString('page', page <= 1 ? '' : page.toString())}`, {
-        scroll: false,
-      })
+    router.push(`${pathname}?${createQueryString('page', page <= 1 ? '' : page.toString())}`, {
+      scroll: false,
     })
   }
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString())
+
+      params.delete('page')
 
       if (value) {
         params.set(name, value)
@@ -82,14 +115,12 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
       [taxonomy]: value,
     }))
 
-    startTransition(() => {
-      router.push(
-        `${pathname}?${createQueryString(taxonomy, typeof value === 'string' ? value : value.join(','))}`,
-        {
-          scroll: false,
-        },
-      )
-    })
+    router.push(
+      `${pathname}?${createQueryString(taxonomy, typeof value === 'string' ? value : value.join(','))}`,
+      {
+        scroll: false,
+      },
+    )
   }
 
   const onMobileFilterChange = (taxonomy: string, value: string | string[]) => {
@@ -101,6 +132,8 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
 
   const handleApply = () => {
     const params = new URLSearchParams(searchParams.toString())
+
+    params.delete('page')
 
     for (const key in filter) {
       const taxonomy = filter[key]
@@ -114,14 +147,15 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
       }
     }
 
-    startTransition(() => {
-      router.push(`${pathname}?${params.toString()}`, {
-        scroll: false,
-      })
+    router.push(`${pathname}?${params.toString()}`, {
+      scroll: false,
     })
   }
 
   const resetFilter = () => {
+    const sp = searchParams.toString()
+    if (!sp) return
+
     const newPathname = currentPage > 1 ? `${pathname}?page=${currentPage}` : pathname
 
     const resetFilter = taxonomies.reduce(
@@ -142,18 +176,24 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
 
     setFilter(resetFilter)
 
-    startTransition(() => {
-      router.push(newPathname, {
-        scroll: false,
-      })
+    router.push(newPathname, {
+      scroll: false,
     })
   }
 
   useEffect(() => {
-    if (isPending) {
-      scrollToSection('tour-list-container', 1, 5)
+    const current = searchParams.toString()
+
+    if (prevSearchRef.current === null) {
+      prevSearchRef.current = current
+      return
     }
-  }, [isPending])
+
+    if (prevSearchRef.current !== current) {
+      scrollToSection('tour-list-container', 1, 5)
+      prevSearchRef.current = current
+    }
+  }, [searchParams])
 
   return (
     <div
@@ -214,7 +254,7 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
           />
         </div>
 
-        {isPending && (
+        {isLoading && (
           <div className='xsm:grid-cols-1 grid w-full grid-cols-4 gap-x-[1.125rem] gap-y-[2rem]'>
             {Array.from({ length: 8 }).map((_, i) => (
               <SkeletonTour key={i} />
@@ -223,14 +263,13 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
         )}
 
         {/* Tour list */}
-        {!isPending &&
-          (data.length > 0 ? <TourList data={data} /> : <EmptyTourResult onReset={resetFilter} />)}
+        {!isLoading && (tours.length > 0 ? <TourList data={tours} /> : <EmptyResult />)}
       </div>
 
       {/* pagination */}
       <Pagination
         pageCurrent={currentPage}
-        pageCount={totalPages}
+        pageCount={pages}
         onPageChange={handlePageChange}
       />
     </div>
