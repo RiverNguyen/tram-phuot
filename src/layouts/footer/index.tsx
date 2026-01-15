@@ -32,7 +32,7 @@ export default function Footer({ data }: { data: IFooter }) {
       {isHomePage ? (
         <div className="pointer-events-none absolute inset-0 bg-[url('/home/explorers/bg-pc.webp')] bg-[length:100%_auto] bg-top bg-repeat-y opacity-5" />
       ) : (
-        <div className="pointer-events-none absolute inset-0 bg-[url('/uu-dai/bg.webp')] bg-cover bg-center" />
+        <div className="pointer-events-none absolute inset-0 bg-[url('/uu-dai/bg.webp')] bg-cover bg-bottom" />
       )}
 
       {/* Background + mask */}
