@@ -10,6 +10,7 @@ const getCachedTaxonomies = (locale: string) =>
     async (): Promise<ICouponTaxonomyRes> => {
       return await fetchData({
         api: `${ENDPOINTS.promotion.couponTaxonomies}?lang=${locale}`,
+        skipNextCache: true, // Bỏ qua next.revalidate để unstable_cache hoạt động đúng
       })
     },
     [`coupon-taxonomies-${locale}`],
@@ -44,7 +45,10 @@ const getCachedCouponSpecialOffer = (locale: string) =>
             ? ENDPOINTS.promotion.couponSpecialOfferEn
             : ENDPOINTS.promotion.couponSpecialOfferVi
 
-        const response = await fetchData({ api: endpoint })
+        const response = await fetchData({
+          api: endpoint,
+          skipNextCache: true, // Bỏ qua next.revalidate để unstable_cache hoạt động đúng
+        })
         return Array.isArray(response) ? response : []
       } catch {
         return []
@@ -75,12 +79,17 @@ const getCachedCoupons = (
   if (tourType) query.set('tour-type', tourType)
   if (paged && Number(paged) > 1) query.set('paged', paged)
 
-  const cacheKey = `coupons-${locale}-${locations || 'none'}-${tourType || 'none'}-${paged || '1'}-${limit}`
+  // Normalize cache key: đảm bảo undefined và empty string được xử lý giống nhau
+  const normalizedLocations = locations || 'none'
+  const normalizedTourType = tourType || 'none'
+  const normalizedPaged = paged || '1'
+  const cacheKey = `coupons-${locale}-${normalizedLocations}-${normalizedTourType}-${normalizedPaged}-${limit}`
 
   return unstable_cache(
     async (): Promise<ICouponRes> => {
       return await fetchData({
         api: `${ENDPOINTS.promotion.coupon}?${query.toString()}`,
+        skipNextCache: true, // Bỏ qua next.revalidate để unstable_cache hoạt động đúng
       })
     },
     [cacheKey],
