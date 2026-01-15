@@ -1,19 +1,19 @@
 'use client'
-import {BrandButton} from '@/components/shared'
+import { BrandButton } from '@/components/shared'
 import { IContentAbout } from '@/interface/about.interface'
-import {useGSAP} from '@gsap/react'
-import {gsap} from 'gsap'
-import {SplitText} from 'gsap/SplitText'
+import { useGSAP } from '@gsap/react'
+import { gsap } from 'gsap'
+import { SplitText } from 'gsap/SplitText'
 import Image from 'next/image'
 import Link from 'next/link'
-import {useEffect, useRef, useState} from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 gsap.registerPlugin(SplitText)
 
-export default function OurStoryAbout({content}: {content: IContentAbout}) {
+export default function OurStoryAbout({ content }: { content: IContentAbout }) {
   const sectionRef = useRef<HTMLDivElement>(null)
-  const textRef=useRef<HTMLParagraphElement>(null)
-  const splitRef = useRef<SplitText|null>(null)
+  const textRef = useRef<HTMLParagraphElement>(null)
+  const splitRef = useRef<SplitText | null>(null)
   const tlRef = useRef<gsap.core.Timeline | null>(null)
 
   const containerRef = useRef<HTMLDivElement>(null)
@@ -33,7 +33,7 @@ export default function OurStoryAbout({content}: {content: IContentAbout}) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-useGSAP(
+  useGSAP(
     () => {
       const isDesktop = window.innerWidth >= 640
       const createAnimation = () => {
@@ -76,11 +76,14 @@ useGSAP(
 
       createAnimation()
     },
-    {dependencies: [], scope: sectionRef},
+    { dependencies: [], scope: sectionRef },
   )
 
   return (
-    <section ref={sectionRef} className='relative sm:mt-[3.44rem] xsm:py-[4rem] sm:pb-[9rem]'>
+    <section
+      ref={sectionRef}
+      className='relative sm:mt-[3.44rem] xsm:py-[4rem] sm:pb-[9rem]'
+    >
       <Image
         src={'/about-us/d-leaf-our-story.webp'}
         alt=''
@@ -117,7 +120,10 @@ useGSAP(
           </div>
 
           <div className='xsm:pt-4 xsm:pb-0 flex justify-center items-center max-w-[47.875rem] p-[8.5625rem_1.78125rem_2.3125rem_1.84375rem]'>
-            <p ref={textRef} className='w-[44.25rem] xsm:w-[19.6875rem] font-phu-du xsm:text-[1.25rem] xsm:leading-[1.375rem] xsm:indent-0 mt-4 text-[2.125rem] font-medium leading-[2.3375rem] tracking-[-0.02] text-center not-italic text-[#2E2E2E99]'>
+            <p
+              ref={textRef}
+              className='w-[44.25rem] xsm:w-[19.6875rem] font-phu-du xsm:text-[1.25rem] xsm:leading-[1.375rem] xsm:indent-0 mt-4 text-[2.125rem] font-medium leading-[2.3375rem] tracking-[-0.02] text-center not-italic text-[#2E2E2E99]'
+            >
               {content?.story_content}
             </p>
           </div>
@@ -225,14 +231,13 @@ useGSAP(
                 alt=''
                 width={1335}
                 height={377}
-                className='xsm:hidden absolute -top-[9.7rem] mx-[2rem] h-[23.5625rem] w-auto'
+                className='xsm:hidden absolute -top-[9.7rem] mx-[2rem] h-[23.5625rem] w-auto z-[0]'
               />
-
               {Array.isArray(content.who_we_are) &&
                 content.who_we_are.map((item, index) => (
                   <div
                     key={index}
-                    className={`xsm:w-[18.8125rem] xsm:first:ml-4 xsm:last:mr-4 xsm:px-[0.375rem] xsm:pt-[1.5rem] flex-shrink-0 w-[24.0625rem] flex flex-col items-start gap-[0.625rem] pt-[2.5rem] px-[0.625rem] pb-[0.625rem] rounded-[1.25rem] bg-[linear-gradient(180deg,rgba(189,222,187,0.91)_14.98%,#F7E9DD_85.05%)] bg-repeat [background-blend-mode:color-burn,normal] ${
+                    className={`relative z-[1] xsm:w-[18.8125rem] xsm:first:ml-4 xsm:last:mr-4 xsm:px-[0.375rem] xsm:pt-[1.5rem] flex-shrink-0 w-[24.0625rem] flex flex-col items-start gap-[0.625rem] pt-[2.5rem] px-[0.625rem] pb-[0.625rem] rounded-[1.25rem] bg-[linear-gradient(180deg,rgba(189,222,187,0.91)_14.98%,#F7E9DD_85.05%)] bg-repeat [background-blend-mode:color-burn,normal] ${
                       index % 2 === 1 ? 'mt-[3.3125rem] xsm:mt-0' : ''
                     }
           ${index === 0 ? 'xsm:ml-4' : ''}
