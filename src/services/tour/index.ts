@@ -11,7 +11,7 @@ const tourService = {
     tourType,
     tourDuration,
     page = '1',
-    limit = 8,
+    limit = 12,
   }: {
     locale: string
     locations?: string

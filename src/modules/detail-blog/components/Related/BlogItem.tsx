@@ -24,7 +24,7 @@ export default function BlogItem({ blog, className }: { blog: IRelatedBlog; clas
           alt={''}
           width={799}
           height={478}
-          className='size-full object-cover transition-all duration-500 ease-[cubic-bezier(0.65,0.01,0.28,0.98)] lg:group-hover:scale-107'
+          className='size-full object-cover transition-all duration-500 ease-[cubic-bezier(0.65,0.01,0.28,0.98)] lg:group-hover:scale-110'
         />
       </div>
 
