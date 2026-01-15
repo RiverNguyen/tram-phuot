@@ -11,7 +11,7 @@ const tourService = {
     tourType,
     tourDuration,
     page = '1',
-    limit = 8,
+    limit = 12,
   }: {
     locale: string
     locations?: string
@@ -35,12 +35,21 @@ const tourService = {
       'tour-duration': tourDuration,
     }
 
+    // Build taxonomy-related params so that:
+    // /api/v1/get-all/tour?lang=en&acf=price_person&paged=1&limit=8&order=DESC&orderby=date
+    // &tax=locations,tour-duration&locations=dak-lak&tour-duration=2-days-1-night
+    const activeTaxes: string[] = []
+
     Object.entries(taxMap).forEach(([tax, value]) => {
       if (value) {
-        params.append('tax', tax)
+        activeTaxes.push(tax)
         params.append(tax, value)
       }
     })
+
+    if (activeTaxes.length) {
+      params.set('tax', activeTaxes.join(','))
+    }
 
     return await fetchData({
       api: `${ENDPOINTS.tour.list}?${params.toString()}`,

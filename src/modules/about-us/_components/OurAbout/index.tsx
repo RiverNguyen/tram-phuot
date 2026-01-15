@@ -167,7 +167,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           alt=''
           width={222}
           height={146}
-          className='absolute -bottom-[1.5rem] left-[38.2rem] z-3 h-[9.125rem] w-auto'
+          className='xsm:hidden absolute -bottom-[1.5rem] left-[38.2rem] z-3 h-[9.125rem] w-auto'
         />
         <Image
           src='/about-us/d-user.webp'
@@ -188,7 +188,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           alt=''
           width={0}
           height={0}
-          className='absolute bottom-[6.71rem] left-[43rem] h-[4.79713rem] w-[5.85219rem]'
+          className='xsm:hidden absolute bottom-[6.71rem] left-[43rem] h-[4.79713rem] w-[5.85219rem]'
         />
         <Image
           src='/about-us/d-gradient-orange.svg'
