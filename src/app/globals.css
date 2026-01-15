@@ -98,6 +98,21 @@ input:-webkit-autofill:active {
   color: currentColor !important;
 }
 
+.input-white {
+  color: #fff;
+}
+
+/* Autofill Chrome / Safari */
+.input-white:-webkit-autofill,
+.input-white:-webkit-autofill:hover,
+.input-white:-webkit-autofill:focus,
+.input-white:-webkit-autofill:active {
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff;
+  box-shadow: 0 0 0 1000px transparent inset !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
 /* Ẩn nút tăng/giảm trên tất cả trình duyệt */
 input[type='number'] {
   appearance: textfield;
@@ -233,20 +248,6 @@ input[type='number'] {
       0 0 0 0.6em rgba(245, 110, 10, 0.22),
       0 0 0 1.05em rgba(245, 110, 10, 0);
   }
-
-  /* 0% {
-    box-shadow:
-      0 0 0 0 rgba(245, 110, 10, 0.45),
-      0 0 0 0.32em rgba(245, 110, 10, 0.32),
-      0 0 0 0.65em rgba(245, 110, 10, 0.22);
-  }
-
-  100% {
-    box-shadow:
-      0 0 0 0.32em rgba(245, 110, 10, 0.32),
-      0 0 0 0.65em rgba(245, 110, 10, 0.22),
-      0 0 0 1.25em rgba(245, 110, 10, 0);
-  } */
 }
 
 .ripple_video {
@@ -335,7 +336,7 @@ body {
   background-color: var(--scrollbar-thumb-hover);
 }
 
-html>body[data-scroll-locked] {
+html > body[data-scroll-locked] {
   overflow: auto !important;
   --removed-body-scroll-bar-size: 0px;
   margin-right: 0 !important;

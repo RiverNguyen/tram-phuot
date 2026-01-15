@@ -1,5 +1,4 @@
 import Banner from '@/modules/tours/_components/Banner'
-import queryString from 'query-string'
 import WrapperTourList from '@/modules/tours/_components/WrapperTourList'
 import tourService from '@/services/tour'
 import ENDPOINTS from '@/configs/endpoints'
@@ -27,17 +26,14 @@ export default async function page({
   searchParams,
 }: {
   params: Promise<{ locale: string }>
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+  searchParams: Promise<{
+    locations: string
+    ['tour-type']: string
+    ['tour-duration']: string
+    page?: string
+  }>
 }) {
   const [{ locale }, sp] = await Promise.all([params, searchParams])
-
-  const currSearchParams = await searchParams
-  // Tạo query string từ searchParams
-  const queryStr = queryString.stringify(currSearchParams, {
-    arrayFormat: 'comma',
-    skipNull: true,
-    skipEmptyString: true,
-  })
 
   const tourPage = await fetchData({
     api: ENDPOINTS.tour[locale as 'en' | 'vi'],
@@ -47,7 +43,10 @@ export default async function page({
     tourService.getTaxonomies(locale),
     tourService.getTours({
       locale,
-      ...currSearchParams,
+      locations: sp.locations,
+      tourType: sp['tour-type'],
+      tourDuration: sp['tour-duration'],
+      page: sp.page,
     }),
   ])
 
@@ -60,11 +59,11 @@ export default async function page({
       />
 
       {/* Main content */}
-      {/* <WrapperTourList
+      <WrapperTourList
         data={data}
         totalPages={totalPages}
         taxonomies={taxonomies}
-      /> */}
+      />
     </main>
   )
 }

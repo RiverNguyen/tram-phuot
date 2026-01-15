@@ -162,7 +162,7 @@ export default function RFHDatePickerField({
             <DrawerProvider
               open={open}
               setOpen={setOpen}
-              showDrawerDrag={false}
+              showDrawerDrag={true}
             >
               <div className='pt-3.25'>
                 <div className='mb-3 flex items-center justify-between border-b border-solid border-[#EDEDED] px-4 pb-3'>

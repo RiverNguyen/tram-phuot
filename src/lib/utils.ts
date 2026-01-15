@@ -37,3 +37,20 @@ export const formatUSD = (amount: number): string => {
     maximumFractionDigits: 0,
   }).format(normalizedAmount)
 }
+
+export function decodeHtmlEntities(text: string): string {
+  if (typeof window === 'undefined') {
+    // Server-side: simple decode for common entities
+    return text
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&nbsp;/g, ' ')
+  }
+  // Client-side: use browser API for complete decoding
+  const textarea = document.createElement('textarea')
+  textarea.innerHTML = text
+  return textarea.value
+}

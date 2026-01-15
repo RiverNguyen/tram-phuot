@@ -109,7 +109,7 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
           className='w-full rounded-none border-none p-0'
           hideCloseButton
         >
-          <div>
+          <div className='relative'>
             <MobileSheetHeader
               data={data}
               onClose={() => setOpenSheet(false)}
@@ -119,7 +119,7 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
               onNavigate={() => setOpenSheet(false)}
             />
           </div>
-          <div className='absolute bottom-0 left-0 w-full bg-white py-[1.5rem]'>
+          <div className='absolute bottom-0 left-0 w-full bg-white py-[1.5rem] border-t border-[#A1A1A1]/18'>
             <MobileSocialMedia socialMedia={socialMedia} />
             <MobileLanguageSwitcher />
           </div>
