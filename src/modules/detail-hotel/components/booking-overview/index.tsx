@@ -751,7 +751,7 @@ export default function BookingOverview({
         <DrawerProvider
           open={openContactForm}
           setOpen={setOpenContactForm}
-          showDrawerDrag={false}
+          showDrawerDrag={true}
           className='rounded-t-[0.5rem]'
         >
           <HotelContactFormContent

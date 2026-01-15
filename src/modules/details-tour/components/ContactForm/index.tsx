@@ -79,7 +79,7 @@ export default function ContactForm({ pricePerPax = 0 }: ContactFormProps) {
         <DrawerProvider
           open={openContactForm}
           setOpen={setOpenContactForm}
-          showDrawerDrag={false}
+          showDrawerDrag={true}
           className='rounded-t-[0.5rem]'
         >
           <ContactFormContent onSubmitForm={handleSubmitForm} />

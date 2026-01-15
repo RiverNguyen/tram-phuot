@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence, type Variants } from 'framer-motion'
 import Link from 'next/link'
+import useIsMobile from '@/hooks/use-is-mobile'
 
 const menuVariants: Variants = {
   open: {
@@ -98,8 +99,16 @@ const ScrollToTopIcon = ({
 }
 
 const CTA = ({ data }: { data: { icon: string; link: string }[] }) => {
-  const [isOpen, setIsOpen] = useState(true)
+  const { isMobile, isLoading: isMobileLoading } = useIsMobile()
+  const [isOpen, setIsOpen] = useState(false)
   const circleRef = useRef<SVGCircleElement | null>(null)
+
+  // Ở PC: luôn mở, ở mobile: bắt đầu đóng
+  useEffect(() => {
+    if (!isMobileLoading) {
+      setIsOpen(!isMobile)
+    }
+  }, [isMobile, isMobileLoading])
 
   useEffect(() => {
     const circle = circleRef.current
@@ -136,7 +145,7 @@ const CTA = ({ data }: { data: { icon: string; link: string }[] }) => {
   }
 
   return (
-    <div className='fixed xsm:right-4 right-8 bottom-10 xsm:bottom-8 xsm:z-[20] z-[30] flex flex-col items-center gap-5'>
+    <div className='fixed xsm:right-4 right-8 bottom-10 xsm:bottom-14 xsm:z-[20] z-[30] flex flex-col items-center gap-5'>
       {/* <button
         type='button'
         onClick={handleScrollToTop}
@@ -188,34 +197,33 @@ const CTA = ({ data }: { data: { icon: string; link: string }[] }) => {
       </AnimatePresence>
 
       {/* Nút toggle chính */}
-      {/* Wrapper để chứa ripple */}
-      <div className="relative inline-flex items-center justify-center">
+      <div className='relative inline-flex items-center justify-center'>
         {/* Ripple layer – chỉ hiện khi !isOpen */}
-        {!isOpen && <span className="ripple_video" />}
+        {!isOpen && <span className='ripple_video' />}
 
         {/* Nút toggle chính */}
         <motion.button
-          type="button"
+          type='button'
           onClick={() => setIsOpen((prev) => !prev)}
           whileTap={{ scale: 0.9 }}
           animate={{
             rotate: isOpen ? 90 : 0,
             scale: isOpen ? 1.05 : 1,
-            transition: { type: "spring", stiffness: 260, damping: 20 },
+            transition: { type: 'spring', stiffness: 260, damping: 20 },
           }}
-          className="relative z-10 size-10 rounded-full
+          className='relative z-10 size-10 rounded-full
       bg-[linear-gradient(139deg,#FFB715_4.6%,#F04C05_101.16%)]
-      flex items-center justify-center shadow-lg"
+      flex items-center justify-center shadow-lg cursor-pointer'
         >
           {isOpen ? (
-            <span className="text-white text-2xl leading-none">×</span>
+            <span className='text-white text-2xl leading-none'>×</span>
           ) : (
             <Image
-              src="/cta/logo.svg"
-              alt="cta"
+              src='/cta/logo.svg'
+              alt='cta'
               width={20}
               height={20}
-              className="w-[1.375rem] h-[1.3125rem] object-cover"
+              className='w-[1.375rem] h-[1.3125rem] object-cover'
             />
           )}
         </motion.button>

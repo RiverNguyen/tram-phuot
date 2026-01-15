@@ -52,7 +52,7 @@ export default function FilterDrawer({
     <DrawerProvider
       open={open}
       setOpen={setOpen}
-      showDrawerDrag={false}
+      showDrawerDrag={true}
       className='max-h-screen overflow-hidden'
     >
       <div className='flex max-h-screen w-full flex-col overflow-hidden'>
