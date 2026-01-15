@@ -6,7 +6,8 @@ import { VoucherType } from '@/types/details-tour.type'
 import { useCopyToClipboard } from '@uidotdev/usehooks'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
-import { toast } from 'sonner'
+import { useState } from 'react'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 
 interface VoucherItemProps {
   couponLocation: string
@@ -40,12 +41,18 @@ export default function VoucherItem({
   const translateComponent = useTranslations('Components.CouponCard')
   const t = useTranslations('DetailHotelPage')
   const [_, copyToClipboard] = useCopyToClipboard()
+  const [copied, setCopied] = useState(false)
+
   const handleCopyVoucher = async (couponCode: string) => {
     try {
       await copyToClipboard(couponCode)
-      toast.success(`${translateComponent('textCopied')}: ${couponCode}`)
+      setCopied(true)
+      setTimeout(() => {
+        setCopied(false)
+      }, 2000)
     } catch (error) {
-      toast.error('Copy failed')
+      // Handle error silently or show tooltip with error message
+      setCopied(false)
     }
   }
 
@@ -151,14 +158,25 @@ export default function VoucherItem({
               <span className='xsm:text-[0.75rem] xsm:leading-[1.6] xsm:tracking-[-0.0075rem] font-montserrat max-w-30 truncate text-[0.75rem] leading-[1.6] font-semibold tracking-[-0.0075rem] text-[#1F4D37]'>
                 {couponCode}
               </span>
-              <button
-                type='button'
-                onClick={() => handleCopyVoucher(couponCode)}
-                className='xsm:h-[1.04035rem] xsm:py-[0.18913rem] xsm:px-[0.37831rem] xsm:gap-[0.28375rem] xsm:rounded-[0.18913rem] xsm:text-[0.625rem] xsm:leading-[1rem] xsm:tracking-[-0.00625rem] font-montserrat flex h-[1.375rem] shrink-0 cursor-pointer items-center gap-[0.375rem] rounded-[0.25rem] bg-[rgba(0,0,0,0.60)] px-[0.5rem] py-[0.25rem] text-[0.75rem] leading-[1.2rem] font-medium tracking-[-0.0075rem] text-white'
-              >
-                <ICCopy className='xsm:size-[0.66206rem] size-[0.875rem]' />
-                <span>{translateComponent('textCopy')}</span>
-              </button>
+              <TooltipProvider>
+                <Tooltip open={copied}>
+                  <TooltipTrigger asChild>
+                    <button
+                      type='button'
+                      onClick={() => handleCopyVoucher(couponCode)}
+                      className='xsm:h-[1.04035rem] xsm:py-[0.18913rem] xsm:px-[0.37831rem] xsm:gap-[0.28375rem] xsm:rounded-[0.18913rem] xsm:text-[0.625rem] xsm:leading-[1rem] xsm:tracking-[-0.00625rem] font-montserrat flex h-[1.375rem] shrink-0 cursor-pointer items-center gap-[0.375rem] rounded-[0.25rem] bg-[rgba(0,0,0,0.60)] px-[0.5rem] py-[0.25rem] text-[0.75rem] leading-[1.2rem] font-medium tracking-[-0.0075rem] text-white'
+                    >
+                      <ICCopy className='xsm:size-[0.66206rem] size-[0.875rem]' />
+                      <span>{translateComponent('textCopy')}</span>
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent className='bg-[#2BAB7D] text-white'>
+                    <p>
+                      {translateComponent('textCopied')}: {couponCode}
+                    </p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
             </div>
           </div>
         </div>

@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl'
 import RFHDatePickerField from '@/modules/details-tour/components/FormControl/RFHDatePickerField'
 import { Form, FormField } from '@/components/ui/form'
 import { DetailsTourPricePerPaxType, TourDurationType } from '@/types/details-tour.type'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import { addDays } from 'date-fns'
 import RHFPaxQuantityField from '@/modules/details-tour/components/FormControl/RHFPaxQuantityField'
 import { BookingTourContext } from '@/modules/details-tour/providers/BookingTourProvider'
@@ -59,6 +59,9 @@ export default function FormBookingTour({ tourDuration, pricePerPax = 0 }: FormB
   })
 
   const { watch } = form
+  const previousBookingDataRef = useRef(bookingTourData)
+  const isResettingRef = useRef(false)
+  const bookingTourDataRef = useRef(bookingTourData)
 
   const startDate = watch('startDate')
   const adults = watch('paxQuantity.adults')
@@ -75,13 +78,68 @@ export default function FormBookingTour({ tourDuration, pricePerPax = 0 }: FormB
     }
   }
 
+  // Keep ref in sync with bookingTourData
+  useEffect(() => {
+    bookingTourDataRef.current = bookingTourData
+  }, [bookingTourData])
+
   useEffect(() => {
     const subscription = form.watch((values) => {
-      setBookingTourData(values as BookingTourFormValues)
+      // Skip updating if we're in the middle of resetting
+      if (isResettingRef.current) {
+        return
+      }
+      
+      // Only update if values are different from current bookingTourData
+      const currentValues = values as BookingTourFormValues
+      const currentBookingData = bookingTourDataRef.current
+      const isDifferent =
+        currentValues.startDate?.getTime() !== currentBookingData.startDate?.getTime() ||
+        currentValues.endDate?.getTime() !== currentBookingData.endDate?.getTime() ||
+        currentValues.paxQuantity.adults !== currentBookingData.paxQuantity.adults ||
+        currentValues.paxQuantity.children58 !== currentBookingData.paxQuantity.children58 ||
+        currentValues.paxQuantity.children14 !== currentBookingData.paxQuantity.children14
+
+      if (isDifferent) {
+        setBookingTourData(currentValues)
+      }
     })
 
     return () => subscription.unsubscribe()
   }, [form, setBookingTourData])
+
+  // Reset form when bookingTourData is reset (after successful form submission)
+  useEffect(() => {
+    const prevData = previousBookingDataRef.current
+    const isResetState =
+      !bookingTourData.startDate &&
+      !bookingTourData.endDate &&
+      bookingTourData.paxQuantity.adults === 1 &&
+      bookingTourData.paxQuantity.children58 === 0 &&
+      bookingTourData.paxQuantity.children14 === 0
+
+    // Only reset if we're transitioning from a non-reset state to reset state
+    const wasNonResetState = prevData.startDate || prevData.endDate || prevData.paxQuantity.adults !== 1 || prevData.paxQuantity.children58 !== 0 || prevData.paxQuantity.children14 !== 0
+
+    if (isResetState && wasNonResetState) {
+      isResettingRef.current = true
+      form.reset({
+        startDate: undefined,
+        endDate: undefined,
+        paxQuantity: {
+          adults: 1,
+          children58: 0,
+          children14: 0,
+        },
+      })
+      // Reset flag after form has synced
+      requestAnimationFrame(() => {
+        isResettingRef.current = false
+      })
+    }
+
+    previousBookingDataRef.current = bookingTourData
+  }, [bookingTourData, form])
 
   useEffect(() => {
     if (!startDate || !tourDayNumber) return

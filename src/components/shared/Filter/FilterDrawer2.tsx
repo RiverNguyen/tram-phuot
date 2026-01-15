@@ -101,7 +101,6 @@ export default function FilterDrawer2({
     <DrawerProvider
       open={open}
       setOpen={onOpenChange}
-      showDrawerDrag={true}
     >
       <div className='relative flex w-full flex-col items-start justify-center gap-[1.5rem] rounded-t-[0.5rem] bg-white pt-[1.5rem]'>
         {/* close */}

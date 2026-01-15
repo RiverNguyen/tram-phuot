@@ -36,7 +36,7 @@ export default async function Promotions({
   ])
 
   return (
-    <main className='relative w-full h-full bg-[url("/uu-dai/bg.webp")] bg-cover bg-center'>
+    <main className='relative w-full h-full bg-[#FDF4ED]'>
       {/* Banner */}
       <Banner
         locale={locale}
@@ -44,7 +44,7 @@ export default async function Promotions({
       />
 
       {/* Main content */}
-      <div className='relative w-full h-full'>
+      <div className='relative w-full h-full bg-[url("/uu-dai/bg.webp")] bg-cover bg-top'>
         <div className='xsm:py-[2.5rem] xsm:gap-0 relative w-full flex flex-col items-center gap-[5.625rem] py-[5rem]'>
           {/* Special offer just for you! */}
           <SpecialOffers data={couponSpecialOffer} text1={promotionPage?.acf?.text_1}/>

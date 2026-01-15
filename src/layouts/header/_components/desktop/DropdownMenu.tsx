@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'motion/react'
 import { XIcon } from 'lucide-react'
+import { decodeHtmlEntities } from '@/lib/utils'
 
 interface DropdownMenuProps {
   hoveredIndex: number | null
@@ -92,7 +93,7 @@ const DropdownMenu = ({
                       target={linkItem.item.target}
                       className='block text-[#2E2E2E]/75 font-semibold leading-[1.5] tracking-[-0.02rem] w-fit whitespace-nowrap hover:text-black transition-all duration-300'
                     >
-                      {linkItem.item.title}
+                      {decodeHtmlEntities(linkItem.item.title)}
                     </Link>
                   </motion.div>
                 ))}

@@ -3,7 +3,7 @@
 import { ICCMenu } from '@/components/icons'
 import SheetProvider from '@/components/provider/SheetProvider'
 import { useScrollHeader } from '@/hooks/useScrollHeader'
-import { Link } from '@/i18n/navigation'
+import { Link, usePathname } from '@/i18n/navigation'
 import { IHeader } from '@/interface/site-setting.interface'
 import DropdownMenu from '@/layouts/header/_components/desktop/DropdownMenu'
 import NavigationMenu from '@/layouts/header/_components/desktop/NavigationMenu'
@@ -11,9 +11,9 @@ import MobileLanguageSwitcher from '@/layouts/header/_components/mobile/MobileLa
 import MobileNavigation from '@/layouts/header/_components/mobile/MobileNavigation'
 import MobileSheetHeader from '@/layouts/header/_components/mobile/MobileSheetHeader'
 import MobileSocialMedia from '@/layouts/header/_components/mobile/MobileSocialMedia'
-import { AnimatePresence } from 'motion/react'
+import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['social_media'] }) => {
   const navLeft = data?.navigations ? data.navigations.slice(0, 4) : []
@@ -21,6 +21,7 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const [hoveredSide, setHoveredSide] = useState<'left' | 'right' | null>(null)
   const [openSheet, setOpenSheet] = useState(false)
+  const pathname = usePathname()
 
   const handleItemHover = (index: number, side: 'left' | 'right') => {
     setHoveredIndex(index)
@@ -43,6 +44,12 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
     setHoveredIndex(null)
     setHoveredSide(null)
   }
+
+  // Tắt hover khi chuyển trang
+  useEffect(() => {
+    setHoveredIndex(null)
+    setHoveredSide(null)
+  }, [pathname])
 
   const headerRef = useRef<HTMLElement>(null)
   useScrollHeader(headerRef as React.RefObject<HTMLElement>)
@@ -129,15 +136,26 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
       </header>
       <AnimatePresence>
         {hoveredIndex !== null && hoveredSide && (
-          <DropdownMenu
-            hoveredIndex={hoveredIndex}
-            hoveredSide={hoveredSide}
-            navLeft={navLeft}
-            navRight={navRight}
-            onClose={handleClose}
-            onMouseEnter={handleDropdownMouseEnter}
-            onMouseLeave={handleItemLeave}
-          />
+          <>
+            {/* Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className='fixed inset-0 z-30 bg-black/20 backdrop-blur-sm xsm:hidden'
+              onClick={handleClose}
+            />
+            <DropdownMenu
+              hoveredIndex={hoveredIndex}
+              hoveredSide={hoveredSide}
+              navLeft={navLeft}
+              navRight={navRight}
+              onClose={handleClose}
+              onMouseEnter={handleDropdownMouseEnter}
+              onMouseLeave={handleItemLeave}
+            />
+          </>
         )}
       </AnimatePresence>
     </>

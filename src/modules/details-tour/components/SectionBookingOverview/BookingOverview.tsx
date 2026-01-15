@@ -50,6 +50,28 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
     },
   )
   const isInitialMountRef = useRef(true)
+  const previousResetStateRef = useRef({
+    startDate: undefined as Date | undefined,
+    endDate: undefined as Date | undefined,
+    adults: 1,
+    children58: 0,
+    children14: 0,
+  })
+
+  // Reset appliedVoucherCode when bookingTourData is reset (after successful form submission)
+  useEffect(() => {
+    const isResetState = !startDate && !endDate && adults === 1 && children58 === 0 && children14 === 0
+    const prevState = previousResetStateRef.current
+    const wasNonResetState = prevState.startDate || prevState.endDate || prevState.adults !== 1 || prevState.children58 !== 0 || prevState.children14 !== 0
+
+    // Only reset voucher when transitioning from non-reset to reset state
+    if (isResetState && wasNonResetState) {
+      setAppliedVoucherCode(null)
+      setTourPrice((prevData) => ({ ...prevData, discountPrice: 0 }))
+    }
+
+    previousResetStateRef.current = { startDate, endDate, adults, children58, children14 }
+  }, [startDate, endDate, adults, children58, children14, setTourPrice])
 
   const formatDateByLocale = (date?: Date, locale = 'en') => {
     if (!date) return ''

@@ -45,6 +45,8 @@ export const contactFormSchema = (messages: Record<string, string>) =>
         },
       ),
     message: z.string().optional(),
+    currentUrl: z.string().optional(),
+    tourName: z.string().optional(),
   })
 
 export type BookingTourFormValues = z.infer<ReturnType<typeof bookingTourSchema>>

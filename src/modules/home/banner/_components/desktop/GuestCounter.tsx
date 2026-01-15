@@ -46,7 +46,7 @@ export const GuestCounter = ({
         </div>
       </PopoverTrigger>
       <PopoverContent
-        className='w-[14rem] py-[0.9375rem]'
+        className='w-[14rem] py-[0.9375rem] ml-[-2rem] rounded-[0.25rem]'
         side='bottom'
         align='start'
       >

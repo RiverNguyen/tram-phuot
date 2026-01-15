@@ -145,7 +145,7 @@ const CTA = ({ data }: { data: { icon: string; link: string }[] }) => {
   }
 
   return (
-    <div className='fixed xsm:right-4 right-8 bottom-10 xsm:bottom-14 xsm:z-[20] z-[30] flex flex-col items-center gap-5'>
+    <div className='fixed xsm:right-4 right-8 bottom-16 xsm:bottom-20 xsm:z-[50] z-[99] flex flex-col items-center gap-5'>
       {/* <button
         type='button'
         onClick={handleScrollToTop}

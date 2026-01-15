@@ -52,7 +52,7 @@ export default async function page({
   ])
 
   return (
-    <main className='relative w-full h-full bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")] bg-center bg-cover'>
+    <main className='relative w-full h-full bg-[#FDF4ED]'>
       {/* Banner */}
       <Banner
         locale={locale}
@@ -60,11 +60,13 @@ export default async function page({
       />
 
       {/* Main content */}
-      <WrapperHotelList
-        data={data}
-        totalPages={totalPages}
-        taxonomies={taxonomies}
-      />
+      <div className='relative w-full h-full bg-[url("/uu-dai/bg.webp")] bg-cover bg-top'>
+        <WrapperHotelList
+          data={data}
+          totalPages={totalPages}
+          taxonomies={taxonomies}
+        />
+      </div>
     </main>
   )
 }

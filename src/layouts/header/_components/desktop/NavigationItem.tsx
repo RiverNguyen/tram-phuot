@@ -30,14 +30,9 @@ const NavigationItem = ({
     return (
       <Link
         href={url}
-        className='leading-[1.6] tracking-[0.04rem] h-full flex items-center px-[1.125rem] first:pl-0 last:pr-0 cursor-pointer'
+        className='leading-[1.6] tracking-[0.04rem] text-white/80 hover:text-white transition-all duration-300 h-full flex items-center px-[1.125rem] first:pl-0 last:pr-0 cursor-pointer'
       >
-        <motion.span
-          whileHover={{ color: '#ffffff' }}
-          className='text-white/80'
-        >
-          {item?.page_link_normal?.title}
-        </motion.span>
+        {item?.page_link_normal?.title}
       </Link>
     )
   } else {
