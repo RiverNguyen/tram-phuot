@@ -7,22 +7,26 @@ import { BookingTourContext } from '@/modules/details-tour/providers/BookingTour
 import { contactFormSchema, ContactFormValues } from '@/schemas/booking-tour.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useTranslations } from 'next-intl'
-import { useContext, useTransition } from 'react'
+import { useContext, useEffect, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 interface ContactFormContentProps {
   onSubmitForm: (data: ContactFormValues) => Promise<{ success: boolean }>
+  tourTitle?: string
 }
 
-export default function ContactFormContent({ onSubmitForm }: ContactFormContentProps) {
+export default function ContactFormContent({
+  onSubmitForm,
+  tourTitle = '',
+}: ContactFormContentProps) {
   const bookingTourContext = useContext(BookingTourContext)
   const [isPending, startTransition] = useTransition()
 
   if (!bookingTourContext) {
     throw new Error('BookingTourContext not found')
   }
-  const { setOpenContactForm } = bookingTourContext
+  const { setOpenContactForm, setBookingTourData, setTourPrice } = bookingTourContext
 
   const translateContactFormBooking = useTranslations('ContactFormBooking')
 
@@ -40,10 +44,20 @@ export default function ContactFormContent({ onSubmitForm }: ContactFormContentP
       email: '',
       phoneNumber: '',
       message: '',
+      currentUrl: typeof window !== 'undefined' ? window.location.href : '',
+      tourName: tourTitle,
     },
   })
 
-  const { reset } = form
+  const { reset, setValue } = form
+
+  // Update currentUrl when form opens
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setValue('currentUrl', window.location.href)
+    }
+    setValue('tourName', tourTitle)
+  }, [setValue, tourTitle])
 
   const handleSubmitForm = async (data: ContactFormValues) => {
     if (!onSubmitForm) return
@@ -52,6 +66,21 @@ export default function ContactFormContent({ onSubmitForm }: ContactFormContentP
       if (response.success) {
         setOpenContactForm(false)
         toast.success(translateContactFormBooking('bookingTourSuccessfully'))
+        // Reset booking tour data
+        setBookingTourData({
+          startDate: undefined,
+          endDate: undefined,
+          paxQuantity: {
+            adults: 1,
+            children58: 0,
+            children14: 0,
+          },
+        })
+        // Reset tour price
+        setTourPrice({
+          provisionalPrice: 0,
+          discountPrice: 0,
+        })
       } else {
         toast.error(translateContactFormBooking('bookingTourFailed'))
       }
@@ -129,6 +158,16 @@ export default function ContactFormContent({ onSubmitForm }: ContactFormContentP
                 placeholder={translateContactFormBooking('textMessage')}
               />
             )}
+          />
+          <FormField
+            name='currentUrl'
+            control={form.control}
+            render={({ field }) => <input type='hidden' {...field} />}
+          />
+          <FormField
+            name='tourName'
+            control={form.control}
+            render={({ field }) => <input type='hidden' {...field} />}
           />
         </form>
       </Form>

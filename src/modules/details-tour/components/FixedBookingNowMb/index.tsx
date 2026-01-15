@@ -95,7 +95,6 @@ export default function FixedBookingNowMb({
         open={openBookingOverviewMobile}
         setOpen={setOpenBookingOverviewMobile}
         className='rounded-t-[0.5rem]'
-        showDrawerDrag={true}
       >
         <button
           type='button'
