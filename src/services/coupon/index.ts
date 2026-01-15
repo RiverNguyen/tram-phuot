@@ -77,7 +77,7 @@ const getCachedCoupons = (
     [cacheKey],
     {
       tags: [cacheKey],
-      revalidate: 300, // 1 phút - cache ngắn hơn vì data có thể thay đổi
+      revalidate: 300,
     },
   )()
 }
