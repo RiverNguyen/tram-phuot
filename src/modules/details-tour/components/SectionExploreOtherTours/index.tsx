@@ -155,7 +155,7 @@ export default function SectionExploreOtherTours({
         <div className='xsm:flex xsm:gap-x-0 xsm:mb-8 xsm:overflow-x-auto xsm:space-x-3.5 hidden_scroll relative xsm:px-4'>
           <Swiper
             modules={[Navigation]}
-            slidesPerView={4}
+            slidesPerView={type === 'tour' ? 4 : 3}
             spaceBetween={convertRemToPx(1.25)}
             speed={800}
             className='rounded-[0.5rem] mx-[6.25rem]! xsm:hidden!'

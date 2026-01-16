@@ -18,13 +18,14 @@ export type ProgressiveBlurProps = {
 
 export function ProgressiveBlur({
   direction = 'bottom',
-  blurLayers = 8,
+  blurLayers = 4,
   className,
   blurIntensity = 0.25,
   ...props
 }: ProgressiveBlurProps) {
-  const layers = Math.max(blurLayers, 2);
-  const segmentSize = 1 / (blurLayers + 1);
+  // Giảm số layers từ 8 xuống 4 để tối ưu performance
+  const layers = Math.max(Math.min(blurLayers, 4), 2);
+  const segmentSize = 1 / (layers + 1);
 
   return (
     <div className={cn('relative', className)}>
@@ -53,6 +54,7 @@ export function ProgressiveBlur({
               WebkitMaskImage: gradient,
               backdropFilter: `blur(${index * blurIntensity}px)`,
               WebkitBackdropFilter: `blur(${index * blurIntensity}px)`,
+              willChange: 'auto',
             }}
             {...props}
           />

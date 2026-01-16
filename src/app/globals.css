@@ -333,7 +333,7 @@ body {
 }
 
 *::-webkit-scrollbar-thumb:hover {
-  background-color: var(--scrollbar-thumb-hover);
+  background-color: #f56e0a;
 }
 
 html > body[data-scroll-locked] {
