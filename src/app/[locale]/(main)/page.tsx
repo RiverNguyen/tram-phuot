@@ -11,6 +11,9 @@ import hotelService from '@/services/hotel'
 import tourService from '@/services/tour'
 import metadataValues from '@/utils/metadataValues'
 import { Metadata } from 'next'
+import AdvertisementPopup from '@/components/shared/AdvertisementPopup'
+import fetchData from '@/fetches/fetchData'
+import ENDPOINTS from '@/configs/endpoints'
 
 export const dynamicParams = false
 
@@ -33,16 +36,27 @@ export async function generateMetadata({
 export default async function page({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
 
-  const [dataHome, hotelRes, tourRes, locationRes, dataReviews, dataOurStories, dataTaxonomies] =
-    await Promise.all([
-      homeService.getHome(locale),
-      hotelService.getHotels({ locale }),
-      tourService.getTours({ locale }),
-      homeService.getTaxonomy(locale, 'locations'),
-      homeService.getReviews(locale),
-      homeService.getOurStories(locale, 'stay-points'),
-      homeService.getTaxonomies(locale, 'post'),
-    ])
+  const [
+    dataHome,
+    hotelRes,
+    tourRes,
+    locationRes,
+    dataReviews,
+    dataOurStories,
+    dataTaxonomies,
+    dataPopup,
+  ] = await Promise.all([
+    homeService.getHome(locale),
+    hotelService.getHotels({ locale }),
+    tourService.getTours({ locale }),
+    homeService.getTaxonomy(locale, 'locations'),
+    homeService.getReviews(locale),
+    homeService.getOurStories(locale, 'stay-points'),
+    homeService.getTaxonomies(locale, 'post'),
+    fetchData({
+      api: `${ENDPOINTS.site_settings}?locale=${locale}&field=popup`,
+    }),
+  ])
 
   return (
     <>
@@ -72,6 +86,12 @@ export default async function page({ params }: { params: Promise<{ locale: strin
           />
         </div>
       </div>
+      <AdvertisementPopup
+        imageUrl={dataPopup?.data?.popup?.image}
+        imageAlt='Advertisement'
+        linkUrl={dataPopup?.data?.popup?.link}
+        delay={500}
+      />
     </>
   )
 }

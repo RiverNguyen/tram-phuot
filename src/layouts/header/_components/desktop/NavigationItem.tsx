@@ -55,7 +55,8 @@ const NavigationItem = ({
                   ? '#ffffff'
                   : 'rgba(255, 255, 255, 0.8)',
             }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            style={{ willChange: 'color' }}
           >
             {item?.page_link_parent?.title?.title}
           </motion.span>
@@ -64,8 +65,8 @@ const NavigationItem = ({
           animate={{
             opacity: hoveredIndex === index && hoveredSide === side ? 1 : 0.5,
           }}
-          style={{ transformOrigin: 'center' }}
-          transition={{ duration: 0.3 }}
+          style={{ transformOrigin: 'center', willChange: 'opacity' }}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
           className='flex items-center justify-center'
         >
           <ICChevron

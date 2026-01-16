@@ -36,7 +36,8 @@ const DropdownMenu = ({
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.15, ease: 'easeOut' }}
+      style={{ willChange: 'opacity, transform' }}
       className='fixed top-[5.125rem] left-[50%] z-40 w-[87.5rem] -translate-x-1/2 rounded-t-[1rem] min-h-[38.0625rem] overflow-hidden shadow-[0_592.313px_165.848px_0_rgba(0,0,0,0.00),_0_379.08px_151.807px_0_rgba(0,0,0,0.01),_0_213.232px_128.115px_0_rgba(0,0,0,0.05),_0_94.77px_94.77px_0_rgba(0,0,0,0.09),_0_23.692px_51.772px_0_rgba(0,0,0,0.10)] xsm:hidden'
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
@@ -62,7 +63,8 @@ const DropdownMenu = ({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.2, ease: 'easeOut' }}
+          style={{ willChange: 'opacity, transform' }}
           className='relative z-10 top-[4rem] left-[4rem] w-fit'
         >
           <p className='font-phu-du text-[4.8rem] font-bold leading-[1.1] tracking-[0.096rem] text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit mb-[3.575rem]'>
@@ -86,7 +88,8 @@ const DropdownMenu = ({
                     key={linkIndex}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.2, delay: 0.1 + linkIndex * 0.05 }}
+                    transition={{ duration: 0.15, delay: 0.05 + linkIndex * 0.03, ease: 'easeOut' }}
+                    style={{ willChange: 'opacity, transform' }}
                   >
                     <Link
                       href={linkItem.item.url}
