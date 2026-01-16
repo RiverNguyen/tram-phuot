@@ -63,8 +63,9 @@ export interface ITheExplorers {
   title: string
 }
 
+
 export interface IVideoAbout {
-  video_file: string | false
+  video_file: IMedia
   video_type: string
   video_youtube: string
 }
