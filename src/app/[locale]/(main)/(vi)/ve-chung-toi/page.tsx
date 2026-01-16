@@ -42,7 +42,7 @@ export default async function page({
         content={aboutPage?.acf?.our_story}
         explorers={aboutPage?.acf.where_dreams_take_flight}
         theExplorer={aboutPage?.acf.the_explorers}
-        video={aboutPage?.acf.video}
+        video={aboutPage?.acf.the_explorers.video}
       />
   )
 }

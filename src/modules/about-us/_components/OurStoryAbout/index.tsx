@@ -96,7 +96,7 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
         alt=''
         width={413}
         height={465}
-        className='absolute xsm:w-[4.46819rem] xsm:right-[-1rem] right-[12.56rem] top-[1.77rem] w-[13.5rem] h-auto object-cover'
+        className='absolute xsm:w-[4.46819rem] xsm:right-[-1rem] xsm:top-[4rem] right-[12.56rem] top-[1.77rem] w-[13.5rem] h-auto object-cover'
       />
       <div className='absolute top-[46%] left-1/2 -translate-x-1/2 -translate-y-1/2'>
         <Image
@@ -119,10 +119,10 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
             </p>
           </div>
 
-          <div className='xsm:pt-4 xsm:pb-0 flex justify-center items-center max-w-[47.875rem] p-[8.5625rem_1.78125rem_2.3125rem_1.84375rem]'>
+          <div className='xsm:pt-4 xsm:pb-0 xsm:px-[1.7rem] flex justify-center items-center max-w-[47.875rem] p-[8.5625rem_1.78125rem_2.3125rem_1.84375rem]'>
             <p
               ref={textRef}
-              className='w-[44.25rem] xsm:w-[19.6875rem] font-phu-du xsm:text-[1.25rem] xsm:leading-[1.375rem] xsm:indent-0 mt-4 text-[2.125rem] font-medium leading-[2.3375rem] tracking-[-0.02] text-center not-italic text-[#2E2E2E99]'
+              className='font-phu-du xsm:text-[1.25rem] xsm:leading-[1.375rem] xsm:indent-0 mt-4 text-[2.125rem] font-medium leading-[2.3375rem] tracking-[-0.02] text-center not-italic text-[#2E2E2E99]'
             >
               {content?.story_content}
             </p>
