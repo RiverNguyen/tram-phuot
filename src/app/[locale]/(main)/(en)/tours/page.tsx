@@ -26,19 +26,8 @@ export async function generateMetadata({
   return metadataValues(res)
 }
 
-export default async function page({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ locale: string }>
-  searchParams: Promise<{
-    locations: string
-    ['tour-type']: string
-    ['tour-duration']: string
-    page?: string
-  }>
-}) {
-  const [{ locale }, sp] = await Promise.all([params, searchParams])
+export default async function page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
 
   const tourPage = await fetchData({
     api: ENDPOINTS.tour[locale as 'en' | 'vi'],
@@ -46,13 +35,7 @@ export default async function page({
 
   const [{ data: taxonomies }, tourRes] = await Promise.all([
     tourService.getTaxonomies(locale),
-    tourService.getTours({
-      locale,
-      locations: sp.locations,
-      tourType: sp['tour-type'],
-      tourDuration: sp['tour-duration'],
-      page: sp.page,
-    }),
+    tourService.getTours({ locale, limit: 12 }),
   ])
 
   return (
