@@ -35,6 +35,9 @@
       "noResult": "Không có kết quả",
       "exploreMore": "Khám phá thêm",
       "resetAll": "Xóa tất cả"
+    },
+    "ourStories": {
+      "noResults": "Không tìm thấy kết quả"
     }
   },
   "Header": {
@@ -276,6 +279,7 @@
     "textApply": "Áp dụng",
     "textPolicy": "Chính sách",
     "textVoucherResetOnDateChange": "Voucher đã được reset do thay đổi ngày. Vui lòng áp dụng lại voucher.",
-    "textPromotionCode": "Mã giảm giá"
+    "textPromotionCode": "Mã giảm giá",
+    "textExploreOtherHotels": "Khám phá khách sạn khác"
   }
 }

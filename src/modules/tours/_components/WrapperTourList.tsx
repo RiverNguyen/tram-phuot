@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import TourList from './TourList'
 import { Pagination } from '@/components/shared'
 import { ITaxonomy } from '@/interface/taxonomy.interface'
@@ -16,6 +16,7 @@ import EmptyResult from './EmptyResult'
 import tourService from '@/services/tour'
 import useSWR from 'swr'
 import { scrollToSection } from '@/utils/scrollToSection'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface WrapperTourListProps {
   taxonomies: ITaxonomy[]
@@ -36,6 +37,10 @@ const buildTourKey = (locale: string, query: Record<string, string>) => {
 
 export default function WrapperTourList({ taxonomies, tourRes, locale }: WrapperTourListProps) {
   const [openDrawer, setOpenDrawer] = useState(false)
+  const [isFixed, setIsFixed] = useState(false)
+  const sentinelRef = useRef<HTMLDivElement>(null)
+  const shouldBeFixedRef = useRef(false)
+  const footerVisibleRef = useRef(false)
   const searchParams = useSearchParams()
   const t = useTranslations('ListTourPage')
   const currentPage = +(searchParams.get('page') || '1')
@@ -90,7 +95,8 @@ export default function WrapperTourList({ taxonomies, tourRes, locale }: Wrapper
     }
   }
 
-  const [query, setQuery] = useState<Record<string, string>>(getInitialQuery)
+  const initialQuery = useMemo(() => getInitialQuery(), [])
+  const [query, setQuery] = useState<Record<string, string>>(initialQuery)
 
   const { data: swrData, isLoading } = useSWR(
     buildTourKey(locale, query),
@@ -107,11 +113,23 @@ export default function WrapperTourList({ taxonomies, tourRes, locale }: Wrapper
       fallbackData: tourRes,
       revalidateOnFocus: false,
       keepPreviousData: true,
+      dedupingInterval: 5000,
     },
   )
 
-  const tours = swrData?.data ?? []
-  const pages = swrData?.totalPages ?? 1
+  const tours = swrData?.data ?? tourRes?.data ?? []
+  const pages = swrData?.totalPages ?? tourRes?.totalPages ?? 1
+
+  // Check xem query hiện tại có khác với query ban đầu không
+  const isQueryChanged =
+    query.locations !== initialQuery.locations ||
+    query['tour-type'] !== initialQuery['tour-type'] ||
+    query['tour-duration'] !== initialQuery['tour-duration'] ||
+    query.page !== initialQuery.page
+
+  // Show loading khi:
+  // 1. Đang loading VÀ (query đã thay đổi HOẶC không có data từ server)
+  const shouldShowLoading = isLoading && (isQueryChanged || !tourRes?.data?.length)
 
   const syncUrl = (nextQuery: Record<string, string>) => {
     const url = new URL(window.location.href)
@@ -202,12 +220,66 @@ export default function WrapperTourList({ taxonomies, tourRes, locale }: Wrapper
     scrollToSection('tour-list-container', 1, 5)
   }
 
+  useEffect(() => {
+    if (!sentinelRef.current) return
+
+    // Observer cho sentinel để detect khi scroll qua
+    const sentinelObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // Khi sentinel không còn visible (scroll qua) thì có thể fixed button
+          shouldBeFixedRef.current = !entry.isIntersecting
+          setIsFixed(shouldBeFixedRef.current && !footerVisibleRef.current)
+        })
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px',
+      },
+    )
+
+    sentinelObserver.observe(sentinelRef.current)
+
+    // Observer cho footer để detect khi footer vào viewport
+    const footerObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          footerVisibleRef.current = entry.isIntersecting
+          // Nếu footer visible thì không fixed button
+          setIsFixed(shouldBeFixedRef.current && !footerVisibleRef.current)
+        })
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px',
+      },
+    )
+
+    // Tìm footer element với delay để đảm bảo footer đã render
+    const checkFooter = () => {
+      const footer = document.querySelector('footer')
+      if (footer) {
+        footerObserver.observe(footer)
+      } else {
+        // Retry nếu footer chưa render
+        setTimeout(checkFooter, 100)
+      }
+    }
+
+    checkFooter()
+
+    return () => {
+      sentinelObserver.disconnect()
+      footerObserver.disconnect()
+    }
+  }, [])
+
   return (
     <div
       id='tour-list-container'
-      className='xsm:px-[1rem] xsm:py-[2.5rem] xsm:gap-[2.5rem] relative mx-auto flex h-full w-full max-w-[87.5rem] flex-col items-center gap-[3.75rem] pt-[5rem] pb-[3.75rem]'
+      className='xsm:px-[1rem] xsm:py-[2.5rem] xsm:gap-[2.5rem] relative mx-auto flex h-full w-full max-w-[87.5rem] flex-col items-center gap-[3.75rem] pt-[5rem] pb-[3.75rem] mt-[-2px]'
     >
-      <div className='xsm:gap-[1.5rem] flex w-full flex-col items-start gap-[2.5rem]'>
+      <div className='xsm:gap-[1.5rem] flex w-full flex-col items-start gap-[2.5rem] relative'>
         {/* Filter Desktop */}
         <div className='xsm:hidden flex w-full items-center space-x-[0.75rem]'>
           {taxonomies.map((taxonomy, i) => (
@@ -232,19 +304,52 @@ export default function WrapperTourList({ taxonomies, tourRes, locale }: Wrapper
           </button>
         </div>
         {/* Filter Mobile */}
-        <div className='w-full sm:hidden'>
-          <button
-            type='button'
-            onClick={() => setOpenDrawer(true)}
-            className='flex h-[4.25rem] w-full items-center justify-between rounded-[0.25rem] border border-[#EDEDED] bg-white p-4 shadow-[266px_185px_91px_0_rgba(0,0,0,0.00),_170px_118px_83px_0_rgba(0,0,0,0.01),_96px_67px_70px_0_rgba(0,0,0,0.04),_42px_30px_52px_0_rgba(0,0,0,0.04),_11px_7px_28px_0_rgba(0,0,0,0.05)]'
-          >
-            <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent uppercase'>
-              {t('searchFilter')}
-            </span>
-            <div className='flex items-center justify-center rounded-[0.5rem] bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] p-[0.625rem]'>
-              <ICFilter className='w-[1rem]' />
-            </div>
-          </button>
+        <>
+          {/* Sentinel element để detect khi scroll qua */}
+          <div
+            ref={sentinelRef}
+            className='w-full sm:hidden'
+          />
+          {/* Button trong document flow - ẩn khi fixed */}
+          <div className={`w-full sm:hidden ${isFixed ? 'invisible' : ''}`}>
+            <button
+              type='button'
+              onClick={() => setOpenDrawer(true)}
+              className='flex h-[4.25rem] w-full items-center justify-between rounded-[0.25rem] border border-[#EDEDED] bg-white p-4 shadow-[266px_185px_91px_0_rgba(0,0,0,0.00),_170px_118px_83px_0_rgba(0,0,0,0.01),_96px_67px_70px_0_rgba(0,0,0,0.04),_42px_30px_52px_0_rgba(0,0,0,0.04),_11px_7px_28px_0_rgba(0,0,0,0.05)]'
+            >
+              <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent uppercase'>
+                {t('searchFilter')}
+              </span>
+              <div className='flex items-center justify-center rounded-[0.5rem] bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] p-[0.625rem]'>
+                <ICFilter className='w-[1rem]' />
+              </div>
+            </button>
+          </div>
+          {/* Button fixed - hiện khi scroll qua với animation mượt */}
+          <AnimatePresence>
+            {isFixed && (
+              <motion.div
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 100, opacity: 0 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className='fixed bottom-0 left-0 right-0 z-50 px-4 pb-4 w-full sm:hidden'
+              >
+                <button
+                  type='button'
+                  onClick={() => setOpenDrawer(true)}
+                  className='flex h-[4.25rem] w-full items-center justify-between rounded-[0.25rem] border border-[#EDEDED] bg-white p-4 shadow-[266px_185px_91px_0_rgba(0,0,0,0.00),_170px_118px_83px_0_rgba(0,0,0,0.01),_96px_67px_70px_0_rgba(0,0,0,0.04),_42px_30px_52px_0_rgba(0,0,0,0.04),_11px_7px_28px_0_rgba(0,0,0,0.05)]'
+                >
+                  <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent uppercase'>
+                    {t('searchFilter')}
+                  </span>
+                  <div className='flex items-center justify-center rounded-[0.5rem] bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] p-[0.625rem]'>
+                    <ICFilter className='w-[1rem]' />
+                  </div>
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
           <FilterDrawer
             data={taxonomies.map((taxonomy) => ({
               label: taxonomy.label,
@@ -259,9 +364,9 @@ export default function WrapperTourList({ taxonomies, tourRes, locale }: Wrapper
             setOpen={setOpenDrawer}
             onChange={onMobileFilterChange}
           />
-        </div>
+        </>
 
-        {isLoading && (
+        {shouldShowLoading && (
           <div className='xsm:grid-cols-1 grid w-full grid-cols-4 gap-x-[1.125rem] gap-y-[2rem]'>
             {Array.from({ length: 8 }).map((_, i) => (
               <SkeletonTour key={i} />
@@ -270,11 +375,11 @@ export default function WrapperTourList({ taxonomies, tourRes, locale }: Wrapper
         )}
 
         {/* Tour list */}
-        {!isLoading && (tours.length > 0 ? <TourList data={tours} /> : <EmptyResult />)}
+        {!shouldShowLoading && (tours.length > 0 ? <TourList data={tours} /> : <EmptyResult />)}
       </div>
 
       {/* pagination */}
-      {!isLoading && pages > 1 && (
+      {!shouldShowLoading && pages > 1 && (
         <Pagination
           pageCurrent={currentPage}
           pageCount={pages}

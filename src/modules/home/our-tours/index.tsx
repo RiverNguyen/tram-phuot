@@ -85,8 +85,8 @@ export default function OurTours({
     }
   }, [tab])
 
-  const exploreMoreTour = locale === 'en' ? '/tours' : '/danh-sach-tour'
-  const exploreMoreHotel = locale === 'en' ? '/hotels' : '/danh-sach-khach-san'
+  const exploreMoreTour = locale === 'en' ? '/tours' : '/vi/danh-sach-tour'
+  const exploreMoreHotel = locale === 'en' ? '/hotels' : '/vi/danh-sach-khach-san'
 
   const handleFilterByLocation = (slug: string) => {
     setLocation(slug)

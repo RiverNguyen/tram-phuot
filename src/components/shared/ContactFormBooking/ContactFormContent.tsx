@@ -74,6 +74,7 @@ export default function ContactFormContent({
             adults: 1,
             children58: 0,
             children14: 0,
+            children9: 0,
           },
         })
         // Reset tour price

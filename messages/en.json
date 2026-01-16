@@ -35,6 +35,9 @@
       "noResult": "No Result",
       "exploreMore": "Explore more",
       "resetAll": "Reset all"
+    },
+    "ourStories": {
+      "noResult": "No stories found"
     }
   },
   "Header": {

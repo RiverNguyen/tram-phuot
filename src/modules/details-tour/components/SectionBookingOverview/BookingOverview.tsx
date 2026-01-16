@@ -42,28 +42,51 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
   const [isApplyingVoucher, startApplyingTransition] = useTransition()
   const [appliedVoucherCode, setAppliedVoucherCode] = useState<string | null>(null)
   const previousDatesRef = useRef<{ startDate?: Date; endDate?: Date }>({})
-  const previousPaxQuantityRef = useRef<{ adults: number; children58: number; children14: number; children9: number }>(
-    {
-      adults: 0,
-      children58: 0,
-      children14: 0,
-      children9: 0,
-    },
-  )
+  const previousPaxQuantityRef = useRef<{
+    adults: number
+    children58: number
+    children14: number
+    children9: number
+  }>({
+    adults: 0,
+    children58: 0,
+    children14: 0,
+    children9: 0,
+  })
   const isInitialMountRef = useRef(true)
-  const previousResetStateRef = useRef({
-    startDate: undefined as Date | undefined,
-    endDate: undefined as Date | undefined,
+  const previousResetStateRef = useRef<{
+    startDate: Date | undefined
+    endDate: Date | undefined
+    adults: number
+    children58: number
+    children14: number
+    children9: number
+  }>({
+    startDate: undefined,
+    endDate: undefined,
     adults: 1,
     children58: 0,
     children14: 0,
+    children9: 0,
   })
 
   // Reset appliedVoucherCode when bookingTourData is reset (after successful form submission)
   useEffect(() => {
-    const isResetState = !startDate && !endDate && adults === 1 && children58 === 0 && children14 === 0 && children9 === 0
+    const isResetState =
+      !startDate &&
+      !endDate &&
+      adults === 1 &&
+      children58 === 0 &&
+      children14 === 0 &&
+      children9 === 0
     const prevState = previousResetStateRef.current
-    const wasNonResetState = prevState.startDate || prevState.endDate || prevState.adults !== 1 || prevState.children58 !== 0 || prevState.children14 !== 0 || prevState.children9 !== 0
+    const wasNonResetState =
+      prevState.startDate ||
+      prevState.endDate ||
+      prevState.adults !== 1 ||
+      prevState.children58 !== 0 ||
+      prevState.children14 !== 0 ||
+      prevState.children9 !== 0
 
     // Only reset voucher when transitioning from non-reset to reset state
     if (isResetState && wasNonResetState) {
@@ -71,7 +94,14 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
       setTourPrice((prevData) => ({ ...prevData, discountPrice: 0 }))
     }
 
-    previousResetStateRef.current = { startDate, endDate, adults, children58, children14, children9 }
+    previousResetStateRef.current = {
+      startDate,
+      endDate,
+      adults,
+      children58,
+      children14,
+      children9,
+    }
   }, [startDate, endDate, adults, children58, children14, children9, setTourPrice])
 
   const formatDateByLocale = (date?: Date, locale = 'en') => {
@@ -167,7 +197,7 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
     if (isInitialMountRef.current) {
       isInitialMountRef.current = false
       previousDatesRef.current = { startDate, endDate }
-      previousPaxQuantityRef.current = { adults, children58, children14 }
+      previousPaxQuantityRef.current = { adults, children58, children14, children9 }
       return
     }
 
@@ -195,6 +225,7 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
               adults: adults,
               children58: children58,
               children14: children14,
+              children9: children9,
             },
           }
 
@@ -229,7 +260,7 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
 
     // Cập nhật previous dates và pax quantity
     previousDatesRef.current = { startDate, endDate }
-    previousPaxQuantityRef.current = { adults, children58, children14 }
+    previousPaxQuantityRef.current = { adults, children58, children14, children9 }
   }, [
     startDate,
     endDate,

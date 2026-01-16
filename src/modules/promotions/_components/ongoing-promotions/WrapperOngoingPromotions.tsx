@@ -1,25 +1,23 @@
 'use client'
 
-import { useEffect, useRef, useState, useTransition } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
 import FilterDrawer from '@/components/shared/Filter/FilterDrawer2'
 import FilterPopover from '@/components/shared/Filter/FilterPopover'
 import { mapTaxonomyToFilter } from '@/utils/mapTaxonomyToFilter'
 import { ICTrashcan } from '@/components/icons'
 import ICCFilterLine from '@/components/icons/ICCFilterLine'
-import { Skeleton } from '@/components/ui/skeleton'
+import SkeletonPromotion from './SkeletonPromotion'
 import { Pagination } from '@/components/shared'
-import { ICoupon, ICouponTaxonomy } from '@/interface/coupon.interface'
+import { ICoupon, ICouponRes, ICouponTaxonomy } from '@/interface/coupon.interface'
 import OngoingPromotionsCard from './OngoingPromotionsCard'
 import { scrollToSection } from '@/utils/scrollToSection'
-import { usePathname, useRouter } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
-import {
-  createQueryString,
-  parseFilterStateFromURL,
-  formatFiltersForURL,
-  hasActiveFilters,
-} from '@/utils/filterHelpers'
+import useSWR from 'swr'
+import EmptyResult from '@/modules/tours/_components/EmptyResult'
+import ENDPOINTS from '@/configs/endpoints'
+import ENV from '@/configs/env'
+import { motion, AnimatePresence } from 'framer-motion'
 
 // Taxonomy configuration
 const TAXONOMY_CONFIG = [
@@ -27,23 +25,65 @@ const TAXONOMY_CONFIG = [
   { key: 'tour-type', variant: 'checkbox' as const, translationKey: 'typeTour' },
 ] as const
 
-export default function OngoingPromotions({
-  data,
-  taxonomies,
-  totalPages,
-  text2,
-}: {
-  data: ICoupon[]
+interface WrapperOngoingPromotionsProps {
   taxonomies: ICouponTaxonomy[]
-  totalPages?: number
+  couponRes: ICouponRes
+  locale: string
   text2: string
-}) {
+}
+
+const buildCouponKey = (locale: string, query: Record<string, string>) => {
+  const params = new URLSearchParams()
+
+  Object.entries(query)
+    .filter(([, v]) => v && v !== '1')
+    .sort(([a], [b]) => a.localeCompare(b))
+    .forEach(([k, v]) => params.set(k, v))
+
+  return `coupons:${locale}?${params.toString()}`
+}
+
+// Client-side fetcher for SWR
+const couponFetcher = async ({
+  locale,
+  locations,
+  tourType,
+  page,
+  limit,
+}: {
+  locale: string
+  locations?: string
+  tourType?: string
+  page?: string
+  limit?: number
+}): Promise<ICouponRes> => {
+  const query = new URLSearchParams()
+  query.set('lang', locale)
+  query.set('acf', 'true')
+  query.set('tax', 'locations,tour-type')
+  query.set('limit', String(limit || 9))
+
+  if (locations) query.set('locations', locations)
+  if (tourType) query.set('tour-type', tourType)
+  if (page && Number(page) > 1) query.set('paged', page)
+
+  const res = await fetch(`${ENV.CMS}${ENV.API!}${ENDPOINTS.promotion.coupon}?${query.toString()}`)
+  if (!res.ok) throw new Error('Failed to fetch coupons')
+  return res.json()
+}
+
+export default function WrapperOngoingPromotions({
+  taxonomies,
+  couponRes,
+  locale,
+  text2,
+}: WrapperOngoingPromotionsProps) {
   const [openDrawer, setOpenDrawer] = useState(false)
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const router = useRouter()
-  const pathname = usePathname()
+  const [isFixed, setIsFixed] = useState(false)
+  const sentinelRef = useRef<HTMLDivElement>(null)
+  const shouldBeFixedRef = useRef(false)
+  const footerVisibleRef = useRef(false)
   const searchParams = useSearchParams()
-  const [isPending, startTransition] = useTransition()
   const t = useTranslations('ListCouponPage')
 
   const filters = mapTaxonomyToFilter(
@@ -56,76 +96,232 @@ export default function OngoingPromotions({
     variant: config.variant,
   }))
 
-  const [filterState, setFilterState] = useState<Record<string, string | string[]>>(() =>
-    parseFilterStateFromURL(searchParams, taxonomiesWithVariant),
-  )
+  const currentPage = +(searchParams.get('page') || searchParams.get('paged') || '1')
 
-  const currentPage = Math.max(1, Number(searchParams.get('paged')) || 1)
+  const initialFilter = taxonomies.reduce(
+    (acc, curr) => {
+      const taxonomy = curr.taxonomy
+      const param = searchParams.get(taxonomy)
+      let value: string | string[] = param || ''
 
-  const pushFilters = (next: Record<string, string | string[]>) => {
-    setFilterState(next)
-    startTransition(() => {
-      const updates = formatFiltersForURL(next)
-      updates.paged = undefined
-      const query = createQueryString(searchParams, updates)
-      router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
-    })
-  }
-
-  const handleFilterChange = (key: string, value: string | string[]) => {
-    pushFilters({
-      ...filterState,
-      [key]: value,
-    })
-  }
-
-  const handleReset = () => {
-    if (!hasActiveFilters(filterState)) {
-      if (currentPage <= 1) {
-        setOpenDrawer(false)
-        return
+      if (taxonomy !== 'locations') {
+        value = param ? param.split(',') : []
       }
-      startTransition(() => {
-        const query = createQueryString(searchParams, { paged: undefined })
-        router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
-      })
-      setOpenDrawer(false)
-      return
-    }
 
-    const reset: Record<string, string | string[]> = {}
-    taxonomiesWithVariant.forEach(({ taxonomy, variant }) => {
-      reset[taxonomy] = variant === 'radio' ? '' : []
-    })
-    pushFilters(reset)
-    setOpenDrawer(false)
-  }
+      acc[taxonomy] = value
+      return acc
+    },
+    {} as Record<string, string | string[]>,
+  )
+  const [filter, setFilter] = useState<Record<string, string | string[]>>(initialFilter)
 
   const handlePageChange = (page: number) => {
-    startTransition(() => {
-      const query = createQueryString(searchParams, {
-        paged: page > 1 ? String(page) : undefined,
-      })
-      router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
+    scrollToSection('ongoing-promotions-section', 1, 7.5)
+
+    const nextQuery = {
+      ...query,
+      page: page <= 1 ? '1' : page.toString(),
+    }
+
+    setQuery(nextQuery)
+    syncUrl(nextQuery)
+  }
+
+  const getInitialQuery = () => {
+    if (typeof window === 'undefined') {
+      return {
+        locations: '',
+        'tour-type': '',
+        page: '1',
+      }
+    }
+
+    const params = new URLSearchParams(window.location.search)
+
+    return {
+      locations: params.get('locations') || '',
+      'tour-type': params.get('tour-type') || '',
+      page: params.get('page') || params.get('paged') || '1',
+    }
+  }
+
+  const initialQuery = useMemo(() => getInitialQuery(), [])
+  const [query, setQuery] = useState<Record<string, string>>(initialQuery)
+
+  const { data: swrData, isLoading } = useSWR(
+    buildCouponKey(locale, query),
+    () =>
+      couponFetcher({
+        locale,
+        locations: query.locations,
+        tourType: query['tour-type'],
+        page: query.page,
+        limit: 9,
+      }),
+    {
+      fallbackData: couponRes,
+      revalidateOnFocus: false,
+      keepPreviousData: true,
+      dedupingInterval: 5000,
+    },
+  )
+
+  const coupons = swrData?.data ?? couponRes?.data ?? []
+  const pages = swrData?.totalPages ?? couponRes?.totalPages ?? 1
+
+  // Filter out private coupons
+  const visibleCoupons = coupons.filter((item) => !item?.acf?.private)
+
+  // Check xem query hiện tại có khác với query ban đầu không
+  const isQueryChanged =
+    query.locations !== initialQuery.locations ||
+    query['tour-type'] !== initialQuery['tour-type'] ||
+    query.page !== initialQuery.page
+
+  // Show loading khi:
+  // 1. Đang loading VÀ (query đã thay đổi HOẶC không có data từ server)
+  const shouldShowLoading = isLoading && (isQueryChanged || !couponRes?.data?.length)
+
+  const syncUrl = (nextQuery: Record<string, string>) => {
+    const url = new URL(window.location.href)
+
+    // 🔥 CLEAR TẤT CẢ QUERY CŨ
+    url.search = ''
+
+    Object.entries(nextQuery).forEach(([key, value]) => {
+      // page=1 thì bỏ
+      if (key === 'page' && value === '1') return
+
+      if (value) {
+        // Convert 'page' to 'paged' for URL
+        const urlKey = key === 'page' ? 'paged' : key
+        url.searchParams.set(urlKey, value)
+      }
     })
+
+    window.history.replaceState(null, '', url.toString())
+  }
+
+  const onFilterChange = (taxonomy: string, value: string | string[]) => {
+    const valueStr = typeof value === 'string' ? value : value.join(',')
+
+    const nextQuery = {
+      ...query,
+      [taxonomy]: valueStr,
+      page: '1',
+    }
+
+    setFilter((prev) => ({
+      ...prev,
+      [taxonomy]: value,
+    }))
+
+    setQuery(nextQuery)
+    syncUrl(nextQuery)
+
+    scrollToSection('ongoing-promotions-section', 1, 7.5)
+  }
+
+  const handleApply = (appliedFilters: Record<string, string | string[]>) => {
+    const nextQuery: Record<string, string> = {
+      ...query,
+      page: '1',
+    }
+
+    for (const key in appliedFilters) {
+      const value = appliedFilters[key]
+      const valueStr = typeof value === 'string' ? value : value.join(',')
+
+      if (valueStr) nextQuery[key] = valueStr
+    }
+
+    setFilter(appliedFilters)
+    setQuery(nextQuery)
+    syncUrl(nextQuery)
+
+    scrollToSection('ongoing-promotions-section', 1, 7.5)
+  }
+
+  const resetFilter = () => {
+    const resetQuery = {
+      locations: '',
+      'tour-type': '',
+      page: '1',
+    }
+
+    setFilter(
+      taxonomies.reduce(
+        (acc, curr) => {
+          acc[curr.taxonomy] = curr.taxonomy === 'locations' ? '' : []
+          return acc
+        },
+        {} as Record<string, string | string[]>,
+      ),
+    )
+
+    setQuery(resetQuery)
+    syncUrl(resetQuery)
+
+    scrollToSection('ongoing-promotions-section', 1, 7.5)
   }
 
   useEffect(() => {
-    setFilterState(parseFilterStateFromURL(searchParams, taxonomiesWithVariant))
-  }, [searchParams])
+    if (!sentinelRef.current) return
 
-  useEffect(() => {
-    if (!isPending) return
-    if (!sectionRef.current) return
-    scrollToSection('ongoing-promotions-section', 1, 7.5)
-  }, [isPending])
+    // Observer cho sentinel để detect khi scroll qua
+    const sentinelObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // Khi sentinel không còn visible (scroll qua) thì có thể fixed button
+          shouldBeFixedRef.current = !entry.isIntersecting
+          setIsFixed(shouldBeFixedRef.current && !footerVisibleRef.current)
+        })
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px',
+      },
+    )
 
-  const visibleData = data.filter((item) => !item?.acf?.private)
+    sentinelObserver.observe(sentinelRef.current)
+
+    // Observer cho footer để detect khi footer vào viewport
+    const footerObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          footerVisibleRef.current = entry.isIntersecting
+          // Nếu footer visible thì không fixed button
+          setIsFixed(shouldBeFixedRef.current && !footerVisibleRef.current)
+        })
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px',
+      },
+    )
+
+    // Tìm footer element với delay để đảm bảo footer đã render
+    const checkFooter = () => {
+      const footer = document.querySelector('footer')
+      if (footer) {
+        footerObserver.observe(footer)
+      } else {
+        // Retry nếu footer chưa render
+        setTimeout(checkFooter, 100)
+      }
+    }
+
+    checkFooter()
+
+    return () => {
+      sentinelObserver.disconnect()
+      footerObserver.disconnect()
+    }
+  }, [])
 
   return (
     <>
       <div
-        ref={sectionRef}
         id='ongoing-promotions-section'
         className='xsm:gap-[1.25rem] xsm:px-[1rem] xsm:mb-[2.25rem] mx-auto flex w-full max-w-[87.5rem] flex-col items-start gap-[2.5rem] self-stretch'
       >
@@ -141,14 +337,14 @@ export default function OngoingPromotions({
                 key={config.key}
                 label={t(config.translationKey)}
                 options={filters[config.key] ?? []}
-                value={filterState[config.key]}
-                onValueChange={(val) => handleFilterChange(config.key, val)}
+                value={filter[config.key]}
+                onValueChange={(val) => onFilterChange(config.key, val)}
                 variant={config.variant}
               />
             ))}
             <button
               type='button'
-              onClick={handleReset}
+              onClick={resetFilter}
               className='group flex h-[2.75rem] cursor-pointer items-center justify-center gap-[0.5rem] rounded-[0.5rem] py-[0.75rem] pl-[0.75rem] font-montserrat text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] text-[#FF2019] uppercase'
             >
               <ICTrashcan className='size-[1.125rem]' />
@@ -159,17 +355,48 @@ export default function OngoingPromotions({
           </div>
 
           {/* Mobile Filter Drawer */}
-          <div className='w-full sm:hidden'>
-            <button
-              onClick={() => setOpenDrawer(true)}
-              type='button'
-              className='flex w-full items-center justify-between rounded-[0.5rem] bg-white px-[0.75rem] py-[0.625rem] shadow-[0_2px_4px_0_rgba(0,0,0,0.05)]'
-            >
-              <span className='font-montserrat text-[0.875rem] leading-[1.3125rem] font-medium text-[rgba(46,46,46,0.75)]'>
-                {t('category')}
-              </span>
-              <ICCFilterLine className='size-[1.28125rem]' />
-            </button>
+          <>
+            {/* Sentinel element để detect khi scroll qua */}
+            <div
+              ref={sentinelRef}
+              className='w-full sm:hidden'
+            />
+            {/* Button trong document flow - ẩn khi fixed */}
+            <div className={`w-full sm:hidden ${isFixed ? 'invisible' : ''}`}>
+              <button
+                onClick={() => setOpenDrawer(true)}
+                type='button'
+                className='flex w-full items-center justify-between rounded-[0.5rem] bg-white px-[0.75rem] py-[0.625rem] shadow-[0_2px_4px_0_rgba(0,0,0,0.05)]'
+              >
+                <span className='font-montserrat text-[0.875rem] leading-[1.3125rem] font-medium text-[rgba(46,46,46,0.75)]'>
+                  {t('category')}
+                </span>
+                <ICCFilterLine className='size-[1.28125rem]' />
+              </button>
+            </div>
+            {/* Button fixed - hiện khi scroll qua với animation mượt */}
+            <AnimatePresence>
+              {isFixed && (
+                <motion.div
+                  initial={{ y: 100, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: 100, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  className='fixed bottom-0 left-0 right-0 z-50 px-4 pb-4 w-full sm:hidden'
+                >
+                  <button
+                    onClick={() => setOpenDrawer(true)}
+                    type='button'
+                    className='flex w-full items-center justify-between rounded-[0.5rem] bg-white px-[0.75rem] py-[0.625rem] shadow-[0_2px_4px_0_rgba(0,0,0,0.05)]'
+                  >
+                    <span className='font-montserrat text-[0.875rem] leading-[1.3125rem] font-medium text-[rgba(46,46,46,0.75)]'>
+                      {t('category')}
+                    </span>
+                    <ICCFilterLine className='size-[1.28125rem]' />
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
             <FilterDrawer
               open={openDrawer}
               onOpenChange={setOpenDrawer}
@@ -179,58 +406,39 @@ export default function OngoingPromotions({
                 title: t(config.translationKey),
                 options: filters[config.key] || [],
               }))}
-              filters={filterState}
-              onApply={(next) => pushFilters(next)}
-              onReset={handleReset}
+              filters={filter}
+              onApply={handleApply}
+              onReset={resetFilter}
             />
-          </div>
+          </>
         </div>
 
         {/* Promotion Cards */}
-        <div className='xsm:grid-cols-1 grid w-full grid-cols-3 gap-[1.25rem]'>
-          {isPending ? (
-            Array.from({ length: 6 }).map((_, idx) => (
-              <div
-                key={idx}
-                className='flex w-full animate-pulse flex-col gap-3'
-              >
-                {/* Image */}
-                <Skeleton className='h-64 w-full rounded-xl' />
-
-                {/* Title + subtitle */}
-                <Skeleton className='h-6 w-3/4 rounded' />
-                <Skeleton className='h-4 w-1/2 rounded' />
-
-                {/* Tags */}
-                <div className='flex flex-wrap gap-2'>
-                  <Skeleton className='h-6 w-16 rounded' />
-                  <Skeleton className='h-6 w-12 rounded' />
-                  <Skeleton className='h-6 w-20 rounded' />
-                </div>
-              </div>
-            ))
-          ) : visibleData.length > 0 ? (
-            visibleData.map((card) => (
+        {shouldShowLoading ? (
+          <div className='xsm:grid-cols-1 grid w-full grid-cols-3 gap-[1.25rem]'>
+            {Array.from({ length: 6 }).map((_, idx) => (
+              <SkeletonPromotion key={idx} />
+            ))}
+          </div>
+        ) : visibleCoupons.length > 0 ? (
+          <div className='xsm:grid-cols-1 grid w-full grid-cols-3 gap-[1.25rem]'>
+            {visibleCoupons.map((card) => (
               <OngoingPromotionsCard
                 key={card.id}
                 card={card}
               />
-            ))
-          ) : (
-            <div className='col-span-3 flex w-full items-center justify-center'>
-              <span className='font-montserrat text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] text-[#2E2E2E]'>
-                {t('noResult')}
-              </span>
-            </div>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <EmptyResult />
+        )}
       </div>
 
       {/* Pagination */}
-      {visibleData.length > 0 && totalPages && totalPages > 1 && (
+      {!shouldShowLoading && visibleCoupons.length > 0 && pages > 1 && (
         <Pagination
           pageCurrent={currentPage}
-          pageCount={totalPages || 1}
+          pageCount={pages || 1}
           onPageChange={handlePageChange}
         />
       )}

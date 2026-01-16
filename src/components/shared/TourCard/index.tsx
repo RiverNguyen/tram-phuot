@@ -38,8 +38,8 @@ export default function TourCard({
   rating,
 }: TourCardProps) {
   const locale = useLocale()
-  const tourListLink = locale === 'vi' ? '/danh-sach-tour' : '/tours'
-  const hotelListLink = locale === 'vi' ? '/danh-sach-khach-san' : '/hotels'
+  const tourListLink = locale === 'vi' ? '/vi/danh-sach-tour' : '/tours'
+  const hotelListLink = locale === 'vi' ? '/vi/danh-sach-khach-san' : '/hotels'
 
   const tourCardSizeClassNames: Record<TourCardSize, string> = {
     small: 'h-90.75',
