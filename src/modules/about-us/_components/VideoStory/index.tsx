@@ -78,7 +78,7 @@ export default function VideoStory({ theExplorer, video }: VideoStoryProps) {
   const shouldLoadVideo = isMounted && isVideoLoaded
 
   return (
-    <div className='relative z-50 w-[87.5rem] mx-auto mt-[12.9rem] pb-[4.5rem] flex items-center justify-center xsm:mt-[4rem] xsm:w-full xsm:pb-[4rem] xsm:px-[1rem]'>
+    <div className='relative z-1 w-[87.5rem] mx-auto mt-[12.9rem] pb-[4.5rem] flex items-center justify-center xsm:mt-[4rem] xsm:w-full xsm:pb-[4rem] xsm:px-[1rem]'>
       {/* TITLE */}
       <div className='absolute left-[1.07rem] top-[-5.9rem] z-[50] xsm:left-[1.38rem] xsm:top-[-3rem]'>
         <BrandTitle
@@ -95,14 +95,14 @@ export default function VideoStory({ theExplorer, video }: VideoStoryProps) {
       {/* VIDEO CONTAINER */}
       <div
         ref={containerRef}
-        className='relative z-[10] w-full h-[39.0625rem] xsm:h-[24.5625rem] cursor-pointer overflow-hidden'
+        className='relative z-[1] w-full h-[39.0625rem] xsm:h-[24.5625rem] cursor-pointer overflow-hidden'
         onClick={handleClickVideo}
       >
         {/* VIDEO / PLACEHOLDER */}
-        <div className='h-full w-full relative'>
+        <div className='h-full w-full relative z-[1]'>
           <video
             ref={videoRef}
-            className='h-full w-full object-cover'
+            className='h-full w-full object-cover relative z-[1]'
             src={video?.video_youtube || '/about-us/14056202_2560_1440_30fps.mp4'}
             preload={shouldLoadVideo ? 'metadata' : 'none'}
             loop

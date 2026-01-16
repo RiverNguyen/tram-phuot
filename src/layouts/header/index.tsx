@@ -33,13 +33,6 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
     setHoveredSide(null)
   }
 
-  const handleDropdownMouseEnter = () => {
-    if (hoveredIndex !== null && hoveredSide) {
-      setHoveredIndex(hoveredIndex)
-      setHoveredSide(hoveredSide)
-    }
-  }
-
   const handleClose = () => {
     setHoveredIndex(null)
     setHoveredSide(null)
@@ -134,7 +127,7 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
 
         {/* Desktop Dropdown Menu */}
       </header>
-      <AnimatePresence>
+      <AnimatePresence mode='wait'>
         {hoveredIndex !== null && hoveredSide && (
           <>
             {/* Overlay */}
@@ -142,8 +135,9 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className='fixed inset-0 z-30 bg-black/20 backdrop-blur-sm xsm:hidden'
+              transition={{ duration: 0.15, ease: 'easeOut' }}
+              className='fixed inset-0 z-30 bg-black/40 xsm:hidden'
+              style={{ willChange: 'opacity' }}
               onClick={handleClose}
             />
             <DropdownMenu
@@ -152,7 +146,9 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
               navLeft={navLeft}
               navRight={navRight}
               onClose={handleClose}
-              onMouseEnter={handleDropdownMouseEnter}
+              onMouseEnter={() => {
+                // Keep dropdown open when hovering over it
+              }}
               onMouseLeave={handleItemLeave}
             />
           </>
