@@ -7,12 +7,45 @@ import './styles.css'
 import { Navigation } from 'swiper/modules'
 import { ICChevron } from '@/components/icons'
 import { ICoupon } from '@/interface/coupon.interface'
-import { useRef } from 'react'
+import { useRef, useMemo } from 'react'
+import { parse } from 'date-fns'
 
-export default function SpecialOffers({ data, text1 }: { data: ICoupon[], text1: string }) {
+export default function SpecialOffers({ data, text1 }: { data: ICoupon[]; text1: string }) {
   const prevRef = useRef<HTMLDivElement | null>(null)
   const nextRef = useRef<HTMLDivElement | null>(null)
-  const visibleData = data.filter((offer: ICoupon) => !offer?.acf?.private)
+
+  // Lọc dữ liệu: loại bỏ private và kiểm tra booking_time
+  const visibleData = useMemo(() => {
+    const now = new Date()
+    now.setHours(0, 0, 0, 0)
+
+    return data.filter((offer: ICoupon) => {
+      // Loại bỏ private offers
+      if (offer?.acf?.private) return false
+
+      // Kiểm tra booking_time
+      if (offer?.acf?.booking_time?.start && offer?.acf?.booking_time?.end) {
+        try {
+          // Parse dates từ format dd/MM/yyyy
+          const startDate = parse(offer.acf.booking_time.start, 'dd/MM/yyyy', new Date())
+          startDate.setHours(0, 0, 0, 0)
+
+          const endDate = parse(offer.acf.booking_time.end, 'dd/MM/yyyy', new Date())
+          endDate.setHours(23, 59, 59, 999)
+
+          // Chỉ hiển thị nếu ngày hiện tại nằm trong khoảng booking_time
+          return now >= startDate && now <= endDate
+        } catch (error) {
+          console.error('Error parsing booking_time dates:', error)
+          // Nếu có lỗi parse thì vẫn hiển thị voucher
+          return true
+        }
+      }
+
+      // Nếu không có booking_time thì hiển thị voucher
+      return true
+    })
+  }, [data])
   return (
     <div className='xsm:gap-0 flex flex-col items-start gap-[2.5rem] self-stretch'>
       <h2 className='xsm:w-full xsm:px-[1rem] xsm:text-[1.25rem] xsm:leading-[1.5rem] xsm:tracking-[0.025rem] font-phu-du mx-auto w-full max-w-[87.5rem] text-[2.125rem] leading-[2.3375rem] font-medium text-[#2E2E2E]'>

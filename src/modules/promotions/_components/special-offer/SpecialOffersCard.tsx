@@ -23,8 +23,6 @@ export default function SpecialOffersCard({ offer }: { offer: ICoupon }) {
     }
   }
 
-  if (offer.acf.private) return null
-
   return (
     <div className='xsm:w-[20.0625rem] xsm:h-[8.94919rem] xsm:drop-shadow-[0_2.832px_11.329px_rgba(0,0,0,0.12)] shrink-0 relative w-[28.33331rem] h-[13.5rem] drop-shadow-[0_4px_16px_rgba(0,0,0,0.12)] rounded-[1.25rem]'>
       <div className='relative w-full h-full rounded-[1.25rem] overflow-hidden'>
@@ -96,11 +94,12 @@ export default function SpecialOffersCard({ offer }: { offer: ICoupon }) {
               {offer?.title}
             </h3>
             <div className='xsm:gap-[0.58494rem] flex flex-col gap-[0.875rem] self-stretch'>
-              {offer?.acf?.booking_time?.start && (
+              {offer?.acf?.time_goes?.start && (
                 <div className='whitespace-nowrap xsm:gap-[0.26556rem] xsm:text-[0.625rem] xsm:leading-[0.4375rem] xsm:tracking-[-0.00625rem] flex items-start gap-[0.375rem] text-[#2E2E2E] font-montserrat text-[0.875rem] font-medium leading-[0.625rem] tracking-[-0.00875rem] opacity-[0.48]'>
                   <span>{t('applicable')}:</span>
                   <span>
-                    {offer?.acf?.booking_time?.start} - {offer?.acf?.booking_time?.end}
+                    {offer?.acf?.time_goes?.start}{' '}
+                    {offer?.acf?.time_goes?.end ? `- ${offer?.acf?.time_goes?.end}` : ''}
                   </span>
                 </div>
               )}
