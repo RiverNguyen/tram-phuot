@@ -49,7 +49,6 @@ export default async function page({ params }: { params: Promise<{ locale: strin
       />
 
       {/* Main content */}
-
       <div className='relative w-full h-full bg-[url("/uu-dai/bg.webp")] bg-cover bg-top'>
         <WrapperTourList
           tourRes={tourRes}

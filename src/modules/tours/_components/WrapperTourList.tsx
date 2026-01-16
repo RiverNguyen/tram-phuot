@@ -56,7 +56,6 @@ export default function WrapperTourList({ taxonomies, tourRes, locale }: Wrapper
     },
     {} as Record<string, string | string[]>,
   )
-
   const [filter, setFilter] = useState<Record<string, string | string[]>>(initialFilter)
 
   const handlePageChange = (page: number) => {
