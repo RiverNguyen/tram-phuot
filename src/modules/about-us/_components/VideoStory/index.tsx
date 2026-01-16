@@ -1,6 +1,7 @@
 'use client'
 
 import { BrandTitle } from '@/components/shared'
+import { Skeleton } from '@/components/ui/skeleton'
 import { ITheExplorers, IVideoAbout } from '@/interface/about.interface'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
@@ -111,14 +112,22 @@ export default function VideoStory({ theExplorer, video }: VideoStoryProps) {
           />
           {!shouldLoadVideo && (
             <div className='absolute inset-0 flex h-full w-full items-center justify-center bg-gray-800 pointer-events-none'>
-              <span className='text-white text-lg'>Loading video...</span>
+              <div className='relative h-full w-full'>
+                <Skeleton className='absolute inset-0 h-full w-full rounded-none bg-gray-700/50' />
+                <div className='absolute inset-0 flex items-center justify-center'>
+                  <div className='flex flex-col items-center gap-4'>
+                    <Skeleton className='h-[5rem] w-[5rem] rounded-full bg-white/20' />
+                    <Skeleton className='h-4 w-32 bg-white/20' />
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
 
         {/* PLAY BUTTON */}
         {isPaused && (
-          <div className='absolute inset-0 flex items-center justify-center pointer-events-none'>
+          <div className='absolute inset-0 z-[2] flex items-center justify-center pointer-events-none'>
             <div className='h-[5rem] w-[5rem] rounded-full overflow-hidden'>
               <Image
                 src='/about-us/press-start.svg'
