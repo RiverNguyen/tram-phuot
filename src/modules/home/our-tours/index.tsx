@@ -17,19 +17,21 @@ import tourService from '@/services/tour'
 import hotelService from '@/services/hotel'
 import SkeletonTour from '@/modules/tours/_components/SkeletonTour'
 import useSWR from 'swr'
+import EmptyResult from '@/modules/tours/_components/EmptyResult'
 
-const tourFetcher = ([_, locale, location]: [string, string, string | undefined]) => {
+const tourFetcher = ([_, locale, location]: [string, string, string]) => {
   return tourService.getTours({
     locale,
     locations: location,
   })
 }
 
-const hotelFetcher = ([_, locale, location]: [string, string, string | undefined]) =>
-  hotelService.getHotels({
+const hotelFetcher = ([_, locale, location]: [string, string, string]) => {
+  return hotelService.getHotels({
     locale,
     locations: location,
   })
+}
 
 export default function OurTours({
   ourTours,
@@ -44,13 +46,13 @@ export default function OurTours({
   locations: ILocation[]
   locale: string
 }) {
-  const [location, setLocation] = useState<string | null>(null)
+  const [location, setLocation] = useState<string>('')
   const [tab, setTab] = useState<'stayPoints' | 'tourAndChill'>('tourAndChill')
   const t = useTranslations('HomePage.ourTours')
   const {
     data: { data: tourData },
     isLoading: tourLoading,
-  } = useSWR(location ? ['home-tours', locale, location] : null, tourFetcher, {
+  } = useSWR(['home-tours', locale, location], tourFetcher, {
     fallbackData: tourRes,
     revalidateOnFocus: false,
     keepPreviousData: true,
@@ -58,7 +60,7 @@ export default function OurTours({
   const {
     data: { data: hotelData },
     isLoading: hotelLoading,
-  } = useSWR(location ? ['home-hotels', locale, location] : null, hotelFetcher, {
+  } = useSWR(['home-hotels', locale, location], hotelFetcher, {
     fallbackData: hotelRes,
     revalidateOnFocus: false,
     keepPreviousData: true,
@@ -78,7 +80,7 @@ export default function OurTours({
   }
 
   const handleReset = () => {
-    setLocation(null)
+    setLocation('')
   }
 
   return (
@@ -195,82 +197,99 @@ export default function OurTours({
               </button>
             </div>
 
-            {/* Desktop Swiper */}
-            <Swiper
-              slidesPerView='auto'
-              touchEventsTarget='container'
-              grabCursor
-              spaceBetween={convertRemToPx(0.725)}
-              className='pointer-events-auto! mb-[1.25rem]! rounded-[0.5rem] h-[27.6875rem] pr-4! xsm:hidden'
-            >
-              {tab === 'stayPoints' ? (
-                isFetching ? (
-                  Array.from({ length: 8 }).map((_, i) => (
-                    <SwiperSlide
-                      key={i}
-                      className='xsm:w-[15.67125rem]! w-[19.125rem]!'
-                    >
-                      <SkeletonTour className='xsm:h-[22.6875rem] h-[27.6875rem]' />
-                    </SwiperSlide>
-                  ))
-                ) : Array.isArray(hotels) && hotels.length > 0 ? (
-                  hotels.map((hotel, i) => {
-                    hotel.type = t('stayPoints')
-
-                    return (
-                      <SwiperSlide
-                        key={i}
-                        className='xsm:w-[15.67125rem]! w-[19.125rem]! h-[27.6875rem]'
-                      >
-                        <HotelCard
-                          hotel={hotel}
-                          className='xsm:h-[22.6875rem] h-[27.6875rem]'
-                        />
-                      </SwiperSlide>
-                    )
-                  })
+            {tab === 'tourAndChill' && (
+              <>
+                {Array.isArray(tours) && tours.length === 0 ? (
+                  <EmptyResult
+                    wrapperClassName='pointer-events-auto h-[27.6875rem] mb-[1.25rem]'
+                    imgClassName='size-[14rem]'
+                    textClassName='text-white text-[1.25rem]'
+                  />
                 ) : (
-                  <div className='font-montserrat xsm:h-[22.6875rem] relative z-2 flex h-[27.6875rem] items-center justify-center text-center text-white'>
-                    {t('noResult')}
-                  </div>
-                )
-              ) : isFetching ? (
-                Array.from({ length: 8 }).map((_, i) => (
-                  <SwiperSlide
-                    key={i}
-                    className='xsm:w-[15.67125rem]! w-[19.125rem]!'
+                  <Swiper
+                    slidesPerView='auto'
+                    touchEventsTarget='container'
+                    grabCursor
+                    spaceBetween={convertRemToPx(0.725)}
+                    className='mb-[1.25rem]! rounded-[0.5rem] h-[27.6875rem] pr-4! pointer-events-auto! xsm:hidden!'
                   >
-                    <SkeletonTour className='xsm:h-[22.6875rem] h-[27.6875rem]' />
-                  </SwiperSlide>
-                ))
-              ) : Array.isArray(tours) && tours.length > 0 ? (
-                tours.map((tour, i) => {
-                  return (
-                    <SwiperSlide
-                      key={i}
-                      className='xsm:w-[15.67125rem]! w-[19.125rem]!'
-                    >
-                      <TourCard
-                        tourType={tour?.taxonomies?.['tour-type']?.[0]?.name || ''}
-                        taxonomies={tour?.taxonomies?.['tour-duration'] || []}
-                        tourName={tour?.title}
-                        tourLocation={tour?.taxonomies?.locations?.[0]?.name || ''}
-                        tourPrice={Number.parseFloat(tour?.acf?.price_person || '0') || 0}
-                        tourThumbnail={tour?.thumbnail as any}
-                        tourSlug={tour?.slug}
-                        type='tour'
-                        size='medium'
-                        classNameCard='xsm:h-[22.6875rem] h-[27.6875rem]'
-                      />
-                    </SwiperSlide>
-                  )
-                })
-              ) : (
-                <div className='font-montserrat xsm:h-[22.6875rem] relative z-2 flex h-[27.6875rem] items-center justify-center text-center text-white'>
-                  {t('noResult')}
-                </div>
-              )}
-            </Swiper>
+                    {isFetching
+                      ? Array.from({ length: 8 }).map((_, i) => (
+                          <SwiperSlide
+                            key={i}
+                            className='xsm:w-[15.67125rem]! w-[19.125rem]!'
+                          >
+                            <SkeletonTour className='xsm:h-[22.6875rem] h-[27.6875rem]' />
+                          </SwiperSlide>
+                        ))
+                      : tours.map((tour, i) => (
+                          <SwiperSlide
+                            key={i}
+                            className='xsm:w-[15.67125rem]! w-[19.125rem]!'
+                          >
+                            <TourCard
+                              tourType={tour?.taxonomies?.['tour-type']?.[0]?.name || ''}
+                              taxonomies={tour?.taxonomies?.['tour-duration'] || []}
+                              tourName={tour?.title}
+                              tourLocation={tour?.taxonomies?.locations?.[0]?.name || ''}
+                              tourPrice={Number.parseFloat(tour?.acf?.price_person || '0') || 0}
+                              tourThumbnail={tour?.thumbnail as any}
+                              tourSlug={tour?.slug}
+                              type='tour'
+                              size='medium'
+                              classNameCard='xsm:h-[22.6875rem] h-[27.6875rem]'
+                            />
+                          </SwiperSlide>
+                        ))}
+                  </Swiper>
+                )}
+              </>
+            )}
+
+            {tab === 'stayPoints' && (
+              <>
+                {Array.isArray(hotels) && hotels.length === 0 ? (
+                  <EmptyResult
+                    wrapperClassName='pointer-events-auto h-[27.6875rem] mb-[1.25rem]'
+                    imgClassName='size-[14rem]'
+                    textClassName='text-white text-[1.25rem]'
+                  />
+                ) : (
+                  <Swiper
+                    slidesPerView='auto'
+                    touchEventsTarget='container'
+                    grabCursor
+                    spaceBetween={convertRemToPx(0.725)}
+                    className='mb-[1.25rem]! rounded-[0.5rem] h-[27.6875rem] pr-4! pointer-events-auto! xsm:hidden!'
+                  >
+                    {isFetching
+                      ? Array.from({ length: 8 }).map((_, i) => (
+                          <SwiperSlide
+                            key={i}
+                            className='xsm:w-[15.67125rem]! w-[19.125rem]!'
+                          >
+                            <SkeletonTour className='xsm:h-[22.6875rem] h-[27.6875rem]' />
+                          </SwiperSlide>
+                        ))
+                      : hotels.map((hotel, i) => {
+                          hotel.type = t('stayPoints')
+
+                          return (
+                            <SwiperSlide
+                              key={i}
+                              className='xsm:w-[15.67125rem]! w-[19.125rem]! h-[27.6875rem]'
+                            >
+                              <HotelCard
+                                hotel={hotel}
+                                className='xsm:h-[22.6875rem] h-[27.6875rem]'
+                              />
+                            </SwiperSlide>
+                          )
+                        })}
+                  </Swiper>
+                )}
+              </>
+            )}
 
             {/* Mobile Slide */}
             <div
@@ -293,9 +312,11 @@ export default function OurTours({
                     )
                   })
                 ) : (
-                  <div className='font-montserrat xsm:h-[22.6875rem] relative z-2 flex h-[27.6875rem] items-center justify-center text-center text-white'>
-                    {t('noResult')}
-                  </div>
+                  <EmptyResult
+                    wrapperClassName='pointer-events-auto'
+                    imgClassName='size-[14rem]'
+                    textClassName='text-white text-[1.25rem]'
+                  />
                 )
               ) : Array.isArray(tours) && tours.length > 0 ? (
                 tours.map((tour, i) => {
@@ -316,9 +337,10 @@ export default function OurTours({
                   )
                 })
               ) : (
-                <div className='font-montserrat xsm:h-[22.6875rem] relative z-2 flex h-[27.6875rem] items-center justify-center text-center text-white'>
-                  {t('noResult')}
-                </div>
+                <EmptyResult
+                  wrapperClassName='pointer-events-auto'
+                  textClassName='text-white text-[1.25rem]'
+                />
               )}
             </div>
 

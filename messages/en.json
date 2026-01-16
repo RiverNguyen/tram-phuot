@@ -58,6 +58,9 @@
     "desc": "The page you’re looking for may have been removed, renamed, or is temporarily unavailable",
     "button": "Back to homepage"
   },
+  "EmptyResult": {
+    "text": "No results found"
+  },
   "ThankYou": {
     "title": "Thank you for trusting us !",
     "subtitle": "We have received your quote request.",

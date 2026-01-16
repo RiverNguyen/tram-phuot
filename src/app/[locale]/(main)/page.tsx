@@ -10,6 +10,7 @@ import homeService from '@/services/home'
 import hotelService from '@/services/hotel'
 import tourService from '@/services/tour'
 import metadataValues from '@/utils/metadataValues'
+import { Metadata } from 'next'
 
 export const dynamicParams = false
 
@@ -17,7 +18,11 @@ export function generateStaticParams() {
   return [{ locale: 'vi' }, { locale: 'en' }]
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
   const { locale } = await params
   const res = await getMetaDataRankMath(
     endpoints.home.rank_math[locale as keyof typeof endpoints.home.rank_math],

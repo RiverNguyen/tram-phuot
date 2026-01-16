@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useState } from 'react'
 import TourList from './TourList'
 import { Pagination } from '@/components/shared'
 import { ITaxonomy } from '@/interface/taxonomy.interface'
@@ -47,13 +47,12 @@ export default function WrapperTourList({ taxonomies, tourRes, locale }: Wrapper
   const pathname = usePathname()
   const t = useTranslations('ListTourPage')
   const currentPage = +(searchParams.get('page') || '1')
-  const prevSearchRef = useRef<string | null>(null)
 
   const swrKey = {
     locale,
-    locations: searchParams.get('locations') || undefined,
-    tourType: searchParams.get('tour-type') || undefined,
-    tourDuration: searchParams.get('tour-duration') || undefined,
+    locations: searchParams.get('locations') || '',
+    tourType: searchParams.get('tour-type') || '',
+    tourDuration: searchParams.get('tour-duration') || '',
     page: searchParams.get('page') || '1',
   }
 
@@ -87,6 +86,7 @@ export default function WrapperTourList({ taxonomies, tourRes, locale }: Wrapper
   const [filter, setFilter] = useState<Record<string, string | string[]>>(initialFilter)
 
   const handlePageChange = (page: number) => {
+    scrollToSection('tour-list-container', 1, 5)
     router.push(`${pathname}?${createQueryString('page', page <= 1 ? '' : page.toString())}`, {
       scroll: false,
     })
@@ -114,6 +114,8 @@ export default function WrapperTourList({ taxonomies, tourRes, locale }: Wrapper
       ...prev,
       [taxonomy]: value,
     }))
+
+    scrollToSection('tour-list-container', 1, 5)
 
     router.push(
       `${pathname}?${createQueryString(taxonomy, typeof value === 'string' ? value : value.join(','))}`,
@@ -147,16 +149,15 @@ export default function WrapperTourList({ taxonomies, tourRes, locale }: Wrapper
       }
     }
 
+    scrollToSection('tour-list-container', 1, 5)
+
     router.push(`${pathname}?${params.toString()}`, {
       scroll: false,
     })
   }
 
   const resetFilter = () => {
-    const sp = searchParams.toString()
-    if (!sp) return
-
-    const newPathname = currentPage > 1 ? `${pathname}?page=${currentPage}` : pathname
+    // const newPathname = currentPage > 1 ? `${pathname}?page=${currentPage}` : pathname
 
     const resetFilter = taxonomies.reduce(
       (acc, curr) => {
@@ -175,25 +176,12 @@ export default function WrapperTourList({ taxonomies, tourRes, locale }: Wrapper
     )
 
     setFilter(resetFilter)
+    scrollToSection('tour-list-container', 1, 5)
 
-    router.push(newPathname, {
+    router.push(pathname, {
       scroll: false,
     })
   }
-
-  useEffect(() => {
-    const current = searchParams.toString()
-
-    if (prevSearchRef.current === null) {
-      prevSearchRef.current = current
-      return
-    }
-
-    if (prevSearchRef.current !== current) {
-      scrollToSection('tour-list-container', 1, 5)
-      prevSearchRef.current = current
-    }
-  }, [searchParams])
 
   return (
     <div

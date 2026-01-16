@@ -59,6 +59,9 @@
     "button": "Quay lại trang chủ",
     "desc": "Trang bạn đang tìm có thể đã bị xóa, đổi tên hoặc tạm thời không khả dụng"
   },
+  "EmptyResult": {
+    "text": "Không tìm thấy kết quả"
+  },
   "ThankYou": {
     "title": "Cảm ơn bạn đã tin tưởng chúng tôi!",
     "subtitle": "Chúng tôi đã nhận được yêu cầu báo giá của bạn.",

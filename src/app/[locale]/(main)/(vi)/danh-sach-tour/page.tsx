@@ -6,6 +6,7 @@ import fetchData from '@/fetches/fetchData'
 import endpoints from '@/configs/endpoints'
 import getMetaDataRankMath from '@/fetches/getMetaDataRankMath'
 import metadataValues from '@/utils/metadataValues'
+import { Metadata } from 'next'
 
 export const dynamicParams = false
 
@@ -13,7 +14,11 @@ export function generateStaticParams() {
   return [{ locale: 'vi' }]
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
   const { locale } = await params
   const res = await getMetaDataRankMath(
     endpoints.tour.rank_math[locale as keyof typeof endpoints.tour.rank_math],
@@ -38,7 +43,7 @@ export default async function page({
     api: ENDPOINTS.tour[locale as 'en' | 'vi'],
   })
 
-  const [{ data: taxonomies }, { data, totalPages }] = await Promise.all([
+  const [{ data: taxonomies }, tourRes] = await Promise.all([
     tourService.getTaxonomies(locale),
     tourService.getTours({
       locale,
@@ -60,9 +65,9 @@ export default async function page({
 
       {/* Main content */}
       <WrapperTourList
-        data={data}
-        totalPages={totalPages}
+        tourRes={tourRes}
         taxonomies={taxonomies}
+        locale={locale}
       />
     </main>
   )
