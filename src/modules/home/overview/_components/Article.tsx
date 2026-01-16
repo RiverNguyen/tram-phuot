@@ -17,14 +17,15 @@ const Article = ({ overview, isInView }: ArticleProps) => {
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: yOffset, filter: 'blur(10px)' }}
+      initial={{ opacity: 0, y: yOffset }}
       animate={
         isInView
-          ? { opacity: 1, y: 0, filter: 'blur(0px)' }
-          : { opacity: 0, y: yOffset, filter: 'blur(10px)' }
+          ? { opacity: 1, y: 0 }
+          : { opacity: 0, y: yOffset }
       }
       transition={{ duration: 1.5, ease: [0.39, 0.02, 0.15, 0.85], delay: 0.2 }}
       className='absolute top-[4.67rem] xsm:top-[3.125rem] xsm:left-[3rem] left-[11rem] z-[5]'
+      style={{ willChange: isInView ? 'transform, opacity' : 'auto' }}
     >
       <motion.div
         initial={{ y: '3rem' }}

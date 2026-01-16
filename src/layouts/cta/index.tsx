@@ -122,21 +122,32 @@ const CTA = ({ data }: { data: { icon: string; link: string }[] }) => {
     circle.style.transform = 'rotate(-90deg)'
     circle.style.transformOrigin = '50% 50%'
 
+    let rafId: number | null = null
     const updateProgress = () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop
       const height = document.documentElement.scrollHeight - window.innerHeight
       const progress = height > 0 ? Math.min(Math.max(scrollTop / height, 0), 1) : 0
       const offset = circumference - progress * circumference
       circle.style.strokeDashoffset = `${offset}`
+      rafId = null
+    }
+
+    const throttledUpdate = () => {
+      if (rafId === null) {
+        rafId = requestAnimationFrame(updateProgress)
+      }
     }
 
     updateProgress()
-    window.addEventListener('scroll', updateProgress, { passive: true })
-    window.addEventListener('resize', updateProgress)
+    window.addEventListener('scroll', throttledUpdate, { passive: true })
+    window.addEventListener('resize', throttledUpdate)
 
     return () => {
-      window.removeEventListener('scroll', updateProgress)
-      window.removeEventListener('resize', updateProgress)
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId)
+      }
+      window.removeEventListener('scroll', throttledUpdate)
+      window.removeEventListener('resize', throttledUpdate)
     }
   }, [])
 

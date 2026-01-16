@@ -44,16 +44,17 @@ export const BannerSlider = ({ gallery, galleryMobile }: BannerSliderProps) => {
             className='relative overflow-hidden'
           >
             <div
-              className='size-full overflow-hidden absolute top-0 left-0 will-change-transform'
-              data-swiper-parallax='70%'
+              className='size-full overflow-hidden absolute top-0 left-0'
+              data-swiper-parallax='50%'
             >
               <Image
                 width={1920}
                 height={1080}
                 src={item.url}
                 alt={item.alt}
-                className='w-full h-full object-cover will-change-transform'
-                preload
+                className='w-full h-full object-cover'
+                priority={index === 0}
+                loading={index === 0 ? undefined : 'lazy'}
               />
             </div>
           </SwiperSlide>

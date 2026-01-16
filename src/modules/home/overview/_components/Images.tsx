@@ -61,7 +61,8 @@ const blurTransformVariants: Variants = {
   hidden: {
     y: '40rem',
     x: '8rem',
-    filter: 'blur(124px)',
+    // Giảm blur intensity để tối ưu performance
+    filter: 'blur(60px)',
     width: '40.8095rem',
     height: '41.25306rem',
     opacity: 0.5,
@@ -126,6 +127,7 @@ const AnimatedImage = ({
       variants={variants}
       transition={transitionWithDelay}
       className={className}
+      style={{ willChange: isInView ? 'transform, opacity' : 'auto' }}
     >
       <Image
         src={src}
@@ -133,6 +135,7 @@ const AnimatedImage = ({
         width={width}
         height={height}
         className='w-full h-full object-cover'
+        loading='lazy'
       />
     </motion.div>
   )
@@ -164,6 +167,7 @@ const Images = ({ isInView }: ImagesProps) => {
         width={375}
         height={275}
         className='w-[23.36031rem] h-[17.15269rem] object-cover absolute bottom-[12rem] left-[-3rem] z-[4] xsm:bottom-[2.25rem] xsm:left-[-1rem] xsm:w-[9.10775rem] xsm:h-[6.6875rem]'
+        loading='lazy'
       />
       <Image
         src='/home/overview/image-mobile.webp'
@@ -172,6 +176,7 @@ const Images = ({ isInView }: ImagesProps) => {
         height={275}
         unoptimized
         className='w-full xsm:block hidden h-[17.15269rem] object-cover absolute bottom-[2rem] left-0 z-[3]'
+        loading='lazy'
       />
 
       {/* Desktop only images */}
@@ -182,6 +187,7 @@ const Images = ({ isInView }: ImagesProps) => {
           width={785}
           height={400}
           className='w-[48.94969rem] h-[25.13025rem] object-cover absolute bottom-[0.5rem] left-[-1rem] z-[1] rotate-[3.464deg]'
+          loading='lazy'
         />
 
         <AnimatedImage
@@ -201,6 +207,7 @@ const Images = ({ isInView }: ImagesProps) => {
           variants={fadeInVariants}
           transition={{ duration: 1, ease: 'easeOut' }}
           className='w-[12.63738rem] h-[16.88356rem] absolute bottom-[20rem] left-[-5rem] z-[0]'
+          style={{ willChange: isInView ? 'opacity' : 'auto' }}
         >
           <Image
             src='/home/overview/decor-art.webp'
@@ -208,6 +215,7 @@ const Images = ({ isInView }: ImagesProps) => {
             width={200}
             height={270}
             className='w-full h-full object-cover'
+            loading='lazy'
           />
         </motion.div>
 
@@ -260,6 +268,7 @@ const Images = ({ isInView }: ImagesProps) => {
           variants={blurTransformVariants}
           transition={{ ...defaultTransition, delay: 0.2 }}
           className='absolute bottom-[55rem] right-[4.5rem] z-[0]'
+          style={{ willChange: isInView ? 'transform, opacity' : 'auto' }}
         >
           <Image
             src='/home/overview/decor-right.svg'
@@ -267,6 +276,7 @@ const Images = ({ isInView }: ImagesProps) => {
             width={90}
             height={90}
             className='w-full h-full object-cover'
+            loading='lazy'
           />
         </motion.div>
 
@@ -285,7 +295,8 @@ const Images = ({ isInView }: ImagesProps) => {
           animate={isInView ? 'visible' : 'hidden'}
           variants={blurFadeVariants}
           transition={{ ...defaultTransition, delay: 0.3 }}
-          className='absolute w-[30.8rem] blur-[124px] h-[30.2rem] bottom-[20rem] right-[-2rem] z-[0]'
+          className='absolute w-[30.8rem] blur-[60px] h-[30.2rem] bottom-[20rem] right-[-2rem] z-[0]'
+          style={{ willChange: 'auto' }}
         >
           <Image
             src='/home/overview/decor-right.svg'
@@ -293,6 +304,7 @@ const Images = ({ isInView }: ImagesProps) => {
             width={90}
             height={90}
             className='w-full h-full object-cover'
+            loading='lazy'
           />
         </motion.div>
 

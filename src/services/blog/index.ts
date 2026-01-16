@@ -56,9 +56,17 @@ const blogsService = {
     })
   },
   getBlogsFeaturedNews: async (locale: string) => {
-    return await fetchData({
-      api: ENDPOINTS.blogs.featuredNews,
-    })
+    try {
+      const endpoint =
+        locale === 'en'
+          ? ENDPOINTS.blogs.featuredNewsEn
+          : ENDPOINTS.blogs.featuredNewsVi
+
+      const response = await fetchData({ api: endpoint })
+      return Array.isArray(response) ? response : []
+    } catch {
+      return []
+    }
   },
   getDetail: async (slug: string): Promise<IBlogDetail> => {
     return await fetchData({

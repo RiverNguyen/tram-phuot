@@ -45,7 +45,8 @@ const BannerHomePage = ({ data, locations }: { data: IHomePage; locations: ILoca
       <h1 className='sr-only'>Trạm Phượt</h1>
 
       <ProgressiveBlur
-        blurIntensity={2}
+        blurIntensity={1.5}
+        blurLayers={3}
         direction='bottom'
         className='w-full h-[16.375rem] opacity-70 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,rgba(2,3,5,0.08)_13.88%,#192842_100%)]  absolute bottom-0 left-0 z-[2] pointer-events-none'
       />

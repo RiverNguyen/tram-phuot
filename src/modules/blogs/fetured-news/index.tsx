@@ -7,10 +7,15 @@ export default function FeturedNews({
   title,
   locale,
 }: {
-  featuredNewsData: IBlog[]
+  featuredNewsData: IBlog[] | null | undefined
   title: string
   locale: string
 }) {
+  // Don't render if no data
+  if (!featuredNewsData || !Array.isArray(featuredNewsData) || featuredNewsData.length === 0) {
+    return null
+  }
+
   const baseHref = locale === 'en' ? '/blogs' : '/vi/danh-sach-tin-tuc'
   return (
     <div className='xsm:gap-0 flex w-full flex-col gap-[2rem]'>

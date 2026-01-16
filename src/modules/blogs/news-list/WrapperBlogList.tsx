@@ -277,7 +277,7 @@ export default function WrapperBlogList({
       {!isPending && <NewsList blogsData={blogsData} />}
 
       {/* Pagination */}
-      {!isPending && blogsData?.length > 0 && (
+      {!isPending && blogsData?.length > 0 && totalPages && totalPages > 1 && (
         <Pagination
           pageCurrent={currentPage}
           pageCount={totalPages}
