@@ -49,7 +49,7 @@ const BannerHomePage = ({ data, locations }: { data: IHomePage; locations: ILoca
         direction='bottom'
         className='w-full h-[16.375rem] opacity-70 bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,rgba(2,3,5,0.08)_13.88%,#192842_100%)]  absolute bottom-0 left-0 z-[2] pointer-events-none'
       />
-      <div className='w-full h-screen overflow-hidden relative'>
+      <div className='w-full h-[100vh] tablet:h-[40vh] xsm:h-[80vh] overflow-hidden relative'>
         <BannerTitle title={data.banner.title} />
         <BannerSlider
           gallery={data?.banner?.gallery || []}

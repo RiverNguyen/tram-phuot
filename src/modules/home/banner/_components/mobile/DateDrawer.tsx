@@ -33,7 +33,6 @@ export const DateDrawer = ({
     <DrawerProvider
       open={open}
       setOpen={onOpenChange}
-      showDrawerDrag={false}
     >
       <div className='pt-[1.5rem] pb-4'>
         <DrawerHeader

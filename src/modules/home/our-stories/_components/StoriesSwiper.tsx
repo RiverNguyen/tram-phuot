@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import StoriesCard from './StoriesCard'
 import StoriesCardSkeleton from './StoriesCardSkeleton'
 import { convertRemToPx } from '@/lib/utils'
+import { useEffect, useRef } from 'react'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -15,9 +16,29 @@ interface StoriesSwiperProps {
   storiesData?: IOurStoriesData[]
   blogs?: IOurStoriesData[]
   onSwiper?: (swiper: SwiperType) => void
+  activeTab?: string
 }
 
-const StoriesSwiper = ({ isLoading, storiesData, blogs, onSwiper }: StoriesSwiperProps) => {
+const StoriesSwiper = ({
+  isLoading,
+  storiesData,
+  blogs,
+  onSwiper,
+  activeTab,
+}: StoriesSwiperProps) => {
+  const mobileScrollRef = useRef<HTMLDivElement | null>(null)
+  const swiperInstanceRef = useRef<SwiperType | null>(null)
+
+  // Reset Swiper và mobile scroll về vị trí ban đầu khi chuyển tab
+  useEffect(() => {
+    if (swiperInstanceRef.current) {
+      swiperInstanceRef.current.slideTo(0, 0)
+    }
+    if (mobileScrollRef.current) {
+      mobileScrollRef.current.scrollLeft = 0
+    }
+  }, [activeTab])
+
   if (isLoading) {
     return (
       <div className='relative flex space-x-5.5 xsm:space-x-[1.125rem] xsm:px-4 xsm:overflow-hidden'>
@@ -43,6 +64,7 @@ const StoriesSwiper = ({ isLoading, storiesData, blogs, onSwiper }: StoriesSwipe
         spaceBetween={convertRemToPx(1.375) || 22}
         slidesPerView={3}
         onSwiper={(swiper) => {
+          swiperInstanceRef.current = swiper
           if (onSwiper) onSwiper(swiper)
         }}
         className='pb-0! xsm:hidden!'
@@ -74,7 +96,10 @@ const StoriesSwiper = ({ isLoading, storiesData, blogs, onSwiper }: StoriesSwipe
         </button>
       </div>
 
-      <div className='flex overflow-auto sm:hidden space-x-[1.125rem] px-4 hidden_scroll'>
+      <div
+        ref={mobileScrollRef}
+        className='flex overflow-auto sm:hidden space-x-[1.125rem] px-4 hidden_scroll'
+      >
         {stories.map((story: IOurStoriesData, index: number) => (
           <StoriesCard
             key={story.slug || index}

@@ -6,13 +6,13 @@ import { ContactFormDialog } from '@/components/shared/ContactFormBooking'
 import { Field, FieldError } from '@/components/ui/field'
 import { Form } from '@/components/ui/form'
 import ENDPOINTS from '@/configs/endpoints'
-import CF7Request from '@/fetches/cf7Request'
+import { submitHotelBooking } from '@/actions/hotel-booking'
 import useIsMobile from '@/hooks/useIsMobile'
 import { ContactFormValues } from '@/schemas/booking-tour.schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { format } from 'date-fns'
 import { useLocale, useTranslations } from 'next-intl'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useMemo, useRef, useState, useTransition } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
@@ -101,6 +101,7 @@ export default function BookingOverview({
   const params = useParams()
   const hotelSlug = params?.slug as string
   const translateBookingTourForm = useTranslations('BookingTourForm')
+  const router = useRouter()
 
   // Set default dates: today and tomorrow, or use initial values from query params
   const today = new Date()
@@ -138,7 +139,7 @@ export default function BookingOverview({
         return parsed
       }
     }
-    return 0
+    return 1
   }
 
   const parseInitialChildren = () => {
@@ -545,11 +546,7 @@ export default function BookingOverview({
         adults: formValues.adults,
         children: formValues.child || 0,
         couponCode: formValues.coupon_code || '',
-        // rooms: selectedRooms.map((room) => ({
-        //   title: room.title,
-        //   quantity: room.quantity,
-        //   pricePerNight: room.pricePerNight,
-        // })),
+
         provisionalAmount,
         voucherDiscount,
         totalAmount,
@@ -566,16 +563,16 @@ export default function BookingOverview({
         currentUrl: typeof window !== 'undefined' ? window.location.href : '',
       }
 
-      const cf7Request = new CF7Request(formData)
-
-      // You may need to add hotel booking endpoints to ENDPOINTS config
-      // For now, using tour endpoints as placeholder
       const CONTACT_ENDPOINT_BY_LOCALE = {
         vi: ENDPOINTS.contact_form.form_booking_hotel_vi,
         en: ENDPOINTS.contact_form.form_booking_hotel_en,
       }
       const endpoint = CONTACT_ENDPOINT_BY_LOCALE[locale as keyof typeof CONTACT_ENDPOINT_BY_LOCALE]
-      const response = await cf7Request.send({ id: endpoint.id, unitTag: endpoint.unit_tag })
+      const response = await submitHotelBooking({
+        formData,
+        id: endpoint.id,
+        unitTag: endpoint.unit_tag,
+      })
 
       if (response.status === 'mail_sent') {
         setOpenContactForm(false)
@@ -590,7 +587,7 @@ export default function BookingOverview({
         form.reset({
           check_in_date: today,
           check_out_date: tomorrow,
-          adults: 0,
+          adults: 1,
           child: 0,
           coupon_code: '',
         })
@@ -615,6 +612,12 @@ export default function BookingOverview({
         // Clear all selected rooms
         if (onClearAllRooms) {
           onClearAllRooms()
+        }
+
+        if (locale === 'en') {
+          router.push('/thank-you')
+        } else {
+          router.push('/vi/cam-on')
         }
 
         return { success: true }
@@ -670,7 +673,7 @@ export default function BookingOverview({
             control={form.control}
             errors={form.formState.errors}
           />
-          <div className='max-h-[15rem] xsm:max-h-[20rem] overflow-y-auto space-y-4'>
+          <div className='max-h-[15rem] overflow-y-auto space-y-4'>
             <Field>
               <Controller
                 control={form.control}
@@ -751,7 +754,6 @@ export default function BookingOverview({
         <DrawerProvider
           open={openContactForm}
           setOpen={setOpenContactForm}
-          showDrawerDrag={false}
           className='rounded-t-[0.5rem]'
         >
           <HotelContactFormContent

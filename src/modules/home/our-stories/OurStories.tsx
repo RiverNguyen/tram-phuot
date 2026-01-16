@@ -66,6 +66,7 @@ export default function OurStories({
             isLoading={isLoading}
             storiesData={storiesData?.data}
             blogs={blogs}
+            activeTab={activeTab}
             onSwiper={(swiper) => {
               swiperRef.current = swiper
             }}

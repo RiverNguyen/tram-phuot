@@ -10,6 +10,7 @@ import { Separator } from '@/components/ui/separator'
 import { IHeader } from '@/interface/site-setting.interface'
 import { Link } from '@/i18n/navigation'
 import { Fragment } from 'react'
+import { decodeHtmlEntities } from '@/lib/utils'
 
 interface MobileNavigationProps {
   data: IHeader
@@ -18,7 +19,7 @@ interface MobileNavigationProps {
 
 const MobileNavigation = ({ data, onNavigate }: MobileNavigationProps) => {
   return (
-    <div className='h-[30.5625rem] overflow-auto hidden_scroll'>
+    <div className='max-h-[calc(100vh-20rem)] overflow-y-auto'>
       <Accordion
         type='single'
         collapsible
@@ -69,7 +70,7 @@ const MobileNavigation = ({ data, onNavigate }: MobileNavigationProps) => {
                             className='text-[#2E2E2E]/75 text-[0.875rem] leading-[1.6]'
                             onClick={onNavigate}
                           >
-                            {linkItem?.item?.title}
+                            {decodeHtmlEntities(linkItem?.item?.title || '')}
                           </Link>
                         ))}
                       </div>

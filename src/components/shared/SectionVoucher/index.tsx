@@ -16,7 +16,7 @@ export default function SectionVoucher({ tourCoupons }: SectionVoucherProps) {
 
   return (
     <section className='relative w-full'>
-      <div className='section-box xsm:rounded-none xsm:bg-transparent xsm:border-none! xsm:shadow-none! relative overflow-hidden rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white pt-8'>
+      <div className='section-box xsm:rounded-none xsm:bg-transparent xsm:border-none! xsm:shadow-none! relative overflow-hidden rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white pt-8 z-[0]'>
         <div className='bg-orange-gradient xsm:hidden absolute -top-9 -right-16.5 h-25.25 w-36 rounded-[3.15625rem]'>
           <div className='absolute top-11.5 left-6 size-[2.25913rem]'>
             <ICStar className='size-full' />
