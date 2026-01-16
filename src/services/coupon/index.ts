@@ -10,6 +10,7 @@ const getCachedTaxonomies = (locale: string) =>
     async (): Promise<ICouponTaxonomyRes> => {
       return await fetchData({
         api: `${ENDPOINTS.promotion.couponTaxonomies}?lang=${locale}`,
+        skipNextCache: true, // Bỏ qua next.revalidate để unstable_cache hoạt động đúng
       })
     },
     [`coupon-taxonomies-${locale}`],
@@ -35,18 +36,30 @@ const getCachedPromotionPage = (locale: string) =>
   )()
 
 // Cache special offer - không thay đổi khi filter
-const getCachedCouponSpecialOffer = unstable_cache(
-  async () => {
-    return await fetchData({
-      api: ENDPOINTS.promotion.couponSpecialOffer,
-    })
-  },
-  ['coupon-special-offer'],
-  {
-    tags: ['coupon-special-offer'],
-    revalidate: 300, // 5 phút
-  },
-)
+const getCachedCouponSpecialOffer = (locale: string) =>
+  unstable_cache(
+    async () => {
+      try {
+        const endpoint =
+          locale === 'en'
+            ? ENDPOINTS.promotion.couponSpecialOfferEn
+            : ENDPOINTS.promotion.couponSpecialOfferVi
+
+        const response = await fetchData({
+          api: endpoint,
+          skipNextCache: true, // Bỏ qua next.revalidate để unstable_cache hoạt động đúng
+        })
+        return Array.isArray(response) ? response : []
+      } catch {
+        return []
+      }
+    },
+    [`coupon-special-offer-${locale}`],
+    {
+      tags: [`coupon-special-offer-${locale}`],
+      revalidate: 300, // 5 phút
+    },
+  )()
 
 // Cache coupons by query parameters - cache khi quay lại filter cũ
 const getCachedCoupons = (
@@ -66,18 +79,23 @@ const getCachedCoupons = (
   if (tourType) query.set('tour-type', tourType)
   if (paged && Number(paged) > 1) query.set('paged', paged)
 
-  const cacheKey = `coupons-${locale}-${locations || 'none'}-${tourType || 'none'}-${paged || '1'}-${limit}`
+  // Normalize cache key: đảm bảo undefined và empty string được xử lý giống nhau
+  const normalizedLocations = locations || 'none'
+  const normalizedTourType = tourType || 'none'
+  const normalizedPaged = paged || '1'
+  const cacheKey = `coupons-${locale}-${normalizedLocations}-${normalizedTourType}-${normalizedPaged}-${limit}`
 
   return unstable_cache(
     async (): Promise<ICouponRes> => {
       return await fetchData({
         api: `${ENDPOINTS.promotion.coupon}?${query.toString()}`,
+        skipNextCache: true, // Bỏ qua next.revalidate để unstable_cache hoạt động đúng
       })
     },
     [cacheKey],
     {
       tags: [cacheKey],
-      revalidate: 300, // 1 phút - cache ngắn hơn vì data có thể thay đổi
+      revalidate: 300,
     },
   )()
 }
@@ -105,7 +123,7 @@ const couponService = {
     return getCachedPromotionPage(locale)
   },
   getCouponSpecialOffer: async (locale: string) => {
-    return getCachedCouponSpecialOffer()
+    return getCachedCouponSpecialOffer(locale)
   },
 }
 

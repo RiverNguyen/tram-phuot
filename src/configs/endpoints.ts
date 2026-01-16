@@ -63,7 +63,8 @@ const ENDPOINTS = {
   blogs: {
     list: 'api/v1/get-all/post',
     taxonomies: 'api/v1/taxonomies/post',
-    featuredNews: 'api/v1/page-acf?page_id=248&name=featured_news&acf=true',
+    featuredNewsEn: 'api/v1/page-acf?page_id=248&name=featured_news&acf=true',
+    featuredNewsVi: 'api/v1/page-acf?page_id=250&name=featured_news&acf=true',
     rank_math: {
       en: '/blog-list',
       vi: '/danh-sach-bai-viet',
@@ -94,7 +95,8 @@ const ENDPOINTS = {
   promotion: {
     coupon: 'api/v1/get-all/coupon',
     couponTaxonomies: 'api/v1/taxonomies/coupon',
-    couponSpecialOffer: 'api/v1/page-acf?page_id=410&name=coupon&acf=true',
+    couponSpecialOfferEn: 'api/v1/page-acf?page_id=410&name=coupon&acf=true',
+    couponSpecialOfferVi: 'api/v1/page-acf?page_id=412&name=coupon&acf=true',
     en: 'wp/v2/pages/410?_fields=acf&acf_format=standard',
     vi: 'wp/v2/pages/412?_fields=acf&acf_format=standard',
     rank_math: {

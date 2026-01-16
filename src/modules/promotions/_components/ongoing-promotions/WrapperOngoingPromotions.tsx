@@ -227,7 +227,7 @@ export default function OngoingPromotions({
       </div>
 
       {/* Pagination */}
-      {visibleData.length > 0 && (
+      {visibleData.length > 0 && totalPages && totalPages > 1 && (
         <Pagination
           pageCurrent={currentPage}
           pageCount={totalPages || 1}
