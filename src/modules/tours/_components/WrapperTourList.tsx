@@ -228,11 +228,13 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
       </div>
 
       {/* pagination */}
-      <Pagination
-        pageCurrent={currentPage}
-        pageCount={totalPages}
-        onPageChange={handlePageChange}
-      />
+      {!isPending && data.length > 0 && totalPages && totalPages > 1 && (
+        <Pagination
+          pageCurrent={currentPage}
+          pageCount={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   )
 }

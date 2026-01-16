@@ -215,7 +215,7 @@ export default function WrapperHotelList({ taxonomies, data, totalPages }: Wrapp
       </div>
 
       {/* pagination */}
-      {data.length > 0 && (
+      {data.length > 0 && totalPages && totalPages > 1 && (
         <Pagination
           pageCurrent={currentPage}
           pageCount={totalPages}
