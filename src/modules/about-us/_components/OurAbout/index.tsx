@@ -216,14 +216,21 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           alt=''
           width={481}
           height={130}
-          className='xsm:h-[5.25rem] xsm:w-[15.1875rem] xsm:bottom-[9.01rem] xsm:left-1/2 xsm:-translate-x-1/2 absolute bottom-[1.59rem] left-[53.81rem] h-[6.375rem] w-[22.5625rem]'
+          className='xsm:hidden absolute bottom-[1.59rem] left-[53.81rem] h-[6.375rem] w-[22.5625rem]'
+        />
+        <Image
+          src='/about-us/d-text-mobile.webp'
+          alt=''
+          width={481}
+          height={130}
+          className='sm:hidden xsm:h-[5.25rem] xsm:w-[15.1875rem] xsm:bottom-[9.01rem] xsm:left-1/2 xsm:-translate-x-1/2 absolute'
         />
         <Image
           src='/about-us/d-connect.webp'
-          alt=''
-          width={146}
-          height={98}
-          className='xsm:right-[0.925rem] top-[-3rem] xsm:w-[6.18169rem] xsm:h-[5.21719rem] absolute right-[17.1rem] z-1 w-[7.54256rem] h-[6.36581rem]'
+          alt='connect'
+          width={121}
+          height={101}
+          className='xsm:right-[0.925rem] xsm:top-[-4.72rem] xsm:w-[8.18169rem] xsm:h-auto top-[-3rem] absolute right-[17.1rem] z-1 w-[7.54256rem] h-[6.36581rem]'
         />
         <Image
           src='/about-us/d-cake.webp'
