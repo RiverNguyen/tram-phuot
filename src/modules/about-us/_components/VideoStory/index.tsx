@@ -29,6 +29,14 @@ export default function VideoStory({ theExplorer, video }: VideoStoryProps) {
     const el = containerRef.current
     if (!el) return
 
+    // On mobile, load video immediately when component mounts
+    const isMobile = window.innerWidth < 768
+    if (isMobile && !isVideoLoaded) {
+      setIsVideoLoaded(true)
+      videoRef.current?.load()
+      return
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !isVideoLoaded) {
@@ -51,6 +59,12 @@ export default function VideoStory({ theExplorer, video }: VideoStoryProps) {
   const handleClickVideo = () => {
     if (!videoRef.current) return
 
+    // Ensure video is loaded when user clicks
+    if (!isVideoLoaded) {
+      setIsVideoLoaded(true)
+      videoRef.current.load()
+    }
+
     if (videoRef.current.paused) {
       videoRef.current.play()
       setIsPaused(false)
@@ -61,7 +75,7 @@ export default function VideoStory({ theExplorer, video }: VideoStoryProps) {
   }
 
   /* ================= RENDER ================= */
-  const shouldShowVideo = isMounted && isVideoLoaded
+  const shouldLoadVideo = isMounted && isVideoLoaded
 
   return (
     <div className='relative z-50 w-[87.5rem] mx-auto mt-[12.9rem] pb-[4.5rem] flex items-center justify-center xsm:mt-[4rem] xsm:w-full xsm:pb-[4rem] xsm:px-[1rem]'>
@@ -85,18 +99,18 @@ export default function VideoStory({ theExplorer, video }: VideoStoryProps) {
         onClick={handleClickVideo}
       >
         {/* VIDEO / PLACEHOLDER */}
-        <div className='h-full w-full'>
-          {shouldShowVideo ? (
-            <video
-              ref={videoRef}
-              className='h-full w-full object-cover'
-              src={video?.video_youtube || '/about-us/14056202_2560_1440_30fps.mp4'}
-              preload='metadata'
-              loop
-              playsInline
-            />
-          ) : (
-            <div className='flex h-full w-full items-center justify-center bg-gray-800'>
+        <div className='h-full w-full relative'>
+          <video
+            ref={videoRef}
+            className='h-full w-full object-cover'
+            src={video?.video_youtube || '/about-us/14056202_2560_1440_30fps.mp4'}
+            preload={shouldLoadVideo ? 'metadata' : 'none'}
+            loop
+            playsInline
+            muted
+          />
+          {!shouldLoadVideo && (
+            <div className='absolute inset-0 flex h-full w-full items-center justify-center bg-gray-800 pointer-events-none'>
               <span className='text-white text-lg'>Loading video...</span>
             </div>
           )}

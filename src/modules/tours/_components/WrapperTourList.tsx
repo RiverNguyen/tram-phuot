@@ -275,7 +275,7 @@ export default function WrapperTourList({ taxonomies, tourRes, locale }: Wrapper
       </div>
 
       {/* pagination */}
-      {pages > 1 && (
+      {!isLoading && pages > 1 && (
         <Pagination
           pageCurrent={currentPage}
           pageCount={pages}

@@ -53,7 +53,7 @@ export default function RHFPaxQuantityField({
                 classNameFormLabel,
               )}
             >
-              {label} {required && <span>*</span>}
+              {label}
             </p>
 
             <div className='xsm:flex hidden items-center space-x-1'>

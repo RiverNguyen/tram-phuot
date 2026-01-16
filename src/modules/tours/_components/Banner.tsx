@@ -44,7 +44,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
         alt='overlay bottom'
         width={4800}
         height={153}
-        className='xsm:hidden absolute top-[33.3rem] left-0 h-auto w-full object-cover'
+        className='xsm:hidden absolute top-[33.1875rem] left-0 h-auto w-full object-cover'
       />
       <Image
         src='/danh-sach-tour/overlay-bottom-mb.webp'

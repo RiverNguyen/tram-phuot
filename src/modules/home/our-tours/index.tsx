@@ -2,8 +2,9 @@
 import { BrandButton, BrandTitle, TourCard } from '@/components/shared'
 import { IOurTourHomePage } from '@/interface/homepage.interface'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import type { Swiper as SwiperType } from 'swiper'
 import 'swiper/css'
 import { cn, convertRemToPx } from '@/lib/utils'
 import { motion } from 'motion/react'
@@ -71,6 +72,18 @@ export default function OurTours({
 
   const isFetching = tourLoading || hotelLoading
   const isFilter = Boolean(location)
+  const swiperRef = useRef<SwiperType | null>(null)
+  const mobileScrollRef = useRef<HTMLDivElement | null>(null)
+
+  // Reset Swiper và mobile scroll về vị trí ban đầu khi chuyển tab
+  useEffect(() => {
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(0)
+    }
+    if (mobileScrollRef.current) {
+      mobileScrollRef.current.scrollLeft = 0
+    }
+  }, [tab])
 
   const exploreMoreTour = locale === 'en' ? '/tours' : '/danh-sach-tour'
   const exploreMoreHotel = locale === 'en' ? '/hotels' : '/danh-sach-khach-san'
@@ -211,6 +224,9 @@ export default function OurTours({
                     touchEventsTarget='container'
                     grabCursor
                     spaceBetween={convertRemToPx(0.725)}
+                    onSwiper={(swiper) => {
+                      swiperRef.current = swiper
+                    }}
                     className='mb-[1.25rem]! rounded-[0.5rem] h-[27.6875rem] pr-4! pointer-events-auto! xsm:hidden!'
                   >
                     {isFetching
@@ -260,6 +276,9 @@ export default function OurTours({
                     touchEventsTarget='container'
                     grabCursor
                     spaceBetween={convertRemToPx(0.725)}
+                    onSwiper={(swiper) => {
+                      swiperRef.current = swiper
+                    }}
                     className='mb-[1.25rem]! rounded-[0.5rem] h-[27.6875rem] pr-4! pointer-events-auto! xsm:hidden!'
                   >
                     {isFetching
@@ -293,6 +312,7 @@ export default function OurTours({
 
             {/* Mobile Slide */}
             <div
+              ref={mobileScrollRef}
               style={{
                 scrollbarWidth: 'none',
               }}

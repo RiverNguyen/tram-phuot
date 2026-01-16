@@ -39,13 +39,13 @@ export const StationSelector = ({
         </div>
       </PopoverTrigger>
       <PopoverContent
-        className='w-[13.5625rem] h-[15rem] overflow-auto hidden_scroll py-[0.9375rem] px-4 rounded-[0.25rem] shadow-[0_0_40px_0_rgba(0,0,0,0.06)] ml-[-1.875rem]'
+        className='w-[15.9625rem] h-[9.375rem] overflow-auto py-[0.9375rem] px-4 rounded-[0.25rem] shadow-[0_0_40px_0_rgba(0,0,0,0.06)] ml-[-1.875rem]'
         align='start'
       >
         <RadioGroup
           value={selectedStation}
           onValueChange={onStationChange}
-          className='space-y-3'
+          className='space-y-3 gap-0'
         >
           {stations.map((station) => (
             <div

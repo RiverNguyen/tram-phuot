@@ -39,7 +39,7 @@ export default async function page({ params }: { params: Promise<{ locale: strin
   ])
 
   return (
-    <main className='relative w-full h-full bg-[#FDF4ED] bg-[url("/uu-dai/bg.webp")] overflow-hidden'>
+    <main className='relative w-full h-full bg-[#FDF4ED]'>
       {/* Banner */}
       <Banner
         locale={locale}
@@ -47,11 +47,14 @@ export default async function page({ params }: { params: Promise<{ locale: strin
       />
 
       {/* Main content */}
-      <WrapperTourList
-        tourRes={tourRes}
-        taxonomies={taxonomies}
-        locale={locale}
-      />
+
+      <div className='relative w-full h-full bg-[url("/uu-dai/bg.webp")] bg-cover bg-top'>
+        <WrapperTourList
+          tourRes={tourRes}
+          taxonomies={taxonomies}
+          locale={locale}
+        />
+      </div>
     </main>
   )
 }

@@ -112,7 +112,6 @@ export default function Summary({ tocs }: { tocs: TocItem[] }) {
           <DrawerProvider
             open={open}
             setOpen={setOpen}
-            showDrawerDrag={false}
             className='rounded-t-[0.5rem]! p-[1.5rem_1rem]!'
           >
             <div className='flex items-center justify-between mb-[1.25rem]'>

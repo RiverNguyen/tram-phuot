@@ -12,7 +12,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
   ]
 
   return (
-    <div className='xsm:h-[34.375rem] relative h-[36.375rem] w-full overflow-hidden'>
+    <div className='xsm:h-[34.375rem] relative h-[36.375rem] w-full'>
       {data?.banner?.background_pc?.url && (
         <Image
           src={data.banner.background_pc.url || '/default.webp'}
@@ -34,7 +34,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
         />
       )}
       {/* overlay */}
-      <div className='xsm:opacity-[0.68] xsm:top-[14.8125rem] xsm:h-[19.5625rem] absolute top-[5.125rem] left-0 h-[31.25rem] w-full bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,#000_100%)]' />
+      <div className='xsm:opacity-[0.68] xsm:bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,rgba(2,3,5,0.08)_13.88%,#192842_100%)] xsm:top-[14.8125rem] xsm:h-[19.5625rem] absolute top-[5.125rem] left-0 h-[31.25rem] w-full bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,#000_100%)]' />
       {/* content */}
       <div className='xsm:top-[24rem] xsm:left-[1rem] xsm:gap-[1rem] absolute top-[21.9375rem] left-[7.125rem] inline-flex flex-col items-start gap-[2rem]'>
         <Breadcrumb breadcrumbItems={breadcrumbItems} />
@@ -55,7 +55,7 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
         alt='overlay bottom'
         width={1125}
         height={87}
-        className='absolute top-[32.5661rem] left-0 h-auto w-full object-cover sm:hidden'
+        className='absolute top-[32rem] left-0 h-auto w-full object-cover sm:hidden'
       />
     </div>
   )

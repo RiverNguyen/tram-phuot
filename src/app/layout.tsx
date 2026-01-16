@@ -1,8 +1,15 @@
 import { montserrat, motherland, phuDu } from '@/app/fonts'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import NextTopLoader from 'nextjs-toploader'
 import { Toaster } from 'sonner'
 import '@/app/globals.css'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
 
 export const metadata: Metadata = {
   title: 'Tram Phuot',
@@ -24,7 +31,7 @@ export default function RootLayout({
       >
         {children}
         <NextTopLoader
-          color='linear-gradient(0deg, #6EEBFF 0%, #141ED2 100%)'
+          color='linear-gradient(0deg, #FFB715 0%, #F04C05 100%)'
           initialPosition={0.08}
           crawlSpeed={200}
           height={3}
@@ -32,7 +39,7 @@ export default function RootLayout({
           showSpinner={true}
           easing='ease'
           speed={200}
-          shadow='0 0 10px #6EEBFF,0 0 5px #6EEBFF'
+          // shadow='0 0 10px #FFB715,0 0 5px #F04C05'
           template='<div class="bar" role="bar"><div class="peg"></div></div>
     <div class="spinner" role="spinner"><div class="spinner-icon"></div></div>'
           zIndex={1600}
