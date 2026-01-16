@@ -11,6 +11,10 @@ import { headers } from 'next/headers'
 
 export const dynamic = 'force-dynamic'
 
+export function generateStaticParams() {
+  return [{ locale: 'en' }]
+}
+
 export async function generateMetadata({
   params,
 }: {
