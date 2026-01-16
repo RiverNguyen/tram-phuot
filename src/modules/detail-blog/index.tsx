@@ -38,7 +38,7 @@ export default function DetailBlog({
 
   const breadcrumbItems = [
     { label: t('breadcrumbHome'), href: '/' },
-    { label: t('breadcrumbBlogList'), href: locale === 'en' ? '/blogs' : '/danh-sach-tin-tuc' },
+    { label: t('breadcrumbBlogList'), href: locale === 'en' ? '/blogs' : '/vi/danh-sach-tin-tuc' },
     { label: blog?.title || '', href: '' },
   ]
 
@@ -61,7 +61,7 @@ export default function DetailBlog({
       wrapper.appendChild(table)
     })
 
-    const headings = Array.from(doc.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+    const headings = Array.from(doc.querySelectorAll('h2'))
     const usedIds = new Set<string>()
 
     headings.forEach((heading) => {
@@ -88,7 +88,7 @@ export default function DetailBlog({
     setTocs(
       headings.map((heading) => ({
         id: heading.id,
-        text: heading.textContent.trim(),
+        text: heading.textContent?.trim() || '',
         level: Number(heading.tagName.replace('H', '')),
       })),
     )

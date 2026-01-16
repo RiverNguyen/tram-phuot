@@ -34,6 +34,7 @@ export type BookingTourDataType = {
     adults: number
     children58: number
     children14: number
+    children9: number
   }
 }
 
@@ -52,6 +53,7 @@ export default function BookingTourProvider({ pricePerPax, children }: BookingTo
       adults: 1,
       children58: 0,
       children14: 0,
+      children9: 0,
     },
   })
 

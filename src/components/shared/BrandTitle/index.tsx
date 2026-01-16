@@ -53,19 +53,15 @@ export default function BrandTitle({
       >
         <div className='relative inline-block'>
           <h2
-            aria-hidden
             className={cn(
-              'xsm:[-webkit-text-stroke:2.07px_#FDF6EC] xsm:text-[1.5rem] absolute inset-0 font-motherland text-[2.25rem] leading-[200%] text-transparent select-none [-webkit-text-stroke:3px_#FDF6EC] rotate-[-3.64deg]',
+              'xsm:text-[1.5rem] relative font-motherland text-[2.25rem] leading-[200%] text-[#F56E0A] rotate-[-3.64deg] whitespace-nowrap',
               classNameTitle,
             )}
-          >
-            {title}
-          </h2>
-          <h2
-            className={cn(
-              'xsm:text-[1.5rem] relative font-motherland text-[2.25rem] leading-[200%] text-[#F56E0A] rotate-[-3.64deg]',
-              classNameTitle,
-            )}
+            style={{
+              WebkitTextStroke: '4.07px #FDF6EC',
+              WebkitTextStrokeColor: '#FDF6EC',
+              paintOrder: 'stroke fill',
+            }}
           >
             {title}
           </h2>

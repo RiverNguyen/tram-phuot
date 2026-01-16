@@ -14,6 +14,7 @@ export const bookingTourSchema = (messages: Record<string, string>) =>
         adults: z.number().int().min(1, messages.adultsMin),
         children58: z.number().int().min(0),
         children14: z.number().int().min(0),
+        children9: z.number().int().min(0),
       }),
 
       voucherCode: z.string().optional(),

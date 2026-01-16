@@ -12,7 +12,7 @@ const ENDPOINTS = {
   thank_you: {
     rank_math: {
       en: '/thank-you',
-      vi: '/cam-on',
+      vi: '/vi/cam-on',
     },
   },
   hotel: {

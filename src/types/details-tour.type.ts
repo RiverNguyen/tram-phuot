@@ -80,6 +80,7 @@ export type ApplyVoucherPayloadType = {
     adults: number
     children58: number
     children14: number
+    children9: number
   }
 }
 export type VoucherType = 'price' | 'percent'

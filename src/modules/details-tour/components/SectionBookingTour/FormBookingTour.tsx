@@ -51,6 +51,7 @@ export default function FormBookingTour({ tourDuration, pricePerPax = 0 }: FormB
     adultsLabel: translateBookingTourForm('adultsLabel'),
     children58Label: translateBookingTourForm('children58Label'),
     children14Label: translateBookingTourForm('children14Label'),
+    children9Label: translateBookingTourForm('children9Label'),
   }
 
   const form = useForm<BookingTourFormValues>({
@@ -67,6 +68,7 @@ export default function FormBookingTour({ tourDuration, pricePerPax = 0 }: FormB
   const adults = watch('paxQuantity.adults')
   const children58 = watch('paxQuantity.children58')
   const children14 = watch('paxQuantity.children14')
+  const children9 = watch('paxQuantity.children9')
 
   const handleSubmitFormSuccess = () => {
     setOpenContactForm(true)
@@ -89,7 +91,7 @@ export default function FormBookingTour({ tourDuration, pricePerPax = 0 }: FormB
       if (isResettingRef.current) {
         return
       }
-      
+
       // Only update if values are different from current bookingTourData
       const currentValues = values as BookingTourFormValues
       const currentBookingData = bookingTourDataRef.current
@@ -98,7 +100,8 @@ export default function FormBookingTour({ tourDuration, pricePerPax = 0 }: FormB
         currentValues.endDate?.getTime() !== currentBookingData.endDate?.getTime() ||
         currentValues.paxQuantity.adults !== currentBookingData.paxQuantity.adults ||
         currentValues.paxQuantity.children58 !== currentBookingData.paxQuantity.children58 ||
-        currentValues.paxQuantity.children14 !== currentBookingData.paxQuantity.children14
+        currentValues.paxQuantity.children14 !== currentBookingData.paxQuantity.children14 ||
+        currentValues.paxQuantity.children9 !== currentBookingData.paxQuantity.children9
 
       if (isDifferent) {
         setBookingTourData(currentValues)
@@ -116,10 +119,17 @@ export default function FormBookingTour({ tourDuration, pricePerPax = 0 }: FormB
       !bookingTourData.endDate &&
       bookingTourData.paxQuantity.adults === 1 &&
       bookingTourData.paxQuantity.children58 === 0 &&
-      bookingTourData.paxQuantity.children14 === 0
+      bookingTourData.paxQuantity.children14 === 0 &&
+      bookingTourData.paxQuantity.children9 === 0
 
     // Only reset if we're transitioning from a non-reset state to reset state
-    const wasNonResetState = prevData.startDate || prevData.endDate || prevData.paxQuantity.adults !== 1 || prevData.paxQuantity.children58 !== 0 || prevData.paxQuantity.children14 !== 0
+    const wasNonResetState =
+      prevData.startDate ||
+      prevData.endDate ||
+      prevData.paxQuantity.adults !== 1 ||
+      prevData.paxQuantity.children58 !== 0 ||
+      prevData.paxQuantity.children14 !== 0 ||
+      prevData.paxQuantity.children9 !== 0
 
     if (isResetState && wasNonResetState) {
       isResettingRef.current = true
@@ -130,6 +140,7 @@ export default function FormBookingTour({ tourDuration, pricePerPax = 0 }: FormB
           adults: 1,
           children58: 0,
           children14: 0,
+          children9: 0,
         },
       })
       // Reset flag after form has synced
@@ -153,14 +164,14 @@ export default function FormBookingTour({ tourDuration, pricePerPax = 0 }: FormB
 
   useEffect(() => {
     const { provisionalPrice } = calculateProvisionalPriceByPaxQuantity(
-      { adults, children58, children14 },
+      { adults, children58, children14, children9 },
       Number(pricePerPax),
     )
     setTourPrice((prevData) => ({
       ...prevData,
       provisionalPrice: provisionalPrice,
     }))
-  }, [adults, children58, children14])
+  }, [adults, children58, children14, children9])
 
   return (
     <Form {...form}>
@@ -217,6 +228,19 @@ export default function FormBookingTour({ tourDuration, pricePerPax = 0 }: FormB
               )}
             />
             <FormField
+              name='paxQuantity.children9'
+              control={form.control}
+              render={({ field }) => (
+                <RHFPaxQuantityField
+                  required
+                  field={field}
+                  classNameFormItem='w-full'
+                  unitPrice={pricePerPaxTypes[PaxType.CHILDREN_9]?.unitPrice || 0}
+                  label={translateBookingTourFormLabels.children9Label}
+                />
+              )}
+            />
+            <FormField
               name='paxQuantity.children58'
               control={form.control}
               render={({ field }) => (
@@ -242,6 +266,7 @@ export default function FormBookingTour({ tourDuration, pricePerPax = 0 }: FormB
                 />
               )}
             />
+
             <p className='text-body-t1/60 font-montserrat text-[0.75rem] leading-[1.6] font-semibold tracking-[-0.0075rem]'>
               {translateBookingTourForm('textNoteChildren14')}
             </p>
