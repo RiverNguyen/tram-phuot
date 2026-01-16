@@ -14,6 +14,8 @@ import { scrollToSection } from '@/utils/scrollToSection'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const offsetRem = 5.75
+
 export default function Summary({ tocs }: { tocs: TocItem[] }) {
   const t = useTranslations('DetailBlogPage')
   const [open, setOpen] = useState(false)
@@ -22,13 +24,11 @@ export default function Summary({ tocs }: { tocs: TocItem[] }) {
   const { isLoading, isMobile } = useIsMobile()
 
   const scrollToHeading = (id: string) => {
-    const offsetRem = window.innerWidth <= 639 ? 5.25 : 5.75
     scrollToSection(id, 1, offsetRem)
   }
 
   useEffect(() => {
     if (!tocs || tocs.length === 0) return
-    const offsetRem = window.innerWidth <= 639 ? 5.25 : 5.75
 
     const headings = tocs
       .map((toc) => document.getElementById(toc.id))
@@ -132,7 +132,10 @@ export default function Summary({ tocs }: { tocs: TocItem[] }) {
                 <li key={i}>
                   <button
                     type='button'
-                    onClick={() => scrollToHeading(toc.id)}
+                    onClick={() => {
+                      setOpen(false)
+                      scrollToHeading(toc.id)
+                    }}
                     className={cn(
                       'cursor-pointer text-left font-montserrat text-[0.875rem] leading-[1.3125rem] text-[rgba(46,46,46,0.75)] transition-all duration-200 whitespace-pre-line',
                       activeId === toc.id && 'font-medium text-[#2E2E2E]',

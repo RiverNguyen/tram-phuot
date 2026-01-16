@@ -1,37 +1,49 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import TourList from './TourList'
 import { Pagination } from '@/components/shared'
 import { ITaxonomy } from '@/interface/taxonomy.interface'
 import FilterPopover from '@/components/shared/Filter/FilterPopover'
 import ICTrashcan from '@/components/icons/ICTrashcan'
-import { usePathname, useRouter } from '@/i18n/navigation'
-import { useSearchParams } from 'next/navigation'
-import { ITour } from '@/interface/tour.interface'
+import { ITourRes } from '@/interface/tour.interface'
 import ICFilter from '@/components/icons/ICFilter'
 import FilterDrawer from '@/components/shared/Filter/FilterDrawer'
-import { useTransition } from 'react'
 import SkeletonTour from './SkeletonTour'
-import { scrollToSection } from '@/utils/scrollToSection'
 import { useTranslations } from 'next-intl'
-import EmptyTourResult from './EmptyTourResult'
+import { useSearchParams } from 'next/navigation'
+import EmptyResult from './EmptyResult'
+import tourService from '@/services/tour'
+import useSWR from 'swr'
+import { scrollToSection } from '@/utils/scrollToSection'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface WrapperTourListProps {
   taxonomies: ITaxonomy[]
-  data: ITour[]
-  totalPages: number
+  tourRes: ITourRes
+  locale: string
 }
 
-export default function WrapperTourList({ taxonomies, data, totalPages }: WrapperTourListProps) {
-  const [openDrawer, setOpenDrawer] = useState(false)
-  const searchParams = useSearchParams()
-  const [currentPage, setCurrentPage] = useState(+(searchParams.get('page') || '1'))
-  const router = useRouter()
-  const pathname = usePathname()
-  const [isPending, startTransition] = useTransition()
-  const t = useTranslations('ListTourPage')
+const buildTourKey = (locale: string, query: Record<string, string>) => {
+  const params = new URLSearchParams()
 
+  Object.entries(query)
+    .filter(([, v]) => v && v !== '1')
+    .sort(([a], [b]) => a.localeCompare(b))
+    .forEach(([k, v]) => params.set(k, v))
+
+  return `tours:${locale}?${params.toString()}`
+}
+
+export default function WrapperTourList({ taxonomies, tourRes, locale }: WrapperTourListProps) {
+  const [openDrawer, setOpenDrawer] = useState(false)
+  const [isFixed, setIsFixed] = useState(false)
+  const sentinelRef = useRef<HTMLDivElement>(null)
+  const shouldBeFixedRef = useRef(false)
+  const footerVisibleRef = useRef(false)
+  const searchParams = useSearchParams()
+  const t = useTranslations('ListTourPage')
+  const currentPage = +(searchParams.get('page') || '1')
   const initialFilter = taxonomies.reduce(
     (acc, curr) => {
       const taxonomy = curr.taxonomy
@@ -49,47 +61,112 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
     },
     {} as Record<string, string | string[]>,
   )
-
   const [filter, setFilter] = useState<Record<string, string | string[]>>(initialFilter)
 
   const handlePageChange = (page: number) => {
-    setCurrentPage(page)
-    startTransition(() => {
-      router.push(`${pathname}?${createQueryString('page', page <= 1 ? '' : page.toString())}`, {
-        scroll: false,
-      })
-    })
+    scrollToSection('tour-list-container', 1, 5)
+
+    const nextQuery = {
+      ...query,
+      page: page <= 1 ? '1' : page.toString(),
+    }
+
+    setQuery(nextQuery)
+    syncUrl(nextQuery)
   }
 
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString())
-
-      if (value) {
-        params.set(name, value)
-      } else {
-        params.delete(name)
+  const getInitialQuery = () => {
+    if (typeof window === 'undefined') {
+      return {
+        locations: '',
+        'tour-type': '',
+        'tour-duration': '',
+        page: '1',
       }
+    }
 
-      return params.toString()
+    const params = new URLSearchParams(window.location.search)
+
+    return {
+      locations: params.get('locations') || '',
+      'tour-type': params.get('tour-type') || '',
+      'tour-duration': params.get('tour-duration') || '',
+      page: params.get('page') || '1',
+    }
+  }
+
+  const initialQuery = useMemo(() => getInitialQuery(), [])
+  const [query, setQuery] = useState<Record<string, string>>(initialQuery)
+
+  const { data: swrData, isLoading } = useSWR(
+    buildTourKey(locale, query),
+    () =>
+      tourService.getTours({
+        locale,
+        locations: query.locations,
+        tourType: query['tour-type'],
+        tourDuration: query['tour-duration'],
+        page: query.page,
+        limit: 12,
+      }),
+    {
+      fallbackData: tourRes,
+      revalidateOnFocus: false,
+      keepPreviousData: true,
+      dedupingInterval: 5000,
     },
-    [searchParams],
   )
 
-  const onFilterChange = async (taxonomy: string, value: string | string[]) => {
+  const tours = swrData?.data ?? tourRes?.data ?? []
+  const pages = swrData?.totalPages ?? tourRes?.totalPages ?? 1
+
+  // Check xem query hiện tại có khác với query ban đầu không
+  const isQueryChanged =
+    query.locations !== initialQuery.locations ||
+    query['tour-type'] !== initialQuery['tour-type'] ||
+    query['tour-duration'] !== initialQuery['tour-duration'] ||
+    query.page !== initialQuery.page
+
+  // Show loading khi:
+  // 1. Đang loading VÀ (query đã thay đổi HOẶC không có data từ server)
+  const shouldShowLoading = isLoading && (isQueryChanged || !tourRes?.data?.length)
+
+  const syncUrl = (nextQuery: Record<string, string>) => {
+    const url = new URL(window.location.href)
+
+    // 🔥 CLEAR TẤT CẢ QUERY CŨ
+    url.search = ''
+
+    Object.entries(nextQuery).forEach(([key, value]) => {
+      // page=1 thì bỏ
+      if (key === 'page' && value === '1') return
+
+      if (value) {
+        url.searchParams.set(key, value)
+      }
+    })
+
+    window.history.replaceState(null, '', url.toString())
+  }
+
+  const onFilterChange = (taxonomy: string, value: string | string[]) => {
+    const valueStr = typeof value === 'string' ? value : value.join(',')
+
+    const nextQuery = {
+      ...query,
+      [taxonomy]: valueStr,
+      page: '1',
+    }
+
     setFilter((prev) => ({
       ...prev,
       [taxonomy]: value,
     }))
 
-    startTransition(() => {
-      router.push(
-        `${pathname}?${createQueryString(taxonomy, typeof value === 'string' ? value : value.join(','))}`,
-        {
-          scroll: false,
-        },
-      )
-    })
+    setQuery(nextQuery)
+    syncUrl(nextQuery)
+
+    scrollToSection('tour-list-container', 1, 5)
   }
 
   const onMobileFilterChange = (taxonomy: string, value: string | string[]) => {
@@ -100,67 +177,109 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
   }
 
   const handleApply = () => {
-    const params = new URLSearchParams(searchParams.toString())
-
-    for (const key in filter) {
-      const taxonomy = filter[key]
-
-      const taxonomyStr = typeof taxonomy === 'string' ? taxonomy : taxonomy.join(',')
-
-      if (taxonomyStr) {
-        params.set(key, taxonomyStr)
-      } else {
-        params.delete(key)
-      }
+    const nextQuery: Record<string, string> = {
+      ...query,
+      page: '1',
     }
 
-    startTransition(() => {
-      router.push(`${pathname}?${params.toString()}`, {
-        scroll: false,
-      })
-    })
+    for (const key in filter) {
+      const value = filter[key]
+      const valueStr = typeof value === 'string' ? value : value.join(',')
+
+      if (valueStr) nextQuery[key] = valueStr
+    }
+
+    setQuery(nextQuery)
+    syncUrl(nextQuery)
+    setOpenDrawer(false)
+
+    scrollToSection('tour-list-container', 1, 5)
   }
 
   const resetFilter = () => {
-    const newPathname = currentPage > 1 ? `${pathname}?page=${currentPage}` : pathname
+    const resetQuery = {
+      locations: '',
+      'tour-type': '',
+      'tour-duration': '',
+      page: '1',
+    }
 
-    const resetFilter = taxonomies.reduce(
-      (acc, curr) => {
-        const taxonomy = curr.taxonomy
-
-        let value: string | string[] = ''
-
-        if (taxonomy !== 'locations') {
-          value = []
-        }
-
-        acc[taxonomy] = value
-        return acc
-      },
-      {} as Record<string, string | string[]>,
+    setFilter(
+      taxonomies.reduce(
+        (acc, curr) => {
+          acc[curr.taxonomy] = curr.taxonomy === 'locations' ? '' : []
+          return acc
+        },
+        {} as Record<string, string | string[]>,
+      ),
     )
 
-    setFilter(resetFilter)
+    setQuery(resetQuery)
+    syncUrl(resetQuery)
 
-    startTransition(() => {
-      router.push(newPathname, {
-        scroll: false,
-      })
-    })
+    scrollToSection('tour-list-container', 1, 5)
   }
 
   useEffect(() => {
-    if (isPending) {
-      scrollToSection('tour-list-container', 1, 5)
+    if (!sentinelRef.current) return
+
+    // Observer cho sentinel để detect khi scroll qua
+    const sentinelObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // Khi sentinel không còn visible (scroll qua) thì có thể fixed button
+          shouldBeFixedRef.current = !entry.isIntersecting
+          setIsFixed(shouldBeFixedRef.current && !footerVisibleRef.current)
+        })
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px',
+      },
+    )
+
+    sentinelObserver.observe(sentinelRef.current)
+
+    // Observer cho footer để detect khi footer vào viewport
+    const footerObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          footerVisibleRef.current = entry.isIntersecting
+          // Nếu footer visible thì không fixed button
+          setIsFixed(shouldBeFixedRef.current && !footerVisibleRef.current)
+        })
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px',
+      },
+    )
+
+    // Tìm footer element với delay để đảm bảo footer đã render
+    const checkFooter = () => {
+      const footer = document.querySelector('footer')
+      if (footer) {
+        footerObserver.observe(footer)
+      } else {
+        // Retry nếu footer chưa render
+        setTimeout(checkFooter, 100)
+      }
     }
-  }, [isPending])
+
+    checkFooter()
+
+    return () => {
+      sentinelObserver.disconnect()
+      footerObserver.disconnect()
+    }
+  }, [])
 
   return (
     <div
       id='tour-list-container'
-      className='xsm:px-[1rem] xsm:py-[2.5rem] xsm:gap-[2.5rem] relative mx-auto flex h-full w-full max-w-[87.5rem] flex-col items-center gap-[3.75rem] pt-[5rem] pb-[3.75rem]'
+      className='xsm:px-[1rem] xsm:py-[2.5rem] xsm:gap-[2.5rem] relative mx-auto flex h-full w-full max-w-[87.5rem] flex-col items-center gap-[3.75rem] pt-[5rem] pb-[3.75rem] mt-[-2px]'
     >
-      <div className='xsm:gap-[1.5rem] flex w-full flex-col items-start gap-[2.5rem]'>
+      <div className='xsm:gap-[1.5rem] flex w-full flex-col items-start gap-[2.5rem] relative'>
         {/* Filter Desktop */}
         <div className='xsm:hidden flex w-full items-center space-x-[0.75rem]'>
           {taxonomies.map((taxonomy, i) => (
@@ -185,19 +304,52 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
           </button>
         </div>
         {/* Filter Mobile */}
-        <div className='w-full sm:hidden'>
-          <button
-            type='button'
-            onClick={() => setOpenDrawer(true)}
-            className='flex h-[4.25rem] w-full items-center justify-between rounded-[0.25rem] border border-[#EDEDED] bg-white p-4 shadow-[266px_185px_91px_0_rgba(0,0,0,0.00),_170px_118px_83px_0_rgba(0,0,0,0.01),_96px_67px_70px_0_rgba(0,0,0,0.04),_42px_30px_52px_0_rgba(0,0,0,0.04),_11px_7px_28px_0_rgba(0,0,0,0.05)]'
-          >
-            <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent uppercase'>
-              {t('searchFilter')}
-            </span>
-            <div className='flex items-center justify-center rounded-[0.5rem] bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] p-[0.625rem]'>
-              <ICFilter className='w-[1rem]' />
-            </div>
-          </button>
+        <>
+          {/* Sentinel element để detect khi scroll qua */}
+          <div
+            ref={sentinelRef}
+            className='w-full sm:hidden'
+          />
+          {/* Button trong document flow - ẩn khi fixed */}
+          <div className={`w-full sm:hidden ${isFixed ? 'invisible' : ''}`}>
+            <button
+              type='button'
+              onClick={() => setOpenDrawer(true)}
+              className='flex h-[4.25rem] w-full items-center justify-between rounded-[0.25rem] border border-[#EDEDED] bg-white p-4 shadow-[266px_185px_91px_0_rgba(0,0,0,0.00),_170px_118px_83px_0_rgba(0,0,0,0.01),_96px_67px_70px_0_rgba(0,0,0,0.04),_42px_30px_52px_0_rgba(0,0,0,0.04),_11px_7px_28px_0_rgba(0,0,0,0.05)]'
+            >
+              <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent uppercase'>
+                {t('searchFilter')}
+              </span>
+              <div className='flex items-center justify-center rounded-[0.5rem] bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] p-[0.625rem]'>
+                <ICFilter className='w-[1rem]' />
+              </div>
+            </button>
+          </div>
+          {/* Button fixed - hiện khi scroll qua với animation mượt */}
+          <AnimatePresence>
+            {isFixed && (
+              <motion.div
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 100, opacity: 0 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className='fixed bottom-0 left-0 right-0 z-50 px-4 pb-4 w-full sm:hidden'
+              >
+                <button
+                  type='button'
+                  onClick={() => setOpenDrawer(true)}
+                  className='flex h-[4.25rem] w-full items-center justify-between rounded-[0.25rem] border border-[#EDEDED] bg-white p-4 shadow-[266px_185px_91px_0_rgba(0,0,0,0.00),_170px_118px_83px_0_rgba(0,0,0,0.01),_96px_67px_70px_0_rgba(0,0,0,0.04),_42px_30px_52px_0_rgba(0,0,0,0.04),_11px_7px_28px_0_rgba(0,0,0,0.05)]'
+                >
+                  <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent uppercase'>
+                    {t('searchFilter')}
+                  </span>
+                  <div className='flex items-center justify-center rounded-[0.5rem] bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] p-[0.625rem]'>
+                    <ICFilter className='w-[1rem]' />
+                  </div>
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
           <FilterDrawer
             data={taxonomies.map((taxonomy) => ({
               label: taxonomy.label,
@@ -212,9 +364,9 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
             setOpen={setOpenDrawer}
             onChange={onMobileFilterChange}
           />
-        </div>
+        </>
 
-        {isPending && (
+        {shouldShowLoading && (
           <div className='xsm:grid-cols-1 grid w-full grid-cols-4 gap-x-[1.125rem] gap-y-[2rem]'>
             {Array.from({ length: 8 }).map((_, i) => (
               <SkeletonTour key={i} />
@@ -223,15 +375,14 @@ export default function WrapperTourList({ taxonomies, data, totalPages }: Wrappe
         )}
 
         {/* Tour list */}
-        {!isPending &&
-          (data.length > 0 ? <TourList data={data} /> : <EmptyTourResult onReset={resetFilter} />)}
+        {!shouldShowLoading && (tours.length > 0 ? <TourList data={tours} /> : <EmptyResult />)}
       </div>
 
       {/* pagination */}
-      {!isPending && data.length > 0 && totalPages && totalPages > 1 && (
+      {!shouldShowLoading && pages > 1 && (
         <Pagination
           pageCurrent={currentPage}
-          pageCount={totalPages}
+          pageCount={pages}
           onPageChange={handlePageChange}
         />
       )}

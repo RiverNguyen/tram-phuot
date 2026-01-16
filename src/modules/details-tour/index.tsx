@@ -79,7 +79,7 @@ export default function DetailsTour({
             <SectionVoucher tourCoupons={tourCoupons || []} />
             <SectionPolicy policy={detailsTourData?.data?.acf?.policy || {}} />
           </div>
-          <div className='xsm:hidden sticky top-22 w-full max-w-120 shrink-0'>
+          <div className='xsm:hidden sticky top-18 w-full max-w-120 shrink-0'>
             <SectionBookingOverview
               tourTitle={detailsTourData?.data?.title || ''}
               tourDuration={detailsTourData?.data?.tour_duration || {}}

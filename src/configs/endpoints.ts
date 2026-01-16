@@ -12,7 +12,7 @@ const ENDPOINTS = {
   thank_you: {
     rank_math: {
       en: '/thank-you',
-      vi: '/cam-on',
+      vi: '/vi/cam-on',
     },
   },
   hotel: {
@@ -27,7 +27,7 @@ const ENDPOINTS = {
     vi: 'wp/v2/pages/562?_fields=acf&acf_format=standard',
     coupons: 'api/v1/coupons',
     rank_math: {
-      en: '/hotel-list',
+      en: '/hotels',
       vi: '/danh-sach-khach-san',
     },
     rank_math_detail: {
@@ -44,7 +44,7 @@ const ENDPOINTS = {
   },
   tour: {
     rank_math: {
-      en: '/tour-list',
+      en: '/tours',
       vi: '/danh-sach-tour',
     },
     rank_math_detail: {
@@ -66,8 +66,8 @@ const ENDPOINTS = {
     featuredNewsEn: 'api/v1/page-acf?page_id=248&name=featured_news&acf=true',
     featuredNewsVi: 'api/v1/page-acf?page_id=250&name=featured_news&acf=true',
     rank_math: {
-      en: '/blog-list',
-      vi: '/danh-sach-bai-viet',
+      en: '/blogs',
+      vi: '/danh-sach-tin-tuc',
     },
     rank_math_detail: {
       en: (slug: string) => `/${slug}`,
@@ -101,7 +101,7 @@ const ENDPOINTS = {
     vi: 'wp/v2/pages/412?_fields=acf&acf_format=standard',
     rank_math: {
       en: '/promotions',
-      vi: '/khuyen-mai',
+      vi: '/uu-dai',
     },
   },
   contact_form: {

@@ -33,7 +33,11 @@
       "tourAndChill": "Tour and chill",
       "exploreTheTour": "Explore the tour",
       "noResult": "No Result",
-      "exploreMore": "Explore more"
+      "exploreMore": "Explore more",
+      "resetAll": "Reset all"
+    },
+    "ourStories": {
+      "noResult": "No stories found"
     }
   },
   "Header": {
@@ -56,6 +60,9 @@
     "title": "Page not found",
     "desc": "The page you’re looking for may have been removed, renamed, or is temporarily unavailable",
     "button": "Back to homepage"
+  },
+  "EmptyResult": {
+    "text": "No results found"
   },
   "ThankYou": {
     "title": "Thank you for trusting us !",
@@ -163,6 +170,7 @@
     "adultsLabel": "Adults",
     "children58Label": "Children 5-8 ages",
     "children14Label": "Children 1-4 ages",
+    "children9Label": "Children 9 ages",
     "textPax": "Pax",
     "textApply": "Apply",
     "textApplyVoucherSuccess": "Voucher applied successfully",

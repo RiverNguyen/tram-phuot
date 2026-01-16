@@ -18,7 +18,7 @@ const MERGED_GROUPS = {
   },
   'ha-noi': {
     markerSlug: 'ha-noi',
-    dataIds: ['ha-noi', 'phu-tho', 'hung-yen', 'hai-phong', 'hai-phong-island'],
+    dataIds: ['ha-noi', 'ha-noi-vi', 'phu-tho', 'hung-yen', 'hai-phong', 'hai-phong-island'],
   },
 }
 
@@ -47,7 +47,8 @@ export default function Map({
     const group = getMergedGroup(dataId)
 
     if (group) {
-      return loc.slug === group.markerSlug
+      // Match với markerSlug hoặc bất kỳ dataId nào trong group (để hỗ trợ locale-specific slugs)
+      return loc.slug === group.markerSlug || group.dataIds.includes(loc.slug)
     }
 
     // Rule mặc định: match slug
@@ -83,7 +84,9 @@ export default function Map({
         }
 
         const loc = locations.find((l) =>
-          group ? l.slug === group.markerSlug : shouldHighlight(dataId, l),
+          group
+            ? l.slug === group.markerSlug || group.dataIds.includes(l.slug)
+            : shouldHighlight(dataId, l),
         )
 
         if (loc) {

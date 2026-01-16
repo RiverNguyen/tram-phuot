@@ -1,224 +1,384 @@
 'use client'
 
-import { useEffect, useRef, useState, useTransition } from 'react'
+import { useState, useMemo, useEffect, useRef } from 'react'
 import HotelList from './HotelList'
 import { Pagination } from '@/components/shared'
 import { ITaxonomy } from '@/interface/taxonomy.interface'
 import FilterPopover from '@/components/shared/Filter/FilterPopover'
 import ICTrashcan from '@/components/icons/ICTrashcan'
-import { usePathname, useRouter } from '@/i18n/navigation'
-import { useSearchParams } from 'next/navigation'
-import { IHotel } from '@/interface/hotel.interface'
-import FilterDrawer from '@/components/shared/Filter/FilterDrawer'
-import { scrollToSection } from '@/utils/scrollToSection'
-import { useTranslations } from 'next-intl'
-import { mapTaxonomyToFilter } from '@/utils/mapTaxonomyToFilter'
+import { IHotelRes } from '@/interface/hotel.interface'
 import ICFilter from '@/components/icons/ICFilter'
-import {
-  createQueryString,
-  parseFilterStateFromURL,
-  formatFiltersForURL,
-  hasActiveFilters,
-} from '@/utils/filterHelpers'
-import { Skeleton } from '@/components/ui/skeleton'
+import FilterDrawer from '@/components/shared/Filter/FilterDrawer'
+import SkeletonHotel from './SkeletonHotel'
+import { useTranslations } from 'next-intl'
+import { useSearchParams } from 'next/navigation'
+import EmptyResult from '@/modules/tours/_components/EmptyResult'
+import hotelService from '@/services/hotels'
+import useSWR from 'swr'
+import { scrollToSection } from '@/utils/scrollToSection'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface WrapperHotelListProps {
   taxonomies: ITaxonomy[]
-  data: IHotel[]
-  totalPages: number
+  hotelRes: IHotelRes
+  locale: string
 }
 
-// Helper to get variant for taxonomy
-const getTaxonomyVariant = (taxonomy: string): 'radio' | 'checkbox' => {
-  return taxonomy === 'locations' ? 'radio' : 'checkbox'
+const buildHotelKey = (locale: string, query: Record<string, string>) => {
+  const params = new URLSearchParams()
+
+  Object.entries(query)
+    .filter(([, v]) => v && v !== '1')
+    .sort(([a], [b]) => a.localeCompare(b))
+    .forEach(([k, v]) => params.set(k, v))
+
+  return `hotels:${locale}?${params.toString()}`
 }
 
-export default function WrapperHotelList({ taxonomies, data, totalPages }: WrapperHotelListProps) {
+export default function WrapperHotelList({ taxonomies, hotelRes, locale }: WrapperHotelListProps) {
   const [openDrawer, setOpenDrawer] = useState(false)
-  const sectionRef = useRef<HTMLDivElement>(null)
-  const router = useRouter()
-  const pathname = usePathname()
+  const [isFixed, setIsFixed] = useState(false)
+  const sentinelRef = useRef<HTMLDivElement>(null)
+  const shouldBeFixedRef = useRef(false)
+  const footerVisibleRef = useRef(false)
   const searchParams = useSearchParams()
-  const [isPending, startTransition] = useTransition()
   const t = useTranslations('ListHotelPage')
+  const currentPage = +(searchParams.get('page') || searchParams.get('paged') || '1')
+  
+  const initialFilter = taxonomies.reduce(
+    (acc, curr) => {
+      const taxonomy = curr.taxonomy
+      const param = searchParams.get(taxonomy)
+      let value: string | string[] = param || ''
 
-  const filters = mapTaxonomyToFilter(taxonomies)
+      if (taxonomy !== 'locations') {
+        value = param ? param.split(',') : []
+      }
 
-  // Map taxonomies with variants
-  const taxonomiesWithVariant = taxonomies.map((taxonomy) => ({
-    taxonomy: taxonomy.taxonomy,
-    variant: getTaxonomyVariant(taxonomy.taxonomy),
-  }))
+      acc[taxonomy] = value
+      return acc
+    },
+    {} as Record<string, string | string[]>,
+  )
+  const [filter, setFilter] = useState<Record<string, string | string[]>>(initialFilter)
 
-  const [filterState, setFilterState] = useState<Record<string, string | string[]>>(() =>
-    parseFilterStateFromURL(searchParams, taxonomiesWithVariant),
+  const handlePageChange = (page: number) => {
+    scrollToSection('hotel-list-container', 1, 5)
+
+    const nextQuery = {
+      ...query,
+      page: page <= 1 ? '1' : page.toString(),
+    }
+
+    setQuery(nextQuery)
+    syncUrl(nextQuery)
+  }
+
+  const getInitialQuery = () => {
+    if (typeof window === 'undefined') {
+      return {
+        locations: '',
+        'hotel-amenities': '',
+        page: '1',
+      }
+    }
+
+    const params = new URLSearchParams(window.location.search)
+
+    return {
+      locations: params.get('locations') || '',
+      'hotel-amenities': params.get('hotel-amenities') || '',
+      page: params.get('page') || params.get('paged') || '1',
+    }
+  }
+
+  const initialQuery = useMemo(() => getInitialQuery(), [])
+  const [query, setQuery] = useState<Record<string, string>>(initialQuery)
+
+  const { data: swrData, isLoading } = useSWR(
+    buildHotelKey(locale, query),
+    () =>
+      hotelService.getHotels({
+        locale,
+        locations: query.locations,
+        hotelAmenities: query['hotel-amenities'],
+        page: query.page,
+        limit: 12,
+      }),
+    {
+      fallbackData: hotelRes,
+      revalidateOnFocus: false,
+      keepPreviousData: true,
+      dedupingInterval: 5000,
+    },
   )
 
-  const currentPage = Math.max(1, Number(searchParams.get('paged')) || 1)
+  const hotels = swrData?.data ?? hotelRes?.data ?? []
+  const pages = swrData?.totalPages ?? hotelRes?.totalPages ?? 1
 
-  const pushFilters = (next: Record<string, string | string[]>) => {
-    setFilterState(next)
-    startTransition(() => {
-      const updates = formatFiltersForURL(next)
-      updates.paged = undefined
-      const query = createQueryString(searchParams, updates)
-      router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
+  // Check xem query hiện tại có khác với query ban đầu không
+  const isQueryChanged =
+    query.locations !== initialQuery.locations ||
+    query['hotel-amenities'] !== initialQuery['hotel-amenities'] ||
+    query.page !== initialQuery.page
+
+  // Show loading khi:
+  // 1. Đang loading VÀ (query đã thay đổi HOẶC không có data từ server)
+  const shouldShowLoading = isLoading && (isQueryChanged || !hotelRes?.data?.length)
+
+  const syncUrl = (nextQuery: Record<string, string>) => {
+    const url = new URL(window.location.href)
+
+    // 🔥 CLEAR TẤT CẢ QUERY CŨ
+    url.search = ''
+
+    Object.entries(nextQuery).forEach(([key, value]) => {
+      // page=1 thì bỏ
+      if (key === 'page' && value === '1') return
+
+      if (value) {
+        // Convert 'page' to 'paged' for URL
+        const urlKey = key === 'page' ? 'paged' : key
+        url.searchParams.set(urlKey, value)
+      }
     })
+
+    window.history.replaceState(null, '', url.toString())
   }
 
-  const handleFilterChange = (key: string, value: string | string[]) => {
-    pushFilters({
-      ...filterState,
-      [key]: value,
-    })
+  const onFilterChange = (taxonomy: string, value: string | string[]) => {
+    const valueStr = typeof value === 'string' ? value : value.join(',')
+
+    const nextQuery = {
+      ...query,
+      [taxonomy]: valueStr,
+      page: '1',
+    }
+
+    setFilter((prev) => ({
+      ...prev,
+      [taxonomy]: value,
+    }))
+
+    setQuery(nextQuery)
+    syncUrl(nextQuery)
+
+    scrollToSection('hotel-list-container', 1, 5)
   }
 
-  const handleMobileFilterChange = (taxonomy: string, value: string | string[]) => {
-    setFilterState((prev) => ({
+  const onMobileFilterChange = (taxonomy: string, value: string | string[]) => {
+    setFilter((prev) => ({
       ...prev,
       [taxonomy]: value,
     }))
   }
 
   const handleApply = () => {
-    pushFilters(filterState)
-    setOpenDrawer(false)
-  }
-
-  const handleReset = () => {
-    if (!hasActiveFilters(filterState)) {
-      if (currentPage <= 1) {
-        setOpenDrawer(false)
-        return
-      }
-      startTransition(() => {
-        const query = createQueryString(searchParams, { paged: undefined })
-        router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
-      })
-      setOpenDrawer(false)
-      return
+    const nextQuery: Record<string, string> = {
+      ...query,
+      page: '1',
     }
 
-    const reset: Record<string, string | string[]> = {}
-    taxonomiesWithVariant.forEach(({ taxonomy, variant }) => {
-      reset[taxonomy] = variant === 'radio' ? '' : []
-    })
-    pushFilters(reset)
+    for (const key in filter) {
+      const value = filter[key]
+      const valueStr = typeof value === 'string' ? value : value.join(',')
+
+      if (valueStr) nextQuery[key] = valueStr
+    }
+
+    setQuery(nextQuery)
+    syncUrl(nextQuery)
     setOpenDrawer(false)
-  }
 
-  const handlePageChange = (page: number) => {
-    startTransition(() => {
-      const query = createQueryString(searchParams, {
-        paged: page > 1 ? String(page) : undefined,
-      })
-      router.push(query ? `${pathname}?${query}` : pathname, { scroll: false })
-    })
-  }
-
-  // Sync filter state with searchParams
-  useEffect(() => {
-    setFilterState(parseFilterStateFromURL(searchParams, taxonomiesWithVariant))
-  }, [searchParams])
-
-  useEffect(() => {
-    if (!isPending) return
-    if (!sectionRef.current) return
     scrollToSection('hotel-list-container', 1, 5)
-  }, [isPending])
+  }
+
+  const resetFilter = () => {
+    const resetQuery = {
+      locations: '',
+      'hotel-amenities': '',
+      page: '1',
+    }
+
+    setFilter(
+      taxonomies.reduce(
+        (acc, curr) => {
+          acc[curr.taxonomy] = curr.taxonomy === 'locations' ? '' : []
+          return acc
+        },
+        {} as Record<string, string | string[]>,
+      ),
+    )
+
+    setQuery(resetQuery)
+    syncUrl(resetQuery)
+
+    scrollToSection('hotel-list-container', 1, 5)
+  }
+
+  useEffect(() => {
+    if (!sentinelRef.current) return
+
+    // Observer cho sentinel để detect khi scroll qua
+    const sentinelObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          // Khi sentinel không còn visible (scroll qua) thì có thể fixed button
+          shouldBeFixedRef.current = !entry.isIntersecting
+          setIsFixed(shouldBeFixedRef.current && !footerVisibleRef.current)
+        })
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px',
+      },
+    )
+
+    sentinelObserver.observe(sentinelRef.current)
+
+    // Observer cho footer để detect khi footer vào viewport
+    const footerObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          footerVisibleRef.current = entry.isIntersecting
+          // Nếu footer visible thì không fixed button
+          setIsFixed(shouldBeFixedRef.current && !footerVisibleRef.current)
+        })
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px',
+      },
+    )
+
+    // Tìm footer element với delay để đảm bảo footer đã render
+    const checkFooter = () => {
+      const footer = document.querySelector('footer')
+      if (footer) {
+        footerObserver.observe(footer)
+      } else {
+        // Retry nếu footer chưa render
+        setTimeout(checkFooter, 100)
+      }
+    }
+
+    checkFooter()
+
+    return () => {
+      sentinelObserver.disconnect()
+      footerObserver.disconnect()
+    }
+  }, [])
 
   return (
     <div
-      ref={sectionRef}
       id='hotel-list-container'
-      className='xsm:px-[1rem] xsm:py-[2.5rem] xsm:gap-[2.5rem] relative mx-auto flex h-full w-full max-w-[87.5rem] flex-col items-center gap-[3.75rem] pt-[5rem] pb-[3.75rem]'
+      className='xsm:px-[1rem] xsm:py-[2.5rem] xsm:gap-[2.5rem] relative mx-auto flex h-full w-full max-w-[87.5rem] flex-col items-center gap-[3.75rem] pt-[5rem] pb-[3.75rem] mt-[-2px]'
     >
-      <div className='xsm:gap-[1.5rem] flex w-full flex-col items-start gap-[2.5rem]'>
+      <div className='xsm:gap-[1.5rem] flex w-full flex-col items-start gap-[2.5rem] relative'>
         {/* Filter Desktop */}
         <div className='xsm:hidden flex w-full items-center space-x-[0.75rem]'>
-          {taxonomies.map((taxonomy) => (
+          {taxonomies.map((taxonomy, i) => (
             <FilterPopover
-              key={taxonomy.taxonomy}
-              options={filters[taxonomy.taxonomy] ?? []}
+              key={i}
+              options={taxonomy.terms.map((term) => ({ label: term.name, value: term.slug }))}
               label={t(taxonomy.label)}
-              value={filterState[taxonomy.taxonomy]}
-              onValueChange={(value) => handleFilterChange(taxonomy.taxonomy, value)}
-              variant={getTaxonomyVariant(taxonomy.taxonomy)}
+              value={filter[taxonomy.taxonomy]}
+              onValueChange={(value) => onFilterChange(taxonomy.taxonomy, value)}
+              variant={taxonomy.taxonomy === 'locations' ? 'radio' : 'checkbox'}
             />
           ))}
           <button
             type='button'
-            onClick={handleReset}
+            onClick={resetFilter}
             className='group font-montserrat flex h-[2.75rem] cursor-pointer items-center space-x-2 p-[0.75rem_0_0.75rem_0.75rem] text-[0.875rem] leading-[1.4rem] tracking-[0.035rem] text-[#FF2019] uppercase'
           >
             <ICTrashcan className='size-[1.125rem]' />
-            <span className='relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-0 after:bg-[#FF2019] after:transition-all after:duration-500 after:ease-out group-hover:after:opacity-100'>{t('reset')}</span>
+            <span className='relative after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:opacity-0 after:bg-[#FF2019] after:transition-all after:duration-500 after:ease-out group-hover:after:opacity-100'>
+              {t('reset')}
+            </span>
           </button>
         </div>
         {/* Filter Mobile */}
-        <div className='w-full sm:hidden'>
-          <button
-            type='button'
-            onClick={() => setOpenDrawer(true)}
-            className='flex h-[4.25rem] w-full items-center justify-between rounded-[0.25rem] border border-[#EDEDED] bg-white p-4 shadow-[266px_185px_91px_0_rgba(0,0,0,0.00),_170px_118px_83px_0_rgba(0,0,0,0.01),_96px_67px_70px_0_rgba(0,0,0,0.04),_42px_30px_52px_0_rgba(0,0,0,0.04),_11px_7px_28px_0_rgba(0,0,0,0.05)]'
-          >
-            <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent uppercase'>
-              {t('searchFilter')}
-            </span>
-            <div className='flex items-center justify-center rounded-[0.5rem] bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] p-[0.625rem]'>
-              <ICFilter className='w-[1rem]' />
-            </div>
-          </button>
+        <>
+          {/* Sentinel element để detect khi scroll qua */}
+          <div
+            ref={sentinelRef}
+            className='w-full sm:hidden'
+          />
+          {/* Button trong document flow - ẩn khi fixed */}
+          <div className={`w-full sm:hidden ${isFixed ? 'invisible' : ''}`}>
+            <button
+              type='button'
+              onClick={() => setOpenDrawer(true)}
+              className='flex h-[4.25rem] w-full items-center justify-between rounded-[0.25rem] border border-[#EDEDED] bg-white p-4 shadow-[266px_185px_91px_0_rgba(0,0,0,0.00),_170px_118px_83px_0_rgba(0,0,0,0.01),_96px_67px_70px_0_rgba(0,0,0,0.04),_42px_30px_52px_0_rgba(0,0,0,0.04),_11px_7px_28px_0_rgba(0,0,0,0.05)]'
+            >
+              <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent uppercase'>
+                {t('searchFilter')}
+              </span>
+              <div className='flex items-center justify-center rounded-[0.5rem] bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] p-[0.625rem]'>
+                <ICFilter className='w-[1rem]' />
+              </div>
+            </button>
+          </div>
+          {/* Button fixed - hiện khi scroll qua với animation mượt */}
+          <AnimatePresence>
+            {isFixed && (
+              <motion.div
+                initial={{ y: 100, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: 100, opacity: 0 }}
+                transition={{ duration: 0.3, ease: 'easeOut' }}
+                className='fixed bottom-0 left-0 right-0 z-50 px-4 pb-4 w-full sm:hidden'
+              >
+                <button
+                  type='button'
+                  onClick={() => setOpenDrawer(true)}
+                  className='flex h-[4.25rem] w-full items-center justify-between rounded-[0.25rem] border border-[#EDEDED] bg-white p-4 shadow-[266px_185px_91px_0_rgba(0,0,0,0.00),_170px_118px_83px_0_rgba(0,0,0,0.01),_96px_67px_70px_0_rgba(0,0,0,0.04),_42px_30px_52px_0_rgba(0,0,0,0.04),_11px_7px_28px_0_rgba(0,0,0,0.05)]'
+                >
+                  <span className='font-montserrat bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-[0.875rem] leading-[1.1375rem] font-bold tracking-[-0.03125rem] text-transparent uppercase'>
+                    {t('searchFilter')}
+                  </span>
+                  <div className='flex items-center justify-center rounded-[0.5rem] bg-[linear-gradient(53deg,#03328C_43.28%,#00804D_83.79%)] p-[0.625rem]'>
+                    <ICFilter className='w-[1rem]' />
+                  </div>
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
           <FilterDrawer
+            data={taxonomies.map((taxonomy) => ({
+              label: taxonomy.label,
+              taxonomy: taxonomy.taxonomy,
+              variant: taxonomy.taxonomy === 'locations' ? 'radio' : 'checkbox',
+              options: taxonomy.terms.map((term) => ({ label: term.name, value: term.slug })),
+            }))}
+            values={filter}
+            onApply={handleApply}
+            onReset={resetFilter}
             open={openDrawer}
             setOpen={setOpenDrawer}
-            data={taxonomies.map((taxonomy) => ({
-              label: t(taxonomy.label),
-              taxonomy: taxonomy.taxonomy,
-              variant: getTaxonomyVariant(taxonomy.taxonomy),
-              options: filters[taxonomy.taxonomy] || [],
-            }))}
-            values={filterState}
-            onChange={handleMobileFilterChange}
-            onApply={handleApply}
-            onReset={handleReset}
+            onChange={onMobileFilterChange}
           />
-        </div>
+        </>
 
-        {isPending && (
-          <div className='xsm:grid-cols-1 grid w-full grid-cols-4 gap-x-[1.125rem] gap-y-[1.5rem] gap-y-[2rem]'>
+        {shouldShowLoading && (
+          <div className='xsm:grid-cols-1 grid w-full grid-cols-4 gap-x-[1.125rem] gap-y-[2rem]'>
             {Array.from({ length: 8 }).map((_, i) => (
-              <div
-                key={i}
-                className='flex w-full animate-pulse flex-col gap-3'
-              >
-                <Skeleton className='h-[22.6875rem] w-full rounded-[0.5rem]' />
-                <Skeleton className='h-5 w-24 rounded' />
-                <Skeleton className='h-6 w-3/4 rounded' />
-                <Skeleton className='h-6 w-1/2 rounded' />
-                <div className='flex items-center justify-between'>
-                  <Skeleton className='h-5 w-28 rounded' />
-                  <Skeleton className='h-5 w-20 rounded' />
-                </div>
-              </div>
+              <SkeletonHotel key={i} />
             ))}
           </div>
         )}
 
         {/* Hotel list */}
-        {!isPending &&
-          (data.length > 0 ? (
-            <HotelList data={data} />
-          ) : (
-            <p className='mx-auto text-center'>{t('noResult')}</p>
-          ))}
+        {!shouldShowLoading && (hotels.length > 0 ? <HotelList data={hotels} /> : <EmptyResult />)}
       </div>
 
       {/* pagination */}
-      {data.length > 0 && totalPages && totalPages > 1 && (
+      {!shouldShowLoading && pages > 1 && (
         <Pagination
           pageCurrent={currentPage}
-          pageCount={totalPages}
+          pageCount={pages}
           onPageChange={handlePageChange}
         />
       )}

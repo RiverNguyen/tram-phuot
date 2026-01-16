@@ -15,7 +15,7 @@ export default function Footer({ data }: { data: IFooter }) {
   const translateFooter = useTranslations('Footer')
   const pathname = usePathname()
 
-  const isThankyouPage = pathname === '/thank-you' || pathname === '/cam-on'
+  const isThankyouPage = pathname === '/thank-you' || pathname === '/vi/cam-on'
   const isHomePage = pathname === '/' || pathname === '/vi'
   const isBlogDetail = pathname.includes('/blogs') && pathname.split('/').length >= 3
 

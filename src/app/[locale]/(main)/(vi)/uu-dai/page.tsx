@@ -15,22 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   )
   return metadataValues(res)
 }
-export default async function page({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ locale: string }>
-  searchParams: Promise<{
-    locations?: string
-    ['tour-type']?: string
-    paged?: string
-  }>
-}) {
-  const [{ locale }, sp] = await Promise.all([params, searchParams])
-  return (
-    <Promotions
-      locale={locale}
-      searchParams={sp}
-    />
-  )
+export default async function page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params
+  return <Promotions locale={locale} />
 }

@@ -4,6 +4,8 @@ import DetailBlog from '@/modules/detail-blog'
 import blogService from '@/services/blog'
 import metadataValues from '@/utils/metadataValues'
 import { Metadata } from 'next'
+import BlogDetailSchema from '@/seo/schemas/BlogDetailSchema'
+import { SEO_CONFIG } from '@/seo/seo.config'
 
 export const dynamic = 'force-dynamic'
 
@@ -37,10 +39,35 @@ export default async function page({
     : ''
   const { data: relatedBlogs } = await blogService.getRelated({ locale, typeNews, limit: 4 })
 
+  // Lấy metadata cho schema
+  const metadata = await getMetaDataRankMath(
+    ENDPOINTS.blogs.rank_math_detail[locale as keyof typeof ENDPOINTS.blogs.rank_math_detail](slug),
+  )
+
+  // Xây dựng URL cho blog
+  const blogUrl = `${SEO_CONFIG.siteUrl}/vi/danh-sach-tin-tuc/${slug}`
+
+  // Xử lý image
+  const blogImage = blog?.thumbnail?.url
+    ? blog.thumbnail.url.startsWith('http')
+      ? blog.thumbnail.url
+      : `${SEO_CONFIG.siteUrl}${blog.thumbnail.url}`
+    : undefined
+
   return (
-    <DetailBlog
-      blog={blog}
-      relatedBlogs={relatedBlogs}
-    />
+    <>
+      <BlogDetailSchema
+        title={blog?.title || ''}
+        url={blogUrl}
+        image={blogImage ? { url: blogImage, alt: blog?.thumbnail?.alt } : undefined}
+        published={blog?.date || ''}
+        description={metadata?.description || blog?.excerpt || blog?.acf?.short_description}
+        lang={locale}
+      />
+      <DetailBlog
+        blog={blog}
+        relatedBlogs={relatedBlogs}
+      />
+    </>
   )
 }

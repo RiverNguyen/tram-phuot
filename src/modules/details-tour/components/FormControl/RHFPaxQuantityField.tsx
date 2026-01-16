@@ -5,7 +5,7 @@ import { FormControl, FormItem, FormLabel, FormMessage } from '@/components/ui/f
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import { useTranslations } from 'next-intl'
-import { ControllerRenderProps, FieldPath } from 'react-hook-form'
+import { ControllerRenderProps } from 'react-hook-form'
 
 interface RHFPaxQuantityFieldProps {
   label?: string
@@ -13,7 +13,7 @@ interface RHFPaxQuantityFieldProps {
   classNameFormLabel?: string
   classNameFormMessage?: string
   required?: boolean
-  field: ControllerRenderProps<any, FieldPath<any>>
+  field: ControllerRenderProps<any, any>
   unitPrice?: number
 }
 

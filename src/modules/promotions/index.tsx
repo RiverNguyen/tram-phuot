@@ -3,33 +3,9 @@ import SpecialOffers from '@/modules/promotions/_components/special-offer/Wrappe
 import OngoingPromotions from '@/modules/promotions/_components/ongoing-promotions/WrapperOngoingPromotions'
 import couponService from '@/services/coupon'
 
-export default async function Promotions({
-  locale,
-  searchParams,
-}: {
-  locale: string
-  searchParams?: {
-    locations?: string
-    ['tour-type']?: string
-    paged?: string
-  }
-}) {
-  const hasFilters =
-    !!searchParams?.locations ||
-    !!searchParams?.['tour-type'] ||
-    (searchParams?.paged ? Number(searchParams.paged) > 1 : false)
-
+export default async function Promotions({ locale }: { locale: string }) {
   const [ongoingCoupon, taxonomies, promotionPage, couponSpecialOffer] = await Promise.all([
-    couponService.getCoupons(
-      hasFilters
-        ? {
-            locale,
-            locations: searchParams?.locations,
-            tourType: searchParams?.['tour-type'],
-            paged: searchParams?.paged,
-          }
-        : { locale },
-    ),
+    couponService.getCoupons({ locale }),
     couponService.getTaxonomies(locale),
     couponService.getPromotionPage(locale),
     couponService.getCouponSpecialOffer(locale),
@@ -51,9 +27,9 @@ export default async function Promotions({
 
           {/* ongoing promotion */}
           <OngoingPromotions
-            data={ongoingCoupon?.data}
+            couponRes={ongoingCoupon}
             taxonomies={taxonomies?.data}
-            totalPages={ongoingCoupon?.totalPages}
+            locale={locale}
             text2={promotionPage?.acf?.text_2}
           />
         </div>

@@ -144,7 +144,7 @@ const BookingRoom = ({ rooms, onChangeSelection, clearRoomIndex }: BookingRoomPr
             (* {t('textPricesMayIncreaseOnWeekendsOrHolidays')})
           </p>
         </div>
-        <ScrollArea className='h-[50.75rem] pr-4 mr-4 xsm:hidden'>
+        <ScrollArea className='max-h-[50.75rem] pr-4 mr-4 xsm:hidden'>
           <div className='space-y-4'>
             {rooms?.map((room, index) => (
               <RoomCard

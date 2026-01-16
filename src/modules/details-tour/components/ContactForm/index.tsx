@@ -32,7 +32,7 @@ export default function ContactForm({ pricePerPax = 0, tourTitle = '' }: Contact
       const {
         startDate,
         endDate,
-        paxQuantity: { adults, children58, children14 },
+        paxQuantity: { adults, children58, children14, children9 },
       } = bookingTourData
       if (!startDate || !endDate || !adults) {
         return { success: false }
@@ -43,6 +43,7 @@ export default function ContactForm({ pricePerPax = 0, tourTitle = '' }: Contact
         startDate: format(startDate, 'dd/MM/yyyy'),
         endDate: format(endDate, 'dd/MM/yyyy'),
         adults: adults,
+        children9: children9,
         children58: children58,
         children14: children14,
         provisionalPrice: tourPrice?.provisionalPrice || 0,
@@ -65,7 +66,7 @@ export default function ContactForm({ pricePerPax = 0, tourTitle = '' }: Contact
       if (locale === 'en') {
         router.push('/thank-you')
       } else {
-        router.push('/cam-on')
+        router.push('/vi/cam-on')
       }
 
       if (response.status === 'mail_sent') return { success: true }

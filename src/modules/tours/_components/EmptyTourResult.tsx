@@ -2,7 +2,7 @@ import ICCompass from '@/components/icons/ICCompass'
 import ICTrashcan from '@/components/icons/ICTrashcan'
 import { useTranslations } from 'next-intl'
 
-export default function EmptyTourResult({ onReset }: { onReset: () => void }) {
+export default function EmptyTourResult({ onReset }: { onReset?: () => void }) {
   const t = useTranslations('ListTourPage')
 
   return (
@@ -21,14 +21,16 @@ export default function EmptyTourResult({ onReset }: { onReset: () => void }) {
           {t('noResultDesc')}
         </p>
 
-        <button
-          type='button'
-          onClick={onReset}
-          className='group font-montserrat mt-[1.5rem] inline-flex h-[3rem] items-center justify-center gap-2 rounded-[0.9rem] border border-[#FF2019]/35 bg-white px-[1.25rem] text-[0.875rem] leading-[1.4rem] font-bold tracking-[0.06rem] text-[#FF2019] uppercase transition-all duration-200 hover:-translate-y-[1px] hover:bg-[#FF2019] hover:text-white cursor-pointer'
-        >
-          <ICTrashcan className='size-[1.125rem] transition-colors group-hover:text-white' />
-          <span>{t('reset')}</span>
-        </button>
+        {onReset && (
+          <button
+            type='button'
+            onClick={onReset}
+            className='group font-montserrat mt-[1.5rem] inline-flex h-[3rem] items-center justify-center gap-2 rounded-[0.9rem] border border-[#FF2019]/35 bg-white px-[1.25rem] text-[0.875rem] leading-[1.4rem] font-bold tracking-[0.06rem] text-[#FF2019] uppercase transition-all duration-200 hover:-translate-y-[1px] hover:bg-[#FF2019] hover:text-white cursor-pointer'
+          >
+            <ICTrashcan className='size-[1.125rem] transition-colors group-hover:text-white' />
+            <span>{t('reset')}</span>
+          </button>
+        )}
       </div>
     </div>
   )

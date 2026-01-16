@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { cn } from '@/lib/utils'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -48,8 +48,8 @@ export default function FilterPopover({
   }
 
   const handleRadioChange = (newValue: string) => {
-    onValueChange?.(newValue)
     setOpen(false)
+    onValueChange?.(newValue)
   }
 
   const handleCheckboxChange = (optionValue: string, checked: boolean) => {

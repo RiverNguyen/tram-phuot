@@ -33,7 +33,11 @@
       "tourAndChill": "Tour và thư giãn",
       "exploreTheTour": "Khám phá tour",
       "noResult": "Không có kết quả",
-      "exploreMore": "Khám phá thêm"
+      "exploreMore": "Khám phá thêm",
+      "resetAll": "Xóa tất cả"
+    },
+    "ourStories": {
+      "noResults": "Không tìm thấy kết quả"
     }
   },
   "Header": {
@@ -58,6 +62,9 @@
     "button": "Quay lại trang chủ",
     "desc": "Trang bạn đang tìm có thể đã bị xóa, đổi tên hoặc tạm thời không khả dụng"
   },
+  "EmptyResult": {
+    "text": "Không tìm thấy kết quả"
+  },
   "ThankYou": {
     "title": "Cảm ơn bạn đã tin tưởng chúng tôi!",
     "subtitle": "Chúng tôi đã nhận được yêu cầu báo giá của bạn.",
@@ -77,7 +84,7 @@
     "more": "Xem thêm",
     "less": "Thu gọn"
   },
- "ListCouponPage": {
+  "ListCouponPage": {
     "noResult": "Không có kết quả",
     "reset": "Xóa tất cả",
     "all": "Tất cả",
@@ -162,6 +169,7 @@
     "adultsLabel": "Người lớn",
     "children58Label": "Trẻ em 5-8 tuổi",
     "children14Label": "Trẻ em 1-4 tuổi",
+    "children9Label": "Trẻ em 9 tuổi",
     "textPax": "Khách",
     "textApply": "Áp dụng",
     "textApplyVoucherSuccess": "Áp dụng voucher thành công",
@@ -271,6 +279,7 @@
     "textApply": "Áp dụng",
     "textPolicy": "Chính sách",
     "textVoucherResetOnDateChange": "Voucher đã được reset do thay đổi ngày. Vui lòng áp dụng lại voucher.",
-    "textPromotionCode": "Mã giảm giá"
+    "textPromotionCode": "Mã giảm giá",
+    "textExploreOtherHotels": "Khám phá khách sạn khác"
   }
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
 import { cn } from '@/lib/utils'
@@ -20,10 +20,46 @@ const DrawerProvider: FC<DrawerProviderProps> = ({
   setOpen,
   showDrawerDrag = false,
 }) => {
+  useEffect(() => {
+    if (open) {
+      // Lưu lại scroll position và chặn scroll
+      const scrollY = window.scrollY
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.width = '100%'
+      document.body.style.overflow = 'hidden'
+    } else {
+      // Khôi phục scroll
+      const scrollY = document.body.style.top
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.width = ''
+      document.body.style.overflow = ''
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1)
+      }
+    }
+
+    // Cleanup function
+    return () => {
+      if (open) {
+        const scrollY = document.body.style.top
+        document.body.style.position = ''
+        document.body.style.top = ''
+        document.body.style.width = ''
+        document.body.style.overflow = ''
+        if (scrollY) {
+          window.scrollTo(0, parseInt(scrollY || '0') * -1)
+        }
+      }
+    }
+  }, [open])
+
   return (
     <Drawer
       onOpenChange={(open) => setOpen(open)}
       open={open}
+      modal={true}
     >
       <DrawerContent
         suppressHydrationWarning

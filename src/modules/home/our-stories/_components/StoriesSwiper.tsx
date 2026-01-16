@@ -10,6 +10,8 @@ import { useEffect, useRef } from 'react'
 
 import 'swiper/css'
 import 'swiper/css/navigation'
+import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 interface StoriesSwiperProps {
   isLoading: boolean
@@ -28,7 +30,7 @@ const StoriesSwiper = ({
 }: StoriesSwiperProps) => {
   const mobileScrollRef = useRef<HTMLDivElement | null>(null)
   const swiperInstanceRef = useRef<SwiperType | null>(null)
-
+  const t = useTranslations('HomePage.ourStories')
   // Reset Swiper và mobile scroll về vị trí ban đầu khi chuyển tab
   useEffect(() => {
     if (swiperInstanceRef.current) {
@@ -53,7 +55,16 @@ const StoriesSwiper = ({
 
   if (!stories || stories.length === 0) {
     return (
-      <div className='text-center text-[#1F4D37] font-phu-du text-[1.5rem]'>No stories found</div>
+      <div className='flex-center flex-col gap-4'>
+        <Image
+          src='/others/d-empty.svg'
+          alt='no stories'
+          width={310}
+          height={310}
+          className='size-[19.4375rem] object-cover xsm:size-[8rem]'
+        />
+        <h3 className='text-[#1F4D37] font-phu-du text-[1.5rem]'>{t('noResults')}</h3>
+      </div>
     )
   }
 
