@@ -29,6 +29,44 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> = React.forwa
   React.ElementRef<typeof RPNInput.default>,
   PhoneInputProps
 >(({ className, placeholder, required, onChange, value, ...props }, ref) => {
+  const previousCountryRef = React.useRef<RPNInput.Country | undefined>(undefined)
+  const hasInitializedRef = React.useRef(false)
+
+  const handleCountryChange = (country: RPNInput.Country | undefined) => {
+    if (country && country !== previousCountryRef.current) {
+      const countryCode = `+${RPNInput.getCountryCallingCode(country)}`
+      // Tự động điền country code khi chọn quốc gia mới
+      // Nếu input đang trống hoặc chỉ có country code (ví dụ: "+84", "+1"), điền country code mới
+      const currentValue = value || ''
+      const isEmpty = !currentValue || currentValue.trim() === ''
+      const isOnlyCountryCode = currentValue.match(/^\+\d{1,4}$/)
+
+      if (isEmpty || isOnlyCountryCode) {
+        // Sử dụng setTimeout để đảm bảo country đã được cập nhật trước khi điền giá trị
+        setTimeout(() => {
+          onChange?.(countryCode as RPNInput.Value)
+        }, 0)
+      }
+      previousCountryRef.current = country
+    }
+  }
+
+  // Tự động điền country code khi component mount với defaultCountry và value trống
+  React.useEffect(() => {
+    if (!hasInitializedRef.current && props.defaultCountry) {
+      const currentValue = value || ''
+      if (!currentValue || currentValue.trim() === '') {
+        const countryCode = `+${RPNInput.getCountryCallingCode(props.defaultCountry)}`
+        // Sử dụng setTimeout để đảm bảo component đã render xong
+        setTimeout(() => {
+          onChange?.(countryCode as RPNInput.Value)
+        }, 0)
+        previousCountryRef.current = props.defaultCountry
+      }
+      hasInitializedRef.current = true
+    }
+  }, [props.defaultCountry, value, onChange])
+
   return (
     <RPNInput.default
       ref={ref}
@@ -52,6 +90,7 @@ const PhoneInput: React.ForwardRefExoticComponent<PhoneInputProps> = React.forwa
        * @param {E164Number | undefined} value - The entered value
        */
       onChange={(value) => onChange?.(value || ('' as RPNInput.Value))}
+      onCountryChange={handleCountryChange}
       {...props}
     />
   )
