@@ -10,6 +10,7 @@ import homeService from '@/services/home'
 import hotelService from '@/services/hotel'
 import tourService from '@/services/tour'
 import metadataValues from '@/utils/metadataValues'
+import { Metadata } from 'next'
 
 export const dynamicParams = false
 
@@ -17,7 +18,11 @@ export function generateStaticParams() {
   return [{ locale: 'vi' }, { locale: 'en' }]
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
   const { locale } = await params
   const res = await getMetaDataRankMath(
     endpoints.home.rank_math[locale as keyof typeof endpoints.home.rank_math],
@@ -47,10 +52,11 @@ export default async function page({ params }: { params: Promise<{ locale: strin
       />
       <Overview overview={dataHome?.acf?.overview} />
       <OurTours
-        initialTours={tourRes?.data}
-        initialHotels={hotelRes?.data}
+        tourRes={tourRes}
+        hotelRes={hotelRes}
         locations={locationRes?.data}
         ourTours={dataHome?.acf?.our_tours}
+        locale={locale}
       />
       <div className='relative bg-[#FDF4ED]'>
         <div className="pointer-events-none absolute inset-0 bg-[url('/home/explorers/bg-pc.webp')] bg-[length:100%_auto] bg-top bg-repeat-y opacity-8" />
