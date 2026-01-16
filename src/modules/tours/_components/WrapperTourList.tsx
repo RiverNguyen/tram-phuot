@@ -22,6 +22,7 @@ interface WrapperTourListProps {
   taxonomies: ITaxonomy[]
   tourRes: ITourRes
   locale: string
+  limit: number
 }
 
 const buildTourKey = (locale: string, query: Record<string, string>) => {
@@ -35,7 +36,7 @@ const buildTourKey = (locale: string, query: Record<string, string>) => {
   return `tours:${locale}?${params.toString()}`
 }
 
-export default function WrapperTourList({ taxonomies, tourRes, locale }: WrapperTourListProps) {
+export default function WrapperTourList({ taxonomies, tourRes, locale, limit }: WrapperTourListProps) {
   const [openDrawer, setOpenDrawer] = useState(false)
   const [isFixed, setIsFixed] = useState(false)
   const sentinelRef = useRef<HTMLDivElement>(null)
@@ -107,7 +108,7 @@ export default function WrapperTourList({ taxonomies, tourRes, locale }: Wrapper
         tourType: query['tour-type'],
         tourDuration: query['tour-duration'],
         page: query.page,
-        limit: 12,
+        limit,
       }),
     {
       fallbackData: tourRes,
