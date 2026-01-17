@@ -70,7 +70,9 @@ export default function OurTours({
   const tours = tourData ?? tourRes?.data
   const hotels = hotelData ?? hotelRes?.data
 
-  const isFetching = tourLoading || hotelLoading
+  // Chỉ hiển thị skeleton khi đang filter (có location) và đang loading
+  // Khi không có filter, đã có data từ server nên không cần skeleton
+  const isFetching = Boolean(location) && (tourLoading || hotelLoading)
   const isFilter = Boolean(location)
   const swiperRef = useRef<SwiperType | null>(null)
   const mobileScrollRef = useRef<HTMLDivElement | null>(null)

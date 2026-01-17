@@ -415,13 +415,13 @@ export default function WrapperOngoingPromotions({
 
         {/* Promotion Cards */}
         {shouldShowLoading ? (
-          <div className='xsm:grid-cols-1 grid w-full grid-cols-3 gap-[1.25rem]'>
+          <div className='xsm:grid-cols-1 grid w-full grid-cols-3 gap-x-[1.25rem] gap-y-[2.5rem]'>
             {Array.from({ length: 6 }).map((_, idx) => (
               <SkeletonPromotion key={idx} />
             ))}
           </div>
         ) : visibleCoupons.length > 0 ? (
-          <div className='xsm:grid-cols-1 grid w-full grid-cols-3 gap-[1.25rem]'>
+          <div className='xsm:grid-cols-1 grid w-full grid-cols-3 gap-x-[1.25rem] gap-y-[2.5rem]'>
             {visibleCoupons.map((card) => (
               <OngoingPromotionsCard
                 key={card.id}

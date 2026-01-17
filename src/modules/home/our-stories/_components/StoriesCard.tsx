@@ -6,6 +6,16 @@ import { useParams } from 'next/navigation'
 const StoriesCard = ({ story }: { story: IOurStoriesData }) => {
   const { locale } = useParams()
   const href = locale === 'en' ? `/blogs/${story.slug}` : `/danh-sach-tin-tuc/${story.slug}`
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    })
+  }
+
   return (
     <Link
       href={href}
@@ -24,12 +34,12 @@ const StoriesCard = ({ story }: { story: IOurStoriesData }) => {
         />
       </div>
 
-      <div className='xsm:w-full flex flex-col w-[27.08938rem] gap-[0.875rem]'>
+      <div className='xsm:w-full flex flex-col w-[27.08938rem] space-y-[0.625rem]'>
         <h3 className='xsm:text-[1rem] xsm:leading-[1.3rem] xsm:tracking-normal line-clamp-2 text-[#1F4D37] font-phu-du text-[1.75rem] font-medium leading-[2.0625rem] tracking-[-0.03125rem] h-[4.3125rem] xsm:h-[2.5rem]'>
           {story?.title}
         </h3>
         <p className='line-clamp-1 text-[#FF7B4A] font-montserrat text-[0.875rem] font-normal font-semibold leading-[1.4rem] tracking-[-0.00875rem]'>
-          {story?.published}
+          {story?.published ? formatDate(story.published) : ''}
         </p>
       </div>
     </Link>
