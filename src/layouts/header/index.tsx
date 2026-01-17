@@ -22,13 +22,37 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
   const [hoveredSide, setHoveredSide] = useState<'left' | 'right' | null>(null)
   const [openSheet, setOpenSheet] = useState(false)
   const pathname = usePathname()
+  const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null)
 
   const handleItemHover = (index: number, side: 'left' | 'right') => {
+    // Clear any pending close timeout when hovering over nav item
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current)
+      closeTimeoutRef.current = null
+    }
     setHoveredIndex(index)
     setHoveredSide(side)
   }
 
   const handleItemLeave = () => {
+    // Add a small delay before closing to allow mouse to move to dropdown
+    closeTimeoutRef.current = setTimeout(() => {
+      setHoveredIndex(null)
+      setHoveredSide(null)
+      closeTimeoutRef.current = null
+    }, 150)
+  }
+
+  const handleDropdownEnter = () => {
+    // Cancel the close timeout when mouse enters dropdown
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current)
+      closeTimeoutRef.current = null
+    }
+  }
+
+  const handleDropdownLeave = () => {
+    // Close immediately when leaving dropdown
     setHoveredIndex(null)
     setHoveredSide(null)
   }
@@ -40,9 +64,22 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
 
   // Tắt hover khi chuyển trang
   useEffect(() => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current)
+      closeTimeoutRef.current = null
+    }
     setHoveredIndex(null)
     setHoveredSide(null)
   }, [pathname])
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current)
+      }
+    }
+  }, [])
 
   const headerRef = useRef<HTMLElement>(null)
   useScrollHeader(headerRef as React.RefObject<HTMLElement>)
@@ -146,10 +183,8 @@ const Header = ({ data, socialMedia }: { data: IHeader; socialMedia: IHeader['so
               navLeft={navLeft}
               navRight={navRight}
               onClose={handleClose}
-              onMouseEnter={() => {
-                // Keep dropdown open when hovering over it
-              }}
-              onMouseLeave={handleItemLeave}
+              onMouseEnter={handleDropdownEnter}
+              onMouseLeave={handleDropdownLeave}
             />
           </>
         )}
