@@ -44,7 +44,7 @@ export default function OurStories({
   return (
     <div className='xsm:pt-[13.88rem] xsm:pb-[7.5rem] relative w-full h-full pt-[8.48rem] pb-0'>
       <div className='xsm:gap-[1.5rem] relative w-full max-w-[87.5rem] mx-auto h-full flex flex-col gap-[1.64rem]'>
-        <div className='xsm:left-0 xsm:top-[-9.5rem] absolute left-[-3.19rem] top-[-9.71rem]'>
+        <div className='xsm:left-0 xsm:top-[-9.5rem] absolute left-[-3.19rem] top-[-7.5rem]'>
           <BrandTitle
             title={data?.text_decor}
             subtitle={data?.title}
