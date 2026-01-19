@@ -12,6 +12,7 @@ import FilterDrawer from '@/components/shared/Filter/FilterDrawer'
 import SkeletonHotel from './SkeletonHotel'
 import { useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
+import { usePathname } from '@/i18n/navigation'
 import EmptyResult from '@/modules/tours/_components/EmptyResult'
 import hotelService from '@/services/hotels'
 import useSWR from 'swr'
@@ -42,9 +43,10 @@ export default function WrapperHotelList({ taxonomies, hotelRes, locale }: Wrapp
   const shouldBeFixedRef = useRef(false)
   const footerVisibleRef = useRef(false)
   const searchParams = useSearchParams()
+  const pathname = usePathname()
   const t = useTranslations('ListHotelPage')
   const currentPage = +(searchParams.get('page') || searchParams.get('paged') || '1')
-  
+
   const initialFilter = taxonomies.reduce(
     (acc, curr) => {
       const taxonomy = curr.taxonomy
@@ -75,25 +77,30 @@ export default function WrapperHotelList({ taxonomies, hotelRes, locale }: Wrapp
   }
 
   const getInitialQuery = () => {
-    if (typeof window === 'undefined') {
-      return {
-        locations: '',
-        'hotel-amenities': '',
-        page: '1',
-      }
-    }
-
-    const params = new URLSearchParams(window.location.search)
-
     return {
-      locations: params.get('locations') || '',
-      'hotel-amenities': params.get('hotel-amenities') || '',
-      page: params.get('page') || params.get('paged') || '1',
+      locations: searchParams.get('locations') || '',
+      'hotel-amenities': searchParams.get('hotel-amenities') || '',
+      page: searchParams.get('page') || searchParams.get('paged') || '1',
     }
   }
 
-  const initialQuery = useMemo(() => getInitialQuery(), [])
+  const initialQuery = useMemo(() => getInitialQuery(), [searchParams])
   const [query, setQuery] = useState<Record<string, string>>(initialQuery)
+
+  // Reset query when route changes (e.g., navigating from hotels page 2 to promotions)
+  useEffect(() => {
+    const newQuery = getInitialQuery()
+    setQuery(newQuery)
+  }, [pathname, searchParams])
+
+  // Check xem query hiện tại có khác với query ban đầu không
+  const isQueryChanged =
+    query.locations !== initialQuery.locations ||
+    query['hotel-amenities'] !== initialQuery['hotel-amenities'] ||
+    query.page !== initialQuery.page
+
+  // Chỉ dùng fallbackData nếu query khớp với initialQuery (từ server-side)
+  const shouldUseFallback = !isQueryChanged
 
   const { data: swrData, isLoading } = useSWR(
     buildHotelKey(locale, query),
@@ -106,25 +113,22 @@ export default function WrapperHotelList({ taxonomies, hotelRes, locale }: Wrapp
         limit: 12,
       }),
     {
-      fallbackData: hotelRes,
+      fallbackData: shouldUseFallback ? hotelRes : undefined,
       revalidateOnFocus: false,
       keepPreviousData: true,
       dedupingInterval: 5000,
     },
   )
 
-  const hotels = swrData?.data ?? hotelRes?.data ?? []
-  const pages = swrData?.totalPages ?? hotelRes?.totalPages ?? 1
-
-  // Check xem query hiện tại có khác với query ban đầu không
-  const isQueryChanged =
-    query.locations !== initialQuery.locations ||
-    query['hotel-amenities'] !== initialQuery['hotel-amenities'] ||
-    query.page !== initialQuery.page
+  const hotels = swrData?.data ?? (shouldUseFallback ? hotelRes?.data : []) ?? []
+  const pages = swrData?.totalPages ?? (shouldUseFallback ? hotelRes?.totalPages : 1) ?? 1
 
   // Show loading khi:
-  // 1. Đang loading VÀ (query đã thay đổi HOẶC không có data từ server)
-  const shouldShowLoading = isLoading && (isQueryChanged || !hotelRes?.data?.length)
+  // 1. Đang loading VÀ query đã thay đổi (không phải lần đầu load)
+  // 2. Hoặc đang loading VÀ không có data từ server VÀ không có data từ SWR
+  const shouldShowLoading =
+    isLoading &&
+    (isQueryChanged || (!hotelRes?.data?.length && !swrData?.data?.length))
 
   const syncUrl = (nextQuery: Record<string, string>) => {
     const url = new URL(window.location.href)
@@ -163,7 +167,10 @@ export default function WrapperHotelList({ taxonomies, hotelRes, locale }: Wrapp
     setQuery(nextQuery)
     syncUrl(nextQuery)
 
-    scrollToSection('hotel-list-container', 1, 5)
+    // Delay scroll để đợi data load và DOM render
+    setTimeout(() => {
+      scrollToSection('hotel-list-container', 1, 5)
+    }, 300)
   }
 
   const onMobileFilterChange = (taxonomy: string, value: string | string[]) => {
@@ -190,7 +197,10 @@ export default function WrapperHotelList({ taxonomies, hotelRes, locale }: Wrapp
     syncUrl(nextQuery)
     setOpenDrawer(false)
 
-    scrollToSection('hotel-list-container', 1, 5)
+    // Delay scroll để đợi data load và DOM render
+    setTimeout(() => {
+      scrollToSection('hotel-list-container', 1, 5)
+    }, 300)
   }
 
   const resetFilter = () => {
@@ -213,7 +223,10 @@ export default function WrapperHotelList({ taxonomies, hotelRes, locale }: Wrapp
     setQuery(resetQuery)
     syncUrl(resetQuery)
 
-    scrollToSection('hotel-list-container', 1, 5)
+    // Delay scroll để đợi data load và DOM render
+    setTimeout(() => {
+      scrollToSection('hotel-list-container', 1, 5)
+    }, 300)
   }
 
   useEffect(() => {
@@ -273,7 +286,7 @@ export default function WrapperHotelList({ taxonomies, hotelRes, locale }: Wrapp
   return (
     <div
       id='hotel-list-container'
-      className='xsm:px-[1rem] xsm:py-[2.5rem] xsm:gap-[2.5rem] relative mx-auto flex h-full w-full max-w-[87.5rem] flex-col items-center gap-[3.75rem] pt-[5rem] pb-[3.75rem] mt-[-2px]'
+      className='xsm:px-[1rem] xsm:pb-[2.5rem] xsm:pt-0 xsm:gap-[2.5rem] relative mx-auto flex h-full w-full max-w-[87.5rem] flex-col items-center gap-[3.75rem] pt-[5rem] pb-0 mt-[-2px]'
     >
       <div className='xsm:gap-[1.5rem] flex w-full flex-col items-start gap-[2.5rem] relative'>
         {/* Filter Desktop */}

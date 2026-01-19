@@ -233,32 +233,32 @@ export default function OurTours({
                   >
                     {isFetching
                       ? Array.from({ length: 8 }).map((_, i) => (
-                          <SwiperSlide
-                            key={i}
-                            className='xsm:w-[15.67125rem]! w-[19.125rem]!'
-                          >
-                            <SkeletonTour className='xsm:h-[22.6875rem] h-[27.6875rem]' />
-                          </SwiperSlide>
-                        ))
+                        <SwiperSlide
+                          key={i}
+                          className='xsm:w-[15.67125rem]! w-[19.125rem]!'
+                        >
+                          <SkeletonTour className='xsm:h-[22.6875rem] h-[27.6875rem]' />
+                        </SwiperSlide>
+                      ))
                       : tours.map((tour, i) => (
-                          <SwiperSlide
-                            key={i}
-                            className='xsm:w-[15.67125rem]! w-[19.125rem]!'
-                          >
-                            <TourCard
-                              tourType={tour?.taxonomies?.['tour-type']?.[0]?.name || ''}
-                              taxonomies={tour?.taxonomies?.['tour-duration'] || []}
-                              tourName={tour?.title}
-                              tourLocation={tour?.taxonomies?.locations?.[0]?.name || ''}
-                              tourPrice={Number.parseFloat(tour?.acf?.price_person || '0') || 0}
-                              tourThumbnail={tour?.thumbnail as any}
-                              tourSlug={tour?.slug}
-                              type='tour'
-                              size='medium'
-                              classNameCard='xsm:h-[22.6875rem] h-[27.6875rem]'
-                            />
-                          </SwiperSlide>
-                        ))}
+                        <SwiperSlide
+                          key={i}
+                          className='xsm:w-[15.67125rem]! w-[19.125rem]!'
+                        >
+                          <TourCard
+                            tourType={tour?.taxonomies?.['tour-type']?.[0]?.name || ''}
+                            taxonomies={tour?.taxonomies?.['tour-duration'] || []}
+                            tourName={tour?.title}
+                            tourLocation={tour?.taxonomies?.locations?.[0]?.name || ''}
+                            tourPrice={Number.parseFloat(tour?.acf?.price_person || '0') || 0}
+                            tourThumbnail={tour?.thumbnail as any}
+                            tourSlug={tour?.slug}
+                            type='tour'
+                            size='medium'
+                            classNameCard='xsm:h-[22.6875rem] h-[27.6875rem]'
+                          />
+                        </SwiperSlide>
+                      ))}
                   </Swiper>
                 )}
               </>
@@ -285,28 +285,28 @@ export default function OurTours({
                   >
                     {isFetching
                       ? Array.from({ length: 8 }).map((_, i) => (
+                        <SwiperSlide
+                          key={i}
+                          className='xsm:w-[15.67125rem]! w-[19.125rem]!'
+                        >
+                          <SkeletonTour className='xsm:h-[22.6875rem] h-[27.6875rem]' />
+                        </SwiperSlide>
+                      ))
+                      : hotels.map((hotel, i) => {
+                        hotel.type = t('stayPoints')
+
+                        return (
                           <SwiperSlide
                             key={i}
-                            className='xsm:w-[15.67125rem]! w-[19.125rem]!'
+                            className='xsm:w-[15.67125rem]! w-[19.125rem]! h-[27.6875rem]'
                           >
-                            <SkeletonTour className='xsm:h-[22.6875rem] h-[27.6875rem]' />
+                            <HotelCard
+                              hotel={hotel}
+                              className='xsm:h-[22.6875rem] h-[27.6875rem]'
+                            />
                           </SwiperSlide>
-                        ))
-                      : hotels.map((hotel, i) => {
-                          hotel.type = t('stayPoints')
-
-                          return (
-                            <SwiperSlide
-                              key={i}
-                              className='xsm:w-[15.67125rem]! w-[19.125rem]! h-[27.6875rem]'
-                            >
-                              <HotelCard
-                                hotel={hotel}
-                                className='xsm:h-[22.6875rem] h-[27.6875rem]'
-                              />
-                            </SwiperSlide>
-                          )
-                        })}
+                        )
+                      })}
                   </Swiper>
                 )}
               </>
@@ -404,21 +404,21 @@ export default function OurTours({
           alt=''
           width={0}
           height={0}
-          className='xsm:hidden absolute -bottom-[1.45rem] left-[0.38rem] z-3 h-[6.853rem] w-[9.40644rem]'
+          className='xsm:hidden absolute -bottom-[2.3rem] left-[0.38rem] z-3 h-[10.853rem] w-[10.40644rem]'
         />
         <Image
           src='/home/our-tours/d-span-2.svg'
           alt=''
           width={0}
           height={0}
-          className='xsm:hidden absolute bottom-[calc(100%+1rem)] left-[26.81rem] z-3 h-[5.55694rem] w-auto'
+          className='xsm:hidden absolute bottom-full left-[26.81rem] z-3 h-auto w-[12rem]'
         />
         <Image
           src='/home/our-tours/d-span-3.svg'
           alt=''
           width={0}
           height={0}
-          className='xsm:hidden absolute -bottom-[1.5rem] left-[40.12rem] z-3 h-auto w-[4.97038rem]'
+          className='xsm:hidden absolute -bottom-[2rem] left-[40.12rem] z-3 h-auto w-[4.97038rem]'
         />
         <Image
           src='/home/our-tours/d-woman.webp'

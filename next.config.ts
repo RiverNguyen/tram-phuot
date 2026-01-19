@@ -19,6 +19,7 @@ const nextConfig: NextConfig = {
     turbopackSourceMaps: false,
     serverSourceMaps: false,
   },
+  reactCompiler: true,
 }
 
 const withNextIntl = createNextIntlPlugin()

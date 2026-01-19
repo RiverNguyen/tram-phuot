@@ -134,7 +134,7 @@ const BookingRoom = ({ rooms, onChangeSelection, clearRoomIndex }: BookingRoomPr
       )}
       <section
         id='booking-room-dorm'
-        className='p-8 pr-0 rounded-[0.5rem] bg-white mt-8 relative z-[0] xsm:px-4 xsm:pt-8 xsm:pb-0 xsm:bg-transparent xsm:rounded-none xsm:border-t-black/10 xsm:mt-0'
+        className='p-8 pr-0 rounded-[0.5rem] bg-white mt-8 relative z-[0] xsm:px-4 xsm:pt-8 xsm:pb-0 xsm:bg-transparent xsm:rounded-none xsm:border-black/10 xsm:border-t xsm:mt-8'
       >
         <div className='flex items-center space-x-[0.625rem] mb-6 xsm:flex-col xsm:items-start'>
           <h3 className='text-[1.5rem] xsm:text-[1.125rem] font-phu-du leading-[1.1] font-bold bg-clip-text text-transparent bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>

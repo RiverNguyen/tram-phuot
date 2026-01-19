@@ -10,6 +10,7 @@ import { useTranslations } from 'next-intl'
 import { useContext, useEffect, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { BrandButton } from '..'
 
 interface ContactFormContentProps {
   onSubmitForm: (data: ContactFormValues) => Promise<{ success: boolean }>
@@ -121,7 +122,7 @@ export default function ContactFormContent({
                 required
                 field={field}
                 className='col-span-full'
-                placeholder='Pham Thanh'
+                placeholder={translateContactFormBooking('textFullName')}
               />
             )}
           />
@@ -133,7 +134,7 @@ export default function ContactFormContent({
                 required
                 field={field}
                 className='col-span-1'
-                placeholder='thomas123@gmail.com'
+                placeholder={translateContactFormBooking('textEmail')}
               />
             )}
           />
@@ -145,7 +146,7 @@ export default function ContactFormContent({
                 required
                 field={field}
                 className='col-span-1'
-                placeholder='033.8792.9999'
+                placeholder={translateContactFormBooking('textPhoneNumber')}
               />
             )}
           />
@@ -176,12 +177,15 @@ export default function ContactFormContent({
         type='submit'
         form='contact-form'
         disabled={isPending}
-        className='flex-center h-10 w-full cursor-pointer rounded-[0.625rem] bg-[linear-gradient(50deg,#03328C_-18.36%,#00804D_82.62%)] disabled:cursor-not-allowed disabled:opacity-50'
+        className='flex-center h-10 w-full cursor-pointer rounded-[0.625rem] bg-[linear-gradient(50deg,#03328C_-18.36%,#00804D_82.62%)] disabled:cursor-not-allowed disabled:opacity-50 xsm:hidden'
       >
         <span className='font-montserrat text-[0.875rem] leading-none font-semibold text-[#F9EAD5] uppercase'>
           {translateContactFormBooking('submitButton')}
         </span>
       </button>
+      <BrandButton type={{ variant: 'button', type: 'submit', form: 'contact-form' }} disabled={isPending} variant='blueGradient' classNameButtonContainer='w-full mt-[1rem]'>
+        {translateContactFormBooking('submitButton')}
+      </BrandButton>
     </section>
   )
 }

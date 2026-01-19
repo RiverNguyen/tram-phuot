@@ -3,15 +3,21 @@
 import { cn } from '@/lib/utils'
 import { scrollToSection } from '@/utils/scrollToSection'
 import { useEffect, useState } from 'react'
+import { useTranslations } from 'next-intl'
 
-const SECTIONS = [
-  { id: 'section-overview', label: 'Overview' },
-  { id: 'section-detail-itinerary', label: 'Detail Itinerary' },
-  { id: 'section-booking', label: 'Booking tour' },
-  { id: 'section-policy', label: 'Policy' },
-]
+
 
 export default function FixedCta() {
+  const translateDetailsTourPage = useTranslations('DetailsTourPage')
+
+
+  const SECTIONS = [
+    { id: 'section-overview', label: translateDetailsTourPage('sectionOverviewTitle') },
+    { id: 'section-detail-itinerary', label: translateDetailsTourPage('sectionDetailItineraryTitle') },
+    { id: 'section-booking', label: translateDetailsTourPage('sectionBookingTourTitle') },
+    { id: 'section-policy', label: translateDetailsTourPage('sectionPolicyTitle') },
+  ]
+
   const [activeId, setActiveId] = useState(SECTIONS[0].id)
   const [isFooterVisible, setIsFooterVisible] = useState(false)
 
@@ -61,10 +67,15 @@ export default function FixedCta() {
     scrollToSection(sectionId, 1, 6)
   }
 
-  if (isFooterVisible) return null
-
   return (
-    <div className='xsm:hidden fixed right-0 bottom-0 left-0 z-50 flex h-13.25 w-full items-center bg-white px-25 shadow-[0_-4px_12px_0_rgba(0,0,0,0.08)]'>
+    <div
+      className={cn(
+        'xsm:hidden fixed right-0 bottom-0 left-0 z-50 flex h-13.25 w-full items-center bg-white px-25 shadow-[0_-4px_12px_0_rgba(0,0,0,0.08)] transition-all duration-300 ease-in-out',
+        isFooterVisible
+          ? 'translate-y-full opacity-0 pointer-events-none'
+          : 'translate-y-0 opacity-100 pointer-events-auto',
+      )}
+    >
       {SECTIONS.map((item, index) => (
         <button
           key={index}

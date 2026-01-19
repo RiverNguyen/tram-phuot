@@ -24,7 +24,7 @@ export default function Footer({ data }: { data: IFooter }) {
   return (
     <footer
       className={cn(
-        'xsm:h-auto relative z-[11] h-[85.8125rem] overflow-hidden bg-[#FDF4ED]',
+        'xsm:h-auto relative z-[11] h-[88.8125rem] overflow-hidden bg-[#FDF4ED]',
         !isLoading && isMobile && isThankyouPage && 'bg-transparent',
         isBlogDetail && 'xsm:mb-[2.75rem]',
       )}
@@ -35,6 +35,7 @@ export default function Footer({ data }: { data: IFooter }) {
         <div className="pointer-events-none absolute inset-0 bg-[url('/uu-dai/bg.webp')] bg-cover bg-bottom" />
       )}
 
+      <DecorOrange className='absolute top-[6rem] left-[-4rem] size-[35rem] z-[1] blur-[20px]' />
       {/* Background + mask */}
       <div className="xsm:mask-[url('/footer/d-footer_mask_mobile.webp')] xsm:mask-size-[23.4375rem_32rem] absolute inset-0 mask-alpha mask-no-repeat sm:mask-[url('/footer/d-footer_mask.webp')] sm:mask-size-[100.07813rem_92.876rem]">
         <Image
@@ -50,7 +51,7 @@ export default function Footer({ data }: { data: IFooter }) {
           alt={data?.form_footer?.background?.desktop?.alt}
           width={data?.form_footer?.background?.desktop?.width}
           height={data?.form_footer?.background?.desktop?.height}
-          className='xsm:hidden absolute -top-[3.5rem] left-0 h-[92.36544rem] w-[100.12506rem] object-contain'
+          className='xsm:hidden absolute -top-[3.5rem] left-0 h-[89.36544rem] w-[100.12506rem] object-cover'
         />
         {/* Overlay */}
         <div className='xsm:h-[29.875rem] absolute top-0 right-0 left-0 z-1 h-[83.01219rem] w-full bg-black/28'></div>
@@ -79,7 +80,7 @@ export default function Footer({ data }: { data: IFooter }) {
                 className='relative z-1'
               ></div>
             </h3>
-            <div className='xsm:mt-2 xsm:mb-0 relative -mt-4 mb-[1.81rem]'>
+            <div className='xsm:mt-2 xsm:mb-0 relative -mt-4 mb-[1rem]'>
               <h2 className='font-phu-du xsm:max-w-[18.55388rem] xsm:mx-auto xsm:text-4xl xsm:text-center xsm:leading-10 xsm:-rotate-[2.664deg] relative max-w-[34.05738rem] text-[4.125rem] leading-[4.125rem] font-bold text-white uppercase whitespace-pre'>
                 {data?.form_footer?.form_title}
               </h2>
@@ -113,10 +114,10 @@ export default function Footer({ data }: { data: IFooter }) {
       </div>
 
       {/* Bottom Content */}
-      <div className='pointer-events-none xsm:h-auto xsm:relative absolute z-4 h-[42.125rem] overflow-hidden sm:right-0 sm:bottom-0 sm:left-0'>
+      <div className='pointer-events-none xsm:h-auto xsm:relative absolute z-4 h-[42.125rem] overflow-hidden sm:right-0 xsm:mt-[-1rem] sm:bottom-0 sm:left-0'>
         <div className='xsm:hidden pointer-events-none absolute top-0 right-0 left-0 h-[42.4375rem] w-full bg-[linear-gradient(180deg,rgba(1,86,63,0.00)_0%,rgba(1,68,57,0.25)_10.05%,rgba(2,33,45,0.79)_27.39%,#021429_44.32%,#021028_73.23%,#020E27_100%)] select-none'></div>
 
-        <div className='xsm:hidden pointer-events-none absolute right-0 -bottom-[1.15rem] left-0 z-1 h-[43.25rem] bg-[linear-gradient(180deg,rgba(217,217,217,0.00)_0%,#A2A2A2_28.34%,#737373_100%)] mask-[url("/footer/d-footer_bottom_deco.webp")] mask-alpha mask-cover mask-no-repeat'></div>
+        <div className='xsm:hidden pointer-events-none absolute right-0 bottom-[1rem] left-0 z-1 h-[43.25rem] bg-[linear-gradient(180deg,rgba(217,217,217,0.00)_0%,#A2A2A2_28.34%,#737373_100%)] mask-[url("/footer/d-footer_bottom_deco.webp")] mask-alpha mask-cover mask-no-repeat'></div>
 
         <div className='pointer-events-auto xsm:relative absolute z-2 mx-auto max-w-[87.805rem] sm:right-0 sm:bottom-0 sm:left-0'>
           {!isLoading && isMobile && (
@@ -243,3 +244,22 @@ export default function Footer({ data }: { data: IFooter }) {
     </footer>
   )
 }
+
+const DecorOrange = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="485" height="892" viewBox="0 0 485 892" fill="none" {...props} >
+    <g opacity="0.6" filter="url(#filter0_f_4550_14610)">
+      <path d="M296.525 135.906L76.0098 148.896C-28.0661 155 -117.43 225.271 -148.262 324.808L-265.015 703.55H5.26953C131.569 703.55 237.993 609.334 253.487 484.13L296.369 135.906H296.525Z" fill="url(#paint0_linear_4550_14610)" fillOpacity="0.6" />
+    </g>
+    <defs>
+      <filter id="filter0_f_4550_14610" x="-452.916" y="-51.9937" width="937.341" height="943.441" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+        <feGaussianBlur stdDeviation="93.95" result="effect1_foregroundBlur_4550_14610" />
+      </filter>
+      <linearGradient id="paint0_linear_4550_14610" x1="153.636" y1="213.846" x2="-96.4587" y2="716.383" gradientUnits="userSpaceOnUse">
+        <stop offset="0.03" stopColor="#FFB715" />
+        <stop offset="1" stopColor="#F04C05" />
+      </linearGradient>
+    </defs>
+  </svg>
+)

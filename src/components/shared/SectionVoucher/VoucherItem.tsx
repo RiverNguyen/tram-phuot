@@ -59,7 +59,7 @@ export default function VoucherItem({
   return (
     <article
       className={cn(
-        'xsm:w-full xsm:h-38.25 xsm:drop-shadow-[0_3.026px_12.106px_rgba(0,0,0,0.12)] relative h-[11.9725rem] w-full rounded-[1.25rem] drop-shadow-[0_4px_16px_rgba(0,0,0,0.12)]',
+        'xsm:w-full xsm:h-38.25 xsm:drop-shadow-[0_3.547px_14.19px_rgba(0,0,0,0.12)] relative h-[11.9725rem] w-full rounded-[1.25rem] drop-shadow-[0_3.547px_14.19px_rgba(0,0,0,0.12)]',
         classNameCard,
       )}
     >

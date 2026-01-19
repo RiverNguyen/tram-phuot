@@ -25,6 +25,8 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
       '<p><strong>"Station" (Trạm):</strong> A sanctuary to recharge after a long journey—a safe, familiar space in the heart of unfamiliar lands.</p><p><strong>"Wanderlust" (Phượt):</strong> The embodiment of an intense passion for discovery and the freedom to escape daily life, immersing yourself in nature and local culture.</p>',
   }
 
+
+
   const isInView = useInView(sectionRef, { once: true, amount: 0.3 })
 
   return (
@@ -64,15 +66,15 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
             isInView={isInView}
             className='w-[29.26269rem] xsm:w-[21.4rem]'
           />
-  
+
           <Article2
             about={about.content_3}
             isInView={isInView}
-            className='w-[26.95019rem] xsm:w-[21.4rem] sm:mt-[7.12rem]'
+            className='xsm:w-[21.4rem] sm:mt-[7.12rem]'
           />
         </div>
       </div>
-      <div className='absolute right-0 top-[20rem] xsm:top-[27.1875rem] xsm:left-[-10.55rem] xsm:w-[36.35006rem]'>
+      <div className='absolute right-0 top-[22rem] xsm:top-[27.1875rem] xsm:left-[-10.55rem] xsm:w-[36.35006rem]'>
         {/* image dynamic 1 */}
         <div className='xsm:top-[-2rem] xsm:left-[17.37rem] xsm:w-[9.53106rem] xsm:h-[6.30244rem] xsm:p-[0.14356rem] xsm:rotate-[-5.691deg] xsm:shadow-[-35.89px_72.068px_22.396px_0_rgba(0,0,0,0),-22.97px_45.94px_20.673px_0_rgba(0,0,0,0.01),-12.921px_25.841px_17.514px_0_rgba(0,0,0,0.05),-5.742px_11.485px_12.921px_0_rgba(0,0,0,0.09),-1.436px_2.871px_7.178px_0_rgba(0,0,0,0.1)] image-dynamic-1 z-2 absolute top-[-8.84rem] left-[35rem] w-[26.43281rem] h-[17.47875rem] rotate-[-5.681deg] p-[0.42931rem] overflow-hidden bg-white shadow-[-107.323px_215.505px_66.97px_0_rgba(0,0,0,0),-68.687px_137.373px_61.818px_0_rgba(0,0,0,0.01),-38.636px_77.273px_52.374px_0_rgba(0,0,0,0.05),-17.172px_34.343px_38.636px_0_rgba(0,0,0,0.09),-4.293px_8.586px_21.465px_0_rgba(0,0,0,0.10)]'>
           <Image
@@ -84,7 +86,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           />
         </div>
         {/* image dynamic 2 */}
-        <div className='xsm:top-[2.8rem] xsm:left-[19.1rem] xsm:w-[4.38581rem] xsm:h-[6.29475rem] xsm:p-[0.14356rem] xsm:rotate-[19.529deg] xsm:z-4 xsm:shadow-[-58.984px_118.439px_36.806px_0_rgba(0,0,0,0.00),-37.75px_75.499px_33.975px_0_rgba(0,0,0,0.01),-21.234px_42.468px_28.784px_0_rgba(0,0,0,0.05),-9.437px_18.875px_21.234px_0_rgba(0,0,0,0.09),-2.359px_4.719px_11.797px_0_rgba(0,0,0,0.10)] image-dynamic-2 z-2 absolute top-[4.3125rem] left-[38.12rem] w-[12.68819rem] h-[21.23656rem] rotate-[19.529deg] p-[0.35rem] overflow-hidden bg-white shadow-[-107.323px_215.505px_66.97px_0_rgba(0,0,0,0),-68.687px_137.373px_61.818px_0_rgba(0,0,0,0.01),-38.636px_77.273px_52.374px_0_rgba(0,0,0,0.05),-17.172px_34.343px_38.636px_0_rgba(0,0,0,0.09),-4.293px_8.586px_21.465px_0_rgba(0,0,0,0.10)]'>
+        <div className='xsm:top-[2.8rem] xsm:left-[19.1rem] xsm:w-[4.38581rem] xsm:h-[6.29475rem] xsm:p-[0.14356rem] xsm:rotate-[19.529deg] xsm:z-4 xsm:shadow-[-58.984px_118.439px_36.806px_0_rgba(0,0,0,0.00),-37.75px_75.499px_33.975px_0_rgba(0,0,0,0.01),-21.234px_42.468px_28.784px_0_rgba(0,0,0,0.05),-9.437px_18.875px_21.234px_0_rgba(0,0,0,0.09),-2.359px_4.719px_11.797px_0_rgba(0,0,0,0.10)] image-dynamic-2 z-2 absolute top-[5.3125rem] left-[38.12rem] w-[12.68819rem] h-[21.23656rem] rotate-[19.529deg] p-[0.35rem] overflow-hidden bg-white shadow-[-107.323px_215.505px_66.97px_0_rgba(0,0,0,0),-68.687px_137.373px_61.818px_0_rgba(0,0,0,0.01),-38.636px_77.273px_52.374px_0_rgba(0,0,0,0.05),-17.172px_34.343px_38.636px_0_rgba(0,0,0,0.09),-4.293px_8.586px_21.465px_0_rgba(0,0,0,0.10)]'>
           <Image
             src={about?.decor_images.framed_image_2?.url || ''}
             alt='Image dynamic 2'
@@ -94,7 +96,7 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           />
         </div>
         {/* image dynamic 3 */}
-        <div className='xsm:top-[12.17rem] xsm:left-[23.51rem] xsm:w-[6.00375rem] xsm:h-[5.02525rem] xsm:p-[0.14356rem] xsm:rotate-[-2.529deg] xsm:z-3 xsm:shadow-[-55.13px_110.701px_34.401px_0_rgba(0,0,0,0.00),-35.283px_70.567px_31.755px_0_rgba(0,0,0,0.01),-19.847px_39.694px_26.904px_0_rgba(0,0,0,0.05),-8.821px_17.642px_19.847px_0_rgba(0,0,0,0.09),-2.205px_4.41px_11.026px_0_rgba(0,0,0,0.10)] image-dynamic-3 z-2 absolute top-[30rem] right-[15.75rem] w-[12.02744rem] h-[10.16169rem] rotate-[-2.529deg] p-[0.35rem] overflow-hidden bg-white shadow-[-100.311px_201.425px_62.594px_0_rgba(0,0,0,0),-64.199px_128.399px_57.779px_0_rgba(0,0,0,0.01),-36.112px_72.224px_48.952px_0_rgba(0,0,0,0.05),-16.05px_32.1px_36.112px_0_rgba(0,0,0,0.09),-4.012px_8.025px_20.062px_0_rgba(0,0,0,0.1)]'>
+        <div className='xsm:top-[12.17rem] xsm:left-[23.51rem] xsm:w-[6.00375rem] xsm:h-[5.02525rem] xsm:p-[0.14356rem] xsm:rotate-[-2.529deg] xsm:z-3 xsm:shadow-[-55.13px_110.701px_34.401px_0_rgba(0,0,0,0.00),-35.283px_70.567px_31.755px_0_rgba(0,0,0,0.01),-19.847px_39.694px_26.904px_0_rgba(0,0,0,0.05),-8.821px_17.642px_19.847px_0_rgba(0,0,0,0.09),-2.205px_4.41px_11.026px_0_rgba(0,0,0,0.10)] image-dynamic-3 z-2 absolute top-[32rem] right-[15.75rem] w-[12.02744rem] h-[10.16169rem] rotate-[-2.529deg] p-[0.35rem] overflow-hidden bg-white shadow-[-100.311px_201.425px_62.594px_0_rgba(0,0,0,0),-64.199px_128.399px_57.779px_0_rgba(0,0,0,0.01),-36.112px_72.224px_48.952px_0_rgba(0,0,0,0.05),-16.05px_32.1px_36.112px_0_rgba(0,0,0,0.09),-4.012px_8.025px_20.062px_0_rgba(0,0,0,0.1)]'>
           <Image
             src={about?.decor_images.framed_image_3?.url || ''}
             alt='Image dynamic 3'
@@ -104,11 +106,11 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
           />
         </div>
         <Image
-          src={'/about-us/d-bg-inked-image-desktop.webp'}
+          src={about?.decor_images?.inked_image?.url || ''}
           alt=''
           width={1280}
           height={924}
-          className='object-cover w-auto h-[57.74781rem] xsm:h-[20.625rem] xsm:w-full'
+          className='object-contain w-auto relative top-[-4rem] xsm:top-0 xsm:left-[3rem] left-[10rem] h-[57.74781rem] sm:mt-[2rem] xsm:h-[20.625rem] xsm:w-full'
         />
       </div>
 

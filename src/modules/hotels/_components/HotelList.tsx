@@ -13,7 +13,7 @@ export default function HotelList({ data }: { data: IHotel[] }) {
   const searchParams = useSearchParams()
 
   return (
-    <div className='xsm:grid-cols-1 grid w-full grid-cols-4 gap-x-[1.125rem] gap-y-[1.5rem] gap-y-[2rem]'>
+    <div className='xsm:grid-cols-1 grid w-full grid-cols-4 gap-x-[1.125rem] xsm:gap-y-[1.5rem] gap-y-[2rem]'>
       {Array.isArray(data) &&
         data.map((hotel) => {
           const baseHref =

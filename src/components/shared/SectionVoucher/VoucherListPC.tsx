@@ -75,7 +75,7 @@ export default function VoucherListPC({ tourCoupons }: VoucherListPCProps) {
         modules={[Pagination, Navigation]}
         grabCursor={true}
         speed={800}
-        className='relative w-full px-8! pt-6! pb-14!'
+        className='relative w-full px-8! pt-9! pb-[4.4rem]!'
       >
         {tourCoupons?.map((item, index) => (
           <SwiperSlide key={index}>

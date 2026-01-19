@@ -47,7 +47,7 @@ export default function SpecialOffers({ data, text1 }: { data: ICoupon[]; text1:
     })
   }, [data])
   return (
-    <div className='xsm:gap-0 flex flex-col items-start gap-[2.5rem] self-stretch'>
+    <div className='xsm:gap-0 flex flex-col items-start self-stretch'>
       <h2 className='xsm:w-full xsm:px-[1rem] xsm:text-[1.25rem] xsm:leading-[1.5rem] xsm:tracking-[0.025rem] font-phu-du mx-auto w-full max-w-[87.5rem] text-[2.125rem] leading-[2.3375rem] font-medium text-[#2E2E2E]'>
         {text1}
       </h2>

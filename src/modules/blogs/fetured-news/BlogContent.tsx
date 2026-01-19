@@ -17,8 +17,8 @@ export default function BlogContent({ blog, baseHref, variant = 'desktop' }: Blo
     <div className='w-full h-full flex flex-col justify-between items-start'>
       <div className='xsm:mb-[1rem] mb-[2.5rem]'>
         {/* taxonomies and date */}
-        <div className='font-montserrat flex items-center gap-[0.5rem] text-[0.875rem] leading-[0.625rem] font-semibold tracking-[-0.00875rem]'>
-          <span className='text-[#F56E0A]'>{blog?.taxonomies?.['type-news']?.[0]?.name}</span>
+        <div className='font-montserrat flex items-center space-x-[0.5rem] text-[0.875rem] leading-[0.625rem] font-semibold tracking-[-0.00875rem]'>
+          <span className='text-[#F56E0A] xsm:max-w-[8rem] xsm:line-clamp-1'>{blog?.taxonomies?.['type-news']?.[0]?.name}</span>
           <span className='size-[0.25rem] rounded-full bg-[#3B3943]'></span>
           <span className='text-[rgba(46,46,46,0.60)]'>
             {new Date(blog?.date).toLocaleDateString(locale, {

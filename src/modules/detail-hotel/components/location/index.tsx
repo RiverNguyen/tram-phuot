@@ -6,14 +6,14 @@ import { useTranslations } from 'next-intl'
 const Location = ({ location }: { location: IHotelDetail['acf']['location'] }) => {
   const t = useTranslations('DetailHotelPage')
   return (
-    <section className='bg-white p-8 rounded-[0.5rem] mt-8 xsm:bg-transparent xsm:p-0 xsm:pt-8 xsm:rounded-none xsm:border xsm:border-t-black/10'>
+    <section className='bg-white p-8 rounded-[0.5rem] mt-8 xsm:bg-transparent xsm:p-0 xsm:pt-8 xsm:rounded-none xsm:border-black/10 xsm:border-t'>
       <div className='flex-y-center space-x-[0.625rem] xsm:px-4'>
         <h3 className='text-[1.5rem] font-phu-du leading-[1.1] font-bold bg-clip-text text-transparent bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-fit'>
           {t('textLocation')}
         </h3>
         <p className='text-[#2E2E2E]/60 text-[0.875rem] leading-[1.5]'>{location?.detail}</p>
       </div>
-      <div className='mt-6 relative w-full group h-[25.125rem] overflow-hidden'>
+      <div className='mt-6 relative w-full group h-[25.125rem] overflow-hidden xsm:mb-[3rem]'>
         <Image
           src={location?.image.url}
           alt={location?.image.alt}

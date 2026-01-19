@@ -4,26 +4,28 @@ import { useTranslations } from 'next-intl'
 
 import { SVGProps } from 'react'
 import VoucherListMB from '@/components/shared/SectionVoucher/VoucherListMB'
+import { cn } from '@/lib/utils'
 
 interface SectionVoucherProps {
   tourCoupons: TourCouponItemType[]
+  type?: 'tour' | 'hotel'
 }
 
-export default function SectionVoucher({ tourCoupons }: SectionVoucherProps) {
+export default function SectionVoucher({ tourCoupons, type = 'tour' }: SectionVoucherProps) {
   const translateComponents = useTranslations('Components')
 
   if (!Array.isArray(tourCoupons) || !tourCoupons.length) return null
 
   return (
-    <section className='relative w-full'>
-      <div className='section-box xsm:rounded-none xsm:bg-transparent xsm:border-none! xsm:shadow-none! relative overflow-hidden rounded-[1.5rem] border border-solid border-[#EDEDED] bg-white pt-8 z-[0]'>
+    <section className='relative w-full mb-2'>
+      <div className='section-box xsm:rounded-none xsm:bg-transparent xsm:border-none! xsm:shadow-none! relative overflow-hidden rounded-[1.5rem] bg-white pt-8 xsm:pt-0 z-[0]'>
         <div className='bg-orange-gradient xsm:hidden absolute -top-9 -right-16.5 h-25.25 w-36 rounded-[3.15625rem]'>
           <div className='absolute top-11.5 left-6 size-[2.25913rem]'>
             <ICStar className='size-full' />
           </div>
         </div>
-        <div className='xsm:px-4 xsm:pb-0 px-8 pb-3'>
-          <h2 className='sm:section-title-h2 xsm:text-[1.25rem] xsm:pr-0 xsm:tracking-[0.025rem] xsm:leading-[1.2] xsm:text-body-t1 font-phu-du w-fit pr-2 text-[1.75rem] leading-8.25 font-bold tracking-[-0.03125rem] uppercase xsm:font-medium'>
+        <div className='xsm:px-4 xsm:pb-0 px-8'>
+          <h2 className={cn(type === 'tour' && 'sm:section-title-h2 xsm:text-[1.25rem] xsm:pr-0 xsm:tracking-[0.025rem] xsm:leading-[1.2]  font-phu-du w-fit pr-2 text-[1.75rem] leading-8.25 font-bold tracking-[-0.03125rem] uppercase xsm:font-medium', type === 'hotel' && 'text-[1.75rem] font-bold leading-[2.0625rem] tracking-[-0.03125rem] bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] bg-clip-text text-transparent w-fit font-phu-du xsm:text-[1.125rem] xsm:leading-[1.1] xsm:tracking-normal')}>
             {translateComponents('SectionVoucher.title')}
           </h2>
         </div>

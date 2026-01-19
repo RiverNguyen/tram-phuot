@@ -5,6 +5,7 @@ import { IHomePageOverview } from '@/interface/homepage.interface'
 import Link from 'next/link'
 import { motion } from 'motion/react'
 import useIsMobile from '@/hooks/use-is-mobile'
+import { cn } from '@/lib/utils'
 
 interface ArticleProps {
   overview: IHomePageOverview
@@ -14,6 +15,9 @@ interface ArticleProps {
 const Article = ({ overview, isInView }: ArticleProps) => {
   const isMobile = useIsMobile()
   const yOffset = isMobile ? '3rem' : '8rem'
+  const lines = overview?.description
+    ?.split(/<br\s*\/?>/i)
+    .filter(Boolean);
 
   return (
     <motion.article
@@ -41,7 +45,7 @@ const Article = ({ overview, isInView }: ArticleProps) => {
         initial={{ y: '3rem' }}
         animate={isInView ? { y: 0 } : { y: '3rem' }}
         transition={{ duration: 1.5, ease: [0.39, 0.02, 0.15, 0.85], delay: 0.3 }}
-        className='text-[#F56E0A] font-motherland text-[3.3125rem] xsm:text-[1.4rem] rotate-[-5.037deg] pl-[5.75rem] translate-y-[1.5rem] xsm:pl-8 xsm:translate-y-[-0.75rem]'
+        className='text-[#F56E0A] font-motherland text-[3.3125rem] xsm:text-[1.4rem] rotate-[-5.037deg] pl-[5.75rem] translate-y-[1.5rem] xsm:pl-8 xsm:translate-y-[-0rem]'
         style={{
           WebkitTextStrokeColor: '#FDF6EC',
           WebkitTextStrokeWidth: '4.61px',
@@ -57,10 +61,22 @@ const Article = ({ overview, isInView }: ArticleProps) => {
         <p>{overview?.title?.line_3}</p>
         <p className='pl-[5rem] xsm:pl-8'>{overview?.title?.line_4}</p>
       </h2>
-      <p className='w-[37.4502rem] xsm:w-[21.4375rem] xsm:text-[0.875rem] xsm:indent-0 mt-4 text-[1.125rem] font-medium leading-[2.0] tracking-[-0.02] indent-[4rem] xsm:ml-[-2rem] xsm:line-clamp-4 underline decoration-dotted decoration-[#AEAFAE] xsm:no-underline'>
-        {overview?.description}
+      <div className="mt-[1rem] xsm:hidden">
+        {lines.map((line, i) => (
+          <div className="relative py-1 w-fit pr-2">
+            <p
+              className={cn("text-[1.125rem] leading-[2] font-medium tracking-[-0.02] text-[#2e2e2e] xsm:text-[0.875rem]", i === 0 && 'sm:indent-[4rem]')}
+              dangerouslySetInnerHTML={{ __html: line }}
+            />
+
+            <span className="pointer-events-none absolute left-0 right-0 bottom-2 border-b border-dashed border-[#AEAFAE] xsm:hidden" />
+          </div>
+
+        ))}
+      </div>
+      <p className='w-[37.4502rem] xsm:w-[21.4375rem] xsm:text-[0.85rem] xsm:indent-0 mt-4 xsm:mt-[0.875rem] text-[1.125rem] font-medium leading-[2.0] tracking-[-0.02] indent-[4rem] xsm:ml-[-2rem] xsm:line-clamp-4 underline decoration-dotted decoration-[#AEAFAE] xsm:no-underline sm:hidden [&_br]:hidden' dangerouslySetInnerHTML={{ __html: overview?.description }}>
       </p>
-      <div className='flex space-x-[0.6875rem] mt-[1.72rem] xsm:flex-col xsm:space-y-[0.875rem] xsm:ml-[-2rem]'>
+      <div className='flex space-x-[0.6875rem] mt-[1.375rem] xsm:flex-col xsm:space-y-[0.875rem] xsm:ml-[-2rem]'>
         <Link
           href={overview?.button_1?.url || ''}
           target={overview?.button_1?.target}

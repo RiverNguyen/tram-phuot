@@ -21,8 +21,17 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   return metadataValues(res)
 }
 
-export default async function page({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params
+export default async function page({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>
+  searchParams: Promise<{ locations?: string; 'hotel-amenities'?: string; page?: string; paged?: string }>
+}) {
+  const [{ locale }, sp] = await Promise.all([params, searchParams])
+  const locations = sp.locations || ''
+  const hotelAmenities = sp['hotel-amenities'] || ''
+  const page = sp.page || sp.paged || '1'
 
   const hotelPage = await fetchData({
     api: ENDPOINTS.hotel[locale as 'en' | 'vi'],
@@ -30,7 +39,7 @@ export default async function page({ params }: { params: Promise<{ locale: strin
 
   const [{ data: taxonomies }, hotelRes] = await Promise.all([
     hotelService.getTaxonomies(locale),
-    hotelService.getHotels({ locale, limit: 12 }),
+    hotelService.getHotels({ locale, locations, hotelAmenities, page, limit: 12 }),
   ])
 
   return (
@@ -42,7 +51,7 @@ export default async function page({ params }: { params: Promise<{ locale: strin
       />
 
       {/* Main content */}
-      <div className='relative w-full h-full bg-[url("/uu-dai/bg.webp")] bg-cover bg-top'>
+      <div className='relative w-full h-full bg-[url("/uu-dai/bg.webp")] bg-cover bg-top xsm:bg-contain'>
         <WrapperHotelList
           hotelRes={hotelRes}
           taxonomies={taxonomies}
