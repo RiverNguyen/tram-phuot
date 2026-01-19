@@ -56,7 +56,7 @@ export default async function page({ params }: { params: Promise<{ locale: strin
       />
 
       {/* Main content */}
-      <div className='relative w-full h-full bg-[url("/uu-dai/bg.webp")] bg-cover bg-top'>
+      <div className='relative w-full h-full bg-[url("/uu-dai/bg.webp")] bg-cover bg-top xsm:bg-contain'>
         <WrapperTourList
           tourRes={tourRes}
           taxonomies={taxonomies}

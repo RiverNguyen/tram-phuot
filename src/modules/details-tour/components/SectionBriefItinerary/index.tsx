@@ -36,8 +36,8 @@ export default function SectionBriefItinerary({
             />
           )}
         </div>
-        <div className='xsm:hidden flex items-center justify-between rounded-[0.75rem] bg-[#F4F4F4] px-3.5 pt-2 pb-3'>
-          <div className='space-y-2'>
+        <div className='xsm:hidden flex items-center justify-between rounded-[0.75rem] bg-[#F4F4F4] px-3.5 py-3'>
+          <div className='space-y-1.5'>
             <p className='flex items-center space-x-1'>
               <ICCompass className='size-4 text-[#F56E0A]' />
               <span className='font-phu-du text-[1.125rem] leading-[1.1] font-bold text-[#F56E0A]'>

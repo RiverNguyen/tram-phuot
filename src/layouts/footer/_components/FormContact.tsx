@@ -80,7 +80,7 @@ export default function FormContact({
           control={form.control}
           name='email'
           render={({ field, fieldState }) => (
-            <FormItem className='xsm:space-y-[0.9375rem] mb-8 space-y-2.5'>
+            <FormItem className='xsm:space-y-[0.9375rem] mb-8 space-y-2.5 xsm:mb-6'>
               <FormControl>
                 <FloatingLabel
                   label='Email'
@@ -98,7 +98,7 @@ export default function FormContact({
           control={form.control}
           name='message'
           render={({ field, fieldState }) => (
-            <FormItem className='xsm:space-y-[0.9375rem] mb-[2.75rem] space-y-2.5'>
+            <FormItem className='xsm:space-y-[0.9375rem] mb-[2.75rem] space-y-2.5 xsm:mb-10'>
               <FormControl>
                 <FloatingLabel
                   label={translateFooter('yourMessage')}
@@ -108,7 +108,7 @@ export default function FormContact({
                 />
               </FormControl>
               <FormMessage className='font-montserrat' />
-              <FormDescription className='font-montserrat xsm:font-medium xsm:text-[0.75rem] xsm:leading-[1.2rem] xsm:-tracking-[0.0075rem] text-[0.875rem] leading-[1.05rem] tracking-[0.00875rem] text-white/60'>
+              <FormDescription className='font-montserrat xsm:font-medium xsm:text-[0.75rem] xsm:leading-[1.2rem] xsm:-tracking-[0.0075rem] text-[0.875rem] leading-[1.05rem] tracking-[0.00875rem] text-white/60 sm:mt-[-0.25rem] xsm:mt-[-0.875rem]'>
                 {translateFooter('formDesc')}
               </FormDescription>
             </FormItem>

@@ -45,7 +45,7 @@ export default function SectionOverview({ overview, siteSettings }: SectionOverv
           <h2 className='xsm:border-[#EDEDED] xsm:w-full xsm:text-[1.25rem] xsm:pb-[0.725rem] xsm:border-b xsm:border-solid font-phu-du section-title-h2 w-fit pr-2 text-[1.75rem] leading-8.25 font-bold tracking-[-0.03125rem]'>
             {translateDetailsTourPage('sectionOverviewTitle')}
           </h2>
-          <p className='font-montserrat xsm:text-[0.75rem] text-body/75 text-[1rem] leading-normal'>
+          <p className='font-montserrat xsm:text-[0.875rem] text-body/75 text-[1rem] leading-normal'>
             {overview?.description || ''}
           </p>
         </div>

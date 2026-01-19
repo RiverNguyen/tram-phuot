@@ -34,7 +34,7 @@ export default function FooterMenu({ title, menus, content, containerClassName }
         {title}
       </p>
       {menus ? (
-        <ul className='flex flex-col space-y-2.5 xsm:flex-row xsm:flex-wrap xsm:space-x-[1.12rem] xsm:space-y-[0.875rem]'>
+        <ul className='flex flex-col space-y-2.5 xsm:flex-row xsm:flex-wrap xsm:space-x-[1.12rem] xsm:space-y-[0.125rem]'>
           {menus.map((menu, i) => (
             <li key={i}>
               <Link

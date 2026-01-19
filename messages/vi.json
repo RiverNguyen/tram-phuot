@@ -207,7 +207,10 @@
     "phoneRequired": "Vui lòng nhập số điện thoại của bạn",
     "phoneInvalid": "Vui lòng nhập số điện thoại hợp lệ",
     "bookingTourSuccessfully": "Đặt tour thành công",
-    "bookingTourFailed": "Đặt tour thất bại. Vui lòng thử lại"
+    "bookingTourFailed": "Đặt tour thất bại. Vui lòng thử lại",
+    "textFullName": "Tên của bạn",
+    "textEmail": "Email",
+    "textPhoneNumber": "Số điện thoại"
   },
   "PhoneInput": {
     "textSearchCountry": "Tìm kiếm quốc gia...",

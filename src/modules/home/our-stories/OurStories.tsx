@@ -42,9 +42,9 @@ export default function OurStories({
   }, [activeTab])
 
   return (
-    <div className='xsm:pt-[13.88rem] xsm:pb-[7.5rem] relative w-full h-full pt-[8.48rem] pb-0'>
-      <div className='xsm:gap-[1.5rem] relative w-full max-w-[87.5rem] mx-auto h-full flex flex-col gap-[1.64rem]'>
-        <div className='xsm:left-0 xsm:top-[-9.5rem] absolute left-[-3.19rem] top-[-7.5rem]'>
+    <div className='xsm:pt-[13.88rem] xsm:pb-[3rem] relative w-full h-full pt-[8.48rem] pb-0'>
+      <div className='xsm:gap-[1.5rem] relative w-full max-w-[87.5rem] mx-auto h-full flex flex-col space-y-[1.64rem]'>
+        <div className='xsm:left-0 xsm:top-[-9.25rem] z-0 absolute left-[-3.19rem] top-[-7.5rem]'>
           <BrandTitle
             title={data?.text_decor}
             subtitle={data?.title}
@@ -61,7 +61,7 @@ export default function OurStories({
         />
 
         {/* stories list */}
-        <div className='w-full pb-[3.3125rem] xsm:pb-0'>
+        <div className='w-full pb-[3.3125rem] mb-0 xsm:pb-0'>
           <StoriesSwiper
             isLoading={isLoading}
             storiesData={storiesData?.data}
@@ -73,7 +73,7 @@ export default function OurStories({
           />
         </div>
 
-        <div className='xsm:px-[1rem] w-full flex items-center gap-[1.625rem]'>
+        <div className='xsm:px-[1rem] w-full flex items-center gap-[1.625rem] xsm:mt-4'>
           <div className='xsm:hidden flex-1 h-[0.0625rem] bg-[#FFC542]' />
           <Link
             href={data?.button?.url || ''}

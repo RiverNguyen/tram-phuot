@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { usePathname } from '@/i18n/navigation'
 import FilterDrawer from '@/components/shared/Filter/FilterDrawer2'
 import FilterPopover from '@/components/shared/Filter/FilterPopover'
 import { mapTaxonomyToFilter } from '@/utils/mapTaxonomyToFilter'
@@ -84,6 +85,7 @@ export default function WrapperOngoingPromotions({
   const shouldBeFixedRef = useRef(false)
   const footerVisibleRef = useRef(false)
   const searchParams = useSearchParams()
+  const pathname = usePathname()
   const t = useTranslations('ListCouponPage')
 
   const filters = mapTaxonomyToFilter(
@@ -147,6 +149,12 @@ export default function WrapperOngoingPromotions({
 
   const initialQuery = useMemo(() => getInitialQuery(), [])
   const [query, setQuery] = useState<Record<string, string>>(initialQuery)
+
+  // Reset query when route changes (e.g., navigating from promotions page 2 to hotels)
+  useEffect(() => {
+    const newQuery = getInitialQuery()
+    setQuery(newQuery)
+  }, [pathname, searchParams])
 
   const { data: swrData, isLoading } = useSWR(
     buildCouponKey(locale, query),
@@ -219,7 +227,10 @@ export default function WrapperOngoingPromotions({
     setQuery(nextQuery)
     syncUrl(nextQuery)
 
-    scrollToSection('ongoing-promotions-section', 1, 7.5)
+    // Delay scroll để đợi data load và DOM render
+    setTimeout(() => {
+      scrollToSection('ongoing-promotions-section', 1, 7.5)
+    }, 300)
   }
 
   const handleApply = (appliedFilters: Record<string, string | string[]>) => {
@@ -239,7 +250,10 @@ export default function WrapperOngoingPromotions({
     setQuery(nextQuery)
     syncUrl(nextQuery)
 
-    scrollToSection('ongoing-promotions-section', 1, 7.5)
+    // Delay scroll để đợi data load và DOM render
+    setTimeout(() => {
+      scrollToSection('ongoing-promotions-section', 1, 7.5)
+    }, 300)
   }
 
   const resetFilter = () => {
@@ -262,7 +276,10 @@ export default function WrapperOngoingPromotions({
     setQuery(resetQuery)
     syncUrl(resetQuery)
 
-    scrollToSection('ongoing-promotions-section', 1, 7.5)
+    // Delay scroll để đợi data load và DOM render
+    setTimeout(() => {
+      scrollToSection('ongoing-promotions-section', 1, 7.5)
+    }, 300)
   }
 
   useEffect(() => {

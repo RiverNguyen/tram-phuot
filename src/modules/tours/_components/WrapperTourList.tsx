@@ -12,6 +12,7 @@ import FilterDrawer from '@/components/shared/Filter/FilterDrawer'
 import SkeletonTour from './SkeletonTour'
 import { useTranslations } from 'next-intl'
 import { useSearchParams } from 'next/navigation'
+import { usePathname } from '@/i18n/navigation'
 import EmptyResult from './EmptyResult'
 import tourService from '@/services/tour'
 import useSWR from 'swr'
@@ -43,6 +44,7 @@ export default function WrapperTourList({ taxonomies, tourRes, locale, limit }: 
   const shouldBeFixedRef = useRef(false)
   const footerVisibleRef = useRef(false)
   const searchParams = useSearchParams()
+  const pathname = usePathname()
   const t = useTranslations('ListTourPage')
   const currentPage = +(searchParams.get('page') || '1')
   const initialFilter = taxonomies.reduce(
@@ -98,6 +100,12 @@ export default function WrapperTourList({ taxonomies, tourRes, locale, limit }: 
 
   const initialQuery = useMemo(() => getInitialQuery(), [])
   const [query, setQuery] = useState<Record<string, string>>(initialQuery)
+
+  // Reset query when route changes (e.g., navigating from tours page 2 to hotels)
+  useEffect(() => {
+    const newQuery = getInitialQuery()
+    setQuery(newQuery)
+  }, [pathname, searchParams])
 
   const { data: swrData, isLoading } = useSWR(
     buildTourKey(locale, query),
@@ -167,7 +175,10 @@ export default function WrapperTourList({ taxonomies, tourRes, locale, limit }: 
     setQuery(nextQuery)
     syncUrl(nextQuery)
 
-    scrollToSection('tour-list-container', 1, 5)
+    // Delay scroll để đợi data load và DOM render
+    setTimeout(() => {
+      scrollToSection('tour-list-container', 1, 5)
+    }, 300)
   }
 
   const onMobileFilterChange = (taxonomy: string, value: string | string[]) => {
@@ -194,7 +205,10 @@ export default function WrapperTourList({ taxonomies, tourRes, locale, limit }: 
     syncUrl(nextQuery)
     setOpenDrawer(false)
 
-    scrollToSection('tour-list-container', 1, 5)
+    // Delay scroll để đợi data load và DOM render
+    setTimeout(() => {
+      scrollToSection('tour-list-container', 1, 5)
+    }, 300)
   }
 
   const resetFilter = () => {
@@ -218,7 +232,10 @@ export default function WrapperTourList({ taxonomies, tourRes, locale, limit }: 
     setQuery(resetQuery)
     syncUrl(resetQuery)
 
-    scrollToSection('tour-list-container', 1, 5)
+    // Delay scroll để đợi data load và DOM render
+    setTimeout(() => {
+      scrollToSection('tour-list-container', 1, 5)
+    }, 300)
   }
 
   useEffect(() => {
@@ -278,7 +295,7 @@ export default function WrapperTourList({ taxonomies, tourRes, locale, limit }: 
   return (
     <div
       id='tour-list-container'
-      className='xsm:px-[1rem] xsm:py-[2.5rem] xsm:gap-[2.5rem] relative mx-auto flex h-full w-full max-w-[87.5rem] flex-col items-center gap-[3.75rem] pt-[5rem] pb-[3.75rem] mt-[-2px]'
+      className='xsm:px-[1rem] xsm:pb-[2.5rem] xsm:pt-0 xsm:gap-[2.5rem] relative mx-auto flex h-full w-full max-w-[87.5rem] flex-col items-center gap-[3.75rem] pt-[5rem] pb-0 mt-[-2px]'
     >
       <div className='xsm:gap-[1.5rem] flex w-full flex-col items-start gap-[2.5rem] relative'>
         {/* Filter Desktop */}

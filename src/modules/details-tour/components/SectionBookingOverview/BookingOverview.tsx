@@ -242,8 +242,8 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
             setAppliedVoucherCode(null)
             const errorMessage = response.message
               ? response.message[locale as 'vi' | 'en'] ||
-                response.message.en ||
-                response.message.vi
+              response.message.en ||
+              response.message.vi
               : translateBookingTourForm('textApplyVoucherError')
             toast.error(errorMessage)
           }
@@ -279,14 +279,14 @@ export default function BookingOverview({ tourDuration, pricePerPax }: BookingOv
       <div className='font-montserrat xsm:px-5 xsm:mb-3 xsm:overflow-y-auto xsm:max-h-[60vh] space-y-3.5'>
         <div className='flex items-start rounded-[1rem] bg-[#F5F5F5] px-3.5 py-2'>
           <div className='shrink-0 space-y-1.5'>
-            <span className='text-[0.875rem] leading-normal text-[#3B3943]'>Duration:</span>
+            <p className='text-[0.875rem] leading-normal text-[#3B3943]'>Duration:</p>
             <p className='capitalize xsm:tracking-normal xsm:text-[0.75rem] text-[0.875rem] leading-[1.2] font-semibold tracking-[0.00875rem] text-[#F56E0A] xsm:mr-[0.8125rem]'>
               {tourDuration?.name || ''}
             </p>
           </div>
           <div className='xsm:ml-1 mr-5 ml-5.75 shrink-0 self-stretch border-r border-solid border-black/12'></div>
           <div className='space-y-1.5'>
-            <span className='text-[0.875rem] leading-normal text-[#3B3943]'>Schedule:</span>
+            <p className='text-[0.875rem] leading-normal text-[#3B3943]'>Schedule:</p>
             <p className='xsm:capitalize xsm:tracking-normal xsm:text-[0.75rem] space-x-1 text-[0.875rem] leading-[1.2] font-semibold tracking-[0.00875rem] text-[#F56E0A]'>
               {startDate && endDate ? (
                 <>

@@ -60,7 +60,7 @@ export default function SectionBanner({
   ]
   return (
     <section className='xsm:h-[31.1875rem] relative h-160 overflow-hidden 2xl:h-screen z-[10]'>
-      <div className='xsm:bottom-[3rem] xsm:px-4 absolute right-0 bottom-23.5 left-0 z-5 mx-auto flex max-w-350 items-end justify-between'>
+      <div className='xsm:bottom-[2.5rem] xsm:px-4 absolute right-0 bottom-23.5 left-0 z-5 mx-auto flex max-w-350 items-end justify-between'>
         <div className='xsm:w-full w-151.5 shrink-0'>
           <Breadcrumb
             breadcrumbItems={breadcrumbItems}
@@ -74,7 +74,7 @@ export default function SectionBanner({
               <ICCompass className='xsm:size-[0.90106rem] xsm:mt-[0.2rem] mt-1.5 size-[1.59194rem] text-[#FFC542]' />
               <span className='xsm:space-x-[0.28rem] flex items-center space-x-2'>
                 <span className='font-phu-du xsm:text-[1.25rem] text-[2.5rem] leading-12 xsm:leading-[1.2] font-medium text-[#FFC542]'>
-                  {fromPricePerPax || '0'}$ USD
+                  {fromPricePerPax || '0'} USD
                 </span>
                 <span className='font-montserrat xsm:text-[0.75rem] inline-block text-[1rem] leading-6 text-white'>
                   /{translateDetailsTourPage('textPerson')}
@@ -146,17 +146,18 @@ export default function SectionBanner({
           className='h-auto w-full'
         />
       </div>
-      <div className='xsm:block pointer-events-none absolute right-0 bottom-[-3px] left-0 z-10 hidden'>
+      <div className='xsm:block pointer-events-none absolute right-0 bottom-[0] left-0 z-1 hidden'>
         <Image
           alt=''
           width={375}
           height={30}
           quality={100}
           unoptimized={true}
-          src='/details-tour/image-decor-bottom-mobile.webp'
+          src='/details-tour/vecto.png'
           className='h-auto w-full'
         />
       </div>
+      <div className="w-full h-[1rem] bg-[#FDF4ED] absolute -bottom-[0.75rem] sm:hidden left-0 z-[2]"></div>
     </section>
   )
 }

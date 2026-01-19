@@ -108,7 +108,7 @@ export default function DetailHotel({
           />
           <Location location={detailHotel?.acf?.location || {}} />
           <div className='mt-8 xsm:mt-0'>
-            <SectionVoucher tourCoupons={coupons || []} />
+            <SectionVoucher tourCoupons={coupons || []} type='hotel' />
           </div>
           <Policy policy={detailHotel?.acf?.policy || {}} />
         </div>
@@ -164,7 +164,7 @@ export default function DetailHotel({
           />
         </DrawerProvider>
       </div>
-      <div className='mt-[5rem] xsm:mt-[2rem]'>
+      <div className='mt-[5rem] xsm:mt-0'>
         <SectionExploreOtherTours
           type='hotel'
           relatedTours={relatedHotels}

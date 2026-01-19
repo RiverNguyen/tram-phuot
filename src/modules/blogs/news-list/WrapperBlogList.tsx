@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect, useRef } from 'react'
 import { useSearchParams } from 'next/navigation'
+import { usePathname } from '@/i18n/navigation'
 import FilterDrawer from '@/components/shared/Filter/FilterDrawer2'
 import FilterPopover from '@/components/shared/Filter/FilterPopover'
 import { mapTaxonomyToFilter } from '@/utils/mapTaxonomyToFilter'
@@ -101,6 +102,7 @@ export default function WrapperBlogList({ taxonomies, blogRes, locale, title }: 
   const shouldBeFixedRef = useRef(false)
   const footerVisibleRef = useRef(false)
   const searchParams = useSearchParams()
+  const pathname = usePathname()
   const t = useTranslations('BlogsPage')
 
   const filters = mapTaxonomyToFilter(
@@ -167,6 +169,12 @@ export default function WrapperBlogList({ taxonomies, blogRes, locale, title }: 
 
   const initialQuery = useMemo(() => getInitialQuery(), [])
   const [query, setQuery] = useState<Record<string, string>>(initialQuery)
+
+  // Reset query when route changes (e.g., navigating from blogs page 2 to hotels)
+  useEffect(() => {
+    const newQuery = getInitialQuery()
+    setQuery(newQuery)
+  }, [pathname, searchParams])
 
   const { data: swrData, isLoading } = useSWR(
     buildBlogKey(locale, query),
@@ -240,7 +248,10 @@ export default function WrapperBlogList({ taxonomies, blogRes, locale, title }: 
     setQuery(nextQuery)
     syncUrl(nextQuery)
 
-    scrollToSection('blog-list-container', 1, 5)
+    // Delay scroll để đợi data load và DOM render
+    setTimeout(() => {
+      scrollToSection('blog-list-container', 1, 5)
+    }, 300)
   }
 
   const handleSortChange = (value: string | string[]) => {
@@ -255,7 +266,10 @@ export default function WrapperBlogList({ taxonomies, blogRes, locale, title }: 
     setQuery(nextQuery)
     syncUrl(nextQuery)
 
-    scrollToSection('blog-list-container', 1, 5)
+    // Delay scroll để đợi data load và DOM render
+    setTimeout(() => {
+      scrollToSection('blog-list-container', 1, 5)
+    }, 300)
   }
 
   const handleApply = (appliedFilters: Record<string, string | string[]>) => {
@@ -279,7 +293,10 @@ export default function WrapperBlogList({ taxonomies, blogRes, locale, title }: 
     setQuery(nextQuery)
     syncUrl(nextQuery)
 
-    scrollToSection('blog-list-container', 1, 5)
+    // Delay scroll để đợi data load và DOM render
+    setTimeout(() => {
+      scrollToSection('blog-list-container', 1, 5)
+    }, 300)
   }
 
   const resetFilter = () => {
@@ -303,7 +320,10 @@ export default function WrapperBlogList({ taxonomies, blogRes, locale, title }: 
     setQuery(resetQuery)
     syncUrl(resetQuery)
 
-    scrollToSection('blog-list-container', 1, 5)
+    // Delay scroll để đợi data load và DOM render
+    setTimeout(() => {
+      scrollToSection('blog-list-container', 1, 5)
+    }, 300)
   }
 
   useEffect(() => {
@@ -385,7 +405,7 @@ export default function WrapperBlogList({ taxonomies, blogRes, locale, title }: 
   return (
     <div
       id='blog-list-container'
-      className='xsm:gap-[1rem] xsm:px-[1rem] flex w-full flex-col gap-[2rem]'
+      className='xsm:space-y-[1rem] xsm:px-[1rem] flex w-full flex-col space-y-[2rem] xsm:mb-[2.5rem]'
     >
       <div className='flex items-center justify-center gap-[3.75rem]'>
         <h2 className='xsm:text-[1.25rem] xsm:leading-[1.5rem] xsm:tracking-[0.025rem] font-phu-du w-[28.5625rem] text-[3rem] leading-[3rem] font-medium text-[#2E2E2E] uppercase'>
@@ -444,7 +464,7 @@ export default function WrapperBlogList({ taxonomies, blogRes, locale, title }: 
         {/* Sentinel element để detect khi scroll qua */}
         <div
           ref={sentinelRef}
-          className='w-full sm:hidden'
+          className='w-full sm:hidden mb-0'
         />
         {/* Button trong document flow - ẩn khi fixed */}
         <div className={`w-full sm:hidden ${isFixed ? 'invisible' : ''}`}>

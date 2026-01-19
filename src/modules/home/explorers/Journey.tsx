@@ -155,8 +155,9 @@ export default function Journey({ explorers }: { explorers: IExplorers }) {
   return (
     <div
       ref={containerRef}
-      className='xsm:px-[1rem] xsm:h-[50.9375rem] relative w-full h-[50.83rem] max-w-[100rem] mx-auto'
+      className='xsm:px-[1rem] xsm:h-[50.9375rem] relative w-full h-[50.83rem] max-w-[100rem] mx-auto mt-[3rem]'
     >
+      <div className='absolute -top-[3rem] left-0 w-full h-[16rem] bg-[#FDF4ED] xsm:hidden' />
       {/* Background */}
       <Image
         src='/home/bg-explorers.webp'

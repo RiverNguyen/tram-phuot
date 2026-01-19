@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { motion } from 'motion/react'
 import useIsMobile from '@/hooks/use-is-mobile'
 import { IAboutUsContent1 } from '@/interface/about.interface'
+import { cn } from '@/lib/utils'
 
 interface ArticleProps {
   about: IAboutUsContent1
@@ -17,6 +18,10 @@ const Article = ({ about, isInView }: ArticleProps) => {
 
   const title = about?.title ?? ''
   const [line1, line2] = title.split(':')
+
+  const lines = about?.description
+    ?.split(/<br\s*\/?>/i)
+    .filter(Boolean);
 
   return (
     <motion.article
@@ -52,19 +57,32 @@ const Article = ({ about, isInView }: ArticleProps) => {
         <h2 className='font-phu-du indent-[6rem] xsm:indent-[3rem] text-[#2E2E2E]'>{line1}:</h2>
 
         {/* LINE 2 */}
-        <h2 className='font-phu-du bg-[linear-gradient(139deg,#FFB715_4.6%,#F04C05_101.16%)] bg-clip-text text-transparent'>
+        <h2 className='font-phu-du bg-[linear-gradient(165deg,#FFB715_4.6%,#F04C05_101.16%)] bg-clip-text text-transparent w-[28rem] xsm:w-auto'>
           {line2?.trim()}
         </h2>
       </div>
+      <div className="mt-7 w-fit xsm:hidden">
+        {lines.map((line, i) => (
+          <div className="relative py-1">
+            <p
+              className={cn("leading-[2] text-[#2e2e2e] xsm:text-[0.875rem]")}
+              dangerouslySetInnerHTML={{ __html: line }}
+            />
 
+            <span className="pointer-events-none absolute left-0 right-0 bottom-2 border-b border-dashed border-[#AEAFAE] xsm:hidden" />
+          </div>
+
+        ))}
+      </div>
       <p
-        className='w-[32rem] xsm:w-[21.32519rem] xsm:text-[0.875rem] xsm:indent-0 mt-8 leading-[2.0] xsm:line-clamp-4 xsm:line-clamp-6'
+        className='w-[32rem] xsm:w-[21.32519rem] xsm:text-[0.875rem] xsm:indent-0 mt-8 leading-[2.0] xsm:line-clamp-6 sm:hidden [&_br]:hidden'
         style={{
           textDecoration: 'underline dotted #AEAFAE',
         }}
+        dangerouslySetInnerHTML={{ __html: about?.description }}
       >
-        {about?.description}
       </p>
+
     </motion.article>
   )
 }

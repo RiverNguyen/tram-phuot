@@ -208,7 +208,10 @@
     "phoneRequired": "Please enter your phone number",
     "phoneInvalid": "Please enter a valid phone number",
     "bookingTourSuccessfully": "Booking tour successfully",
-    "bookingTourFailed": "Booking tour failed. Please try again"
+    "bookingTourFailed": "Booking tour failed. Please try again",
+    "textFullName": "Your name",
+    "textEmail": "Email",
+    "textPhoneNumber": "Phone number"
   },
   "PhoneInput": {
     "textSearchCountry": "Search country...",
@@ -270,7 +273,7 @@
     "textBookingSuccessfulOurStaffWillContactYouSoon": "Booking successful, our staff will contact you soon.",
     "textCheckInDate": "Check in date",
     "textCheckOutDate": "Check out date",
-    "textFullName": "Full name",
+    "textFullName": "Your name",
     "textEmail": "Email",
     "textPhoneNumber": "Phone number",
     "textProvisional": "Provisional",
