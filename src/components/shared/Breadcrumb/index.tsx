@@ -33,7 +33,7 @@ export default function Breadcrumb({
                 classNameBreadcrumbItem,
               )}
             >
-              {isLast ? <span>{label}</span> : <Link href={href}>{label}</Link>}
+              {isLast ? <strong>{label}</strong> : <Link href={href}>{label}</Link>}
             </li>
           )
         })}

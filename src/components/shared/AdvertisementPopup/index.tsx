@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import { XIcon } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -23,6 +23,7 @@ export default function AdvertisementPopup({
 }: AdvertisementPopupProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const scrollPositionRef = useRef<number>(0)
 
   useEffect(() => {
     setMounted(true)
@@ -44,29 +45,34 @@ export default function AdvertisementPopup({
 
     if (isOpen) {
       // Save current scroll position
-      const scrollY = window.scrollY
+      scrollPositionRef.current = window.scrollY
       document.body.style.position = 'fixed'
-      document.body.style.top = `-${scrollY}px`
+      document.body.style.top = `-${scrollPositionRef.current}px`
       document.body.style.width = '100%'
       document.body.style.overflow = 'hidden'
     } else {
       // Restore scroll position
-      const scrollY = document.body.style.top
+      const scrollY = scrollPositionRef.current
       document.body.style.position = ''
       document.body.style.top = ''
       document.body.style.width = ''
       document.body.style.overflow = ''
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0') * -1)
+      // Restore scroll position after styles are reset
+      if (scrollY > 0) {
+        window.scrollTo(0, scrollY)
       }
     }
 
     return () => {
       // Cleanup on unmount
+      const scrollY = scrollPositionRef.current
       document.body.style.position = ''
       document.body.style.top = ''
       document.body.style.width = ''
       document.body.style.overflow = ''
+      if (scrollY > 0) {
+        window.scrollTo(0, scrollY)
+      }
     }
   }, [isOpen, mounted])
 

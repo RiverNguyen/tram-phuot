@@ -14,7 +14,7 @@ export default function SectionPolicy({ policy }: SectionPolicyProps) {
       id='section-policy'
       className='xsm:px-4 relative w-full'
     >
-      <div className='section-box xsm:shadow-none xsm:py-4 xsm:px-3 xsm:rounded-[0.75rem] space-y-4 rounded-[1.5rem] px-8 py-6'>
+      <div className='section-box xsm:shadow-none xsm:py-4 xsm:px-3 xsm:rounded-[0.75rem] space-y-4 rounded-[1.5rem] px-8 py-6 mt-[2rem] xsm:mt-0'>
         <h2 className='xsm:text-[1.25rem] font-phu-du section-title-h2 xsm:pb-[0.725rem] xsm:border-b xsm:border-solid xsm:border-[#EDEDED] xsm:w-full w-fit pr-2 pb-3 text-[1.75rem] leading-8.25 font-bold tracking-[-0.03125rem] uppercase'>
           {translateDetailsTourPage('sectionPolicyTitle')}
         </h2>

@@ -29,7 +29,7 @@ export default function FeturedNews({
           baseHref={baseHref}
         />
       </div>
-      <div className='hidden xsm:flex xsm:gap-[1.25rem] xsm:px-[1rem] xsm:pb-[2.5rem] xsm:pt-[1.25rem] overflow-x-auto hidden_scroll'>
+      <div className='hidden xsm:flex xsm:gap-[1.25rem] xsm:px-[1rem] xsm:pb-[2.25rem] xsm:pt-[1.25rem] overflow-x-auto hidden_scroll'>
         {featuredNewsData?.map((blog: IBlog) => (
           <FeturedNewsMobile
             blog={blog}

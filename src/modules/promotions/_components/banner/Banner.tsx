@@ -32,9 +32,9 @@ export default function Banner({ locale, data }: { locale?: string; data?: PageB
       {/* overlay */}
       <div className='xsm:top-[14.8125rem] xsm:h-[19.5625rem] absolute top-[12.375rem] left-0 h-[24rem] w-full bg-[linear-gradient(180deg,rgba(0,0,0,0.00)_0%,rgba(2,3,5,0.08)_13.88%,#192842_100%)] opacity-[0.68]' />
       {/* content */}
-      <div className='xsm:top-[27.4375rem] xsm:left-[1rem] xsm:gap-[1rem] absolute top-[24.6875rem] left-[7.125rem] inline-flex flex-col items-start gap-[2rem]'>
+      <div className='xsm:top-[26.4375rem] xsm:right-[1rem] xsm:left-[1rem] xsm:gap-[1rem] absolute top-[24.6875rem] left-[7.125rem] inline-flex flex-col items-start gap-[2rem]'>
         <Breadcrumb breadcrumbItems={breadcrumbItems} />
-        <h1 className='xsm:text-[1.25rem] xsm:leading-[1.375rem] xsm:tracking-normal xsm:font-medium font-phu-du text-[3rem] leading-[3.09rem] tracking-[-0.03rem] text-white uppercase text-shadow-[0_4.702px_4.702px_rgba(0,0,0,0.50)]'>
+        <h1 className='xsm:text-[1.875rem] xsm:leading-[1.03] xsm:tracking-[0.01875rem] xsm:font-normal font-phu-du text-[3rem] leading-[3.09rem] tracking-[-0.03rem] text-white uppercase text-shadow-[0_4.702px_4.702px_rgba(0,0,0,0.50)]'>
           {data?.banner?.title}
         </h1>
       </div>

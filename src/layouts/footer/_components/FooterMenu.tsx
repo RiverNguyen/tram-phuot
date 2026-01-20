@@ -30,7 +30,7 @@ function decodeHtmlEntities(text: string): string {
 export default function FooterMenu({ title, menus, content, containerClassName }: FooterMenuProps) {
   return (
     <div className={cn('flex-1', containerClassName)}>
-      <p className='font-phu-du text-[0.75rem] font-medium leading-[0.975rem] tracking-[0.015rem] uppercase text-white/30 mb-[0.625rem] xsm:tracking-[0.0625rem] xsm:leading-[0.9875rem] xsm:text-white/80 xsm:opacity-60'>
+      <p className='font-phu-du text-[0.75rem] font-medium leading-[0.975rem] tracking-[0.015rem] uppercase text-white/30 mb-[0.25rem] xsm:tracking-[0.0625rem] xsm:leading-[0.9875rem] xsm:text-white/80 xsm:opacity-60'>
         {title}
       </p>
       {menus ? (
