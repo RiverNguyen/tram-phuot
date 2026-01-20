@@ -36,7 +36,7 @@ const RoomInfo = ({ room }: RoomInfoProps) => {
       <h4 className='text-[#2e2e2e] font-phu-du text-[1.125rem] font-medium leading-[1.1] w-[21.8125rem] line-clamp-2 mt-[0.625rem] xsm:w-full xsm:line-clamp-2 xsm:mt-4 xsm:text-[1rem] xsn:leading-[1.0]'>
         {room?.title}
       </h4>
-      <div className='my-[1.125rem] xsm:mt-4 space-y-5 xsm:space-y-2'>
+      <div className='my-[1.125rem] xsm:mt-4 space-y-2'>
         <p className='text-[#2e2e2e]/60 text-[0.75rem] font-medium leading-[1.6] tracking-[-0.0075rem]'>
           {t('textArea')} <strong className='text-[#2e2e2e] ml-1'>{room?.acf?.area}</strong>
         </p>

@@ -183,7 +183,7 @@ export default function ContactFormContent({
           {translateContactFormBooking('submitButton')}
         </span>
       </button>
-      <BrandButton type={{ variant: 'button', type: 'submit', form: 'contact-form' }} disabled={isPending} variant='blueGradient' classNameButtonContainer='w-full mt-[1rem]'>
+      <BrandButton type={{ variant: 'button', type: 'submit', form: 'contact-form' }} disabled={isPending} variant='blueGradient' classNameButtonContainer='w-full mt-[1rem] sm:hidden'>
         {translateContactFormBooking('submitButton')}
       </BrandButton>
     </section>

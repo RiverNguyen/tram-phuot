@@ -156,7 +156,7 @@ const CountrySelect = ({
       >
         <PopoverTrigger
           asChild
-          // className='xsm:hidden block'
+        // className='xsm:hidden block'
         >
           <Button
             type='button'
@@ -175,7 +175,7 @@ const CountrySelect = ({
         </PopoverTrigger>
         <PopoverContent
           align='start'
-          className='w-full p-0 hidden_scroll'
+          className='w-full p-0 hidden_scroll relative z-[100]'
         >
           <Command>
             <CommandInput
