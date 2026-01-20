@@ -75,10 +75,7 @@ const Article = ({ about, isInView }: ArticleProps) => {
         ))}
       </div>
       <p
-        className='w-[32rem] xsm:w-[21.32519rem] xsm:text-[0.875rem] xsm:indent-0 mt-8 leading-[2.0] xsm:line-clamp-6 sm:hidden [&_br]:hidden'
-        style={{
-          textDecoration: 'underline dotted #AEAFAE',
-        }}
+        className='w-[32rem] xsm:w-[21.32519rem] xsm:text-[0.875rem] xsm:indent-0 mt-8 leading-[1.7] xsm:line-clamp-6 sm:hidden [&_br]:hidden'
         dangerouslySetInnerHTML={{ __html: about?.description }}
       >
       </p>

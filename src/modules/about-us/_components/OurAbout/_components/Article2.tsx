@@ -47,7 +47,7 @@ const Article = ({ about, isInView, className }: ArticleProps) => {
         ))}
       </div>
       <div
-        className='descriptionWrapper xsm:w-[20.32519rem] sm:hidden text-[1rem] xsm:text-[0.875rem] xsm:indent-0 mt-8 xsm:mt-[0.875rem] leading-[2.0] tracking-[-0.02] xsm:text-[#07364D] [&_br:not(:has(+_strong))]:hidden'
+        className='xsm:w-[20.32519rem] sm:hidden text-[1rem] xsm:text-[0.875rem] xsm:indent-0 mt-8 xsm:mt-[0.875rem] leading-[1.8] tracking-[-0.02] xsm:text-[#07364D] [&_br:not(:has(+_strong))]:hidden'
         dangerouslySetInnerHTML={{ __html: about?.description }}
       />
     </motion.article>
