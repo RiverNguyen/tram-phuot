@@ -75,6 +75,13 @@ export default function OurAbout({ about }: { about: IAboutUs }) {
         </div>
       </div>
       <div className='absolute right-0 top-[22rem] xsm:top-[27.1875rem] xsm:left-[-10.55rem] xsm:w-[36.35006rem]'>
+        <Image
+          src={'/home/overview/bird.webp'}
+          alt='Bird'
+          width={290}
+          height={215}
+          className='absolute top-[5rem] xsm:top-[5rem] xsm:right-[18rem] right-[37rem] xsm:w-[6.48669rem] xsm:h-[4.865rem] w-[17.98975rem] h-[13.49231rem] object-cover'
+        />
         {/* image dynamic 1 */}
         <div className='xsm:top-[-2rem] xsm:left-[17.37rem] xsm:w-[9.53106rem] xsm:h-[6.30244rem] xsm:p-[0.14356rem] xsm:rotate-[-5.691deg] xsm:shadow-[-35.89px_72.068px_22.396px_0_rgba(0,0,0,0),-22.97px_45.94px_20.673px_0_rgba(0,0,0,0.01),-12.921px_25.841px_17.514px_0_rgba(0,0,0,0.05),-5.742px_11.485px_12.921px_0_rgba(0,0,0,0.09),-1.436px_2.871px_7.178px_0_rgba(0,0,0,0.1)] image-dynamic-1 z-2 absolute top-[-8.84rem] left-[35rem] w-[26.43281rem] h-[17.47875rem] rotate-[-5.681deg] p-[0.42931rem] overflow-hidden bg-white shadow-[-107.323px_215.505px_66.97px_0_rgba(0,0,0,0),-68.687px_137.373px_61.818px_0_rgba(0,0,0,0.01),-38.636px_77.273px_52.374px_0_rgba(0,0,0,0.05),-17.172px_34.343px_38.636px_0_rgba(0,0,0,0.09),-4.293px_8.586px_21.465px_0_rgba(0,0,0,0.10)]'>
           <Image
