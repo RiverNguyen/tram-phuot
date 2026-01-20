@@ -14,7 +14,7 @@ interface BannerSliderProps {
   galleryMobile: Array<{ url: string; alt: string }>
 }
 
-export const BannerSlider = ({ gallery, galleryMobile }: BannerSliderProps) => {
+const BannerSlider = ({ gallery, galleryMobile }: BannerSliderProps) => {
   const isMobile = useIsMobile()
 
   return (
@@ -53,8 +53,8 @@ export const BannerSlider = ({ gallery, galleryMobile }: BannerSliderProps) => {
                 src={item.url}
                 alt={item.alt}
                 className='w-full h-full object-cover'
-                priority={index === 0}
                 loading={index === 0 ? undefined : 'lazy'}
+                preload={index === 0}
               />
             </div>
           </SwiperSlide>
@@ -62,3 +62,5 @@ export const BannerSlider = ({ gallery, galleryMobile }: BannerSliderProps) => {
     </Swiper>
   )
 }
+
+export default BannerSlider

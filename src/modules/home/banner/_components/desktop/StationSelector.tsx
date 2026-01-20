@@ -4,7 +4,8 @@ import { ICChevron } from '@/components/icons'
 import { Label } from '@/components/ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { RadioGroup, RadioGroupItemCustom } from '@/components/ui/radio-group'
-import { useTranslations } from 'next-intl'
+import { cn } from '@/lib/utils'
+import { useLocale, useTranslations } from 'next-intl'
 
 interface Station {
   name: string
@@ -23,6 +24,7 @@ export const StationSelector = ({
   onStationChange,
 }: StationSelectorProps) => {
   const t = useTranslations('HomePage.banner')
+  const locale = useLocale()
 
   return (
     <Popover>
@@ -30,7 +32,7 @@ export const StationSelector = ({
         <div className='flex items-end space-x-[1.125rem] cursor-pointer'>
           <div className='space-y-1'>
             <p className='text-[#2e2e2e] text-[0.875rem] leading-[1.6]'>{t('station')}</p>
-            <h3 className='text-[2.125rem] font-medium leading-[0.9] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] w-[11rem] line-clamp-1'>
+            <h3 className={cn('text-[2.125rem] font-medium leading-[0.9] font-phu-du text-transparent bg-clip-text bg-[linear-gradient(230deg,#03328C_5.76%,#00804D_100.15%)] line-clamp-1', locale === 'en' ? 'w-[11rem]' : 'w-[9rem] py-2')}>
               {stations.find((s) => s.value === selectedStation)?.name.toUpperCase() ||
                 stations[0].name.toUpperCase()}
             </h3>

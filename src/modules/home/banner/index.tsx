@@ -3,42 +3,88 @@
 import { ProgressiveBlur } from '@/components/ui/progressive-blur'
 import { IHomePage } from '@/interface/homepage.interface'
 import { ILocation } from '@/interface/taxonomy.interface'
-import { useState } from 'react'
-import { BannerSlider } from './_components/BannerSlider'
-import { BannerTitle } from './_components/BannerTitle'
-import { BookingForm } from './_components/desktop/BookingForm'
-import BookingFormMobile from './_components/mobile/BookingFormMobile'
+import { useState, useMemo, useCallback } from 'react'
+import { BannerTitle } from '@/modules/home/banner/_components/BannerTitle'
+import { BookingForm } from '@/modules/home/banner/_components/desktop/BookingForm'
+import BookingFormMobile from '@/modules/home/banner/_components/mobile/BookingFormMobile'
+
+import dynamic from 'next/dynamic'
+
+const BannerSlider = dynamic(() => import('@/modules/home/banner/_components/BannerSlider'), {
+  ssr: false,
+})
+
+// Helper function để tạo date với time = 00:00:00
+const createDateAtMidnight = (date: Date): Date => {
+  const newDate = new Date(date)
+  newDate.setHours(0, 0, 0, 0)
+  return newDate
+}
+
+// Helper function để tạo ngày tiếp theo
+const getNextDay = (date: Date): Date => {
+  const nextDay = new Date(date)
+  nextDay.setDate(nextDay.getDate() + 1)
+  return nextDay
+}
 
 const BannerHomePage = ({ data, locations }: { data: IHomePage; locations: ILocation[] }) => {
-  // Lấy ngày hiện tại và ngày mai làm giá trị mặc định
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const tomorrow = new Date(today)
-  tomorrow.setDate(tomorrow.getDate() + 1)
+  // Memoize default dates để tránh tính toán lại mỗi lần render
+  const defaultDates = useMemo(() => {
+    const today = createDateAtMidnight(new Date())
+    const tomorrow = getNextDay(today)
+    return { today, tomorrow }
+  }, [])
 
-  const [checkInDate, setCheckInDate] = useState<Date | undefined>(today)
-  const [checkOutDate, setCheckOutDate] = useState<Date | undefined>(tomorrow)
-  const [selectedStation, setSelectedStation] = useState<string>(locations[0]?.slug || '')
+  // Memoize default station để tránh tính toán lại
+  const defaultStation = useMemo(
+    () => locations[0]?.slug || '',
+    [locations]
+  )
+
+  const [checkInDate, setCheckInDate] = useState<Date | undefined>(defaultDates.today)
+  const [checkOutDate, setCheckOutDate] = useState<Date | undefined>(defaultDates.tomorrow)
+  const [selectedStation, setSelectedStation] = useState<string>(defaultStation)
   const [adults, setAdults] = useState<number>(2)
   const [children, setChildren] = useState<number>(1)
 
-  const handleCheckInChange = (date: Date | undefined) => {
+  // Memoize handlers để tránh tạo function mới mỗi lần render
+  // Sử dụng functional updates cho checkOutDate để giảm dependency
+  const handleCheckInChange = useCallback((date: Date | undefined) => {
     setCheckInDate(date)
     // Nếu check-in lớn hơn check-out, tự động cập nhật check-out thành ngày sau check-in 1 ngày
-    if (date && checkOutDate && date >= checkOutDate) {
-      const nextDay = new Date(date)
-      nextDay.setDate(nextDay.getDate() + 1)
-      setCheckOutDate(nextDay)
+    if (date) {
+      const checkInTime = createDateAtMidnight(date)
+      setCheckOutDate((prevCheckOut) => {
+        if (!prevCheckOut) return getNextDay(checkInTime)
+        const checkOutTime = createDateAtMidnight(prevCheckOut)
+        if (checkInTime >= checkOutTime) {
+          return getNextDay(checkInTime)
+        }
+        return prevCheckOut
+      })
     }
-  }
+  }, [])
 
-  const handleCheckOutChange = (date: Date | undefined) => {
+  const handleCheckOutChange = useCallback((date: Date | undefined) => {
     // Chỉ cho phép set check-out nếu nó lớn hơn check-in
-    if (date && checkInDate && date <= checkInDate) {
-      return // Không cho phép set nếu check-out <= check-in
+    if (!date) {
+      setCheckOutDate(date)
+      return
     }
-    setCheckOutDate(date)
-  }
+
+    const dateTime = createDateAtMidnight(date)
+    // Cần đọc checkInDate hiện tại để so sánh, nên giữ dependency
+    if (!checkInDate) {
+      setCheckOutDate(date)
+      return
+    }
+
+    const checkInTime = createDateAtMidnight(checkInDate)
+    if (dateTime > checkInTime) {
+      setCheckOutDate(date)
+    }
+  }, [checkInDate])
 
   return (
     <section className='relative'>

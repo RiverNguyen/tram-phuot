@@ -150,7 +150,7 @@ export default function AdvertisementPopup({
                 fill
                 className='object-cover'
                 sizes='(max-width: 768px) 100vw, 400px'
-                priority
+                preload
               />
             </motion.div>
           </motion.div>
