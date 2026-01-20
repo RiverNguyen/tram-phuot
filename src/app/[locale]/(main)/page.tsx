@@ -86,12 +86,14 @@ export default async function page({ params }: { params: Promise<{ locale: strin
           />
         </div>
       </div>
-      <AdvertisementPopup
-        imageUrl={dataPopup?.data?.popup?.image}
-        imageAlt='Advertisement'
-        linkUrl={dataPopup?.data?.popup?.link}
-        delay={500}
-      />
+      {dataPopup?.data?.popup?.image && (
+        <AdvertisementPopup
+          imageUrl={dataPopup?.data?.popup?.image}
+          imageAlt='Advertisement'
+          linkUrl={dataPopup?.data?.popup?.link}
+          delay={500}
+        />
+      )}
     </>
   )
 }

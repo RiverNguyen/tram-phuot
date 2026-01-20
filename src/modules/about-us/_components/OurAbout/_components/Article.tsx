@@ -65,7 +65,7 @@ const Article = ({ about, isInView }: ArticleProps) => {
         {lines.map((line, i) => (
           <div className="relative py-1" key={i}>
             <p
-              className={cn("leading-[2] text-[#2e2e2e] xsm:text-[0.875rem]")}
+              className={cn("leading-[2] text-[#07364D] xsm:text-[0.875rem]")}
               dangerouslySetInnerHTML={{ __html: line }}
             />
 

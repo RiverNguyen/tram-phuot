@@ -1,47 +1,13 @@
 import localFont from 'next/font/local'
 
-// Montserrat Font Family
+// Montserrat Font Family - Optimized: chỉ load các weight đang sử dụng (400, 500, 600, 700)
+// Loại bỏ italic variants và các weight không cần thiết để giảm bundle size
 export const montserrat = localFont({
   src: [
-    {
-      path: './montserrat/Montserrat-Thin.ttf',
-      weight: '100',
-      style: 'normal',
-    },
-    {
-      path: './montserrat/Montserrat-ThinItalic.ttf',
-      weight: '100',
-      style: 'italic',
-    },
-    {
-      path: './montserrat/Montserrat-ExtraLight.ttf',
-      weight: '200',
-      style: 'normal',
-    },
-    {
-      path: './montserrat/Montserrat-ExtraLightItalic.ttf',
-      weight: '200',
-      style: 'italic',
-    },
-    {
-      path: './montserrat/Montserrat-Light.ttf',
-      weight: '300',
-      style: 'normal',
-    },
-    {
-      path: './montserrat/Montserrat-LightItalic.ttf',
-      weight: '300',
-      style: 'italic',
-    },
     {
       path: './montserrat/Montserrat-Regular.ttf',
       weight: '400',
       style: 'normal',
-    },
-    {
-      path: './montserrat/Montserrat-Italic.ttf',
-      weight: '400',
-      style: 'italic',
     },
     {
       path: './montserrat/Montserrat-Medium.ttf',
@@ -49,53 +15,21 @@ export const montserrat = localFont({
       style: 'normal',
     },
     {
-      path: './montserrat/Montserrat-MediumItalic.ttf',
-      weight: '500',
-      style: 'italic',
-    },
-    {
       path: './montserrat/Montserrat-SemiBold.ttf',
       weight: '600',
       style: 'normal',
-    },
-    {
-      path: './montserrat/Montserrat-SemiBoldItalic.ttf',
-      weight: '600',
-      style: 'italic',
     },
     {
       path: './montserrat/Montserrat-Bold.ttf',
       weight: '700',
       style: 'normal',
     },
-    {
-      path: './montserrat/Montserrat-BoldItalic.ttf',
-      weight: '700',
-      style: 'italic',
-    },
-    {
-      path: './montserrat/Montserrat-ExtraBold.ttf',
-      weight: '800',
-      style: 'normal',
-    },
-    {
-      path: './montserrat/Montserrat-ExtraBoldItalic.ttf',
-      weight: '800',
-      style: 'italic',
-    },
-    {
-      path: './montserrat/Montserrat-Black.ttf',
-      weight: '900',
-      style: 'normal',
-    },
-    {
-      path: './montserrat/Montserrat-BlackItalic.ttf',
-      weight: '900',
-      style: 'italic',
-    },
   ],
   variable: '--font-montserrat',
   display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'arial'],
+  adjustFontFallback: 'Arial',
 })
 
 // Motherland Font Family
@@ -103,16 +37,13 @@ export const motherland = localFont({
   src: './motherland/NVN-MOTHERLAND-SIGNATURE-1.ttf',
   variable: '--font-motherland',
   display: 'swap',
+  preload: false, // Display font, không cần preload
+  fallback: ['serif'],
 })
 
-// Phu-du Font Family
+// Phu-du Font Family - Optimized: chỉ load các weight đang sử dụng (400, 500, 700)
 export const phuDu = localFont({
   src: [
-    {
-      path: './phu-du/DTPhudu-Light.otf',
-      weight: '300',
-      style: 'normal',
-    },
     {
       path: './phu-du/DTPhudu-Regular.otf',
       weight: '400',
@@ -128,12 +59,10 @@ export const phuDu = localFont({
       weight: '700',
       style: 'normal',
     },
-    {
-      path: './phu-du/DTPhudu-Black.otf',
-      weight: '900',
-      style: 'normal',
-    },
   ],
   variable: '--font-phu-du',
   display: 'swap',
+  preload: true, // Primary font, cần preload
+  fallback: ['sans-serif'],
+  adjustFontFallback: 'Arial',
 })
