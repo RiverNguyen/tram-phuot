@@ -1,12 +1,12 @@
-import ENDPOINTS from '@/configs/endpoints'
-import fetchData from '@/fetches/fetchData'
+import { Suspense } from 'react'
 import Header from '@/layouts/header'
 import { NextIntlClientProvider } from 'next-intl'
-import { ISiteSetting } from '@/interface/site-setting.interface'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import OrganizationSchema from '@/seo/schemas/OrganizationSchema'
 import WebSiteSchema from '@/seo/schemas/WebSiteSchema'
 import { SEO_CONFIG } from '@/seo/seo.config'
+import HeaderLoader from '@/layouts/header/_components/HeaderLoader'
+import HeaderWrapper from '@/layouts/header/_components/HeaderWrapper'
 
 export default async function layout({
   children,
@@ -17,10 +17,6 @@ export default async function layout({
 }) {
   const { locale } = await params
 
-  const dataSiteSettings: ISiteSetting = await fetchData({
-    api: `${ENDPOINTS.site_settings}?locale=${locale}&field=header`,
-  })
-
   return (
     <NextIntlClientProvider>
       <TooltipProvider>
@@ -29,10 +25,9 @@ export default async function layout({
           lang={locale}
           name={SEO_CONFIG.siteName}
         />
-        <Header
-          data={dataSiteSettings?.data?.header}
-          socialMedia={dataSiteSettings.data?.header?.social_media}
-        />
+        <Suspense fallback={<HeaderLoader />}>
+          <HeaderWrapper locale={locale} />
+        </Suspense>
         {children}
       </TooltipProvider>
     </NextIntlClientProvider>
