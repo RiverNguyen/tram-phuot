@@ -112,7 +112,7 @@ export default function DetailHotel({
           </div>
           <Policy policy={detailHotel?.acf?.policy || {}} />
         </div>
-        <div className='w-[27.75rem] bg-white rounded-[0.5rem] px-[1.375rem] py-4 h-fit sticky top-22 xsm:hidden'>
+        <div className='w-[27.75rem] bg-white rounded-[0.5rem] px-[1.375rem] py-4 h-fit sticky top-22 xsm:hidden mr-0'>
           <BookingOverview
             selectedRooms={selectedRooms}
             onRemoveRoom={handleRemoveRoom}

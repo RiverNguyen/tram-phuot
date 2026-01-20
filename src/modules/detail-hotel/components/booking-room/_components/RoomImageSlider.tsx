@@ -94,7 +94,7 @@ const RoomImageSlider = ({
       pagination={{
         clickable: true,
       }}
-      className='w-[18rem]! rounded-[0.5rem]! group ml-0! mr-6! relative [&_.swiper-pagination-bullet]:size-[0.375rem] [&_.swiper-pagination-bullet]:bg-white [&_.swiper-pagination-bullet]:opacity-40 [&_.swiper-pagination-bullet-active]:opacity-100 [&_.swiper-pagination-bullet]:mx-[0.1875rem] [&_.swiper-pagination]:absolute! [&_.swiper-pagination]:left-[0.75rem]! [&_.swiper-pagination]:bottom-[0.75rem]! [&_.swiper-pagination]:w-fit! [&_.swiper-pagination]:opacity-0 hover:[&_.swiper-pagination]:opacity-100 transition-opacity duration-300 xsm:w-full! xsm:[&_.swiper-pagination]:opacity-100'
+      className='w-[19.25rem]! rounded-l-[0.5rem]! group ml-0! mr-6! relative [&_.swiper-pagination-bullet]:size-[0.375rem] [&_.swiper-pagination-bullet]:bg-white [&_.swiper-pagination-bullet]:opacity-40 [&_.swiper-pagination-bullet-active]:opacity-100 [&_.swiper-pagination-bullet]:mx-[0.1875rem] [&_.swiper-pagination]:absolute! [&_.swiper-pagination]:left-[0.75rem]! [&_.swiper-pagination]:bottom-[0.75rem]! [&_.swiper-pagination]:w-fit! [&_.swiper-pagination]:opacity-0 hover:[&_.swiper-pagination]:opacity-100 transition-opacity duration-300 xsm:w-full! xsm:[&_.swiper-pagination]:opacity-100'
       grabCursor={true}
       speed={800}
       modules={[Pagination, Navigation]}

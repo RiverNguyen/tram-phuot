@@ -130,7 +130,7 @@ export default function Footer({ data }: { data: IFooter }) {
           )}
           <div className='relative overflow-hidden'>
             <div className='absolute top-0 right-0 left-0 h-[29.39425rem] w-full sm:hidden'>
-              <Image src='/footer/d-footer_bottom_deco.webp' alt='Footer Bottom Deco' width={1600} height={200} className='w-full h-full object-cover opacity-60' />
+              <Image src='/footer/Footer.svg' alt='Footer Bottom Deco' width={1600} height={200} className='w-full h-auto' />
             </div>
             <div className='xsm:px-4 relative'>
               <Link
