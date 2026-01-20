@@ -342,7 +342,7 @@ export default function WrapperOngoingPromotions({
         id='ongoing-promotions-section'
         className='xsm:gap-[1.25rem] xsm:px-[1rem] xsm:mb-[2.25rem] mx-auto flex w-full max-w-[87.5rem] flex-col items-start gap-[2.5rem] self-stretch'
       >
-        <div className='xsm:flex-col xsm:gap-[0.875rem] xsm:items-start flex items-center gap-[2.5rem] self-stretch'>
+        <div className='xsm:flex-col xsm:space-y-[0.875rem] xsm:items-start flex items-center space-y-[2.5rem] self-stretch'>
           <h2 className='xsm:w-full xsm:text-[1.25rem] xsm:leading-[1.5rem] xsm:tracking-[0.025rem] line-clamp-1 font-phu-du w-[35.8125rem] text-[2.125rem] leading-[2.3375rem] font-medium text-[#2E2E2E]'>
             {text2}
           </h2>
@@ -376,7 +376,7 @@ export default function WrapperOngoingPromotions({
             {/* Sentinel element để detect khi scroll qua */}
             <div
               ref={sentinelRef}
-              className='w-full sm:hidden'
+              className='w-full sm:hidden mb-0'
             />
             {/* Button trong document flow - ẩn khi fixed */}
             <div className={`w-full sm:hidden ${isFixed ? 'invisible' : ''}`}>
@@ -432,13 +432,13 @@ export default function WrapperOngoingPromotions({
 
         {/* Promotion Cards */}
         {shouldShowLoading ? (
-          <div className='xsm:grid-cols-1 grid w-full grid-cols-3 gap-x-[1.25rem] gap-y-[2.5rem]'>
+          <div className='xsm:grid-cols-1 grid w-full grid-cols-3 gap-x-[1.25rem] gap-y-[2.5rem] xsm:gap-y-[1.25rem]'>
             {Array.from({ length: 6 }).map((_, idx) => (
               <SkeletonPromotion key={idx} />
             ))}
           </div>
         ) : visibleCoupons.length > 0 ? (
-          <div className='xsm:grid-cols-1 grid w-full grid-cols-3 gap-x-[1.25rem] gap-y-[2.5rem]'>
+          <div className='xsm:grid-cols-1 grid w-full grid-cols-3 gap-x-[1.25rem] gap-y-[2.5rem] xsm:gap-y-[1.25rem]'>
             {visibleCoupons.map((card) => (
               <OngoingPromotionsCard
                 key={card.id}

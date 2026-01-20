@@ -9,6 +9,7 @@ import { useGSAP } from '@gsap/react'
 import { CustomEase } from 'gsap/dist/CustomEase'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { IExplorers } from '@/interface/homepage.interface'
+import { cn } from '@/lib/utils'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -44,6 +45,9 @@ const TEXTAREA = `At Wanderlust Station community every traveler finds a place t
 
 export default function Journey({ explorers }: { explorers: IExplorers }) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const lines = explorers?.desc
+    ?.split(/<br\s*\/?>/i)
+    .filter(Boolean);
 
   useGSAP(
     () => {
@@ -160,7 +164,7 @@ export default function Journey({ explorers }: { explorers: IExplorers }) {
       <div className='absolute -top-[3rem] left-0 w-full h-[16rem] bg-[#FDF4ED] xsm:hidden' />
       {/* Background */}
       <Image
-        src='/home/bg-explorers.webp'
+        src='/home/bg-journey.webp'
         alt='Bg Explorers'
         width={4811}
         height={2669}
@@ -333,9 +337,20 @@ export default function Journey({ explorers }: { explorers: IExplorers }) {
         />
         {/* content */}
         <div className='xsm:top-[11.38rem] xsm:left-[1rem] xsm:right-[1rem] xsm:w-auto xsm:gap-[2.06rem] content absolute top-[5.4077rem] left-[16.9103rem] flex w-[32.0625rem] flex-col justify-center gap-[1.4375rem]'>
-          <p className='xsm:text-[0.875rem] xsm:no-underline xsm:before:content-none xsm:leading-[1.75rem] xsm:tracking-[-0.0175rem] text-white text-[1.125rem] font-montserrat font-medium leading-[200%] tracking-[-2%] whitespace-pre-line underline decoration-[0.0625rem] decoration-[rgba(165,165,165,0.50)] underline-offset-[0.5rem] decoration-dashed decoration before:content-[""] before:pl-[3.875rem]'>
-            {explorers?.desc}
-          </p>
+          <div className='xsm:hidden w-fit'>
+            {lines.map((line, i) => (
+              <div className="relative py-1">
+                <p
+                  className={cn("text-medium text-[1.125rem] leading-[2.0] tracking-[-0.02] text-white", i === 0 && 'sm:indent-[4rem]')}
+                  dangerouslySetInnerHTML={{ __html: line }}
+                />
+
+                <span className="pointer-events-none absolute left-0 right-0 bottom-2 border-b border-dashed border-[#AEAFAE]/80 xsm:hidden" />
+              </div>
+
+            ))}
+          </div>
+          <div className="sm:hidden [&_br]:hidden text-white text-[0.875rem] font-medium leading-[1.75rem] tracking-[-0.0175rem]" dangerouslySetInnerHTML={{ __html: explorers?.desc }}></div>
           <div className='xsm:gap-[1.01075rem] flex items-center gap-[1.1035rem]'>
             {Array.isArray(explorers?.social_media) &&
               explorers?.social_media?.map((social, index) => (

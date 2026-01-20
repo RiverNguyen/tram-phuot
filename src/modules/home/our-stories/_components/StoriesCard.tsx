@@ -34,11 +34,11 @@ const StoriesCard = ({ story }: { story: IOurStoriesData }) => {
         />
       </div>
 
-      <div className='xsm:w-full flex flex-col w-[27.08938rem] space-y-[0.625rem]'>
-        <h3 className='xsm:text-[1rem] xsm:leading-[1.3rem] xsm:tracking-normal line-clamp-2 text-[#1F4D37] font-phu-du text-[1.75rem] font-medium leading-[2.0625rem] tracking-[-0.03125rem] h-[4.3125rem] xsm:h-[2.5rem] xsm:mb-2'>
+      <div className='xsm:w-full flex flex-col w-[27.08938rem]'>
+        <h3 className='xsm:text-[1rem] xsm:leading-[1.3rem] xsm:tracking-normal line-clamp-2 text-[#1F4D37] font-phu-du text-[1.75rem] font-medium leading-[2.0625rem] tracking-[-0.03125rem] h-[4.3125rem] xsm:h-[2.5rem] mb-1'>
           {story?.title}
         </h3>
-        <p className='line-clamp-1 text-[#FF7B4A] font-montserrat text-[0.875rem] font-normal font-semibold leading-[1.4rem] tracking-[-0.00875rem]'>
+        <p className='line-clamp-1 text-[#FF7B4A] font-montserrat text-[0.875rem] font-semibold leading-[1.4rem] tracking-[-0.00875rem]'>
           {story?.published ? formatDate(story.published) : ''}
         </p>
       </div>

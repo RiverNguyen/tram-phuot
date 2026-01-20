@@ -104,7 +104,7 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
           alt=''
           width={794}
           height={608}
-          className='w-[49.68275rem] h-auto object-cover'
+          className='w-[49.68275rem] h-auto object-cover xsm:hidden'
         />
       </div>
       <div className='flex flex-col justify-center items-center'>
@@ -237,9 +237,8 @@ export default function OurStoryAbout({ content }: { content: IContentAbout }) {
                 content.who_we_are.map((item, index) => (
                   <div
                     key={index}
-                    className={`relative z-[1] xsm:w-[18.8125rem] xsm:first:ml-4 xsm:last:mr-4 xsm:px-[0.375rem] xsm:pt-[1.5rem] flex-shrink-0 w-[24.0625rem] flex flex-col items-start gap-[0.625rem] pt-[2.5rem] px-[0.625rem] pb-[0.625rem] rounded-[1.25rem] bg-[linear-gradient(180deg,rgba(189,222,187,0.91)_14.98%,#F7E9DD_85.05%)] bg-repeat [background-blend-mode:color-burn,normal] ${
-                      index % 2 === 1 ? 'mt-[3.3125rem] xsm:mt-0' : ''
-                    }
+                    className={`relative z-[1] xsm:w-[18.8125rem] xsm:first:ml-4 xsm:last:mr-4 xsm:px-[0.375rem] xsm:pt-[1.5rem] flex-shrink-0 w-[24.0625rem] flex flex-col items-start gap-[0.625rem] pt-[2.5rem] px-[0.625rem] pb-[0.625rem] rounded-[1.25rem] bg-[linear-gradient(180deg,rgba(189,222,187,0.91)_14.98%,#F7E9DD_85.05%)] bg-repeat [background-blend-mode:color-burn,normal] ${index % 2 === 1 ? 'mt-[3.3125rem] xsm:mt-0' : ''
+                      }
           ${index === 0 ? 'xsm:ml-4' : ''}
     ${index === 2 ? 'xsm:mr-4' : ''}
           `}

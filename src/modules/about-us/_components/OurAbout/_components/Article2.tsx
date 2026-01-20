@@ -35,13 +35,13 @@ const Article = ({ about, isInView, className }: ArticleProps) => {
 
       <div className="mt-[1.625rem] xsm:hidden">
         {lines.map((line, i) => (
-          <div className="relative py-1 w-fit">
+          <div className="relative py-1 w-fit" key={i}>
             <p
-              className={cn("leading-[2] text-[#2e2e2e] xsm:text-[0.875rem]")}
+              className={cn("leading-[2] text-[#07364D] xsm:text-[0.875rem]")}
               dangerouslySetInnerHTML={{ __html: line }}
             />
 
-            <span className="pointer-events-none absolute left-0 right-0 bottom-2 border-b border-dashed border-[#AEAFAE] xsm:hidden" />
+            <span className="pointer-events-none absolute left-0 right-0 bottom-2 border-b border-dashed border-[#AEAFAE]" />
           </div>
 
         ))}

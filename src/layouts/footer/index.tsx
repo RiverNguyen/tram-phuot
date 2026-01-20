@@ -24,7 +24,7 @@ export default function Footer({ data }: { data: IFooter }) {
   return (
     <footer
       className={cn(
-        'xsm:h-auto relative z-[11] h-[88.8125rem] overflow-hidden bg-[#FDF4ED]',
+        'xsm:h-auto relative z-[11] h-[86.8125rem] overflow-hidden bg-[#FDF4ED]',
         !isLoading && isMobile && isThankyouPage && 'bg-transparent',
         isBlogDetail && 'xsm:mb-[2.75rem]',
       )}
@@ -35,7 +35,7 @@ export default function Footer({ data }: { data: IFooter }) {
         <div className="pointer-events-none absolute inset-0 bg-[url('/uu-dai/bg.webp')] bg-cover bg-bottom" />
       )}
 
-      <DecorOrange className='absolute top-[6rem] left-[-4rem] size-[35rem] z-[1] blur-[20px]' />
+      <DecorOrange className='absolute top-[6rem] left-[-4rem] size-[35rem] z-[1] blur-[100px] xsm:hidden' />
       {/* Background + mask */}
       <div className="xsm:mask-[url('/footer/d-footer_mask_mobile.webp')] xsm:mask-size-[23.4375rem_32rem] absolute inset-0 mask-alpha mask-no-repeat sm:mask-[url('/footer/d-footer_mask.webp')] sm:mask-size-[100.07813rem_92.876rem]">
         <Image
@@ -117,7 +117,9 @@ export default function Footer({ data }: { data: IFooter }) {
       <div className='pointer-events-none xsm:h-auto xsm:relative absolute z-4 h-[42.125rem] overflow-hidden sm:right-0 xsm:mt-[-1rem] sm:bottom-0 sm:left-0'>
         <div className='xsm:hidden pointer-events-none absolute top-0 right-0 left-0 h-[42.4375rem] w-full bg-[linear-gradient(180deg,rgba(1,86,63,0.00)_0%,rgba(1,68,57,0.25)_10.05%,rgba(2,33,45,0.79)_27.39%,#021429_44.32%,#021028_73.23%,#020E27_100%)] select-none'></div>
 
-        <div className='xsm:hidden pointer-events-none absolute right-0 bottom-[1rem] left-0 z-1 h-[43.25rem] bg-[linear-gradient(180deg,rgba(217,217,217,0.00)_0%,#A2A2A2_28.34%,#737373_100%)] mask-[url("/footer/d-footer_bottom_deco.webp")] mask-alpha mask-cover mask-no-repeat'></div>
+        <div className='xsm:hidden pointer-events-none absolute right-0 bottom-[0rem] left-0 z-1 h-[40.25rem]'>
+          <Image src='/footer/d-footer_bottom_deco.webp' alt='Footer Bottom Deco' width={1600} height={200} className='w-full h-full object-cover opacity-90' />
+        </div>
 
         <div className='pointer-events-auto xsm:relative absolute z-2 mx-auto max-w-[87.805rem] sm:right-0 sm:bottom-0 sm:left-0'>
           {!isLoading && isMobile && (
@@ -127,7 +129,9 @@ export default function Footer({ data }: { data: IFooter }) {
             />
           )}
           <div className='relative overflow-hidden'>
-            <div className='absolute top-0 right-0 left-0 h-[29.39425rem] w-full bg-[linear-gradient(180deg,rgba(217,217,217,0.00)_0%,#A2A2A2_28.34%,#737373_100%)] mask-[url("/footer/d-footer_bottom_deco.webp")] mask-alpha mask-size-[67.96363rem_29.39425rem] mask-center mask-no-repeat sm:hidden'></div>
+            <div className='absolute top-0 right-0 left-0 h-[29.39425rem] w-full sm:hidden'>
+              <Image src='/footer/d-footer_bottom_deco.webp' alt='Footer Bottom Deco' width={1600} height={200} className='w-full h-full object-cover opacity-60' />
+            </div>
             <div className='xsm:px-4 relative'>
               <Link
                 href='/'
@@ -141,8 +145,8 @@ export default function Footer({ data }: { data: IFooter }) {
                   className='xsm:w-[14.47369rem] xsm:h-[3.85906rem] h-[5.11313rem] w-[19.17756rem] object-cover'
                 />
               </Link>
-              <div className='xsm:flex-col xsm:py-[1.25rem] flex justify-between border-t border-b border-dashed border-t-white/20 border-b-white/20 py-[2.44825rem]'>
-                <div className='xsm:w-full xsm:grid-cols-1 xsm:gap-y-[1.25rem] xsm:pb-[1.25rem] grid w-[37.11438rem] shrink-0 grid-cols-3'>
+              <div className='xsm:flex-col xsm:py-[1.25rem] flex justify-between border-t border-b border-dashed border-t-white/20 border-b-white/20 pt-[2.44825rem] pb-[1.4275rem]'>
+                <div className='xsm:w-full xsm:grid-cols-1 xsm:gap-y-[2.25rem] xsm:pb-[1.25rem] grid w-[37.11438rem] shrink-0 grid-cols-3'>
                   <FooterMenu
                     title='Menu'
                     menus={data?.footer_content?.menu}
@@ -200,7 +204,7 @@ export default function Footer({ data }: { data: IFooter }) {
                     title={`${translateFooter('socialMedia')}:`}
                     containerClassName='sm:pt-[1.92rem]'
                     content={
-                      <div className='flex items-center space-x-2'>
+                      <div className='flex items-center space-x-2 xsm:mt-2'>
                         {data?.footer_content?.social_media.map((social, i) => (
                           <Link
                             key={i}

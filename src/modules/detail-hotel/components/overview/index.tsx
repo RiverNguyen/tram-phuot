@@ -15,7 +15,7 @@ const Overview = ({
         {t('textOverview')}
       </h3>
       <article
-        className='[&_ul]:list-disc [&_ul]:list-inside [&_ul_li::marker]:text-orange-500 text-body-t1/75 leading-[1.5] xsm:text-[0.875rem]'
+        className='[&_ul]:list-disc [&_ul]:space-y-3 [&_ul]:list-inside [&_ul_li::marker]:text-orange-500 text-body-t1/75 leading-[1.5] xsm:text-[0.875rem]'
         dangerouslySetInnerHTML={{ __html: overview?.content || '' }}
       />
       <div className='p-4 bg-[#f8f8f8] rounded-[0.5rem] mt-6 xsm:mt-[2.25rem] xsm:bg-transparent xsm:p-0'>
