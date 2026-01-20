@@ -115,7 +115,7 @@ export default function TourCard({
               </p>
 
               <p className='font-phu-du xsm:text-[0.875rem] text-[1rem] leading-[1.3] font-medium text-[#FFC542] uppercase'>
-                {tourPrice} USD /{' '}
+                {tourPrice} USD/
                 <span className='text-white/80 text-[0.75rem]'>
                   {locale === 'vi' ? 'người' : 'person'}
                 </span>

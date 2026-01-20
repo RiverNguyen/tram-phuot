@@ -44,7 +44,7 @@ export default function DetailsTour({
           accommodation={detailsTourData?.data?.acf?.accommodation || ''}
           pickupAndDropoff={detailsTourData?.data?.acf?.pickup_and_dropoff || ''}
         />
-        <div className='xsm:pt-2 relative mx-auto pt-25 mb-8 xsm:mb-6 flex max-w-351 items-start justify-between z-[5]'>
+        <div className='xsm:pt-2 relative mx-auto pt-25 mb-8 xsm:mb-6 flex max-w-351 items-start space-x-8 z-[5]'>
           <div className='xsm:w-full xsm:space-y-6 w-full max-w-222 shrink-0 space-y-8'>
             <SectionOverview
               overview={detailsTourData?.data?.acf?.overview}
@@ -70,7 +70,7 @@ export default function DetailsTour({
           </div>
         </div>
 
-        <div className='xsm:mb-6 relative mx-auto mb-10 flex max-w-351 items-start justify-between'>
+        <div className='xsm:mb-6 relative mx-auto mb-10 flex max-w-351 items-start space-x-8'>
           <div className='xsm:w-full xsm:space-y-6 w-full max-w-222 shrink-0 space-y-8'>
             <SectionBookingTour
               tourDuration={detailsTourData?.data?.tour_duration}
