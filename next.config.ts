@@ -15,15 +15,11 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   productionBrowserSourceMaps: false,
-  compress: true,
   experimental: {
     turbopackSourceMaps: false,
     serverSourceMaps: false,
-    optimizePackageImports: ['sonner', 'nextjs-toploader'],
   },
   reactCompiler: true,
-  // Optimize font loading
-  optimizeFonts: true,
 }
 
 const withNextIntl = createNextIntlPlugin()
