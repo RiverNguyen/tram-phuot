@@ -1,8 +1,8 @@
-import { Suspense } from 'react'
+import ENDPOINTS from '@/configs/endpoints'
+import fetchData from '@/fetches/fetchData'
+import { ISiteSetting } from '@/interface/site-setting.interface'
 import Footer from '@/layouts/footer'
 import CTA from '@/layouts/cta'
-import FooterWrapper from '@/layouts/footer/_components/FooterWrapper'
-import CTAWrapper from '@/layouts/cta/_components/CTAWrapper'
 
 export default async function MainLayout({
   children,
@@ -13,15 +13,15 @@ export default async function MainLayout({
 }) {
   const { locale } = await params
 
+  const dataSiteSettings: ISiteSetting = await fetchData({
+    api: `${ENDPOINTS.site_settings}?locale=${locale}&field=footer,cta`,
+  })
+
   return (
     <>
-      <Suspense fallback={null}>
-        <CTAWrapper locale={locale} />
-      </Suspense>
+      <CTA data={dataSiteSettings?.data?.cta?.list} />
       {children}
-      <Suspense fallback={null}>
-        <FooterWrapper locale={locale} />
-      </Suspense>
+      <Footer data={dataSiteSettings?.data?.footer} />
     </>
   )
 }

@@ -4,26 +4,6 @@ import localFont from 'next/font/local'
 export const montserrat = localFont({
   src: [
     {
-      path: './montserrat/Montserrat-Regular.ttf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: './montserrat/Montserrat-Medium.ttf',
-      weight: '500',
-      style: 'normal',
-    },
-    {
-      path: './montserrat/Montserrat-SemiBold.ttf',
-      weight: '600',
-      style: 'normal',
-    },
-    {
-      path: './montserrat/Montserrat-Bold.ttf',
-      weight: '700',
-      style: 'normal',
-    },
-    {
       path: './montserrat/Montserrat-Thin.ttf',
       weight: '100',
       style: 'normal',
@@ -54,9 +34,19 @@ export const montserrat = localFont({
       style: 'italic',
     },
     {
+      path: './montserrat/Montserrat-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
       path: './montserrat/Montserrat-Italic.ttf',
       weight: '400',
       style: 'italic',
+    },
+    {
+      path: './montserrat/Montserrat-Medium.ttf',
+      weight: '500',
+      style: 'normal',
     },
     {
       path: './montserrat/Montserrat-MediumItalic.ttf',
@@ -64,9 +54,19 @@ export const montserrat = localFont({
       style: 'italic',
     },
     {
+      path: './montserrat/Montserrat-SemiBold.ttf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
       path: './montserrat/Montserrat-SemiBoldItalic.ttf',
       weight: '600',
       style: 'italic',
+    },
+    {
+      path: './montserrat/Montserrat-Bold.ttf',
+      weight: '700',
+      style: 'normal',
     },
     {
       path: './montserrat/Montserrat-BoldItalic.ttf',
@@ -96,9 +96,6 @@ export const montserrat = localFont({
   ],
   variable: '--font-montserrat',
   display: 'swap',
-  preload: true,
-  fallback: ['system-ui', 'arial'],
-  adjustFontFallback: false,
 })
 
 // Motherland Font Family
@@ -112,23 +109,23 @@ export const motherland = localFont({
 export const phuDu = localFont({
   src: [
     {
-      path: './phu-du/DTPhudu-Regular.otf',
-      weight: '400',
-      style: 'normal',
-    },
-    {
-      path: './phu-du/DTPhudu-Bold.otf',
-      weight: '700',
-      style: 'normal',
-    },
-    {
       path: './phu-du/DTPhudu-Light.otf',
       weight: '300',
       style: 'normal',
     },
     {
+      path: './phu-du/DTPhudu-Regular.otf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
       path: './phu-du/DTPhudu-Medium.otf',
       weight: '500',
+      style: 'normal',
+    },
+    {
+      path: './phu-du/DTPhudu-Bold.otf',
+      weight: '700',
       style: 'normal',
     },
     {
@@ -139,7 +136,4 @@ export const phuDu = localFont({
   ],
   variable: '--font-phu-du',
   display: 'swap',
-  preload: true,
-  fallback: ['system-ui', 'arial'],
-  adjustFontFallback: false,
 })
