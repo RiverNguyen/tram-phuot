@@ -145,7 +145,7 @@ const BookingRoom = ({ rooms, onChangeSelection, clearRoomIndex }: BookingRoomPr
           </p>
         </div>
         <ScrollArea className='max-h-[50.75rem] pr-4 mr-4 xsm:hidden'>
-          <div className='space-y-4'>
+          <div className='space-y-4 overflow-y-auto max-h-[46.75rem]'>
             {rooms?.map((room, index) => (
               <RoomCard
                 key={index}

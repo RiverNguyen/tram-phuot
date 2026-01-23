@@ -9,7 +9,7 @@ const Policy = ({ policy }: { policy: IHotelDetail['acf']['policy'] }) => {
         {t('textPolicy')}
       </h3>
       <article
-        className='[&_ul]:list-disc xsm:text-[0.875rem] xsm:[&_strong]:text-base [&_hr]:my-[1.125rem] [&_hr]:h-[0.0625rem] [&_hr]:bg-[#EDEDED] [&_ul]:list-inside [&_ul_li::marker]:text-orange-500 text-body-t1/75 leading-[1.5] [&_strong]:font-phu-du [&_strong]:font-bold [&_strong]:leading-[1.1] [&_strong]:text-[#2E2E2E] [&_ul]:mt-3'
+        className='[&_ul]:list-disc xsm:text-[0.875rem] xsm:[&_strong]:text-base [&_hr]:my-[1.125rem] [&_hr]:h-[0.0625rem] [&_hr]:bg-[#EDEDED] [&_ul]:list-inside [&_ul_li::marker]:text-orange-500 text-body-t1/75 leading-[1.5] [&_strong]:font-phu-du [&_strong]:font-bold [&_strong]:leading-[1.1] [&_strong]:text-[#2E2E2E] [&_ul]:my-3'
         dangerouslySetInnerHTML={{ __html: policy?.content || '' }}
       />
     </section>
