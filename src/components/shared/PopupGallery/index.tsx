@@ -126,6 +126,7 @@ export default function PopupGallery({
                     src={item.url}
                     alt={item?.alt || ''}
                     className='size-full object-cover'
+                    quality={100}
                   />
                 </SwiperSlide>
               ))}

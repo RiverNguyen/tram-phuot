@@ -13,36 +13,6 @@ import { cn } from '@/lib/utils'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const SOCIALS = [
-  {
-    name: 'Facebook',
-    image: '/socials/facebook.webp',
-    href: 'https://www.facebook.com',
-  },
-  {
-    name: 'Instagram',
-    image: '/socials/instagram.webp',
-    href: 'https://www.instagram.com',
-  },
-  {
-    name: 'YouTube',
-    image: '/socials/youtube.webp',
-    href: 'https://www.youtube.com',
-  },
-  {
-    name: 'TikTok',
-    image: '/socials/tiktok.webp',
-    href: 'https://www.tiktok.com',
-  },
-  {
-    name: 'Twitter',
-    image: '/socials/twitter.webp',
-    href: 'https://www.twitter.com',
-  },
-]
-
-const TEXTAREA = `At Wanderlust Station community every traveler finds a place to share stories tips and new routes connecting through the love of the open road`
-
 export default function Journey({ explorers }: { explorers: IExplorers }) {
   const containerRef = useRef<HTMLDivElement>(null)
   const lines = explorers?.desc
@@ -51,7 +21,7 @@ export default function Journey({ explorers }: { explorers: IExplorers }) {
 
   useGSAP(
     () => {
-      CustomEase.create('explorersEase', '0.51,-0.01,0.12,1')
+      CustomEase.create('explorersEase', '0.83,-0.01,0.31,1')
 
       const mm = gsap.matchMedia()
 
@@ -65,7 +35,7 @@ export default function Journey({ explorers }: { explorers: IExplorers }) {
 
           const tl = gsap.timeline({
             defaults: {
-              duration: 1.6,
+              duration: 1.3,
               ease: 'explorersEase',
             },
             scrollTrigger: {
